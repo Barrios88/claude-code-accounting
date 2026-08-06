@@ -31,13 +31,18 @@ Output lands in `_site/` (gitignored).
 
 ## Publish to GitHub Pages
 
-From the `website/` directory, with a GitHub remote configured:
+Pushes to `main` trigger `.github/workflows/publish.yml`, which renders the site
+and deploys to GitHub Pages at:
+
+https://johnmbarrios.com/claude-code-accounting/
+
+Repo: https://github.com/Barrios88/claude-code-accounting
+
+To redeploy manually:
 
 ```bash
-quarto publish gh-pages
+gh workflow run publish.yml --repo Barrios88/claude-code-accounting
 ```
-
-Quarto creates/updates the `gh-pages` branch and deploys the rendered site.
 
 ## Sync skills catalog
 
