@@ -32,9 +32,9 @@ Output lands in `_site/` (gitignored).
 ## Publish to GitHub Pages
 
 Pushes to `main` trigger `.github/workflows/publish.yml`, which renders the site
-and deploys to GitHub Pages at:
+and deploys the `_site/` output to the `gh-pages` branch.
 
-https://johnmbarrios.com/claude-code-accounting/
+Live URL: https://johnmbarrios.com/claude-code-accounting/
 
 Repo: https://github.com/Barrios88/claude-code-accounting
 
@@ -42,6 +42,12 @@ To redeploy manually:
 
 ```bash
 gh workflow run publish.yml --repo Barrios88/claude-code-accounting
+```
+
+Or locally (after `quarto render`):
+
+```bash
+quarto publish gh-pages --no-prompt
 ```
 
 ## Sync skills catalog
