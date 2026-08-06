@@ -1,0 +1,344 @@
+/*-- scss:defaults --*/
+
+// Style system ported from MGT 816 course site (theme-yale.scss) — D-018.
+// SOM navy, matched to som.yale.edu
+$som-navy: #002856;
+$primary: $som-navy;
+$link-color: $som-navy;
+$navbar-bg: $som-navy;
+$navbar-fg: #ffffff;
+
+// Course design-system support tokens (figures/callouts continuity)
+// Warm gray darkened from #978D85 for WCAG AA contrast on white and $mist
+$yale-gray: #6f665e;
+$ink: #212529;
+$mist: #f8f9fa;
+$blue-tint: #e7edf4;
+$warning: #c0392b;
+
+/*-- scss:rules --*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+// SOM-style masthead (text-only variant — no Yale/SOM marks on this
+// personal public site, per course identity policy)
+.som-masthead {
+  background: #fff;
+  border-bottom: 1px solid #d9dee5;
+}
+.som-masthead__inner {
+  margin: 0;
+  padding: 0.7rem 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.som-masthead__brand {
+  color: $som-navy;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.som-masthead__course {
+  color: $som-navy;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 576px) {
+  .som-masthead__course { display: none; }
+}
+
+// Landing-page hero band (resolves the FIG-SH-01 hero slot, D-017):
+// navy card with the course title, lede, fact row, and two CTAs
+.hero-band {
+  background: $som-navy;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2.25rem 2.5rem 2rem;
+  margin: 1.25rem 0 2rem;
+
+  h1 {
+    color: #fff;
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 2rem;
+    border-bottom: none;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 44rem;
+  }
+
+  .hero-facts {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b9c8da;
+    margin: 1.25rem 0 0.25rem;
+  }
+
+  .hero-buttons { margin-bottom: 0; }
+
+  .hero-buttons a {
+    background-color: #fff;
+    color: $som-navy !important;
+  }
+  .hero-buttons a:hover {
+    background-color: $blue-tint;
+    color: $som-navy !important;
+  }
+  .hero-buttons a.btn-ghost {
+    background: transparent;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+  }
+  .hero-buttons a.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-band {
+    padding: 1.5rem 1.25rem;
+    h1 { font-size: 1.5rem; }
+  }
+}
+
+// Buttons (hero + syllabus actions + landing CTA), MGT 816 style
+.hero-buttons,
+.syllabus-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  align-items: center;
+}
+
+.hero-buttons a,
+.syllabus-actions a,
+.cta-setup,
+a.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: $primary;
+  color: #fff !important;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero-buttons a:hover,
+.syllabus-actions a:hover,
+.cta-setup:hover,
+a.btn:hover {
+  background-color: darken($primary, 8%);
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.syllabus-actions .btn-secondary {
+  background-color: #fff;
+  color: $primary !important;
+  border: 1px solid $primary;
+}
+.syllabus-actions .btn-secondary:hover {
+  background-color: #f0f4f8;
+}
+
+.cta-setup { margin-top: 1.25rem; }
+
+// "This week"-style highlight box (used for notices)
+.this-week {
+  border-left: 4px solid $primary;
+  padding: 0.75rem 1rem;
+  margin: 1.5rem 0;
+  background: $mist;
+}
+
+.due-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: $warning;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.locked-link {
+  color: #6c757d;
+  font-style: italic;
+}
+
+// Course callouts, recolored to the navy system. The course uses real Quarto
+// callout types with the first inner heading lifted into the callout title:
+//   note    = learning objectives / general notes  (navy on blue tint)
+//   warning = common failures                       (warning red on mist)
+//   tip     = verify-this protocol boxes            (navy on mist)
+.callout.callout-note,
+.callout.callout-warning,
+.callout.callout-tip {
+  border-radius: 4px;
+  box-shadow: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+
+  .callout-header {
+    background: transparent;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+  }
+  .callout-body { color: $ink; }
+}
+
+.callout.callout-note {
+  border-left: 4px solid $primary;
+  background-color: $blue-tint;
+  .callout-header { color: $primary; }
+}
+
+.callout.callout-warning {
+  border-left: 4px solid $warning;
+  background-color: $mist;
+  .callout-header { color: $warning; }
+}
+
+.callout.callout-tip {
+  border-left: 4px solid $primary;
+  background-color: $mist;
+  .callout-header { color: $primary; }
+}
+
+// Tables: navy-tinted header, hairline rules
+table {
+  thead th {
+    background-color: $blue-tint;
+    color: $primary;
+    font-weight: 600;
+    border-bottom: 1px solid #d8dee6;
+  }
+  tbody tr:nth-child(even) { background-color: $mist; }
+}
+
+// Code
+pre { background-color: $mist; border: 1px solid #d8dee6; }
+:not(pre) > code { background-color: $mist; color: $ink; }
+
+// Blockquotes carry the course's reusable prompts — style as prompt cards
+// instead of Bootstrap's pale default
+blockquote.blockquote {
+  font-size: 1rem;
+  border-left: 4px solid $primary;
+  background: $blue-tint;
+  padding: 0.9rem 1.2rem;
+  border-radius: 0 4px 4px 0;
+}
+blockquote.blockquote > :last-child { margin-bottom: 0; }
+
+// Figures: hairline frame so white-background diagrams and terminal
+// mockups don't float on the white page
+.quarto-figure img, figure img {
+  border: 1px solid #d8dee6;
+  border-radius: 4px;
+}
+
+// Captions
+.figure-caption, figcaption, caption {
+  font-size: 0.85rem;
+  color: $yale-gray;
+}
+
+// Footer
+.nav-footer, .page-footer {
+  background-color: $mist !important;
+  border-top: 1px solid #d9dee5;
+  font-size: 0.9rem;
+}
+
+// Skill catalog subtitle
+.skill-subtitle {
+  color: $yale-gray;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+// Skills catalog listing grid: clamp long trigger-style descriptions to
+// three lines so the 41 cards stay scannable; full text lives on the page
+.quarto-grid-item {
+  border: 1px solid #d8dee6;
+  border-radius: 4px;
+  transition: box-shadow 0.15s ease;
+
+  &:hover { box-shadow: 0 2px 8px rgba(0, 40, 86, 0.12); }
+
+  .card-title { color: $primary; font-size: 1.05rem; }
+
+  .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9rem;
+    color: $ink;
+  }
+
+  .listing-categories .listing-category {
+    color: $primary;
+    border-color: $blue-tint;
+    background: $blue-tint;
+  }
+}
+
+/* Mobile: wide tables scroll inside themselves instead of breaking the page */
+@media (max-width: 768px) {
+  main table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-buttons a,
+  .syllabus-actions a { flex: 1 1 auto; text-align: center; }
+}
+
+/* Keep anchor jumps clear of the sticky masthead + navbar (~100px combined) */
+:target {
+  scroll-margin-top: 7rem;
+}
+
+/* Print: verification.qmd is meant to be printed as a protocol card */
+@media print {
+  .som-masthead,
+  #quarto-header,
+  #quarto-sidebar,
+  #quarto-margin-sidebar,
+  .nav-footer,
+  .page-footer,
+  .quarto-page-breadcrumbs { display: none !important; }
+
+  body { padding-top: 0 !important; }
+
+  blockquote.blockquote,
+  section[class*="callout-"],
+  div[class*="callout-"] {
+    background: none;
+    border-left-width: 3px;
+  }
+}

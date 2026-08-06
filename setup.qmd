@@ -1,0 +1,82 @@
+---
+title: "General Setup"
+---
+
+Everything on this page happens **before Module 1**. The course moves fast because the environment work is done in advance — a laptop that can't run Claude Code on the first morning costs you the whole first lab. Budget 45–90 minutes, more if you're on Windows. Work top to bottom; each step ends with a check that tells you it worked.
+
+::: {.callout-note icon=false}
+## What you need by Module 1 (summary)
+
+A laptop you have admin rights on (macOS or Linux natively; Windows via WSL2). A working local Python — plus R or Stata if that's your language. Claude Code installed and authenticated on a Claude Pro or Max subscription (or an API key). git installed and a GitHub account. And a WRDS account with Duo multi-factor enrolled — the account by Module 1, a working `ssh wrds` login by end of Module 2 (that checkpoint is a hard gate for Module 4).
+:::
+
+## 1. Operating system
+
+macOS and Linux work natively — nothing special to do. **Windows requires WSL2** (Windows Subsystem for Linux): Claude Code runs inside the Linux environment, not native Windows. Install Ubuntu via `wsl --install` in an administrator PowerShell, reboot, and do *everything else on this page inside the Ubuntu terminal*. The most common Windows failure across the course is mixing the two worlds — a Python installed in Windows is invisible from WSL and vice versa. Pick WSL and stay there.
+
+**Check:** you can open a terminal (Terminal.app, your Linux terminal, or the Ubuntu/WSL window) and `echo hello` prints hello.
+
+## 2. Local runtime: Python (and R or Stata)
+
+Claude Code writes and runs code using whatever is installed on *your* machine — it does not bundle a Python or R of its own. The course's examples are Python; a Stata bridge is taught in Module 4, and R users can follow along with everything.
+
+- **Python 3.10+**: `python3 --version` should print 3.10 or higher. If not: macOS `brew install python`; Ubuntu/WSL `sudo apt update && sudo apt install python3 python3-pip python3-venv`.
+- Install the handful of packages the labs lean on: `pip3 install pandas matplotlib duckdb pyarrow requests` (add `--break-system-packages` on newer Ubuntu if pip refuses).
+- **R users:** confirm `Rscript --version` runs. **Stata users:** confirm you can launch Stata from your machine and know the path to the executable — Module 4's `.do`/`.dta` handoff needs it.
+
+**Check:** `python3 -c "import pandas; print('ok')"` prints ok.
+
+## 3. Claude Code — install and authenticate
+
+You need either a **Claude Pro or Max subscription** or an **API key**. Pro (roughly \$20/month at the time of writing — check [current pricing](https://claude.com/pricing)) is sufficient for this course; Max tiers buy more usage headroom but are not required. API-key billing is pay-per-token and also works fine.
+
+Install (either method):
+
+```bash
+# npm (requires Node 18+; macOS: brew install node / Ubuntu: sudo apt install nodejs npm)
+npm install -g @anthropic-ai/claude-code
+
+# or the standalone installer
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Then, from any folder, run `claude`. On first launch it walks you through login — choose your subscription account (or configure the API key when prompted). Grant the terminal access it asks for.
+
+**Check (the one that matters):** `cd` into a fresh empty folder, run `claude`, and ask it: *"Create a file called hello.txt containing one sentence about accounting research, then read it back to me."* If it creates the file, reads it back, and the file exists when you `ls` — you are ready for Module 1.
+
+::: {.callout-warning icon=false}
+## Common failure: it installs but won't launch
+
+Three usual suspects, in order: (1) Node too old — `node --version` should be 18+; (2) npm's global bin directory not on your PATH — the installer prints the path to add; (3) on Windows, you installed in PowerShell instead of inside WSL. If you burn more than 30 minutes here, stop and bring the error message to Module 1's lab — Part A has time and staff for exactly this, and the [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) below has step-by-step walkthroughs for both macOS and Windows.
+:::
+
+## 4. git and GitHub
+
+git is the course's safety net (Module 1) and its collaboration layer (Module 5). Install: macOS `xcode-select --install` (or `brew install git`); Ubuntu/WSL `sudo apt install git`. Create a free [GitHub account](https://github.com) if you don't have one, and set your identity:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@university.edu"
+```
+
+**Check:** `git --version` prints a version; you can log in to github.com.
+
+## 5. WRDS account and Duo — start this early
+
+Module 4 runs on **your own WRDS account**; the course never distributes WRDS data or shares logins. If you don't have an account, request one now through your institution's WRDS representative — approval can take days, which is why this is a pre-course item, not a Module 3 one.
+
+Two stages, two deadlines: your account exists and **Duo multi-factor is enrolled by Module 1** (WRDS Account → Settings → Two-Factor); and you can complete an SSH login — `ssh your_username@wrds-cloud.wharton.upenn.edu`, approve the Duo push, see a WRDS prompt, type `exit` — **by end of Module 2**. Module 2 closes with a checkpoint where you submit proof of that login or flag a problem; students without working access by Module 4 use the public-data fallback track (same skills, public SEC data), so nobody is stranded — but the real thing is better.
+
+**Check:** the SSH login above succeeds end-to-end.
+
+## 6. Optional, recommended
+
+Fifteen minutes of terminal comfort pays off across the course: a modern terminal (e.g., [Ghostty](https://ghostty.org)) and a multiplexer (e.g., [Zellij](https://zellij.dev) or tmux) make long-running agent sessions much more pleasant — Module 1's demo shows this setup briefly, but nothing in the course requires it. A plain-text editor you like (VS Code is fine) helps for reading what Claude writes.
+
+For a second opinion on any install step, [hanlulong/AI-research-setup](https://github.com/hanlulong/AI-research-setup) is a step-by-step Claude Code setup guide written for economics researchers, covering macOS and Windows, and kept current — it is the reference we point students to when a machine misbehaves. The [Tools](tools.qmd) page covers what Claude Code *is* relative to Claude Desktop, Cursor, and Codex; the [WRDS setup](setup-wrds.qmd) page covers the Module 4 stack in detail (do that one after Module 3, not now).
+
+::: {.callout-tip icon=false}
+## The pre-course checklist
+
+Before Module 1, all of these should be true — each one was a **Check** line above. Terminal opens and runs commands. `python3 -c "import pandas"` works (plus R/Stata if applicable). `claude` launches in a fresh folder, authenticates, and completes the hello.txt round-trip. `git --version` works and you have a GitHub account. WRDS account exists with Duo enrolled. If any box fails and resists 30 minutes of effort, note the exact error message and bring it to Module 1 — you will not be the only one, and it is a solvable problem, not a disqualifying one.
+:::

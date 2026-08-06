@@ -1,0 +1,93 @@
+project:
+  type: website
+  output-dir: _site
+
+execute:
+  freeze: auto
+
+website:
+  title: "Claude Code for Accounting Research"
+  site-url: https://johnmbarrios.com/claude-code-accounting/
+  page-navigation: true
+  navbar:
+    background: "#002856"
+    foreground: "#FFFFFF"
+    right:
+      - text: Home
+        href: index.qmd
+      - text: Syllabus
+        href: syllabus.qmd
+      - text: Setup
+        menu:
+          - text: General Setup
+            href: setup.qmd
+          - text: WRDS MCP Setup
+            href: setup-wrds.qmd
+      - text: Modules
+        menu:
+          - text: "Module 1: Foundations"
+            href: modules/01-foundations.qmd
+          - text: "Module 2: Empirical Loop"
+            href: modules/02-empirical-loop.qmd
+          - text: "Module 3: EDGAR Text"
+            href: modules/03-edgar-text.qmd
+          - text: "Module 4: WRDS MCP & Scale"
+            href: modules/04-wrds-mcp-scale.qmd
+          - text: "Module 5: Writing & Verification"
+            href: modules/05-writing-verify.qmd
+          - text: "Module 6: AI & Knowledge Market"
+            href: modules/06-ai-knowledge-market.qmd
+      - text: Labs
+        href: labs/index.qmd
+      - text: Skills
+        href: skills/index.qmd
+      - text: Reference
+        menu:
+          - text: Tools
+            href: tools.qmd
+          - text: Prompts
+            href: prompts.qmd
+          - text: Verification
+            href: verification.qmd
+          - text: Resources
+            href: resources.qmd
+      - text: About
+        href: about.qmd
+  sidebar:
+    - id: modules
+      title: "Modules"
+      style: docked
+      contents:
+        - href: modules/index.qmd
+          text: Overview
+        - href: modules/01-foundations.qmd
+          text: "Module 1: Foundations"
+        - href: modules/02-empirical-loop.qmd
+          text: "Module 2: Empirical Loop"
+        - href: modules/03-edgar-text.qmd
+          text: "Module 3: EDGAR Text"
+        - href: modules/04-wrds-mcp-scale.qmd
+          text: "Module 4: WRDS MCP & Scale"
+        - href: modules/05-writing-verify.qmd
+          text: "Module 5: Writing & Verification"
+        - href: modules/06-ai-knowledge-market.qmd
+          text: "Module 6: AI & Knowledge Market"
+  page-footer:
+    background: "#F5F7FA"
+    foreground: "#6f665e"
+    left:
+      - "John Barrios · Yale School of Management · "
+      - text: "Attribution & about"
+        href: about.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles/custom.scss
+    include-before-body: styles/som-masthead.html
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    smooth-scroll: true
+    lightbox: true

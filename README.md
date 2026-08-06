@@ -1,0 +1,86 @@
+# Claude Code for Accounting Research — Course Website
+
+PhD intensive course site built with [Quarto](https://quarto.org/). Visual identity follows the Yale SOM design system (`course/shared/yale_som_style.md`).
+
+## Repository boundary
+
+**Only this `website/` folder** is published to the public GitHub repository. Course materials, local configs, and the broader monorepo stay private.
+
+## Prerequisites
+
+- [Quarto](https://quarto.org/docs/get-started/) ≥ 1.4
+- Python 3.9+ (for `scripts/sync_skills.py`)
+
+## Local preview
+
+```bash
+cd website
+quarto preview
+```
+
+Opens a live-reloading dev server (default `http://localhost:4200`).
+
+## Build
+
+```bash
+cd website
+quarto render
+```
+
+Output lands in `_site/` (gitignored).
+
+## Publish to GitHub Pages
+
+From the `website/` directory, with a GitHub remote configured:
+
+```bash
+quarto publish gh-pages
+```
+
+Quarto creates/updates the `gh-pages` branch and deploys the rendered site.
+
+## Sync skills catalog
+
+The skills pages are generated from the Barrios Skills source tree:
+
+```bash
+python3 scripts/sync_skills.py
+```
+
+Options:
+
+```bash
+python3 scripts/sync_skills.py --help
+python3 scripts/sync_skills.py --source /path/to/skills --site-root .
+python3 scripts/sync_skills.py --dry-run
+```
+
+Default source: `~/Documents/Barrios_Skills/skills`. The script converts each `SKILL.md` folder to `skills/<name>.qmd`, zips it to `assets/skills/<name>.zip`, and regenerates `skills/index.qmd`.
+
+Install a skill locally:
+
+```bash
+# Cursor
+cp -r <skill-folder> ~/.cursor/skills/
+
+# Claude Code
+cp -r <skill-folder> ~/.claude/skills/
+```
+
+## Project layout
+
+```
+website/
+├── _quarto.yml          # Site config, navbar, sidebar, footer
+├── styles/custom.scss   # Yale SOM design tokens
+├── index.qmd            # Landing page
+├── modules/             # Day 1–6 content (sidebar)
+├── labs/                # Hands-on exercises
+├── skills/              # Generated skills catalog
+├── assets/              # Zips, slides, figures
+└── scripts/sync_skills.py
+```
+
+## Instructor
+
+John Barrios · Yale School of Management

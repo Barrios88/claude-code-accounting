@@ -1,0 +1,63 @@
+---
+title: "Module 1 Lab: Install, Project Setup, One Verified Task"
+---
+
+[Download the starter pack (zip)](../assets/labs/lab1_starter.zip){.btn} · [Module 1 slides (PDF)](../assets/slides/day1_slides.pdf)
+
+This module's lab has one job: get Claude Code installed, authenticated, and configured for a real project, and then run one small, genuinely reproducible task through it — start to finish, with a verification step you perform yourself. Nothing here touches WRDS or any licensed dataset; everything is public SEC data, so there are no credentials to protect and no reason to wait on an account approval. The lab starter pack (`lab1_starter.zip`) contains a `CLAUDE.md` template, a `verify_checklist.md`, and a `prompts_tried.md` log — download it before you begin.
+
+::: {.callout-note icon=false}
+## What you're building in this module
+
+By the end of the lab you will have: a working Claude Code install that launches from a fresh terminal; a project folder (`~/lab1/`) with a working `CLAUDE.md` that loads correctly; and one small pipeline — a script, its output, and one number you checked by hand — that you could hand to a labmate and have them reproduce exactly.
+:::
+
+## Part A: Environment (25 min)
+
+Install Claude Code and confirm it authenticates against your Pro, Max, or API-key account, following the steps on the [Setup](../setup.qmd) page. Once installed, create a brand-new, empty directory — `mkdir ~/lab1 && cd ~/lab1` — and launch `claude` from inside it. Starting from an empty folder is deliberate: the first thing Claude sees when it looks around should be nothing but your project, not a Downloads folder full of unrelated files from a different course or a different paper. You'll rely on this same empty-folder habit every module for the rest of the course.
+
+Confirm the install is working by asking Claude a trivial question about the (empty) directory and watching it actually inspect the filesystem rather than guess. If `claude` doesn't launch, or launches but can't find a local Python or R install to run scripts with, that is very likely a PATH or WSL configuration issue rather than anything wrong with Claude Code itself — flag it early.
+
+Pair debugging is encouraged for this part. If you're stuck for more than 20 minutes, pair up with a neighbor whose install is already working rather than continuing to troubleshoot alone; note the issue on your exit ticket so the instructor can follow up. The instructor and TA will be circulating specifically for Windows/WSL installs, which are the most common source of Module 1 friction.
+
+## Part B: CLAUDE.md (15 min)
+
+Open the `CLAUDE.md.template` from the starter pack, save it as `CLAUDE.md` in `~/lab1/`, and fill in the three TODOs: a language preference (Python or R — whichever you'll actually use across this course), one style convention (how you want output formatted — a figure style, a naming pattern, a units convention), and one verification rule (a check you want Claude to run automatically, such as printing a row count before and after any filtering step). Keep it short; a CLAUDE.md that runs to a full page defeats its own purpose by eating into the context budget it's supposed to protect.
+
+Once it's saved, close your session entirely and start a fresh one in the same folder. Ask Claude directly what it knows about your project's conventions, and confirm the answer matches what you wrote. If it doesn't, check that the file is named exactly `CLAUDE.md`, sits at the project root, and that you actually restarted rather than continuing the old session — CLAUDE.md loads at session start, not mid-conversation.
+
+## Part C: One verified task (40 min)
+
+Choose one of the three tiers below. All three work from the same public dataset — the SEC's Financial Statement Data Sets (FSDS), a free, credential-free quarterly bulk file of filing metadata and tagged financial values — and none require you to touch WRDS.
+
+**Base.** Download one quarter of FSDS, extract `sub.txt` (the filing metadata file), and count filings by form type (10-K, 10-Q, 8-K, and so on). Output the counts as `form_counts.csv`, produced by a named script rather than pasted from a chat reply — for example, ask explicitly for `count_forms.py` so the file exists on disk and can be rerun.
+
+**Standard.** Do everything in Base, plus a bar figure of the top ten form types by count, labeled on both axes, saved as `form_counts.png`.
+
+**Stretch.** Do everything in Standard, plus one deliberate ESC redirect: let Claude start down a wrong path on purpose (for instance, ask it to also parse every available quarter, then interrupt before it finishes), press Esc, restate the actual scope, and log the vague-to-specific rewrite in `prompts_tried.md`.
+
+Whichever tier you choose, insist on a named script as the deliverable, not an interactive answer. If Claude reports a number directly in the conversation without writing the script that produced it, ask it to write the script — a number that only exists in a chat transcript disappears the moment the transcript does; a script that produced the number can be rerun by you, a labmate, or your future self next week.
+
+::: {.callout-tip icon=false}
+## Verify this: your full checklist
+
+Work through every line below before you consider the lab complete. This is a self-graded, pass/fail checklist — the instructor will spot-check a sample, not grade every box individually.
+
+- [ ] `claude` launches in a fresh terminal, and `CLAUDE.md` visibly loads in a new session (you asked, and the answer matched what you wrote)
+- [ ] The task ran from a named script (e.g., `count_forms.py`), not from output pasted into the chat
+- [ ] At least one output number is checked against a source Claude did not touch — write down what you checked and where. A reasonable check: cross-reference your 10-K count for the quarter against SEC EDGAR's own filing search interface, filtered to the same form type and date range.
+- [ ] `prompts_tried.md` contains at least one real vague-to-specific prompt rewrite from your own session (not copied from the module page)
+- [ ] No credentials of any kind appear anywhere in `~/lab1/` — this lab uses only public data, so this box should be trivially true; get in the habit of checking it anyway
+:::
+
+## Debrief and exit ticket (2:45–3:05)
+
+Come back together for a short debrief. Be ready to answer, informally: What broke during your install or your task, and how did you find out? Was there a moment you typed a correction and argued with Claude instead of pressing Esc and redirecting — and if so, what would you do differently next time? By show of hands: whose first attempt at a prompt was vaguer than they realized once they saw the output?
+
+Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's specific item:
+
+::: {.callout-warning icon=false}
+## Homework: confirm your WRDS/Duo runway now
+
+Confirm that you have an active WRDS account and that Duo two-factor authentication is enrolled on it. Before Module 2, test that `ssh wrds` connects and completes a Duo push successfully. This is not optional bookkeeping — Module 2's lab ends with a hard checkpoint on this exact connection, and Module 4's entire flagship lab depends on it working. Two days of runway is the minimum lead time to resolve account or Duo problems through WRDS support; starting this the night before Module 4 is too late. If you hit any trouble, flag it at Module 2's checkpoint, not after.
+:::

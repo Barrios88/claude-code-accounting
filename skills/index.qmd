@@ -1,0 +1,41 @@
+---
+title: "Skills Catalog"
+toc: false
+listing:
+  id: skills-listing
+  contents: ["*.qmd"]
+  type: grid
+  grid-columns: 3
+  categories: true
+  sort: "title"
+  sort-ui: false
+  filter-ui: true
+  fields: [title, description, categories]
+  page-size: 60
+---
+
+Agent skills for accounting research workflows — 41 skills, each with a download and a one-line install. Use the search box to filter, or the category list to browse by area. Click a card for the full skill documentation and its download.
+
+::: {.callout-note icon=false}
+## Snapshot
+This catalog is a snapshot of the [Barrios Skills collection](https://barrios88.github.io/barrios-skills/) taken at course build time. The live collection is the canonical, updated source.
+:::
+
+## Install quick-start
+
+```bash
+# Cursor
+cp -r <skill-folder> ~/.cursor/skills/
+
+# Claude Code
+cp -r <skill-folder> ~/.claude/skills/
+```
+
+Or download a `.zip` from any skill page and extract into the same location.
+
+::: {#skills-listing}
+:::
+
+---
+
+*Skills are from the Barrios Skills collection, MIT licensed ([full license](LICENSE.txt)).*

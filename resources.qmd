@@ -1,0 +1,50 @@
+---
+title: "Resources"
+---
+
+These are the outside tools, templates, and readings behind the course — the same vetted list the module outlines were built from, grouped by the module where each is most relevant. Each item gets one line on when an accounting PhD would actually reach for it. Nothing here is required reading; it's a set of pointers for after the course ends, when you're building your own pipeline rather than following the lab.
+
+One item is flagged rather than recommended: it's included because it exists and is on people's radar, not because it's been vetted to the standard of everything else on this page. Agents that helped build this course were permitted to mine any of these workflow templates for patterns, but never to copy prose from them — the same no-verbatim rule that governs this course's use of its own primary source material (see [About](about.qmd)).
+
+## Module 1 — setup and mental models
+
+- **[hanlulong/AI-research-setup](https://github.com/hanlulong/AI-research-setup)** — step-by-step Claude Code + Codex setup for economics research on macOS and Windows. Reach for this before a build module if the course's own [Setup](setup.qmd) page leaves a platform-specific gap, especially on Windows.
+- **Korinek, *AI Agents for Economic Research* (NBER w34202, 2025)** and **[genaiforecon.org](https://www.genaiforecon.org/)** — the source for this course's agent-framing lecture. Reach for the site specifically for its semi-annual tool updates, since a course syllabus goes stale faster than a living page does.
+- **[pedrohcgs/claude-code-my-workflow](https://github.com/pedrohcgs/claude-code-my-workflow)** — Pedro Sant'Anna's Emory Econ 730 template (contractor mode, quality gates, session logging). Reach for this when you're setting up your own lab's standing Claude Code conventions and want a second worked example beyond this course's own `CLAUDE.md`.
+
+## Modules 1/5 — ready-to-fork research workflow templates
+
+Useful for seeing what a mature setup looks like once you're past the basics — mine these for `CLAUDE.md` and quality-gate patterns rather than adopting one wholesale.
+
+- **[nemmerel/claude-workflow](https://github.com/nemmerel/claude-workflow)** — an economist-oriented Sant'Anna fork with econometrics-reviewer, replication-auditor, and referee-response agents spanning the full research lifecycle. Reach for this when you want a template for a specific agent role (a replication auditor, say) rather than building one from scratch.
+- **[chesun/claude-research-workflow](https://github.com/chesun/claude-research-workflow)** — an empirical social science template built around an explicit "epistemic stack" (no-assumptions, primary-source-first, derive-don't-guess, adversarial-default). Reach for this alongside the [Verification](verification.qmd) page — the epistemic-stack framing pairs directly with this course's verification-debt lecture.
+- **[eweisbrod/example-project](https://eweisbrod.github.io/example-project/)** — Eric Weisbrod's reproducible-project template for accounting research (R, Python, SAS, and Stata), including a dedicated page on [meeting JAR's data-sharing policy](https://eweisbrod.github.io/example-project/pages/jar-data-policy.html): replication code, SAS-log-style execution logs, and exported sample identifiers with file hashes. Reach for this when a paper is headed to JAR — or any journal with a data policy — and you want [Module 5](modules/05-writing-verify.qmd)'s paper-trail discipline mapped onto an actual submission requirement.
+- **[benediktheid/clo-author](https://github.com/benediktheid/clo-author)** — a lit-review-to-submission pipeline with adversarial QA built in. Reach for this if you're scoping an end-to-end drafting pipeline for a full paper, not just one section.
+- **[izhiwen/AiEconLab](https://github.com/izhiwen/AiEconLab)** — a multi-role "virtual research team" (PI/RA/referee personas). **Watch, unvetted:** this is emerging and unproven (near-zero stars at time of writing); it's listed here so you know it exists, not as a course-vetted recommendation.
+
+## Module 3 — EDGAR / text-as-data
+
+- **[stefanoamorelli/sec-edgar-mcp](https://github.com/stefanoamorelli/sec-edgar-mcp)** — an SEC EDGAR MCP server. Reach for this once you've built [Module 3](modules/03-edgar-text.qmd)'s hand-rolled scrape once and want to compare the "build it yourself" version against the "adopt an existing MCP" version — the tradeoff is itself a teaching point, not just a shortcut.
+
+## Module 4 — Stata bridge and data MCPs
+
+- **[hanlulong/stata-mcp](https://github.com/hanlulong/stata-mcp)** — a VS Code/Cursor Stata MCP extension with real-time output, a data viewer, and graphs. Reach for this if you want the Parquet/DuckDB/Stata handoff from [Module 4](modules/04-wrds-mcp-scale.qmd) to happen inside an IDE rather than the terminal.
+- **[tmonk/mcp-stata](https://github.com/tmonk/mcp-stata)** — a lightweight Stata MCP with a skills catalog for replication, robustness, specification comparison, and publication QA. Reach for this as the closest existing analogue to this course's own `wrds` filter skill and its iron-law checklist.
+- **[SepineTam/stata-mcp](https://github.com/sepinetam/stata-mcp)** — a third Stata MCP option, worth comparing against the two above before you commit to one for a lab's standing toolchain.
+- **Public-data MCP zoo** (not taught in the course, but worth knowing the pattern generalizes): **[fred-mcp-server](https://github.com/stefanoamorelli/fred-mcp-server)**, **[worldbank/data360-mcp](https://github.com/worldbank/data360-mcp)**, **[US Census MCP](https://github.com/uscensusbureau/us-census-bureau-data-api-mcp)**, **[financial-datasets/mcp-server](https://github.com/financial-datasets/mcp-server)**. Reach for any of these when a project needs macro, trade, or census-style public data through the same MCP pattern Module 4 teaches for WRDS, without a WRDS account behind it.
+
+## Module 5 — writing and review
+
+- **[hanlulong/econ-writing-skill](https://github.com/hanlulong/econ-writing-skill)** — worth comparing against this course's own `barrios-voice` and `econ-humanizer` skills to see a different take on the same problem.
+- **[claesbackman/AI-research-feedback](https://github.com/claesbackman/AI-research-feedback)** — structured AI feedback on drafts. Reach for this as a second input alongside [Module 5](modules/05-writing-verify.qmd)'s editor-not-rewriter workflow when you want a differently structured pass at the same section.
+- **[Future-House/paper-qa](https://github.com/Future-House/paper-qa)** and **[papersgpt-for-zotero](https://github.com/papersgpt/papersgpt-for-zotero)** — lit-review tooling. Reach for either when a literature synthesis task has outgrown a single chat conversation and needs to query a real library of PDFs.
+- **[craigsc/cmux](https://github.com/craigsc/cmux)** — "tmux for Claude Code": one command per parallel agent, each in its own git worktree. Reach for this when a revision forks — robustness variants explored side by side, or a pipeline rebuild running while a second session works the prose. See the [Tools page](tools.qmd#running-multiple-sessions-in-parallel) for the workflow and the verification caveat.
+- **[manaflow-ai/cmux](https://github.com/manaflow-ai/cmux)** — same name, different tool: a Ghostty-based macOS terminal with vertical tabs and notifications built for watching several coding agents at once. Reach for this if you run parallel sessions daily and want the cockpit, not just the workflow.
+
+## Other people's lists
+
+For when this page itself goes stale: **[awesome-ai-for-economists](https://github.com/hanlulong/awesome-ai-for-economists)**, **[meleantonio/awesome-econ-ai-stuff](https://github.com/meleantonio/awesome-econ-ai-stuff)**, Will Rinehart's AEI AI-tools guide, and Cowen & Tabarrok's "How to Learn and Teach Economics with LLMs." These are maintained by other people on their own schedule and worth a periodic check independent of this course.
+
+---
+
+Everything on this page was vetted at the time this course was built; unvetted items are labeled as such rather than silently included. See [About](about.qmd) for the attribution policy governing how these resources were used while building the course materials.

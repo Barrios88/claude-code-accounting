@@ -1,0 +1,167 @@
+---
+title: "Module 1: Foundations — Tools, Context, and the Research Map"
+---
+
+[Module 1 slides (PDF)](../assets/slides/day1_slides.pdf) · [Lab](../labs/day1.qmd)
+
+Most people's first encounter with an AI assistant is a chat window or a Cowork-style helper embedded in a browser tab, and most people's first real research task breaks that assistant almost immediately. Ask it to open a Compustat extract, join it against a filing index, and produce a labeled figure, and it stalls — it cannot see your filesystem, cannot run your code, and forgets the conversation the moment you close the tab. The natural conclusion is "AI can't do real research work." That conclusion is only half right. It's right about the tool you tried. It's wrong about what agentic AI can do, because you were standing on a low rung of a ladder that goes considerably higher.
+
+::: {layout-ncol=2}
+![The same request at rung 1: no filesystem, no execution.](../assets/exhibits/day1/EXH-D1-01a_desktop_file_task.png){fig-alt="Mock chat window where an assistant, asked to open a Compustat file, replies that it cannot access local files."}
+
+![And at rung 4: read, script, run, verify.](../assets/exhibits/day1/EXH-D1-01b_claudecode_file_task.png){fig-alt="Mock terminal session where Claude Code reads the same Compustat file, writes a script, runs it, and reports the result."}
+:::
+
+Claude Code is a different kind of tool: a terminal-resident agent that reads and writes files, runs your R, Python, or Stata code on your own machine, and executes a real multi-step plan rather than answering one question at a time. That power comes with a cost that this module is entirely organized around: Claude Code has no memory of its own. Every session starts blank. Everything it "knows" about your project at any moment is whatever has been typed into the current conversation or written to a file it can read. In this module you install it, place it correctly on the tool ladder, and build the habits — externalizing state to files, verifying output the way you would an RA's, being specific about what you want — that make a stateless agent trustworthy for research work. Module 6 will come back to a harder version of the question this raises: what does an agent this capable change about how accounting research gets produced, and which parts of the job stay yours?
+
+::: {.callout-note icon=false}
+## Learning objectives
+
+By the end of this module, you should be able to place Claude Code correctly on a five-rung tool ladder and explain why the rung matters for a data-intensive accounting task; describe, in your own words, why Claude Code carries no memory between sessions and what that implies for how you work; rewrite a vague research prompt into one that names the input file, the operation, the level of aggregation, and the output; write a minimal CLAUDE.md for a real project and confirm that it loads; and see where this module's habits fit in the rest of the course — where an agent buys you speed, and where the judgment stays yours.
+:::
+
+## The tool ladder: five rungs, one decision
+
+Not every AI tool sits at the same level of capability, and the level determines what kind of research task is even feasible. Think of five rungs. At the bottom, a plain chat interface answers questions about text you paste in — useful for a quick methods question, useless for touching real data. One rung up, an inline assistant inside an editor (think Cursor's autocomplete or an IDE chat panel) can suggest and insert code as you type, which is real help for a quick Stata do-file edit but still leaves you driving every keystroke. A step above that, an agentic IDE assistant can execute a short chain of edits across a few files without you approving each line, closing some of the gap but still bounded by the editor's own sandbox and its narrower view of your project.
+
+Claude Code occupies the fourth rung: a terminal agent with direct filesystem access and the ability to run arbitrary local commands — build a Python script, execute it, read the error, fix the script, and rerun, all without you retyping anything. That is the rung this course lives on. A fifth rung exists above it, where the agent is also wired into external services and sandboxed execution environments through the Model Context Protocol — you'll meet this directly in Module 4, when a WRDS MCP server lets Claude query Compustat on your own credentials without ever seeing your password. Where a Cowork-style browser assistant sits depends on configuration, but by default it operates with a restricted, browser-scoped view of your work — closer to rung two than rung four. That's not a knock on the tool; it is simply a different rung, built for a different job.
+
+![The five-rung tool ladder, with a Compustat-scale research task unlocked at each rung.](../assets/figures/day1/FIG-D1-01_tool_ladder.png){fig-alt="Diagram of a five-rung ladder. From bottom: plain chat, inline code assistant, agentic IDE assistant, terminal agent, and agent wired to external services, with the research task each rung makes feasible."}
+
+The full comparison across products lives on the [Tools](../tools.qmd) page; what matters in this module is the decision logic, not the product names: if the task requires touching real files, running real code, and iterating autonomously, you need rung four or above.
+
+::: {.callout-warning icon=false}
+## Common failure: dismissing AI after a Cowork-level disappointment
+
+If your first experience with agentic AI was a browser-based assistant that couldn't open your data file, the instinct is to conclude that AI assistants in general can't help with research. That's the wrong lesson. The tool was doing exactly what it was built to do; it just wasn't built to touch your filesystem. Many students arrive at this course from exactly that experience, and it's a reasonable one to have had — the fix is recognizing which rung you need, not writing off the whole ladder.
+:::
+
+## Claude Code as a terminal-resident RA
+
+The mental model that will serve you across this course is this: Claude Code behaves like a research assistant who sits at your terminal rather than a search engine you type questions into. It reads the files in your project directory, writes new scripts, executes them using whatever R, Python, or Stata installation already exists on your machine, and reports back what happened — including the error message, if there was one. That last detail matters: because the code actually runs on your hardware, your local environment has to be real. If Python isn't installed, or your Stata license path isn't configured, no amount of agent capability fixes that; the agent is a very capable collaborator, not a virtual computer.
+
+![Anatomy of a Claude Code turn: your prompt, the tool calls, what it saw, the handback, and where you are.](../assets/exhibits/day1/EXH-D1-02_terminal_anatomy.png){fig-alt="Annotated mock Claude Code terminal turn, with labels pointing to the user prompt, the tool calls, what the agent saw, its summary, and the next input line."}
+
+This also reframes what "using" Claude Code well means. You are not crafting the perfect single prompt and hoping for a perfect single answer, the way you might with a chat tool. You are managing a collaborator who will draft a merge script for a Compustat and CRSP extract, run it, look at the row counts, and tell you what it found — the same way a first-year RA would, and with the same need for you to check the work before you rely on it.
+
+::: {.callout-warning icon=false}
+## Common failure: assuming the runtime is handled for you
+
+Because Claude Code feels conversational, it's tempting to assume it carries its own Python or R environment the way a cloud notebook might. It doesn't. It uses whatever is installed locally, which is the most common Module 1 blocker — especially on Windows, where a native Python install and a WSL-based one can silently diverge. If `claude` launches but a script it writes fails with "command not found," check your local runtime before assuming something is wrong with the agent.
+:::
+
+## Context window mechanics: everything, every turn
+
+Here is the fact everything else in this module follows from: Claude Code does not remember your project between turns the way a person would. Every time you send a message, the entire conversation so far — every prompt, every reply, every file it has read into the conversation — is bundled up and sent to the model again as a single package. The model has no separate, persistent memory of yours; it only knows what's currently sitting inside that bundle. Anthropic's models currently work with a context window of roughly 200,000 tokens, which sounds enormous until you remember that reading one large CSV directly into a conversation can consume a meaningful share of it in a single turn. The discipline this forces is simple to state and easy to violate: don't ask the agent to read a giant Compustat extract into the conversation to "look at it" — ask it to write a script that processes the file on disk and reports back a summary.
+
+::: {.callout-warning icon=false}
+## Common failure: importing your Dropbox mental model
+
+The habit that's hardest to unlearn is treating a Claude Code session like a shared drive or an email thread — something that just remembers what happened last week because it's "in the account." It isn't. Nothing is retained across separate sessions unless it was written to a file that a future session can read. This is the single biggest mental-model shift of the module, and every convention introduced below — CLAUDE.md, progress files, named scripts — exists because of this one fact.
+:::
+
+## Degradation and intentional compaction
+
+Two related things happen as a single session runs long. First, the conversation simply gets larger — more turns, more file contents, more back-and-forth — until it approaches the window's capacity. Second, and less obviously, response quality itself can drift downward well before the window is technically full: a session that has accumulated many turns of trial and error, dead ends, and course corrections leaves all of that noise sitting inside the bundle that gets re-sent every turn, and it can measurably degrade how carefully the model reasons about your next request.
+
+The fix is to compact on purpose rather than let the window fill by accident. Before a session gets unwieldy, ask Claude to write a short progress file — call it `progress.md` — summarizing what's been decided and done so far: which filters were applied, which files exist, what's left. Then run `/compact`, which condenses the conversation history into a much shorter summary retained in place of the full transcript. If you want to make sure something specific survives compaction, you can be explicit about it — for example, asking Claude to compact while retaining every detail related to a particular variable construction decision. For a fully fresh start, close the session outright and open a new one; because `progress.md` and your project's `CLAUDE.md` are files, not conversation, the next session can read them and pick up exactly where the last one left off. This is the point of the whole exercise: state that would otherwise evaporate at the end of a session survives instead, on disk.
+
+![Left: turns accumulating in a finite context window until it overflows. Right: the intentional compaction cycle — progress.md, then /compact, then a fresh session with a slim, file-backed context.](../assets/figures/day1/FIG-D1-02_context_compaction.png){fig-alt="Two-panel diagram. Left: conversation turns stacking inside a fixed 200K-token context window until it overflows. Right: a three-step cycle — write progress.md, run /compact, start a fresh session that reads the file."}
+
+::: {.callout-warning icon=false}
+## Common failure: treating compaction as forgetting everything
+
+Compaction is not an eraser. It replaces a long, noisy transcript with a compressed summary of what mattered — it is closer to how you'd hand a project off to a colleague with a two-paragraph memo than to wiping the whiteboard. The failure mode is either avoiding `/compact` out of fear of losing progress, or trusting it blindly without having first written the important decisions to a file where they're guaranteed to persist. Do both: write the file, then compact.
+:::
+
+## Trust, but verify — the RA standard
+
+If Claude Code is a terminal-resident RA, then the right way to treat its output is the way you'd already treat a real RA's work: trust the process enough to delegate it, but verify the result before you build on it. This is not a special AI-era caution — it is ordinary supervision, applied to a new kind of collaborator. Concretely: if Claude produces a leverage ratio panel from a Compustat extract, don't take the whole panel on faith. Pull one firm you know well by hand — say, a large, well-covered industrial firm — and check that its computed leverage matches what you'd get by reading the same year's 10-K balance sheet directly. If that one check holds, you have real grounds for confidence in the rest of the panel. If it doesn't, you've caught a construction error before it propagated into every downstream table.
+
+::: {.callout-tip icon=false}
+## Verify this: one number, one independent source
+
+Before you accept any computed output in this module — a row count, a ratio, a figure — pick one value you can check against a source Claude did not touch, and check it by hand. It costs a few minutes and it is the one step in this module's lab the agent cannot do for you: only you can decide whether the number looks right.
+:::
+
+## Goal-first prompting: four components
+
+Vague prompts do not fail loudly; they fail by producing something plausible-looking that isn't quite what you meant, and the cost of that gap compounds over a session. The highest-return habit for a beginner is writing prompts that name four things explicitly: the **file** you're operating on, the **operation** to perform, the **level of aggregation** the result should live at, and the **output** you expect back, by name and format.
+
+Compare two versions of the same request. Vague: "Look at this Compustat file and tell me something about leverage." Specific: "Read `funda_1990_2023.csv`. For each gvkey-fiscal year, compute book leverage as long-term debt divided by total assets, winsorize it at the 1st and 99th percentiles, and compute the mean by fiscal year and two-digit SIC code. Save the result as `leverage_by_industry_year.csv`, and save a line figure with one line per two-digit SIC as `leverage_trends.png`, formatted for a working-paper draft." The second version leaves almost nothing to be inferred — the file is named, the transformation is unambiguous, the aggregation level is explicit, and the two output artifacts are named in advance. That last detail is not incidental: naming the output file in the prompt is what turns a one-off answer into a reproducible script, a habit Module 2's lab depends on.
+
+::: {.callout-warning icon=false}
+## Common failure: describing the goal instead of the task
+
+"Analyze this data and tell me what's interesting" describes a goal, not a task. It reads as thoughtful, but it hands the agent every decision you should be making yourself — which variables matter, at what level, reported how. The fix is almost mechanical: before you send a prompt, check it against the four components above. If any one of file, operation, aggregation, or output is missing, add it before you hit enter.
+:::
+
+## Redirect, don't argue
+
+Sometimes the agent starts down a path that's clearly wrong — parsing every fiscal quarter when you only asked about one, say, or pulling every Compustat variable when you named three. The instinct is to type a correction and let it continue mid-stream, or worse, to go back and forth arguing about what you actually meant. Both waste turns, because every additional turn adds more of the wrong direction into the context that keeps getting re-sent. The better move is to press Esc the moment you notice the drift. That interrupts the current action and returns you to a clean point to redirect from, rather than layering a correction on top of a conversation that has already committed to the wrong plan. State the correction plainly and specifically — reusing the four-component habit from the previous section — and let it start again from there.
+
+The rule worth remembering: correct within two turns of noticing the problem, not ten. The cost of catching a wrong direction early is small; the cost of an eight-turn argument that ends in the same correction is not.
+
+::: {.callout-warning icon=false}
+## Common failure: arguing in natural language instead of interrupting
+
+Typing "no, I meant just 2023, not all years" after the agent has already started a four-year pull doesn't undo the four-year pull — it adds a new instruction on top of an already-derailed plan, and both versions now live in the context. Interrupt first, then restate. The interruption is what actually changes course; the restatement is what tells it where to go instead.
+:::
+
+## Plan Mode: a first look
+
+For anything more involved than a single script, it's worth asking Claude to design before it builds. Pressing Shift+Tab toggles into Plan Mode, where the agent investigates the problem — reading relevant files, checking assumptions — and proposes a step-by-step approach before writing or executing any code. You review the plan, adjust it if something's off, and only then let it proceed. For a task like building a panel of filing counts by industry and year across several years of filings, this is the difference between one well-considered pass and a half-dozen false starts discovered one at a time.
+
+![Plan Mode: the agent proposes; you decide.](../assets/exhibits/day1/EXH-D1-04_plan_mode.png){fig-alt="Mock Plan Mode screen: the agent lists a numbered step-by-step plan and waits for approval before executing anything."}
+
+This module's exposure to Plan Mode is intentionally light: you'll trigger it, read a proposed plan for a bigger task than this module's lab requires, and set it aside without executing it. The full plan-then-build-then-clear-context workflow gets a real run in Module 3, once you've built more of the surrounding habits.
+
+::: {.callout-warning icon=false}
+## Common failure: canceling out of Plan Mode too early
+
+Watching Claude think through a multi-step design before writing any code can feel like wasted time, especially the first time you see it. It usually isn't. A few seconds of design time upfront routinely saves several rounds of course-correction later, particularly for anything that touches more than one file or more than one data source. Let the plan finish before deciding whether to act on it.
+:::
+
+## CLAUDE.md: instructions that persist
+
+You now have the piece that makes the context-window problem manageable at the project level. A file named `CLAUDE.md`, sitting at the root of your project folder, is read automatically at the start of every session opened in that folder — it is standing context that doesn't have to be retyped, and it survives the way any other file survives: on disk, independent of any one conversation. A minimal, useful CLAUDE.md states a language preference, one style convention, and one verification rule — for example, that all output figures should follow a particular journal's formatting convention, or that any script touching raw data must print a row count before and after filtering.
+
+Write one now, live: a handful of lines is enough. Then restart your session and confirm — by asking Claude what it knows about the project's conventions — that the file actually loaded. This is worth distinguishing from a **skill**, which you'll meet properly in Module 3: a CLAUDE.md is project-wide standing context, while a skill is a packaged, reusable procedure for a specific recurring workflow. You'll update your CLAUDE.md throughout the course as your own conventions solidify; this module's version doesn't need to be complete, only true.
+
+::: {.callout-warning icon=false}
+## Common failure: writing CLAUDE.md and expecting it to apply mid-session
+
+CLAUDE.md loads at the start of a session, not continuously. If you edit it while a session is already running, that session won't see the change — you have to start a new one. This trips people up because it looks like the file "isn't working," when really it just hasn't had the chance to load yet.
+:::
+
+## Permission modes: manual vs. auto
+
+Before Claude Code takes an action that touches your filesystem — writing a file, running a script, installing a package — it asks. In this module you'll see this happen for the first time and choose between two modes for the rest of the session: Manual, which asks before every individual action, and Auto, which grants standing approval for the session so the agent can move through a multi-step task without stopping to ask each time. Manual is the safer default when you're still building trust in a new project or a destructive-sounding operation; Auto is the productive default once you're doing iterative, exploratory work — which is most of what this course does.
+
+![The permission ask, and the two modes you'll choose between in this module.](../assets/exhibits/day1/EXH-D1-03_permission_ask.png){fig-alt="Mock terminal permission prompt asking to run a command, with options to approve once or for the rest of the session."}
+
+What makes Auto comfortable rather than reckless is a safety net that costs nothing to set up: git. If every meaningful change is a commit, the worst outcome of an overeager agent is something you can roll back in seconds. You'll build the full git habit in Module 5; for now, just know that "Auto plus git" is the combination that lets you move quickly without moving recklessly. A third mode — one that skips permission checks entirely — exists and has legitimate uses, but it belongs inside a sandboxed environment, not on your host machine; that's a Module 5 topic, not a Module 1 one.
+
+::: {.callout-warning icon=false}
+## Common failure: staying in Manual mode out of caution and never leaving it
+
+Manual mode feels safer, but for a multi-step pipeline it means approving the same category of action ten or twenty times in a row, which trains you to click through prompts rather than actually read them — the opposite of the caution it's meant to provide. Auto mode paired with git commits gives you the same real protection with far less friction.
+:::
+
+## The accounting research workflow map
+
+Zoom out from this module's individual habits and place them inside the shape of an actual research project: idea, data, measure, analysis, paper. An agent like Claude Code accelerates real stretches of that pipeline — downloading a bulk filing index, writing the boilerplate to parse it, drafting a first-pass figure, catching a malformed date column before it corrupts a merge. It does not, and should not, replace the stages that require your judgment: choosing which question is worth asking, deciding whether a text-based measure actually captures the construct you claim it does, and interpreting what a result means for the literature. The honest picture is a pipeline where an agent clearly speeds up some stretches, while others stay where they belong: with you.
+
+![The accounting research workflow, with AI-accelerated stages distinguished from judgment-driven stages.](../assets/figures/day1/FIG-D1-03_research_map.png){fig-alt="Flowchart of the research pipeline from idea to data, measure, analysis, and paper, with agent-accelerated stages shaded and judgment-driven stages marked as human."}
+
+This map is the seed of Module 6's seminar, not a fully resolved argument in this module — you'll come back to a harder version of this same question once you've spent five modules actually running the pipeline yourself and have a real basis for an opinion about where the line sits.
+
+## The three Module 1 mantras
+
+Three sentences carry everything above, and they'll follow you through the rest of the course — they belong on your verification protocol card, which you can find on the [Verification](../verification.qmd) page.
+
+1. **Files persist; context doesn't.** Anything you need to survive past this session has to be written down.
+2. **Trust, but verify — same as an RA.** Delegate freely; sign off only after you've checked something.
+3. **Be specific: file, operation, aggregation, output.** Name all four, every time.
+
+From here, head to [this module's lab](../labs/day1.qmd) to install, configure your first CLAUDE.md, and run one small task end to end with a real verification step attached. The [Tools](../tools.qmd) page has the full product-by-product comparison behind this module's tool ladder, and the [Verification](../verification.qmd) page collects the protocol you'll keep building on across the course.

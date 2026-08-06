@@ -1,0 +1,12 @@
+---
+title: "Modules"
+---
+
+Six sessions, one arc. Modules 1–5 build — each module page is the module's full student notes, with its figures, exhibits, lab link, and slide deck. Module 6 discusses. The modules assume you read them in order: every module leans on the habits the previous one installed, and the sequencing is deliberate (the context-window mental model precedes everything; skills are learned in Module 3 so Module 4 can apply them; the WRDS checkpoint in Module 2 exists so Module 4 works).
+
+1. [Foundations — Tools, Context, and the Research Map](01-foundations.qmd). The tool ladder, the stateless-agent mental model, goal-first prompting, CLAUDE.md, permissions, and the three mantras the course repeats throughout.
+2. [The Empirical Loop on SEC FSDS](02-empirical-loop.qmd). One accounting question travels from vague idea to verified, publication-style figure — with named scripts, paper trails, and sanity checks as the deliverable.
+3. [EDGAR Text → Structured Data, + Your First Skill](03-edgar-text.qmd). A 10-K text pipeline with caching, quality reports, and measurement-validity discipline; then the SOP becomes a reusable SKILL.md.
+4. [WRDS MCP, Scale, and the Stata Bridge](04-wrds-mcp-scale.qmd). The flagship: plain English to a correctly filtered `funda` extract on your own credentials, landed in Parquet/DuckDB with a metadata table — and inspected before it's trusted.
+5. [Writing, Safety, and the Verification Capstone](05-writing-verify.qmd). The banal/meaningful delegation line, sandboxes and credential hygiene, verification debt, git as the operating system — and the capstone that hardens one of your pipelines.
+6. [Seminar: AI, the Production of Knowledge, and the Academic Research Market](06-ai-knowledge-market.qmd). Three questions, each harder to sit with than the last, five short readings, one position memo: "What I will still be paid for in 2036."

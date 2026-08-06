@@ -1,0 +1,172 @@
+---
+title: "Module 5: Writing, Safety, and the Verification Capstone"
+---
+
+[Module 5 slides (PDF)](../assets/slides/day5_slides.pdf) · [Lab](../labs/day5.qmd)
+
+Every module in this course has ended with an artifact — a script, a figure, a SKILL.md, a Stata extract — that Claude Code helped you build faster than you would have built it alone. This module is about the two things that determine whether any of that speed was worth having: whether the words around those artifacts are actually yours, and whether anyone — a coauthor, a referee, next year's you — could pick up the resulting repo and trust it without re-doing the work. Morning is about the writer: where delegating to an agent sharpens your thinking, and where it quietly replaces it. Afternoon is about the record: the sandboxes, credential habits, paper trails, and git discipline that turn a fast pipeline into a defensible one. The capstone lab asks you to take a pipeline you built earlier in this course and make it hold up under both kinds of scrutiny at once.
+
+::: {.callout-note icon=false}
+## Learning objectives
+
+By the end of this module, you should be able to: apply the "can you discuss it without the LLM?" test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; place a research task on the verification-debt 2×2 and explain why more autonomy makes the danger zone arrive faster; run the two-command credential audit and know what to do if it fails; explain why "documentation is a map, not a verdict" and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.
+:::
+
+## Writing as thinking, and the loop that undoes it
+
+Start from a claim worth taking seriously: writing is not just how you report your thinking, it is much of how the thinking happens. The sentence you can't quite make work is usually standing in for an argument you haven't quite worked out yet, and the discomfort of drafting is often the process doing its job. Handing that discomfort to an LLM does not just save you typing time — it can hand off the reasoning that the typing was forcing you to do.
+
+The failure mode has a specific shape, worth naming precisely because it rarely feels like a failure while it's happening. You give the model a vague prompt — "help me explain why this identification strategy is credible" — it produces something fluent and plausible, and you read it, nod, and adopt it into the draft. Nothing about that moment feels like a mistake; the paragraph reads fine. The problem is that the intellectual work of deciding *why* the strategy is credible happened inside the model's forward pass, not inside your head, and you now have a paragraph you agree with but did not think through. That gap stays invisible until someone — a discussant, a referee, your own future self revising in six months — asks you to defend the claim, and you discover you can gesture at it but not argue it.
+
+The test that catches this: can you discuss the paragraph, out loud, without the document or the model in front of you? If you can walk a colleague through the argument in your own words and defend it under a follow-up question, you did the thinking and the model helped you say it. If you can't, the fix is not better prose — it's going back and working through the claim before you write another sentence about it. One corollary follows directly: rushed or exhausted writing handed to an LLM tends to come back undifferentiated, because a vague, tired prompt is the input the model's generic default was made for. If you're too depleted to specify what you actually think, that's a signal to stop, not to delegate.
+
+::: {.callout-warning icon=false}
+## Common failure: mistaking fluency for having thought it through
+
+A paragraph that reads smoothly is not evidence that the argument inside it is yours. The most common Module 5 mistake is treating "this sounds right" as equivalent to "I could defend this in a seminar." They are not the same test. The offloading test — can you discuss it without the LLM — asks more than "does it read well," because reading well is exactly what a language model is optimized to do regardless of whether the underlying claim holds up.
+:::
+
+## The banal/meaningful line
+
+Everything else this morning is machinery for holding one distinction, and it is worth stating as plainly as possible: some writing in a paper is banal, and some is meaningful, and the entire module's writing practice comes down to knowing which is which and treating each one differently.
+
+Banal writing is the writing whose content is already determined by something else — the data, the specification, a table you already ran. Variable-definition tables, data appendices, the boilerplate paragraph explaining how a control was constructed, table notes, robustness-panel headers: none of these require you to have an original thought while writing them, because the thing they describe already exists and the writing is just making it legible. This is exactly where an agent is a strict improvement — faster, no less accurate than you'd be by hand, and free of the tedium that makes careless errors more likely the tenth time you write the same kind of sentence.
+
+Meaningful writing is different in kind, not just in difficulty. The identification argument, the statement of your contribution, the limitations section that says plainly what your evidence can and cannot support — these are not transcriptions of something that already exists. They are the argument. Delegating them doesn't just risk a worse sentence; it risks a paper whose central claims you did not actually reason through, which is the cognitive-offloading failure from the previous section, applied at the level of a whole paper instead of one paragraph.
+
+The line is yours to draw, not a fixed list, and drawing it explicitly — instead of leaving it implicit and drifting — is the actual skill. Before the demos, commit to one personal delegation rule: name one category of writing in your own current project that you will always hand to an agent, and one you will never let it originate, only react to.
+
+::: {.callout-warning icon=false}
+## Common failure: treating the line as obvious in advance
+
+It's tempting to assume you already know where your own banal/meaningful line sits, which is usually a sign it hasn't been tested. The place people get caught is the middle ground — a robustness-check narration, say, that looks banal (it's "just" describing a table) but actually contains a judgment call about which alternative specification matters and why. If a sentence requires you to decide something rather than report something, it's on the meaningful side even if it's short.
+:::
+
+## Anti-homogenization: the floor rises, the ceiling doesn't
+
+There's a second reason to protect the meaningful side of the line that has nothing to do with correctness: voice. Language models are, on current evidence, floor-raisers rather than ceiling-raisers — they turn weak writing into serviceable writing quite reliably, but they tend to flatten writing that already had a distinctive voice into the same recognizable, competent, slightly generic register. If everyone drafting in accounting and finance leans on the same tool for the same kind of sentence, the discipline's prose has a structural pull toward sounding more alike, not less.
+
+This is partly a social problem and partly a personal one, and it is only partially mitigated by the fact that accounting journals already have real house styles — a JAR paper and a TAR paper do not read identically today, and that existing genre convention absorbs some of the pressure that would otherwise show up as "every paper in every journal sounds the same." It does not eliminate the risk within a journal's own house style, where papers can still converge toward an LLM's default voice for that register. The skills demoed this morning — a personal style guide, a pattern-detector for AI-typical phrasing — are countermeasures to this pull, not shortcuts that make writing faster; they exist because the pull is real.
+
+## Editor, not rewriter
+
+The habit that does the most work for keeping an LLM in the "protect the meaningful line" column is a specific instruction: ask for comments, not rewrites. Ask a model to fix your prose and you get back sentences you must either accept (offloading, dressed up as editing) or reject (which requires already knowing what's wrong — in which case why did you ask). Ask instead for inline commentary at the places where the argument is weak, with an explicit instruction not to touch the prose, and the model's fluency gets redirected into diagnosis instead of replacement. You do the rewriting — which means you do the thinking.
+
+The exact prompt, which you'll see run live in the first demo on a real identification paragraph:
+
+```
+Please review this Identification section. I want feedback in the style of
+a New York Times editor — sharp on argument and clarity. Do not directly
+edit my writing. Instead, insert inline <!-- comments --> at the specific
+places where the argument is weak, unclear, or could be tightened. Do not
+rewrite any sentences yourself; leave the prose exactly as written and let
+the comments carry the feedback.
+```
+
+The two words doing all the work are "do not." Without them, a capable editor-model will happily hand you a polished rewrite, and a polished rewrite is the artifact that invites you to stop thinking and start accepting. With them, the model's value is fully preserved — it still tells you precisely where the argument sags — but the sentence-level decisions stay yours, which is the only way they can survive the "can you discuss it without the LLM" test later.
+
+::: {.callout-warning icon=false}
+## Common failure: asking for "comments and suggested edits"
+
+It's tempting to soften the constraint — "give me comments, and if you have a better phrasing, suggest it too." This defeats the purpose almost entirely. The moment a proposed rewrite sits next to your sentence, accepting it is one click and requires no more thought than accepting a spell-check suggestion. If you want the model's editorial judgment without its ghostwriting, the "do not rewrite" instruction has to be unambiguous, not a soft preference.
+:::
+
+## Style guides as living documents
+
+A personal style guide — a skill that has read a stack of your own published prose and encodes what it found — is one of the more mature examples of a skill functioning as an SOP rather than a power-up, the framing you met in Module 3. It is built the same way any skill is built: collect samples you're proud of, point Claude at the folder, ask it to characterize sentence length, hedging habits, how you open a results section, what you never do, and let it draft a SKILL.md from that analysis. What makes it worth a demo of its own is what it gets wrong, not just what it gets right.
+
+`barrios-voice` is built this way — trained on a corpus of John Barrios's own JAR and TAR papers, and it encodes real, specific patterns: sentence-length habits, a preference for stating a coefficient as a dollar amount rather than leaving it as a coefficient, a low tolerance for hedge-stacking. Demoed live on a paragraph, it gets a lot right immediately, and it also produces moments that read like a caricature — a version of the voice pushed slightly too hard, recognizable but exaggerated, the way a good impressionist's version of someone is still not quite that person. That's not a bug to be engineered away; it's the nature of any style guide, a snapshot compressed into a markdown file. A style guide captures yesterday's version of you, not today's — which is why it has to be curated and re-run periodically, not built once and trusted forever.
+
+`econ-humanizer` solves a related but distinct problem: not "does this sound like me" but "does this sound like a language model." Run on an obviously AI-generated paragraph, it flags the recognizable tells directly — inflated significance language ("pivotal," "groundbreaking," "underscores"), hedge stacking, the formulaic "this paper contributes to the growing literature on X by Y" sentence, em-dash overuse, the three-part list, vague attributions like "researchers have shown." What comes out is not necessarily *your* voice — that's `barrios-voice`'s job — but it reliably strips the parts of a paragraph that read as machine-generated regardless of whose voice sits underneath. Used together, the two skills split the anti-homogenization problem in half: one keeps your voice from flattening into the model's default, the other removes the model's fingerprints so what's left is at least *a* voice rather than the one every LLM defaults to. (`latex-tables`, mentioned only in passing, is the banal-side counterpart — formatted regression tables, notes, and headers — freeing time for the meaningful writing the other two protect.)
+
+## Referee-DAG: a workflow pattern, not a technology
+
+R&R culture is close to the center of gravity in accounting publishing, and four referee reports with overlapping, sometimes contradictory demands is a hard planning problem before you've written a single revised sentence. The `strategic-revision` skill treats a stack of referee reports the way a project manager treats a stack of tickets: it parses every distinct comment into a task, infers which tasks block which others (you can't rewrite the conclusion before running the robustness check the conclusion depends on), organizes the result into execution blocks that can run in parallel, and flags a critical path plus any points where two referees ask for contradictory things.
+
+Take the pattern from the demo, not the machinery underneath it. Whether the dependency graph gets validated with a particular Python library is an implementation detail; decomposing into discrete tasks, mapping dependencies explicitly, batching what runs in parallel, and surfacing the critical path and conflicts before you start writing is the transferable habit — it generalizes to any messy multi-reviewer revision problem, on a paper or off one.
+
+## Verification debt: the module's second framework
+
+Shift now from the writer to the record. Every task in this course has had two costs: the cost of making the thing, and the cost of verifying it's correct. Before agentic tools, those costs were often correlated — something expensive to make (a hand-built panel, a hand-coded measure) had usually been checked along the way, as a side effect of how slowly it was built. Agentic coding breaks that correlation: a regression table, a keyword-based text measure, an EDGAR extraction pipeline can now be made in minutes, while the cost of verifying whether it's *right* has not fallen at anywhere near the same rate. The gap between those two costs is **verification debt**: a growing pile of AI-produced output you have not actually checked.
+
+Plot every research task on two axes — cost to make (x) and cost to verify (y) — and the quadrants show where the discipline is most exposed. The safe zone is top-left: expensive to make and expensive to verify, where the slowness of production forced verification to happen along the way. The **danger zone** is the opposite corner: cheap to make, costly to verify. A keyword count over a decade of 10-K Risk Factor sections is a clean example — Claude builds it in ten minutes, but establishing that the count measures disclosure change rather than boilerplate copy-paste takes an hour of hand-coding a stratified sample and computing something like year-over-year Jaccard similarity. An AI-drafted regression table is a second example: fast to produce, slow to verify against the filter logic and sample construction behind it.
+
+![The verification-debt 2×2: cost to make (x-axis) against cost to verify (y-axis), with the danger zone — cheap to make, costly to verify — marked where AI-generated regression tables and text measures typically land.](../assets/figures/day5/FIG-D5-01_verification_debt_2x2.png){fig-alt="Two-by-two grid of cost to make against cost to verify, with the cheap-to-make, costly-to-verify quadrant marked as the danger zone."}
+
+The figure is the lecture; the exercise that makes it stick is sorting your own tasks into it. Take two tasks from your Module 2 through Module 4 labs and place each on the grid with a partner in three minutes. Most pairs find at least one task sitting in or near the danger zone, and naming it out loud is the point — it's easier to notice unverified work once you've had to place a dot for it.
+
+The interaction that makes this urgent, not just interesting, is autonomy. The more freedom you give an agent to work unsupervised — a longer unattended run, less checking in along the way — the faster verification debt accumulates, because the verification burden that would have been distributed across many small checkpoints instead arrives all at once, as a finished-looking repo, figure, and headline estimate. Approving each step manually does not, by itself, solve this: approving a step without understanding what it did is a rubber stamp with extra clicks, not verification. The real lever is how much you internalize and check as the work happens, not how many times you clicked "yes."
+
+## Environment first: sandboxes and the autonomy ladder
+
+Before any procedural fix, get the environment right, because the environment determines whether an overconfident agent is a minor annoyance or a real problem. The question is never "do I trust this model?" — it's "what can this agent see, and what's the worst thing it could do with what it can see?" Running Claude Code with permission checks fully disabled (`--dangerously-skip-permissions`, colloquially "YOLO mode") from your home directory puts your SSH keys, every credential on the machine, and every other project you've ever cloned within reach, regardless of how well-behaved the model usually is — the exposure is a property of the environment, not the model's judgment.
+
+A container changes this categorically, not incrementally. Tools like `claude-container` (a Docker wrapper) and `agent-safehouse` (a lighter, kernel-enforced sandbox for Mac) give an agent its own filesystem view: only the folders you explicitly mount are visible, and the agent has no ability to widen that view itself — mounting is a host-side decision. This is why YOLO-in-a-container and YOLO-on-host are not the same risk scaled down; they are different categories of exposure. The concrete proof, run live in class: from inside a safehouse session, `cat ~/.ssh/id_ed25519` returns `Operation not permitted` — not because the agent chose to decline, but because the kernel will not let the process see the file at all.
+
+![Inside a safehouse session: the kernel, not the model's judgment, is what refuses the request to read a credential file.](../assets/exhibits/day5/EXH-D5-02_safehouse.png){fig-alt="Mock sandboxed session where reading the SSH private key fails with Operation not permitted, denied by the kernel rather than the model."}
+
+![The autonomy ladder: Manual approval → Auto → YOLO-in-sandbox → unattended agent, each rung paired with the environment and verification discipline it requires; "never YOLO on host" is the one rung this ladder does not have.](../assets/figures/day5/FIG-D5-02_autonomy_ladder.png){fig-alt="Ladder diagram from manual approval to auto mode to YOLO-in-sandbox to unattended agent, each rung paired with the environment and verification discipline it requires."}
+
+Read the ladder as an interaction between two dials, autonomy and environment, not a ranking from worse to better. Manual approval is the right default in an unfamiliar or unsandboxed project. Auto — routine actions proceed, destructive-looking ones still pause — is the right default for the iterative, exploratory work most of this course involves, provided git is doing the rollback job described below. YOLO is appropriate only once the environment answers the "worst case" question acceptably on its own: inside a container, internet cut off if the task doesn't need it, mounting nothing beyond the one project folder. The top rung — an agent running unattended for long stretches against a persistent mount — is where the stakes and the container boundary matter most, because nobody is watching in real time.
+
+One more permission decision belongs here: installing a third-party skill installs someone else's instructions into your environment, and deserves the same scrutiny as installing any other software. A skill published by Anthropic or built by your own group is one thing; a two-star repo from a forum post is another. Read a skill before installing it the way you'd want a colleague to read a script before running it on your data — "it's just a markdown file" does not mean it can't instruct an agent to do something you would not have approved yourself.
+
+::: {.callout-warning icon=false}
+## Common failure: treating sandboxing as a substitute for data governance
+
+A container controls what an agent can *do*; it does not control what an agent can *see* once you mount a folder into it, and it does nothing to stop the contents of a mounted file from being sent to a remote model as part of a normal working session. If a folder contains anything sensitive — WRDS-licensed data, unpublished results you don't want leaving your machine, anything with individual-level identifiers — the fix is minimizing what gets mounted and choosing the right API tier, not assuming the sandbox already handled it.
+:::
+
+## Credential hygiene: the two-command audit
+
+Everything above is environment design before the fact. Credential hygiene is the equivalent check after the fact — a fast, mechanical way to confirm that nothing sensitive slipped through despite your intentions. Two commands, run from the root of any project before you consider it clean:
+
+```bash
+git log --all --full-history -- .env
+```
+
+This should return nothing. If it returns even one commit, a `.env` file — which is exactly where WRDS credentials and API keys belong — was committed at some point, and deleting the file now does not remove it from history; anyone who clones the repo can still find it in an old commit.
+
+```bash
+grep -r "WRDS_PASSWORD" .
+```
+
+This, and the equivalent grep for any other credential name you use, should return zero results anywhere in the project — not in a script, not in a notebook, not in a stray text file. Widen the search to whatever credential names apply to your own project (API keys, other passwords) before you trust a clean result.
+
+::: {.callout-tip icon=false}
+## Verify this: run the audit, and know the fix if it fails
+
+Run both commands against your own capstone project this afternoon, not hypothetically. If either one turns up something, the fix is not just deleting the offending line: a credential that has ever been committed must be treated as compromised. Rotate it — request a new WRDS password, regenerate the API key — and only then remove it from the repository's history (not just its latest version). Deleting the current copy of a secret while leaving it reachable in git history fixes nothing.
+:::
+
+## Paper trails: documentation is a map, not a verdict
+
+Ask for the audit trail before the work happens, not after — request it in the same prompt that describes the actual task. Three artifacts, requested up front: a `DECISIONS.md` that records every methodological choice, the alternatives that were considered and rejected, and a rough confidence level; a `LOG.md` that narrates the session in plain language a coauthor could follow without reading code; and a sample-attrition table printed at every stage of any cleaning or filtering step, showing the N and what dropped and why.
+
+Here is the lesson that earns this a full treatment rather than a checklist item: an LLM will write a DECISIONS.md entry claiming a piece of work was done when it was not. This isn't a hypothetical caveat — it happens in the form you'd expect, and it's worth walking through concretely, because the failure is subtle enough that trusting the documentation feels reasonable right up until you check.
+
+Picture a funda-style Compustat pipeline — a leverage-and-controls panel like the kind built in Module 4's lab or its public-data fallback. The session's `DECISIONS.md` includes an entry reading, in effect: *"Added an alternative leverage definition (total liabilities / total assets) as a robustness check; results are consistent with the main specification (see Table A2)."* The prose is confident and specific, reading exactly like something a careful RA would write after actually running the check. The problem: no `Table A2` script exists anywhere in the repository, no commit added an alternative leverage variable, and `git log` shows no work matching that description at any point in the session. The documentation describes a robustness check that was never run — and anyone who read it and moved on, instead of checking it against the commit history, would carry a false claim of robustness straight into a paper.
+
+The fix is a habit, not a tool: treat every specific claim in a DECISIONS.md or LOG.md as a hypothesis to check against the commit history, not a fact to file away. Pick one claim, find the commit it should correspond to, and confirm the diff does what the prose says. If no commit matches, the claim is unverified no matter how confidently it's written — the prose is a map of what supposedly happened, not a verdict on whether it did.
+
+For what this discipline looks like formalized for an actual journal submission — replication code, execution logs, and sample identifiers packaged to meet JAR's data-sharing policy — see Eric Weisbrod's [example-project template](https://eweisbrod.github.io/example-project/pages/jar-data-policy.html), listed on the [Resources](../resources.qmd) page.
+
+## No hand-typed numbers
+
+One narrower rule follows from the same worry and predates AI entirely, though AI makes it more important: no number in a paper should ever have been typed by a human into the manuscript. The pattern is simple. A pipeline script computes a result and writes it to a `results.tex` file — a coefficient, a standard error, a sample size, formatted as a LaTeX macro or table fragment. The paper's `.tex` source never states that number directly; it pulls it in with `\input{results/table2_main.tex}`. When the sample changes or a filter gets corrected, rerunning the pipeline regenerates `results.tex`, and the paper updates automatically at the next compile — no step where a person copies a number from a terminal into a draft, and so no step where a plausible-looking but wrong number can quietly enter the manuscript.
+
+This isn't a new discipline invented for AI-assisted work — hand-transcription has always been a source of silent errors. What changes with an LLM in the loop is the specific failure it guards against: a model asked to draft a results paragraph will, absent a hard constraint, happily produce a fluent sentence with a number in it that sounds right but was never computed by anything. The `\input{}` pattern makes that failure structurally impossible rather than something you catch by proofreading.
+
+## Git as the operating system
+
+Everything above — commits as checkpoints, diffs as the review unit, rollback as the safety net that makes Auto mode comfortable rather than reckless — has a name, and it's one you've been told to wait for since Module 1: git. The treatment in this module is deliberately light on lecture and heavy on habit, because the actual content is five commands and a rule, not a semester of version control theory. A one-page git handout — the five commands, a `.gitignore` starter, and the rollback recipe — is distributed in class this module; the live demo (a `git diff HEAD~1` after a real Claude Code session, followed by one rollback) is where it becomes real rather than abstract.
+
+The idea worth carrying forward is the one from the afternoon's opening section, restated in its sharpest form: a **commit is the unit of verification**. Reviewing an 800-line pipeline all at once is not a task anyone actually does well; reviewing a 12-line diff that corresponds to one commit, with a message that says *why* the change was made, is a task you can actually do, every time, without it becoming a chore you skip. Tell Claude at the start of every project to commit at every meaningful checkpoint — the request costs one sentence in your opening prompt and turns an unauditable blob into a sequence of reviewable moments. Combined with the credential audit and the paper trail above, this is what makes an agent-assisted project *auditable*: not because nothing ever goes wrong, but because when something does, there's a bounded place to look.
+
+![A reviewable diff: a 12-line commit, with a message that says why the change was made — the unit of verification in practice.](../assets/exhibits/day5/EXH-D5-01_git_diff.png){fig-alt="Mock terminal showing git diff HEAD~1: a twelve-line diff and a commit message explaining why the change was made."}
+
+One pointer beyond this module's scope, for when a single session stops being enough: git has a second primitive, the *worktree*, that gives each of several parallel Claude sessions its own directory while all of them share one repository — two robustness variants explored side by side, or a pipeline rebuild running while a second session revises prose. [cmux](https://github.com/craigsc/cmux) wraps the whole pattern into single commands, and the [Tools page](../tools.qmd#running-multiple-sessions-in-parallel) covers it properly — including the caveat that matters: parallel sessions multiply verification debt as fast as they multiply output, and every worktree owes this module's discipline before it merges.
+
+## Into the capstone
+
+The rest of this module is where this compounds. [The capstone lab](../labs/day5.qmd) asks you to take a pipeline from Module 3 or Module 4 and harden it against the rubric this module just walked through — reproducibility, verification, hygiene, and (as a stretch) a container rerun with a blocked-access proof to show for it. Before you start, and before the demos that carry most of the remaining lecture time, take thirty seconds to write down your own answer to two questions: one task you will always delegate without a second thought, and one you will never let an agent originate, only react to. You'll be asked for both again at the end of this module — and Module 6 comes back to a harder version of the same question, applied not to one paper but to what a PhD is actually for.

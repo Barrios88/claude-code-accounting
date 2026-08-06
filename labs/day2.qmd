@@ -1,0 +1,59 @@
+---
+title: "Module 2 Lab: Empty Folder to Verified Figure"
+---
+
+[Download the starter pack (zip)](../assets/labs/lab2_starter.zip){.btn} · [Module 2 slides (PDF)](../assets/slides/day2_slides.pdf)
+
+This module's lab runs the exact loop you just watched in the demo — empty folder, download script, clean panel, publication-style figure, reproducibility README — on a measure you choose rather than one you copy. The demo built R&D intensity; your lab measure is a different one, so that when you check your own figure at the end, you're checking real work, not retyping someone else's. The starter pack (`lab2_starter.zip`) contains an opening-prompt template with blanks for your measure, tags, and aggregation; a verify checklist; and a card explaining `DECISIONS.md` and `LOG.md`. There is no data in the zip — FSDS is public, and downloading it yourself is part of the exercise.
+
+::: {.callout-note icon=false}
+## What you're building in this module
+
+By the end of the lab you will have: a fresh project folder with a complete pipeline of named scripts — download, clean-and-join, measure, figure — none of which exist only as chat output; a `DECISIONS.md` and `LOG.md` that were requested in your opening prompt, not added afterward, plus an attrition table explaining every sample-size change; one publication-style figure with two sanity checks written down and sourced; and a README a labmate could use to reproduce your entire pipeline in a fresh clone of the folder.
+:::
+
+## Choose your measure
+
+Start the same way the demo did: `mkdir ~/lab2 && cd ~/lab2 && claude`. An empty folder means the first thing Claude sees is this project and nothing else. Then choose one of the three measures below, tiered by ambition — pick the tier that matches how much cleaning judgment you want to practice in this module, not necessarily the hardest one available.
+
+**Base: leverage by industry and year.** Compute book leverage — long-term debt divided by total assets — as the median by two-digit SIC code (`sic2`) and year. This is the most direct variant of the demo's structure: same join, same aggregation shape, a different pair of XBRL tags.
+
+**Standard: R&D intensity, different industry grain.** Build the same R&D-intensity measure as the demo — R&D expense over total assets — but aggregate at a different industry grain than the demo's `sic2`: use one-digit SIC (`sic1`) instead. The measure is familiar; the grouping decision, and what it does to the pattern you see, is not.
+
+**Stretch: revenue concentration.** For each year, compute the share of total reported revenue accounted for by the ten largest filers by revenue. This tier requires more cleaning judgment than the other two — deciding how to handle firms that report revenue under more than one tag, and how to break ties at the tenth-largest boundary — and is a reasonable choice if you want more practice with ambiguous cleaning decisions rather than more practice with the mechanics of the join.
+
+Whichever tier you pick, use the same known-good quarter list the starter pack pins for you: Q4 of 2012, 2015, 2018, 2021, and 2023. These five quarters give you enough of a time series to make a plausibility check meaningful without requiring you to download and clean fourteen quarters in an 80-minute lab. Tag coverage on FSDS varies somewhat by quarter — a tag reported under one name in an earlier filing sometimes appears under a slightly different tag in a later one — which is one more reason to pin exact quarters rather than reach for "all of them" by default.
+
+## Requirements, regardless of tier
+
+However you build it, the deliverable has the same shape as the demo's: named scripts only, with `DECISIONS.md` and `LOG.md` requested in your opening prompt before any analysis runs, not retrofitted afterward once something looks off; an attrition table showing every point where your sample size changed and why; one publication-style figure; and a README sufficient for a stranger — or you, in three weeks — to rerun the whole pipeline from scratch. Adapt the opening-prompt template in the starter pack to your chosen tier: fill in the measure, the tags, and the aggregation, and leave the paper-trail section exactly as written — it's built in for a reason, not a section to trim if you're short on time.
+
+::: {.callout-tip icon=false}
+## Verify this: your checklist for this module
+
+Work through every line before you consider the lab complete. This is a self-graded, pass/fail checklist, same as Module 1's — the instructor will spot-check a sample, not grade every box individually.
+
+- [ ] Pipeline reruns start-to-finish from README instructions in a fresh clone of the folder
+
+- [ ] `sub`/`num` joined on `adsh` (state row counts before/after join)
+
+- [ ] Attrition table present; every sample-size change explained in DECISIONS.md
+
+- [ ] Two sanity checks written down: one benchmark comparison, one plausibility check — with sources
+
+- [ ] Figure produced by a script; no interactive-only outputs anywhere
+:::
+
+**Stretch for finishers:** if your pipeline is done with time to spare, either rerun the same research question with a second measure and compare what changes, or draft — in a paragraph, not code — what the WRDS version of this same pipeline would need to change: which table replaces `sub.txt` and `num.txt`, which key replaces `adsh`, and which filters Compustat would require that FSDS doesn't. This is a preview of Module 4, not homework; a few sentences is enough.
+
+::: {.callout-tip icon=false}
+## WRDS CHECKPOINT — hard gate, due by the end of this module
+
+Before you leave this module, submit one of two things on your exit ticket: a `tunnel_status` screenshot showing `ssh wrds` connecting, a Duo push arriving, and the connection succeeding — or, if it didn't work, a flag describing exactly what went wrong. This is not optional bookkeeping. Module 4's entire flagship lab depends on this connection working, and the instructor needs tonight to triage problems and announce fixes in the next module, not the night before Module 4. If your WRDS access isn't working by this module's checkpoint, you'll be pre-assigned to the public-data fallback track for Module 4 — decided calmly here, not scrambled at the last minute. If you haven't attempted the connection since Module 1's homework, do it before lab starts, not after.
+:::
+
+## Debrief and exit ticket
+
+Come back together for a short debrief. Whose first-draft figure was actually right on the first attempt? (If the answer is close to nobody, that's the expected outcome, not a problem with this module's lab — normalize it.) Where did Claude recover from an error on its own, and where did you have to step in and redirect?
+
+Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's two specific items: the WRDS checkpoint above, and one sentence on the sub-agent teaser — if you saw Claude spin up a sub-agent at any point during your lab, what do you think it was for? We'll answer that properly in Module 4.

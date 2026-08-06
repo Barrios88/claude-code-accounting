@@ -1,0 +1,65 @@
+---
+title: "Module 3 Lab: EDGAR Pipeline, Validity Protocol, First Skill"
+---
+
+[Download the starter pack (zip)](../assets/labs/lab3_starter.zip){.btn} · [Module 3 slides (PDF)](../assets/slides/day3_slides.pdf)
+
+This module's lab has three parts, and they build on each other in a specific order: first you build a real 10-K text pipeline end to end, then you stop and write — not code, write — a validity protocol for the measure you just built, and finally you convert the whole pipeline into your first `SKILL.md`. The starter pack (`lab3_starter.zip`) contains a pinned list of twenty CIKs across four industry groups, a front-loaded prompt template, a `SKILL.md` skeleton with anatomy comments already in place, and this lab's verify checklist. No filing data ships with the starter pack — EDGAR is public, so you'll fetch everything live, the same way you would for a real project.
+
+::: {.callout-note icon=false}
+## What you're building in this module
+
+By the end of the lab you will have: a DuckDB file (`filings`, `sections`, `keywords` tables) built from real 10-K Risk Factors sections across roughly twenty firms and three fiscal years, with a cache directory, a quality report, and an extraction rate of at least 95 percent with every failure diagnosed in writing; a short, written audit-sample protocol for the keyword measure you computed — not a claim that the measure is valid, but the concrete plan you'd run to check it; and a working `edgar-panel/SKILL.md` that fires correctly in a fresh session and reproduces the pipeline on two firms it has never seen.
+:::
+
+## Part A: Pipeline (45 min)
+
+Start from an empty project folder, the same discipline as every lab across this course. Open the front-loaded prompt template from the starter pack and fill in the pieces specific to your run: the topic you'll measure (pick one from the menu below), the fiscal years (2021–2023 is a reasonable default), and the output paths. The template already carries the operational facts from this morning's lecture — the CIK list, the rate limit, the User-Agent requirement, the cache path — so you should not need to re-derive any of them; if you find yourself typing a fact the template already states, that's a sign to fill in the template rather than write a fresh prompt from scratch.
+
+Pick one topic from the menu for your keyword measure: **tariffs** (trade policy exposure), **cyber** (cybersecurity and data-breach risk), **climate** (climate and physical-risk disclosure), or **supply chain** (supply-chain disruption risk). Any of the four works equally well for this module's pipeline; pick whichever you'd plausibly use in your own research, since you'll be looking at the actual sentences later in Part B.
+
+Build the pipeline in the order the lecture described it: CIK resolution and filing-index retrieval for the pinned firm list, cached raw-HTML download, Item 1A section extraction with a fallback chain of regex patterns, load into DuckDB, then one result table — your keyword measure by firm-fiscal-year. Three things are non-negotiable, not optional polish: the cache must actually prevent re-downloading a filing that already succeeded (test this by re-running the pipeline once and confirming zero new network requests for already-cached filings); the pipeline must produce a quality report stating the extraction rate and, for every failure, a one-line diagnosis of what went wrong (a genuine edge case, a regex gap, a malformed filing); and the extraction rate itself must reach at least 95 percent before you move to Part B. If it doesn't, that's the morning's central lesson showing up in your own data — read the quality report, ask Claude why the remaining filings are missing, and fix what's fixable before accepting the rest as genuine edge cases.
+
+::: {.callout-warning icon=false}
+## Common failure: accepting a low extraction rate without reading why
+
+An 80 percent extraction rate is not automatically a problem, and a 99 percent rate is not automatically fine — what matters is whether you can say, for every single failure, what specifically went wrong. The failure mode to avoid is treating the percentage itself as the finding and moving on. If your quality report just says "16 of 20 succeeded" with no diagnosis attached, you don't have a quality report yet; you have a number. Ask Claude to open the cached HTML for each failure and report what's structurally different about it before you decide which failures are fixable and which are genuine edge cases.
+:::
+
+## Part B: Validity check (15 min)
+
+This part is deliberately short and deliberately written rather than coded — the judgment involved here is the one piece of this lab that isn't delegable, and the point is to practice making that judgment explicit rather than to produce more code. Pick one firm from your panel and compute the year-over-year textual similarity (Jaccard or cosine, whichever your pipeline already supports) between its Risk Factors section this year and the same section last year. Read both sections side by side. Classify what you're looking at: is the year-over-year change in your keyword count driven by boilerplate — largely unchanged language, high similarity score, a keyword count that moved because a paragraph got slightly longer — or by a meaningful rewrite, where the similarity score is lower and the new language is actually where the keyword signal comes from?
+
+Then write, in three sentences, the audit-sample protocol you would run before this measure went into a real paper's main table: which fifty filings you would pull and how you'd stratify the sample (by measure value, firm size, and industry, not a convenience sample of whichever firms are easiest to read), who would code them and against what rubric decided in advance, and what you'd report if more than one person coded any part of the sample. The deliverable here is the protocol, not a claim that your measure is valid — fifty filings is not enough to prove that at any real scale, and writing "this measure is valid" without having run the audit would be exactly the validity failure the lecture warned about.
+
+## Part C: The skill (20 min)
+
+Convert the pipeline you just built into `edgar-panel/SKILL.md`, installed at project scope (`.claude/skills/`) rather than globally — this pipeline is tied to this project's data, and project scope means a coauthor who clones your repository inherits the skill automatically. Use the five-step workflow from lecture: notice the repetition (you just wrote this procedure out once already, in Part A's prompt), name the inputs (CIK list, form type, fiscal-year range), design the output structure (DuckDB file, `metadata.csv`, quality report) before writing the skill body, let Claude draft the `SKILL.md` from a short spec covering those three things, then test-fire it.
+
+The test-fire step is not optional: open a genuinely fresh session — not the one you built the skill in — and confirm the skill actually triggers on a natural request (something like "build an EDGAR panel for these two CIKs") without you naming the skill file directly. Then run it on two CIKs not in your pinned list and confirm it reproduces the same output structure. If it doesn't fire, the most likely cause is the one from lecture: check whether your `description` field reads as a trigger condition or as a title, and rewrite it if it's the latter.
+
+Once your skill fires correctly, install one or two skills from the course's Barrios Skills catalog — `latex-tables` and `stata-regression` are good choices regardless of your primary language — and read through one mature `SKILL.md` from the catalog as a model for what a well-developed skill looks like at a level of polish beyond a first attempt. Notice, in particular, how its description is phrased and how its steps are structured; that's the standard your own skill is working toward, even if this module's version doesn't fully reach it yet.
+
+::: {.callout-tip icon=false}
+## Verify this: your full checklist
+
+Work through every line below before you consider the lab complete. This is a self-graded, pass/fail checklist — the instructor will spot-check a sample, not grade every box individually.
+
+- [ ] Cache works: re-running the pipeline downloads zero already-fetched filings
+
+- [ ] Quality report: extraction rate stated; every failure has a one-line diagnosis
+
+- [ ] Result table reproduced by named scripts from README
+
+- [ ] Validity paragraph + audit-sample protocol written (the *measure* is not claimed valid — the protocol is the deliverable)
+
+- [ ] SKILL.md: description is a trigger condition (not a title) and the skill fires in a fresh session
+
+- [ ] Rate limit respected (≤10 req/sec) and User-Agent set — show the code line
+:::
+
+## Debrief and exit ticket (2:45–3:05)
+
+Come back together for a short debrief. Be ready to share, informally: what your extraction rate landed at, and whether the failures you found were genuine edge cases or regex gaps you could have caught earlier with a better fallback chain. The instructor will read two or three student `SKILL.md` descriptions aloud, without naming whose they are, and ask the room to vote on whether each one would actually trigger on a natural request — this is the fastest way to see the title-versus-trigger distinction land (or fail to land) in someone else's writing before it costs you in your own.
+
+Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's specific item: **what would your second skill be?** — name one other recurring procedure in your own research workflow you'd convert next, and what its inputs and output structure would look like.

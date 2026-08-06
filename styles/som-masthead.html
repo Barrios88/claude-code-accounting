@@ -1,0 +1,20 @@
+<div class="som-masthead" id="som-masthead">
+  <div class="som-masthead__inner">
+    <span class="som-masthead__brand">John Barrios &middot; Yale School of Management</span>
+    <span class="som-masthead__course">Claude Code for Accounting Research</span>
+  </div>
+</div>
+<script>
+  (function () {
+    var place = function () {
+      var m = document.getElementById("som-masthead");
+      var h = document.getElementById("quarto-header");
+      if (m && h) h.insertBefore(m, h.firstChild);
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", place);
+    } else {
+      place();
+    }
+  })();
+</script>

@@ -1,0 +1,15 @@
+---
+title: "Labs"
+---
+
+Five labs, one per build module, each 80 minutes inside the module session. Every lab page carries the full instructions, the tiered task menu (base / standard / stretch), and the verify checklist you self-grade against — pass/fail, spot-checked in the debrief. Starter packs are small zips: templates and checklists, never data and never credentials. You download data yourself from public sources, and Module 4's WRDS pull runs on your own account (a public-data fallback track covers anyone whose access isn't live yet).
+
+| Lab | Builds | Starter |
+|-----|--------|---------|
+| [Module 1 — Install, project setup, one verified task](day1.qmd) | Working environment, first CLAUDE.md, one externally verified number | [zip](../assets/labs/lab1_starter.zip) |
+| [Module 2 — The empirical loop on SEC FSDS](day2.qmd) | Download → clean → figure → replication README, with paper trail | [zip](../assets/labs/lab2_starter.zip) |
+| [Module 3 — 10-K text panel + your first skill](day3.qmd) | EDGAR pipeline with quality report, validity protocol, SKILL.md | [zip](../assets/labs/lab3_starter.zip) |
+| [Module 4 — WRDS pipeline (live or fallback track)](day4.qmd) | Filtered funda extract → Parquet/DuckDB → metadata table (+ .dta) | [zip](../assets/labs/lab4_starter.zip) |
+| [Module 5 — Capstone: harden a pipeline](day5.qmd) | One earlier pipeline made reproducible, verified, and hygienic against the rubric | [zip](../assets/labs/lab5_starter.zip) |
+
+The capstone rubric on the [Module 5 page](day5.qmd) is the course's summative standard: reruns from the README, paper trail cross-checked against commits, no hand-typed numbers, credentials audited clean. Module 6 has no lab — its deliverable is the position memo described on the [seminar page](../modules/06-ai-knowledge-market.qmd).

@@ -1,0 +1,88 @@
+---
+title: "Module 4 Lab: WRDS Pull to Analysis-Ready Panel"
+---
+
+[Download the starter pack (zip)](../assets/labs/lab4_starter.zip){.btn} · [Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
+
+This module's lab builds the same pipeline twice — once on live WRDS data if your account and tunnel are ready, and once on an equivalent public dataset if they aren't. Both tracks run through the identical five moves: a feasibility-assessment prompt, a filtered pull, mandatory inspection, a Parquet/DuckDB landing, and a metadata table. Neither track is the "real" one and neither is a consolation prize. The discipline is the deliverable; the data source underneath it is interchangeable. Some students will choose the fallback track deliberately, even with a working WRDS connection, because it's faster to iterate on — that's a legitimate choice, not a failure to reach the live track.
+
+The lab starter pack (`lab4_starter.zip`) contains `.env.example`, the iron-law checklist, the metadata-table template, the verify checklist, and the fallback-sample build script. **No WRDS data is in the zip, ever, under any circumstance** — the fallback sample is built entirely from public SEC data, and every WRDS-derived file you produce in this module stays in your own `~/wrds_data` or project folder.
+
+::: {.callout-note icon=false}
+## What you're building in this module
+
+By the end of the lab you will have: a `funda`-shaped panel, either pulled live from Compustat under all four iron-law filters or built from the public SEC fallback sample; four written inspection checks with actual numbers, not impressions; a Parquet-backed DuckDB database with an `analysis_ready` table and a `metadata` table documenting at least eight variables; and, if you choose the extension, a `.dta` export and a working leverage–ROA regression in Stata with fyear and SIC2 fixed effects.
+:::
+
+## Before you start: which track are you on?
+
+If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP Setup](../setup-wrds.qmd) checklist with the tunnel coming up cleanly — you're on the **live track**. If Duo is unresolved, your tunnel won't come up, or anything fails mid-lab and you don't want to spend the rest of the session debugging a connection instead of practicing the pipeline, switch to the **fallback track** at any point, no questions asked and no penalty. Switching mid-lab is a normal thing to do, not a fallback from a fallback.
+
+## Live track
+
+**Checkpoint-cleared students, own WRDS account.**
+
+1. **Environment.** Activate `~/.wrds-mcp-env`, confirm `.env` is filled in and gitignored, source it, and bring the tunnel up with `tunnel_up.sh`. Approve the single Duo push. Confirm with `tunnel_status.sh` before doing anything else.
+2. **Feasibility-assessment prompt.** Before asking for any SQL, ask Claude the exact question from the module page: *"I want a firm-year panel with leverage and ROA for US industrials 2000–2023 from funda. Tell me what's involved before you try anything complicated. What might be missing?"* Read what comes back before proceeding — it should surface the iron-law filters and at least one linking or coverage caveat.
+3. **Pull.** Request the `funda` extract with an explicit variable list (`gvkey`, `fyear`, `sale`, `at`, `dltt`, `ni`, plus anything else your panel needs) and all four iron-law filters applied. No `SELECT *`, anywhere, in any script produced in this module.
+4. **Inspect — write all four down, with real numbers, before proceeding:**
+   - Row count, compared to what you expected going in.
+   - `.head()` or `.sample()` eyeball of the actual values.
+   - `fyear` min/max, checked against your requested range.
+   - One benchmark firm's value checked against a figure from a source Claude did not touch (its own 10-K, or a number you already knew).
+5. **Land it.** Convert the extract to Parquet, attach it in DuckDB, and build a `compustat_metadata` table documenting at least eight variables (varname, label, units, one screening note each) using the template from the starter pack.
+6. **Fresh-session check.** Close your session entirely, open a new one, and orient it with nothing but `SELECT * FROM metadata`. Confirm the fresh session can describe your variables correctly from that alone.
+7. **Tunnel teardown.** Run `tunnel_down.sh` and confirm with `tunnel_status.sh` that it's actually closed. This is not optional and it is not last on this list by accident.
+
+## Fallback track
+
+**Duo unresolved, tunnel failure, or your own choice — identical pipeline, public data.**
+
+The fallback sample (`lab/fallback_sample/fallback_panel.parquet`) is built entirely from the SEC's public Financial Statement Data Sets — no WRDS account, no credentials, no institutional access required, reproducible by anyone with the provided build script. Its columns are named to mirror a `funda`-style pull: `firm_id` (CIK, standing in for `gvkey`), `company_name` (for `conm`), `period` (for `datadate`), `at`, `sale`, `ni`. It is genuinely not Compustat — XBRL tags vary by filer and period in ways Compustat's standardization smooths over, and `firm_id` cannot be joined to CRSP or Compustat without a crosswalk this sample doesn't include — but every mechanical step below is identical to the live track.
+
+1. **Environment.** No tunnel, no `.env`, no Duo. Just confirm `fallback_panel.parquet` (or `.csv`) is present from the starter pack.
+2. **Feasibility-assessment prompt.** Ask the same question, adapted to the fallback panel's actual columns: *"I want a firm-year panel with leverage and profitability measures from this sample. Tell me what's involved before you try anything complicated. What might be missing?"* This still surfaces real issues — missing revenue tags for some filers, the CIK/gvkey gap — even without WRDS in the loop.
+3. **Pull.** There's no live query here, but treat the load the same way: explicit column selection, never a blanket read of every column in the file, and document which SEC XBRL tags feed each variable (the conceptual equivalent of the iron-law filters — write down which tags you used and why, even though there's no `WHERE` clause to paste).
+4. **Inspect — the same four checks, on the fallback data:**
+   - Row count, compared to what the README states (≤ 5,000 firm-year observations).
+   - `.head()` or `.sample()` eyeball.
+   - `period` min/max, checked against the quarter the sample was built from.
+   - One firm's `at` or `sale` value checked against that company's own public 10-K filing.
+5. **Land it.** Same Parquet/DuckDB/metadata steps as the live track — build a `metadata` table with at least eight variables documented, including a screening note that flags where SEC tag coverage is inconsistent.
+6. **Fresh-session check.** Identical to the live track: close, reopen, orient with `SELECT * FROM metadata` alone.
+7. **No tunnel to tear down** — skip that step and move straight to the verify checklist below.
+
+## Extension (either track): the Stata bridge
+
+Export only the analysis-ready table you actually built — never a full `funda` pull, on either track — to `.dta`, and run the provided `.do` file from the starter pack (`stata_bridge_extension.md`), which regresses ROA on leverage with fiscal-year and two-digit-SIC fixed effects. Connect each variable's Stata `label variable` line back to your metadata table: if you documented `dltt` as "long-term debt, millions of dollars" in DuckDB, that same label belongs on the Stata variable, not a fresh guess at what it means.
+
+## Verify checklist
+
+Work through every line below — self-graded, pass/fail, same discipline as every other module across this course.
+
+- [ ] `.env` exists, is gitignored, and `grep -r` for your WRDS password over the entire project returns nothing (live track — trivially true on fallback, check anyway)
+- [ ] All four iron-law filters are present in the query — paste the `WHERE` clause into the checklist below
+- [ ] Four inspection checks written down with actual numbers: rows, `fyear`/`period` min/max, sample eyeball, one benchmark firm checked against a source Claude didn't touch
+- [ ] Metadata table is queryable in DuckDB, with at least 8 variables documented (units + one screening note each)
+- [ ] Explicit variable list in every query — no `SELECT *` anywhere in any script
+- [ ] **Tunnel torn down** (live track) — last item on this list on purpose
+- [ ] No WRDS-derived file anywhere outside `~/wrds_data` or your project data directory; nothing WRDS-derived committed to git
+
+```
+Paste your WHERE clause here:
+
+
+
+```
+
+## Debrief and exit ticket
+
+Come back together for a short debrief. Be ready to share, informally: what anomaly your inspection step actually caught (there is almost always at least one — missing `at` values, an unexpected duplicate row, a benchmark firm that didn't match); which iron law would have bitten you specifically, had you skipped it; and, if you're on the fallback track, whether the pipeline actually felt different from the live track (it shouldn't have).
+
+Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's item:
+
+::: {.callout-tip icon=false}
+## Exit ticket — Module 4 item
+
+Write the feasibility-assessment prompt for a real pull from your own dissertation or working paper — not this module's demo panel, your actual next step. Name the table, the variables, the date range, and ask what might be missing before you try anything complicated.
+:::

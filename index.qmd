@@ -1,0 +1,40 @@
+---
+pagetitle: "Claude Code for Accounting Research"
+toc: false
+---
+
+::: {.hero-band}
+# Claude Code for Accounting Research
+
+A hands-on PhD course on agentic AI for empirical accounting research — five build modules and a closing seminar. It starts at first install, ends at a verified WRDS-to-Stata pipeline, and closes with a discussion of what these tools mean for the profession.
+
+::: {.hero-facts}
+6 modules · 5 labs · 41 skills · 1 verification protocol
+:::
+
+::: {.hero-buttons}
+[Start with Setup](setup.qmd)
+[View Syllabus](syllabus.qmd){.btn-ghost}
+:::
+:::
+
+Each of the five build modules runs about three hours — a short lecture, a live demo, an extended lab, a debrief — and each ends with something you keep: a reproducible pipeline, a publication-style figure, a text-extraction skill, a regression-ready Compustat extract on your own WRDS account. Speed is only half of each module; the other half is what makes the speed usable in a paper — verification, paper trails, credential hygiene, and the measurement-validity judgment no agent supplies. Module 6 is different: a discussion seminar on AI, the production of knowledge, and the academic research market, with a position memo instead of a lab.
+
+The course assumes no Claude Code experience. It does assume a laptop you control, a working WRDS account, and the willingness to run code live.
+
+## The six modules
+
+| Module | Session | The question it answers | Materials |
+|:---:|---------|------------------------|-----------|
+| 1 | [Foundations](modules/01-foundations.qmd) | What kind of tool is this, and how do I stay in control? | [Lab](labs/day1.qmd) · [Slides](assets/slides/day1_slides.pdf) |
+| 2 | [The Empirical Loop](modules/02-empirical-loop.qmd) | Can I go from idea to verified figure, reproducibly? | [Lab](labs/day2.qmd) · [Slides](assets/slides/day2_slides.pdf) |
+| 3 | [EDGAR Text → Data, + Skills](modules/03-edgar-text.qmd) | Can I build a text measure I'd defend to a referee? | [Lab](labs/day3.qmd) · [Slides](assets/slides/day3_slides.pdf) |
+| 4 | [WRDS MCP at Scale](modules/04-wrds-mcp-scale.qmd) | Can Claude work my licensed data, safely, on my account? | [Lab](labs/day4.qmd) · [Slides](assets/slides/day4_slides.pdf) |
+| 5 | [Writing, Safety, Verification](modules/05-writing-verify.qmd) | What do I delegate, and how do I make my work auditable? | [Lab](labs/day5.qmd) · [Slides](assets/slides/day5_slides.pdf) |
+| 6 | [Seminar: AI & the Research Market](modules/06-ai-knowledge-market.qmd) | What will I still be paid for? | [Slides](assets/slides/day6_slides.pdf) |
+
+## Beyond the modules
+
+The [Skills catalog](skills/index.qmd) has 41 agent skills for accounting research — econometrics, data work, writing, review — each with a download and a one-line install command. The [Tools guide](tools.qmd) compares Claude Code with Claude Desktop, Cursor, and Codex, with a decision table for picking the right one per task. The [Prompt gallery](prompts.qmd) collects every reusable prompt the course teaches, and the [Verification protocol](verification.qmd) is the one-page checklist the whole course drills. [Resources](resources.qmd) lists other useful tools and readings, grouped by the module where each is most relevant.
+
+Taught by [John Barrios](about.qmd), Yale School of Management. Course materials draw on cited sources credited on the [About](about.qmd) page; all student-facing content is original.
