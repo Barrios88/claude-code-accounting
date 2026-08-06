@@ -1,0 +1,158 @@
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+      radial-gradient(ellipse at top, rgba(0, 40, 86, 0.12), transparent 55%),
+      #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d9dee5;
+    border-top: 4px solid #002856;
+    padding: 2rem 1.75rem 1.75rem;
+    box-shadow: 0 10px 30px rgba(0, 40, 86, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.5rem;
+    color: #002856;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #c5CCD6;
+    border-radius: 2px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 2px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #003a7a; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #c0392b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>

@@ -29,6 +29,23 @@ quarto render
 
 Output lands in `_site/` (gitignored).
 
+## Access code
+
+The live site shows an access-code gate before content. Only a SHA-256 hash of
+the code is stored in `styles/access-gate.html` (not the plaintext).
+
+To change the code:
+
+```bash
+echo -n 'NEW_CODE' | shasum -a 256
+# paste the hex digest into CODE_HASH in styles/access-gate.html
+```
+
+Then commit, push, and wait for the Pages deploy.
+
+This is a soft client-side gate for temporary course access. Direct asset URLs
+(PDFs, zip labs) are not encrypted.
+
 ## Publish to GitHub Pages
 
 Pushes to `main` trigger `.github/workflows/publish.yml`, which renders the site

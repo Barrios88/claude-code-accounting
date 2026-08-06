@@ -85,9 +85,11 @@ format:
     theme:
       - cosmo
       - styles/custom.scss
+    include-in-header: styles/access-gate.html
     include-before-body: styles/som-masthead.html
     toc: true
     toc-depth: 3
     code-copy: true
     smooth-scroll: true
     lightbox: true
+
