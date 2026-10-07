@@ -428,6 +428,62 @@ a.btn:hover {
   .bi { font-size: 1rem; line-height: 1; }
 }
 
+// Module walkthrough video (Module 1): 16:9 frame on the text column
+.module-video {
+  margin: 0 0 2.2rem;
+  scroll-margin-top: 7rem;
+
+  .module-video__label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.6rem;
+    font-family: $serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: $som-navy;
+    .bi { font-size: 1.15rem; }
+  }
+  .module-video__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: $som-navy;
+    border: 1px solid $hairline;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+  }
+  video:focus-visible { outline: 3px solid $accent; outline-offset: -3px; }
+  video::cue {
+    font-family: $font-family-sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    background: rgba(0, 20, 45, 0.82);
+    color: #fff;
+  }
+  .module-video__meta {
+    margin: 0.5rem 0 0;
+    font-size: 0.86rem;
+    color: $yale-gray;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+  }
+}
+// Browsers without aspect-ratio support (old Safari): padding-box fallback
+@supports not (aspect-ratio: 16 / 9) {
+  .module-video .module-video__frame { height: 0; padding-top: 56.25%; }
+  .module-video video { position: absolute; inset: 0; }
+}
+
 // "This week"-style highlight box (used for notices)
 .this-week {
   border-left: 4px solid $primary;
@@ -798,4 +854,8 @@ nav.page-navigation {
     border-left-width: 3px;
   }
   pre, div.sourceCode { white-space: pre-wrap; }
+
+  // Video can't play on paper: drop the player, keep the label and link
+  .module-video__frame { display: none !important; }
+  .module-video { margin-bottom: 1rem; }
 }

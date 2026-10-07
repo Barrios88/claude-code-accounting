@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  # Files referenced only from raw HTML (the Module 1 <video> embed)
+  resources:
+    - assets/video/*
 
 execute:
   freeze: auto

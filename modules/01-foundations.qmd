@@ -3,10 +3,37 @@ title: "Module 1: Foundations — Tools, Context, and the Research Map"
 ---
 
 ::: {.module-links}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (12 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 1 slides (PDF)](../assets/slides/day1_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day1.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab1_starter.zip)
 :::
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 1 walkthrough (12 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="../assets/video/module1_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="../assets/video/module1_foundations.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module1_foundations.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module1_foundations.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module1_foundations.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 25 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module1_foundations.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
 
 Most people first meet AI through a chat window or a Cowork-style helper in a browser tab, and the first real research task they give it usually breaks it. Ask it to open a Compustat extract, join it to a filing index, and produce a labeled figure, and it stalls. It cannot see your filesystem, it cannot run your code, and it forgets the conversation when you close the tab. The natural conclusion is "AI can't do real research work." That is true of the tool you tried. It is not true of agentic AI in general, because you were on a low rung of a ladder that goes much higher.
 
