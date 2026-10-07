@@ -12,6 +12,8 @@ One item is flagged rather than recommended. It is listed because it exists and 
 - **Korinek, *AI Agents for Economic Research* (NBER w34202, 2025)** and **[genaiforecon.org](https://www.genaiforecon.org/)** — the source for this course's agent-framing lecture. Reach for the site for its semi-annual tool updates, since a course syllabus goes out of date faster than a maintained site does.
 - **[pedrohcgs/claude-code-my-workflow](https://github.com/pedrohcgs/claude-code-my-workflow)** — Pedro Sant'Anna's Emory Econ 730 template (contractor mode, quality gates, session logging). Reach for this when you're setting up your own lab's standing Claude Code conventions and want a second worked example beyond this course's own `CLAUDE.md`.
 
+- **Dell'Acqua, McFowland, Mollick, Lifshitz, Kellogg, Rajendran, Krayer, Candelon and Lakhani, "Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of Artificial Intelligence on Knowledge Worker Productivity and Quality," *Organization Science* (2026), [doi:10.1287/orsc.2025.21838](https://doi.org/10.1287/orsc.2025.21838)** — the field experiment with Boston Consulting Group consultants behind [Module 1](modules/01-foundations.qmd)'s point that AI help can improve some tasks and quietly worsen others of similar difficulty. Reach for this when you are deciding how closely to check an agent's work on a given step.
+
 ## Modules 1/5 — ready-to-fork research workflow templates
 
 These show what a mature setup looks like once you're past the basics. Borrow `CLAUDE.md` and quality-gate patterns from them rather than adopting one wholesale.
