@@ -3,7 +3,11 @@ pagetitle: "Claude Code for Accounting Research"
 toc: false
 ---
 
-::: {.hero-band}
+::: {.hero-band .hero-band--art}
+```{=html}
+<img class="hero-art" src="assets/illustrations/home-header-vector-light.webp" alt="" aria-hidden="true">
+```
+
 [John Barrios · Yale School of Management]{.hero-kicker}
 
 # Claude Code for Accounting Research
@@ -38,7 +42,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::::: {.module-grid}
 
 :::: {.module-card}
-[Module 1]{.module-card__kicker}
+[![](assets/illustrations/icons/module-01-foundations.svg){.module-card__icon width="28" height="28"}[Module 1]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[Foundations](modules/01-foundations.qmd)]{.module-card__title}
 
@@ -50,7 +54,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::
 
 :::: {.module-card}
-[Module 2]{.module-card__kicker}
+[![](assets/illustrations/icons/module-02-empirical-loop.svg){.module-card__icon width="28" height="28"}[Module 2]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[The Empirical Loop](modules/02-empirical-loop.qmd)]{.module-card__title}
 
@@ -62,7 +66,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::
 
 :::: {.module-card}
-[Module 3]{.module-card__kicker}
+[![](assets/illustrations/icons/module-03-edgar-text.svg){.module-card__icon width="28" height="28"}[Module 3]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[EDGAR Text → Data, + Skills](modules/03-edgar-text.qmd)]{.module-card__title}
 
@@ -74,7 +78,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::
 
 :::: {.module-card}
-[Module 4]{.module-card__kicker}
+[![](assets/illustrations/icons/module-04-wrds-mcp.svg){.module-card__icon width="28" height="28"}[Module 4]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[WRDS MCP at Scale](modules/04-wrds-mcp-scale.qmd)]{.module-card__title}
 
@@ -86,7 +90,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::
 
 :::: {.module-card}
-[Module 5]{.module-card__kicker}
+[![](assets/illustrations/icons/module-05-writing-verify.svg){.module-card__icon width="28" height="28"}[Module 5]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[Writing, Safety, Verification](modules/05-writing-verify.qmd)]{.module-card__title}
 
@@ -98,7 +102,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 ::::
 
 :::: {.module-card .module-card--seminar}
-[Module 6 · Seminar]{.module-card__kicker}
+[![](assets/illustrations/icons/module-06-seminar.svg){.module-card__icon width="28" height="28"}[Module 6 · Seminar]{.module-card__kicker-text}]{.module-card__kicker}
 
 [[Seminar: AI & the Research Market](modules/06-ai-knowledge-market.qmd)]{.module-card__title}
 
