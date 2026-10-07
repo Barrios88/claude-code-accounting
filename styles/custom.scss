@@ -799,7 +799,11 @@ nav.page-navigation {
   body { padding-top: 0 !important; font-size: 11pt; }
 
   .module-links a,
+  .module-links a.is-primary,
+  .module-links a.btn,
+  .hero-buttons a:not(.hero-link),
   .module-card { border-color: #999 !important; background: none !important; color: #000 !important; }
+  .hero-band { padding-top: 0; }
   .module-grid { grid-template-columns: 1fr 1fr; }
 
   blockquote.blockquote,
