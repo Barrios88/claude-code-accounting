@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Module 2: The Empirical Loop on SEC FSDS – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../modules/03-edgar-text.html" rel="next">
+<link href="../modules/01-foundations.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="../setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="../modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../labs/index.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="../tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/02-empirical-loop.html">Module 2: Empirical Loop</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/01-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 1: Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/02-empirical-loop.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Module 2: Empirical Loop</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/03-edgar-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 3: EDGAR Text</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/04-wrds-mcp-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/05-writing-verify.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 5: Writing &amp; Verification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/06-ai-knowledge-market.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-full-loop-once-end-to-end" id="toc-the-full-loop-once-end-to-end" class="nav-link active" data-scroll-target="#the-full-loop-once-end-to-end">The full loop, once, end to end</a></li>
+  <li><a href="#sec-fsds-anatomy-two-files-and-one-key" id="toc-sec-fsds-anatomy-two-files-and-one-key" class="nav-link" data-scroll-target="#sec-fsds-anatomy-two-files-and-one-key">SEC FSDS anatomy: two files and one key</a></li>
+  <li><a href="#profile-the-data-before-you-plot-it" id="toc-profile-the-data-before-you-plot-it" class="nav-link" data-scroll-target="#profile-the-data-before-you-plot-it">Profile the data before you plot it</a></li>
+  <li><a href="#from-vague-idea-to-precise-task-one-more-time" id="toc-from-vague-idea-to-precise-task-one-more-time" class="nav-link" data-scroll-target="#from-vague-idea-to-precise-task-one-more-time">From vague idea to precise task, one more time</a></li>
+  <li><a href="#reproducibility-as-code-not-chat-lore" id="toc-reproducibility-as-code-not-chat-lore" class="nav-link" data-scroll-target="#reproducibility-as-code-not-chat-lore">Reproducibility as code, not chat lore</a></li>
+  <li><a href="#the-opening-prompt-template" id="toc-the-opening-prompt-template" class="nav-link" data-scroll-target="#the-opening-prompt-template">The opening-prompt template</a></li>
+  <li><a href="#iteration-is-not-failure" id="toc-iteration-is-not-failure" class="nav-link" data-scroll-target="#iteration-is-not-failure">Iteration is not failure</a></li>
+  <li><a href="#sanity-checks-two-minimum-before-you-sign-off" id="toc-sanity-checks-two-minimum-before-you-sign-off" class="nav-link" data-scroll-target="#sanity-checks-two-minimum-before-you-sign-off">Sanity checks: two, minimum, before you sign off</a></li>
+  <li><a href="#the-three-module-1-mantras-carried-forward" id="toc-the-three-module-1-mantras-carried-forward" class="nav-link" data-scroll-target="#the-three-module-1-mantras-carried-forward">The three Module 1 mantras, carried forward</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Module 2: The Empirical Loop on SEC FSDS</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-banner"><img src="../assets/illustrations/banners/module-02-empirical-loop.webp" alt="Illustration: four sheets with a scatter plot, bar chart, time series and coefficient plot arranged in a loop" width="1600" height="896"></div>
+<div class="module-links">
+<p><a href="#module-video" class="is-primary"><span class="bi bi-play-btn" aria-hidden="true"></span> Video (14 min)</a> <a href="../assets/slides/day2_slides.pdf"><span class="bi bi-file-earmark-pdf" aria-hidden="true"></span> Module 2 slides (PDF)</a> <a href="../labs/day2.html"><span class="bi bi-tools" aria-hidden="true"></span> Lab</a> <a href="../assets/labs/lab2_starter.zip"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Starter pack (zip)</a></p>
+</div>
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 2 walkthrough (14 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls="" preload="metadata" playsinline="" poster="../assets/video/module2_poster.jpg" aria-labelledby="module-video-label">
+      <source src="../assets/video/module2_empirical_loop.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module2_empirical_loop.en.vtt" srclang="en" label="English" default="">
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module2_empirical_loop.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module2_empirical_loop.mp4" download="">
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 31 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module2_empirical_loop.en.vtt" download="">Captions (WebVTT)</a>
+  </p>
+</div>
+<p>Module 1 gave you the mental model: files persist and context doesn’t, delegate and then verify, and say what you mean in four parts (file, operation, aggregation, output). So far you have not tested that model on a real research question. This module does. We take one accounting question, how R&amp;D intensity has evolved across industries, from a vague idea to a verified, publication-style figure. You watch that happen in the demo, then do it yourself with a different measure. The lecture is short and mostly mechanical: what the dataset looks like, what the stages of the loop are, and which habits keep the work reproducible. Most of the learning happens in the demo and the lab, which run the same pipeline at two speeds.</p>
+<p>The dataset for this module is the SEC’s Financial Statement Data Sets (FSDS): free, quarterly bulk extracts of every XBRL-tagged financial value from every electronic filing the SEC receives. You need no credentials. There is no WRDS account, no Duo push, and no institutional subscription, only a zip file you can download to a laptop on a coffee-shop connection. FSDS is also structured the way Compustat is: a filing-metadata table, a tagged-values table, and a key that joins them. What you learn about FSDS here previews the shape of the Compustat pipeline you’ll build in Module 4, once WRDS access is live.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this module, you should be able to describe the FSDS file structure (<code>sub.txt</code> and <code>num.txt</code>, pipe-delimited, joined on <code>adsh</code>) and explain how it maps onto the shape of Compustat; write and read a six-part opening prompt that specifies the data, the join, the measure, the aggregation, the output, and the paper trail before any code is written; run the full empirical loop yourself in a single lab session, from an empty folder to a verified figure and a README a stranger could rerun; expect a wrong first-draft figure as a normal first output of a pipeline, and fix it with one to three small, targeted refinement rounds instead of one long, over-specified prompt; write a <code>DATA_PROFILE.md</code> that states what one row is, tests that it is unique, and reports tag coverage before any figure exists; and apply at least two sanity checks (one benchmark comparison and one plausibility check), plus a plot of the raw series, before you sign off on any computed result.</p>
+</div>
+</div>
+<section id="the-full-loop-once-end-to-end" class="level2">
+<h2 class="anchored" data-anchor-id="the-full-loop-once-end-to-end">The full loop, once, end to end</h2>
+<p>This module teaches the empirical loop by running it rather than describing it. The loop has five stages, and each one produces a file, not a conversation. You start from an empty folder. A download script pulls the raw FSDS extracts. A cleaning-and-join script turns the two raw files into an analysis-ready panel and prints its own attrition as it goes. A figure script turns the panel into a labeled, publication-style plot. A README, written last, states what a stranger would need to type to get from the empty folder back to the same figure. Every stage is required, and none of them happens in the chat window. When you finish, each stage is a named script on disk.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day2/FIG-D2-01_empirical_loop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The empirical loop: empty folder, download script, clean panel, figure, README — each an artifact on disk, not a conversation."><img src="../assets/figures/day2/FIG-D2-01_empirical_loop.png" class="img-fluid figure-img" alt="Flow diagram of five stages — empty folder, download script, clean-and-join, figure script, README — each stage producing a named file on disk."></a></p>
+<figcaption>The empirical loop: empty folder, download script, clean panel, figure, README — each an artifact on disk, not a conversation.</figcaption>
+</figure>
+</div>
+<p>Compare this with Module 1. Module 1 asked you to write one named script and check one number. This module asks for a chain of scripts, each feeding the next, with the sample size and the reasoning at every step written down as it happens rather than reconstructed afterward. The scale is bigger, but the habits are the same: state what you want in four parts, write it to a file, and verify before you trust it. Here you apply them across a whole pipeline instead of a single step.</p>
+</section>
+<section id="sec-fsds-anatomy-two-files-and-one-key" class="level2">
+<h2 class="anchored" data-anchor-id="sec-fsds-anatomy-two-files-and-one-key">SEC FSDS anatomy: two files and one key</h2>
+<p>FSDS comes as one zip file per fiscal quarter, going back to 2009. Inside each zip are several pipe-delimited text files. Two of them matter for nearly everything you’ll do in this course. <code>sub.txt</code> is the submissions file: one row per filing, giving you the accession number (<code>adsh</code>), the filer’s central index key (<code>cik</code>), its SIC industry code, the form type (10-K, 10-Q, and so on), the fiscal year end, and the period the filing covers. <code>num.txt</code> is the numeric-values file: one row per tagged financial fact inside a filing, giving you the accession number again, the XBRL tag (a controlled vocabulary name like <code>Assets</code> or <code>ResearchAndDevelopmentExpense</code>), the date the value applies to, the number of quarters the value spans (<code>qtrs</code>: zero for a balance-sheet snapshot, four for a full fiscal year of a flow variable), and the value itself.</p>
+<p>The join key that ties these two files together is <code>adsh</code>, the filing’s accession number. It is the most important fact about FSDS for this course. <code>sub.txt</code> tells you <em>who filed what, when, in what industry</em>; <code>num.txt</code> tells you <em>what numbers that filing reported</em>; and <code>adsh</code> is the only reliable link between the two. Every pipeline you build in this module starts by reading both files and joining them on that column. Every pipeline should also report the row count in each file before the join and the row count after. A join that drops or duplicates rows without any warning is a common failure in panel construction, and an easy one to miss.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day2/FIG-D2-02_sub_num_join.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="sub.txt and num.txt, joined on adsh: filing metadata meets tagged values."><img src="../assets/figures/day2/FIG-D2-02_sub_num_join.png" class="img-fluid figure-img" alt="Diagram of two tables, sub.txt filing metadata and num.txt tagged values, joined by arrows on the shared adsh accession-number key."></a></p>
+<figcaption><code>sub.txt</code> and <code>num.txt</code>, joined on <code>adsh</code>: filing metadata meets tagged values.</figcaption>
+</figure>
+</div>
+<p>This structure is also why you should learn FSDS before Compustat, not instead of it. Conceptually, Compustat’s <code>funda</code> table does the same job as <code>num.txt</code>: one row per firm-year per reported variable. Its company file plays the role of <code>sub.txt</code>, giving you the industry code and the identifying metadata you join everything else against. If you learn the join-key discipline here, on free data with no account to wait for, Module 4’s WRDS pipeline will look like a larger, better-documented version of something you already know.</p>
+</section>
+<section id="profile-the-data-before-you-plot-it" class="level2">
+<h2 class="anchored" data-anchor-id="profile-the-data-before-you-plot-it">Profile the data before you plot it</h2>
+<p>Before the first figure, have Claude write a <code>DATA_PROFILE.md</code>: a short file that records what one row of each table is and what can go wrong with it. It takes a few minutes, it stays on disk where every later session can read it, and it catches errors that a clean-looking figure will hide. Ask for it in the opening prompt, alongside <code>DECISIONS.md</code> and <code>LOG.md</code>, so it is written before any measure is computed. For FSDS, the profile should answer the questions below.</p>
+<p><strong>What is one row?</strong> In <code>sub.txt</code>, one filing. In <code>num.txt</code>, one reported value: a tag, for a date, over a number of quarters, in a unit, within a filing. Write that sentence down in the profile.</p>
+<p><strong>Is that row actually unique?</strong> Don’t rely on Claude’s answer or on your own memory. Have Claude look up the key columns in the SEC’s own FSDS documentation, then <em>test</em> it: count rows, count distinct combinations of those columns, and report both numbers. If they differ, you have duplicates, and you need to know why before you aggregate anything.</p>
+<p><strong>How complete are the tags you plan to use?</strong> For each tag in your measure (<code>Assets</code>, <code>ResearchAndDevelopmentExpense</code>, <code>LongTermDebt</code>), report the share of 10-K filings in each pinned quarter that report it at all. If a third of filers never report a tag, a measure built on that tag reflects who reports it as much as the underlying economics.</p>
+<p><strong>What are the known problems?</strong> A 10-K reports the prior year alongside the current one, so the same firm-year value appears in more than one filing. Decide which filing’s value you keep, and write the rule down. Amended filings (<code>10-K/A</code>) restate values that an earlier filing already reported. Decide whether you keep the original or the amendment, and record that choice too.</p>
+<p>The profile applies Module 1’s first mantra, files persist and context doesn’t, to the data layer. It also sets up Module 4, where you ask the same questions of Compustat and the answers become the metadata table and the iron-law filters.</p>
+</section>
+<section id="from-vague-idea-to-precise-task-one-more-time" class="level2">
+<h2 class="anchored" data-anchor-id="from-vague-idea-to-precise-task-one-more-time">From vague idea to precise task, one more time</h2>
+<p>“How has R&amp;D intensity evolved across industries?” is a good research question, but it does not work as a prompt. It doesn’t say which years, which industry grouping, which measure of R&amp;D, which measure of scale, or what the output should look like. An agent given that sentence has to guess at each of those choices, and you will spend your first several turns finding out, one at a time, which guesses were wrong. Module 1’s four-component habit (file, operation, aggregation, output) closes that gap. In this module you use it on a real question instead of a toy one.</p>
+<p>To turn the vague version into the precise version, answer these questions before you type anything: which files (which FSDS quarters, and which two files inside each), which join (on what key, checked how), which measure (R&amp;D expense over total assets, but which XBRL tags, and filtered how), which aggregation (a statistic, by what grouping, over what time unit), and which output (what kind of figure, saved under what name, alongside what underlying table). A domain expert should make each of these decisions deliberately; the agent should not have to infer them. The opening-prompt template below applies this decomposition in full to the demo question, and it is the part of this module most worth keeping.</p>
+</section>
+<section id="reproducibility-as-code-not-chat-lore" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility-as-code-not-chat-lore">Reproducibility as code, not chat lore</h2>
+<p>Put three small habits in place before you write the opening prompt. Adding them after the fact costs far more than building them in from the start.</p>
+<p>The first is empty-folder discipline. Every new project starts in a fresh, empty directory (<code>mkdir ~/lab2 &amp;&amp; cd ~/lab2 &amp;&amp; claude</code>), so that when the agent looks around, it sees only this project. This matters more than you might expect. An agent that opens into a folder full of last month’s Stata do-files, or another course’s half-finished scripts, will sometimes let those files shape its sense of what the project is about. An empty folder rules that out.</p>
+<p>The second is named-script discipline, which you met in Module 1 on a small scale and which this module relies on heavily. Every stage of the loop (download, clean, join, measure, figure) should exist as a named file (<code>download_fsds.py</code>, <code>clean_join.py</code>, <code>build_measure.py</code>, <code>make_figure.py</code>, or whatever names you choose), not as a number or a plot that exists only inside a chat reply. To check, ask yourself: if you deleted the entire conversation right now, would the pipeline still run? A named script passes that test. An answer typed into a chat window does not.</p>
+<p>The third habit is new in this module: paper-trail prompting. Instead of asking for the analysis and adding documentation later, you request the documentation <em>in the same prompt that starts the work</em>. The prompt asks for a <code>DECISIONS.md</code> file that records each methodological choice as it is made (which tag was used when more than one was available, how a duplicate row was handled, why a filter was applied), a <code>LOG.md</code> file with a timestamped line at every major step, and an attrition row (sample size before, sample size after, and the reason for the change) printed every time the sample shrinks or grows. Ask for these upfront. A paper trail requested after the fact has to be reconstructed from memory, and Module 1 warned you not to rely on memory.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day2/EXH-D2-02_paper_trail.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A paper trail in practice: DECISIONS.md, LOG.md, and an attrition row, each requested in the same prompt that starts the work."><img src="../assets/exhibits/day2/EXH-D2-02_paper_trail.png" class="img-fluid figure-img" alt="Mock project listing with excerpts of DECISIONS.md, LOG.md, and an attrition row printed as a pipeline runs."></a></p>
+<figcaption>A paper trail in practice: DECISIONS.md, LOG.md, and an attrition row, each requested in the same prompt that starts the work.</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-opening-prompt-template" class="level2">
+<h2 class="anchored" data-anchor-id="the-opening-prompt-template">The opening-prompt template</h2>
+<p>Here is this module’s demo prompt in full. Read it slowly. It is the most reusable artifact in the module, and you should keep it verbatim as a template for any empirical question you take through this pipeline. It has six parts. Four of them extend Module 1’s four components. The other two, the join and the paper trail, are what you add once a single script becomes a multi-stage pipeline.</p>
+<blockquote class="blockquote">
+<p><strong>DATA:</strong> Download the FSDS quarterly zip files for these fourteen quarters — Q4 of each year from 2010 through 2023 — from the SEC’s Financial Statement Data Sets page. From each quarter we need two files: <code>sub.txt</code> (filing metadata: <code>adsh</code>, <code>cik</code>, <code>sic</code>, <code>form</code>, fiscal year end, period) and <code>num.txt</code> (tagged numeric values: <code>adsh</code>, <code>tag</code>, <code>ddate</code>, <code>qtrs</code>, <code>value</code>).</p>
+<p><strong>JOIN:</strong> Merge <code>sub.txt</code> and <code>num.txt</code> on <code>adsh</code> — the filing’s accession number, the only key that reliably links the two files. State the row count in each file before the join and the row count after, and flag any <code>adsh</code> values in <code>num.txt</code> with no match in <code>sub.txt</code>.</p>
+<p><strong>MEASURE:</strong> R&amp;D intensity, defined as R&amp;D expense divided by total assets for each filer-period. Use the XBRL tag <code>ResearchAndDevelopmentExpense</code> for the numerator and <code>Assets</code> for the denominator. Keep <code>qtrs = 0</code> rows for <code>Assets</code> (a balance-sheet snapshot) and <code>qtrs = 4</code> rows for the R&amp;D tag (a full fiscal year of a flow variable). Restrict to <code>form = 10-K</code>.</p>
+<p><strong>AGGREGATION:</strong> Compute the median R&amp;D-intensity ratio by two-digit SIC code (<code>sic2</code>, the first two digits of <code>sub.txt</code>’s <code>sic</code> column) and calendar year, across all fourteen quarters.</p>
+<p><strong>OUTPUT:</strong> One line figure, one line per SIC2 industry, R&amp;D intensity on the y-axis and year on the x-axis, formatted for a working-paper draft — white background, labeled axes, a legend, no default plotting-library styling — saved as <code>rd_intensity.png</code>. Save the underlying aggregated table as <code>rd_intensity_by_sic2_year.csv</code>.</p>
+<p><strong>PAPER TRAIL:</strong> Write every stage as a named script — no output that exists only as a chat reply. Keep a <code>DECISIONS.md</code> recording every methodological choice as it’s made — which tag was chosen when more than one was available, how duplicate rows were handled, any filter applied and why. Keep a <code>LOG.md</code> with a timestamped line for every major step. Print an attrition row — n before, n after, reason — every time the sample size changes. Before computing any measure or drawing any figure, write a <code>DATA_PROFILE.md</code>: what one row of each table is, a uniqueness test on that row (report the row count and the count of distinct key combinations), the share of 10-K filings in each quarter that report each tag you use, and the rule for prior-year duplicates and <code>10-K/A</code> amendments.</p>
+</blockquote>
+<p>Read the prompt again and notice what it rules out. There is no ambiguity about which quarters, which tags, which filter, which statistic, or which filename. The pipeline also cannot end up living only inside a transcript, because the prompt requires scripts and a paper trail as part of the deliverable. This is the six-part habit in full. Learn it well enough that you can write a version of it for any measure you construct in the rest of this course.</p>
+</section>
+<section id="iteration-is-not-failure" class="level2">
+<h2 class="anchored" data-anchor-id="iteration-is-not-failure">Iteration is not failure</h2>
+<p>The first-draft figure is almost never the figure you want. Many people are surprised by this the first time, but it is normal and does not mean anything has gone wrong. A first pass at the R&amp;D-intensity plot might have the wrong axis labels, too many industry lines crowded onto one plot to read, or an industry grouping too coarse or too fine to show the pattern you’re looking for. Don’t respond with one enormous, over-specified prompt that tries to anticipate every problem. Use small, targeted refinement rounds instead: fix the axes and labels, look at the result, then adjust the industry-bucket granularity and look again. Two or three rounds is typical, and each one should address one specific thing you can see is wrong in the previous draft. Count the rounds as you go. If you’re past three and the figure is not converging, stop iterating and rethink the request itself.</p>
+<p>The other kind of iteration in this module is autonomous error recovery. Watch it closely instead of jumping in to fix the problem yourself. SEC’s servers reject bulk-file requests that don’t identify the requester, so the first time a download script runs without a proper User-Agent header, it gets a bare “403 Forbidden.” A capable agent reads that error, recognizes what it means, adds an identifying header, and retries successfully, without you typing any part of the fix.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day2/EXH-D2-01_403_recovery.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Autonomous error recovery in practice: a 403 Forbidden, diagnosed and fixed by the agent without you typing a word."><img src="../assets/exhibits/day2/EXH-D2-01_403_recovery.png" class="img-fluid figure-img" alt="Mock terminal log: a download request returns 403 Forbidden, the agent adds a User-Agent header, retries, and succeeds."></a></p>
+<figcaption>Autonomous error recovery in practice: a 403 Forbidden, diagnosed and fixed by the agent without you typing a word.</figcaption>
+</figure>
+</div>
+<p>This applies the redirect-don’t-argue principle from Module 1. You watch rather than drive, and you step in only when the <em>strategy</em> looks wrong, not every time an intermediate step throws an error. If the agent starts guessing wildly, keeps retrying the same broken approach, or heads toward a dead end, intervene. Press Esc, restate the goal plainly, and let it resume from a clean point, as Module 1’s stuck-loop protocol described.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day2/FIG-D2-03_stuck_loop_tree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="When a pipeline stalls: watch autonomous recovery first, and know the branch point where you step in."><img src="../assets/figures/day2/FIG-D2-03_stuck_loop_tree.png" class="img-fluid figure-img" alt="Decision tree for a stalled pipeline: watch autonomous recovery first, and intervene by pressing Esc and restating the goal only when the strategy itself is wrong."></a></p>
+<figcaption>When a pipeline stalls: watch autonomous recovery first, and know the branch point where you step in.</figcaption>
+</figure>
+</div>
+<p>You may also see a sub-agent appear in this module. For a long-running search or a task with several independent branches, Claude Code can start sub-agents: separate contexts that each investigate one piece of a problem and report back a summary, which saves the main conversation’s context budget. This module’s lab is small enough that you may not see one at all. Module 4 covers what sub-agents are and how to request parallel ones explicitly. If one does appear in your session, note it on your exit ticket; we’ll come back to it.</p>
+</section>
+<section id="sanity-checks-two-minimum-before-you-sign-off" class="level2">
+<h2 class="anchored" data-anchor-id="sanity-checks-two-minimum-before-you-sign-off">Sanity checks: two, minimum, before you sign off</h2>
+<p>Nothing above replaces judgment, and judgment matters most at the end, once a figure exists and looks plausible. Before you accept any computed result in this module, run at least two checks, and know what each one tests.</p>
+<p>The first is a benchmark comparison. Pick one or two industries where you already have a strong prior about the answer. Pharmaceuticals and software should show clearly higher R&amp;D intensity than utilities or retail, so confirm that the figure shows this. If it doesn’t, something in the tag selection, the filter, or the aggregation is probably wrong, and it is much cheaper to catch that now than after the figure is in a slide deck. The second is a plausibility check tied to a known event: does the series behave as you’d expect around a real economic shock? R&amp;D spending around 2020, for instance, should show some visible response to the disruption of that year. You don’t need to know the direction in advance, but a real, economically meaningful series should show <em>some</em> response. A perfectly smooth line through a period you know was turbulent suggests that something upstream was over-aggregated or mis-constructed.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: name your two checks before you look at the figure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Decide what your benchmark comparison and your plausibility check will be <em>before</em> the figure renders. If you name the checks in advance, you are less likely to reason backward from whatever the figure shows to a story that makes it look right. Write both checks in your README, along with the source you’re checking against. If a check isn’t written down, nobody else can tell that you ran it.</p>
+</div>
+</div>
+<p>One more check takes little time and comes before both of these: plot the raw series before you aggregate it. Before computing a median by industry and year, plot the firm-level ratio itself, every observation by fiscal year, once before winsorizing and once after. A handful of firms reporting R&amp;D larger than their total assets, a year where the number of observations collapses, a cluster of exact zeros that should be missing values: each of these is obvious in a raw scatter and invisible in a median. The raw plot does not replace the two checks you named in advance. It tells you whether the series is worth summarizing at all.</p>
+<p>The benchmark and plausibility checks depend on domain knowledge, and an agent cannot run them for you. Claude Code can tell you the median R&amp;D intensity came out at 4% for SIC code 28. It cannot tell you, on its own authority, whether 4% is a plausible number for pharmaceutical R&amp;D intensity in 2019. That is accounting and finance judgment, and this course is built to protect it.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: treating a plausible-looking figure as a verified one
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A figure with clean axis labels, a sensible legend, and smooth lines looks trustworthy. That polish says nothing about whether the tag selection, filter, or join was correct. A figure can look finished without being verified, and the two checks above are what verify it. Run them even when the plot looks clean.</p>
+</div>
+</div>
+</section>
+<section id="the-three-module-1-mantras-carried-forward" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-module-1-mantras-carried-forward">The three Module 1 mantras, carried forward</h2>
+<p>Everything in this module rests on the same three sentences from Module 1, now applied to more work at once.</p>
+<p><strong>Files persist; context doesn’t.</strong> In this module that means DECISIONS.md, LOG.md, attrition rows, and named scripts at every stage, not just at the end. <strong>Trust, but verify — same as an RA.</strong> In this module that means two named sanity checks before you sign off on a figure, not a vague sense that it looks fine. <strong>Be specific: file, operation, aggregation, output.</strong> In this module that habit grows to six parts (data, join, measure, aggregation, output, paper trail), because a full pipeline involves more decisions than a single script, and each one still needs to be stated rather than inferred.</p>
+<p>From here, go to <a href="../labs/day2.html">this module’s lab</a>, where you’ll run the same loop yourself on a measure of your choosing. Your measure is different from the R&amp;D demo, so your verification has to be your own rather than copied. The lab ends with a hard gate: every student needs a confirmed, working WRDS tunnel before Module 4’s flagship lab depends on it. If you haven’t tested <code>ssh wrds</code> and a Duo push since Module 1’s homework, do it before you arrive for this module. Fixing an account or Duo problem through WRDS support takes at least two days. The lab’s closing checkpoint is where we confirm access, so it is not left to the last minute.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../modules/01-foundations.html" class="pagination-link" aria-label="Module 1: Foundations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Module 1: Foundations</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../modules/03-edgar-text.html" class="pagination-link" aria-label="Module 3: EDGAR Text">
+        <span class="nav-page-text">Module 3: EDGAR Text</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

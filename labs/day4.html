@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Module 4 Lab: WRDS Pull to Analysis-Ready Panel – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../labs/day5.html" rel="next">
+<link href="../labs/day3.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="../setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="../modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="../labs/index.html" aria-current="page"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="../tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/day4.html">Module 4 Lab</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/day1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 1 Lab</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/day2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 2 Lab</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/day3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 3 Lab</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/day4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Module 4 Lab</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/day5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 5 Lab</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#before-you-start-which-track-are-you-on" id="toc-before-you-start-which-track-are-you-on" class="nav-link active" data-scroll-target="#before-you-start-which-track-are-you-on">Before you start: which track are you on?</a></li>
+  <li><a href="#live-track" id="toc-live-track" class="nav-link" data-scroll-target="#live-track">Live track</a></li>
+  <li><a href="#fallback-track" id="toc-fallback-track" class="nav-link" data-scroll-target="#fallback-track">Fallback track</a></li>
+  <li><a href="#extension-either-track-the-stata-bridge" id="toc-extension-either-track-the-stata-bridge" class="nav-link" data-scroll-target="#extension-either-track-the-stata-bridge">Extension (either track): the Stata bridge</a></li>
+  <li><a href="#extension-either-track-fan-it-out-with-sub-agents" id="toc-extension-either-track-fan-it-out-with-sub-agents" class="nav-link" data-scroll-target="#extension-either-track-fan-it-out-with-sub-agents">Extension (either track): fan it out with sub-agents</a></li>
+  <li><a href="#verify-checklist" id="toc-verify-checklist" class="nav-link" data-scroll-target="#verify-checklist">Verify checklist</a></li>
+  <li><a href="#debrief-and-exit-ticket" id="toc-debrief-and-exit-ticket" class="nav-link" data-scroll-target="#debrief-and-exit-ticket">Debrief and exit ticket</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Module 4 Lab: WRDS Pull to Analysis-Ready Panel</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-links">
+<p><a href="../assets/labs/lab4_starter.zip" class="btn"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Download the starter pack (zip)</a> <a href="../assets/slides/day4_slides.pdf"><span class="bi bi-file-earmark-pdf" aria-hidden="true"></span> Module 4 slides (PDF)</a> <a href="../modules/04-wrds-mcp-scale.html"><span class="bi bi-journal-text" aria-hidden="true"></span> Module 4 notes</a></p>
+</div>
+<p>This lab builds one pipeline on two tracks: live WRDS data if your account and tunnel are ready, or an equivalent public dataset if they aren’t. Both tracks run through the same five steps: a feasibility-assessment prompt, a filtered pull, mandatory inspection, a Parquet/DuckDB landing, and a metadata table. The two tracks count equally. What you are learning is the procedure, and the data source underneath it can be swapped. Some students choose the fallback track even with a working WRDS connection because it is faster to iterate on. That is a legitimate choice.</p>
+<p>The lab starter pack (<code>lab4_starter.zip</code>) contains <code>env_example.txt</code> (the credential-file template), the iron-law checklist, the metadata-table template, the verify checklist, the Stata bridge extension, and the fallback-sample build script with its README. <strong>The zip never contains WRDS data.</strong> The fallback sample is built entirely from public SEC data, and every WRDS-derived file you produce in this module stays in your own <code>~/wrds_data</code> or project folder.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you’re building in this module
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of the lab you will have: a <code>funda</code>-shaped panel, either pulled live from Compustat under all four iron-law filters or built from the public SEC fallback sample; four inspection checks written down with actual numbers; a Parquet-backed DuckDB database with an <code>analysis_ready</code> table and a <code>metadata</code> table documenting at least eight variables; and, if you choose the extension, a <code>.dta</code> export and a working leverage–ROA regression in Stata with fyear and SIC2 fixed effects.</p>
+</div>
+</div>
+<section id="before-you-start-which-track-are-you-on" class="level2">
+<h2 class="anchored" data-anchor-id="before-you-start-which-track-are-you-on">Before you start: which track are you on?</h2>
+<p>If your WRDS account is active, Duo is enrolled, and you completed the <a href="../setup-wrds.html">WRDS MCP Setup</a> checklist with the tunnel coming up cleanly, you’re on the <strong>live track</strong>. If Duo is unresolved, your tunnel won’t come up, or something fails mid-lab and you would rather practice the pipeline than spend the session debugging a connection, switch to the <strong>fallback track</strong>. You can switch at any point, with no penalty. Switching mid-lab is normal.</p>
+</section>
+<section id="live-track" class="level2">
+<h2 class="anchored" data-anchor-id="live-track">Live track</h2>
+<p><strong>Checkpoint-cleared students, own WRDS account.</strong></p>
+<ol type="1">
+<li><strong>Environment.</strong> Activate <code>~/.wrds-mcp-env</code>, confirm <code>.env</code> is filled in and gitignored, source it, and bring the tunnel up with <code>tunnel_up.sh</code>. Approve the single Duo push. Confirm with <code>tunnel_status.sh</code> before doing anything else.</li>
+<li><strong>Feasibility-assessment prompt.</strong> Before asking for any SQL, ask Claude the exact question from the module page: <em>“I want a firm-year panel with leverage and ROA for US industrials 2000–2023 from funda. Tell me what’s involved before you try anything complicated. What might be missing?”</em> Read the answer before you go on. It should raise the iron-law filters and at least one linking or coverage caveat.</li>
+<li><strong>Pull.</strong> Request the <code>funda</code> extract with an explicit variable list (<code>gvkey</code>, <code>fyear</code>, <code>sale</code>, <code>at</code>, <code>dltt</code>, <code>ni</code>, plus anything else your panel needs) and all four iron-law filters applied. Do not use <code>SELECT *</code> in any script you produce in this module.</li>
+<li><strong>Inspect — write all four down, with real numbers, before proceeding:</strong>
+<ul>
+<li>Row count, compared to what you expected going in.</li>
+<li><code>.head()</code> or <code>.sample()</code> eyeball of the actual values.</li>
+<li>Null check: the share of missing values in each column you plan to use.</li>
+<li><code>fyear</code> min/max, checked against your requested range.</li>
+</ul>
+Then check one benchmark firm’s value against a source Claude did not touch (its own 10-K, or a number you already knew).</li>
+<li><strong>Land it.</strong> Convert the extract to Parquet, attach it in DuckDB, and build a <code>compustat_metadata</code> table documenting at least eight variables (varname, label, units, one screening note each) using the template from the starter pack.</li>
+<li><strong>Fresh-session check.</strong> Close your session entirely, open a new one, and orient it with nothing but <code>SELECT * FROM metadata</code>. Confirm the fresh session can describe your variables correctly from that alone.</li>
+<li><strong>Tunnel teardown.</strong> Run <code>tunnel_down.sh</code> and confirm with <code>tunnel_status.sh</code> that the tunnel is closed. This step is required, and it is last on the list on purpose.</li>
+</ol>
+</section>
+<section id="fallback-track" class="level2">
+<h2 class="anchored" data-anchor-id="fallback-track">Fallback track</h2>
+<p><strong>Duo unresolved, tunnel failure, or your own choice — identical pipeline, public data.</strong></p>
+<p>The fallback sample (<code>fallback_panel.parquet</code>) is built entirely from the SEC’s public Financial Statement Data Sets by <code>build_fallback_sample.py</code> in the starter pack. It needs no WRDS account, credentials, or institutional access. Its columns are named to mirror a <code>funda</code>-style pull: <code>firm_id</code> (CIK, standing in for <code>gvkey</code>), <code>company_name</code> (for <code>conm</code>), <code>period</code> (for <code>datadate</code>), <code>at</code>, <code>sale</code>, <code>ni</code>. It is not Compustat. XBRL tags vary by filer and period in ways Compustat’s standardization smooths over, and <code>firm_id</code> cannot be joined to CRSP or Compustat without a crosswalk, which this sample doesn’t include. Every mechanical step below, however, is the same as on the live track.</p>
+<ol type="1">
+<li><strong>Environment.</strong> You need no tunnel, <code>.env</code>, or Duo. Build the sample once, from the starter-pack folder: <code>pip install requests pandas pyarrow</code>, then <code>export SEC_USER_AGENT="Your Name your.email@yale.edu"</code> (SEC requires your name and email on every request), then <code>python build_fallback_sample.py --quarter 2023q4 --out-dir .</code>. Confirm that <code>fallback_panel.parquet</code> and <code>fallback_panel.csv</code> appear. See <code>README_fallback.md</code> for details.</li>
+<li><strong>Feasibility-assessment prompt.</strong> Ask the same question, adapted to the fallback panel’s actual columns: <em>“I want a firm-year panel with leverage and profitability measures from this sample. Tell me what’s involved before you try anything complicated. What might be missing?”</em> The answer should still raise real issues, such as missing revenue tags for some filers and the CIK/gvkey gap, even without WRDS involved.</li>
+<li><strong>Pull.</strong> There’s no live query here, but treat the load the same way. Select columns explicitly; never read every column in the file. Document which SEC XBRL tags feed each variable. This is the fallback’s equivalent of the iron-law filters: write down which tags you used and why, even though there’s no <code>WHERE</code> clause to paste.</li>
+<li><strong>Inspect — the same four checks, on the fallback data:</strong>
+<ul>
+<li>Row count, compared to what the README states (≤ 5,000 firm-year observations).</li>
+<li><code>.head()</code> or <code>.sample()</code> eyeball.</li>
+<li>Null check: the share of missing <code>at</code>, <code>sale</code> and <code>ni</code> (expect <code>sale</code> to be missing more often, because revenue tags vary by filer).</li>
+<li><code>period</code> min/max, checked against the quarter the sample was built from.</li>
+</ul>
+Then check one firm’s <code>at</code> or <code>sale</code> value against that company’s own public 10-K filing.</li>
+<li><strong>Land it.</strong> Follow the same Parquet/DuckDB/metadata steps as the live track. Build a <code>metadata</code> table with at least eight variables documented, including a screening note that flags where SEC tag coverage is inconsistent.</li>
+<li><strong>Fresh-session check.</strong> Same as the live track: close, reopen, orient with <code>SELECT * FROM metadata</code> alone.</li>
+<li><strong>No tunnel to tear down.</strong> Skip this step and go to the verify checklist below.</li>
+</ol>
+</section>
+<section id="extension-either-track-the-stata-bridge" class="level2">
+<h2 class="anchored" data-anchor-id="extension-either-track-the-stata-bridge">Extension (either track): the Stata bridge</h2>
+<p>Export to <code>.dta</code> only the analysis-ready table you built, never a full <code>funda</code> pull, on either track. Run the provided <code>.do</code> file from the starter pack (<code>stata_bridge_extension.md</code>), which regresses ROA on leverage with fiscal-year and two-digit-SIC fixed effects. Match each variable’s Stata <code>label variable</code> line to your metadata table. If you documented <code>dltt</code> as “long-term debt, millions of dollars” in DuckDB, use that same label in Stata rather than writing a new one.</p>
+<p>Then run the two-language check from this module’s notes. In a fresh session, give Claude only a written description of the model — outcome, regressors, the two sets of fixed effects, how standard errors are clustered — and ask for a Python version that reads the same <code>.dta</code> file. Don’t show it the <code>.do</code> file. Compare the leverage coefficient from both runs to six decimal places and paste both numbers into your notes. If the standard errors differ, find the default that explains the gap and write it down.</p>
+</section>
+<section id="extension-either-track-fan-it-out-with-sub-agents" class="level2">
+<h2 class="anchored" data-anchor-id="extension-either-track-fan-it-out-with-sub-agents">Extension (either track): fan it out with sub-agents</h2>
+<p>This exercise answers the question from the Module 2 exit ticket. Ask Claude to split a profile of your landed Parquet file across parallel sub-agents, one per block of fiscal years (three or four blocks is enough). Each sub-agent reports row counts, the share of missing <code>at</code> and <code>sale</code>, and any duplicate firm-year pairs, and writes those numbers to its own file in a <code>checks/</code> folder. In your prompt, tell each sub-agent to read your metadata table before it queries anything. Then:</p>
+<ul>
+<li>Ask the main session to compare the files and flag the block that looks least like the others.</li>
+<li>Open one of the <code>checks/</code> files yourself and confirm one number in it against a DuckDB query you run directly.</li>
+<li>Type <code>/context</code> before and after the exercise to see how much of your main session’s context it used. Compare that with what the same profile would have cost run in the main session.</li>
+</ul>
+</section>
+<section id="verify-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="verify-checklist">Verify checklist</h2>
+<p>Work through every line below. It is self-graded and pass/fail, as in every other module.</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>.env</code> exists, is gitignored, and <code>grep -r</code> for your WRDS password over the entire project returns nothing (live track; on the fallback track this passes automatically, but check anyway)</label></li>
+<li><label><input type="checkbox">All four iron-law filters are present in the query — paste the <code>WHERE</code> clause into the box below (fallback track: paste the list of XBRL tags you used and why)</label></li>
+<li><label><input type="checkbox">Four inspection checks written down with actual numbers: rows, sample eyeball, null shares, <code>fyear</code>/<code>period</code> min/max; plus one benchmark firm checked against a source Claude didn’t touch</label></li>
+<li><label><input type="checkbox">Metadata table is queryable in DuckDB, with at least 8 variables documented (units + one screening note each)</label></li>
+<li><label><input type="checkbox">Explicit variable list in every query — no <code>SELECT *</code> anywhere in any script</label></li>
+<li><label><input type="checkbox">No WRDS-derived file anywhere outside <code>~/wrds_data</code> or your project data directory; nothing WRDS-derived committed to git</label></li>
+<li><label><input type="checkbox"><strong>Tunnel torn down</strong> (live track). This is the last item on the list on purpose.</label></li>
+</ul>
+<pre><code>Paste your WHERE clause (or, on the fallback track, your XBRL tag list) here:
+
+
+</code></pre>
+</section>
+<section id="debrief-and-exit-ticket" class="level2">
+<h2 class="anchored" data-anchor-id="debrief-and-exit-ticket">Debrief and exit ticket</h2>
+<p>Come back together for a short debrief. Be ready to share three things informally. First, what anomaly your inspection step caught. There is usually at least one: missing <code>at</code> values, an unexpected duplicate row, or a benchmark firm that didn’t match. Second, which iron-law filter would have caused a problem in your pull had you skipped it. Third, if you’re on the fallback track, whether the pipeline felt different from the live track. It should not have.</p>
+<p>Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you’d want to verify before trusting a similar result), plus this module’s item:</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exit ticket — Module 4 item
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write the feasibility-assessment prompt for a real pull from your own dissertation or working paper. Use your actual next step, not this module’s demo panel. Name the table, the variables, the date range, and ask what might be missing before you try anything complicated.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../labs/day3.html" class="pagination-link" aria-label="Module 3 Lab">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Module 3 Lab</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../labs/day5.html" class="pagination-link" aria-label="Module 5 Lab">
+        <span class="nav-page-text">Module 5 Lab</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

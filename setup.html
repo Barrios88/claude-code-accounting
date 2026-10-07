@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>General Setup – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="./setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="./modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./labs/index.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="./tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#operating-system" id="toc-operating-system" class="nav-link active" data-scroll-target="#operating-system">1. Operating system</a>
+  <ul class="collapse">
+  <li><a href="#windows-step-by-step-wsl2" id="toc-windows-step-by-step-wsl2" class="nav-link" data-scroll-target="#windows-step-by-step-wsl2">Windows, step by step (WSL2)</a></li>
+  </ul></li>
+  <li><a href="#local-runtime-python-and-r-or-stata" id="toc-local-runtime-python-and-r-or-stata" class="nav-link" data-scroll-target="#local-runtime-python-and-r-or-stata">2. Local runtime: Python (and R or Stata)</a></li>
+  <li><a href="#claude-code-install-and-authenticate" id="toc-claude-code-install-and-authenticate" class="nav-link" data-scroll-target="#claude-code-install-and-authenticate">3. Claude Code — install and authenticate</a>
+  <ul class="collapse">
+  <li><a href="#claude-in-an-editor" id="toc-claude-in-an-editor" class="nav-link" data-scroll-target="#claude-in-an-editor">Prefer a window to a bare terminal? Run Claude Code in VS Code or Cursor</a></li>
+  <li><a href="#claude-does-setup" id="toc-claude-does-setup" class="nav-link" data-scroll-target="#claude-does-setup">Let Claude Code set up the rest for you</a></li>
+  </ul></li>
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">4. git and GitHub</a></li>
+  <li><a href="#wrds-account-and-duo-start-this-early" id="toc-wrds-account-and-duo-start-this-early" class="nav-link" data-scroll-target="#wrds-account-and-duo-start-this-early">5. WRDS account and Duo — start this early</a></li>
+  <li><a href="#optional-recommended" id="toc-optional-recommended" class="nav-link" data-scroll-target="#optional-recommended">6. Optional, recommended</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">General Setup</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Do everything on this page <strong>before Module 1</strong>. The course moves fast because this setup is done in advance. If your laptop can’t run Claude Code on the first morning, you lose the whole first lab. Budget 45–90 minutes, more if you’re on Windows. Work from top to bottom. Each step ends with a check that tells you it worked.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you need by Module 1 (summary)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A laptop you have admin rights on (macOS or Linux natively; Windows via WSL2). A working local Python, plus R or Stata if that’s your language. Claude Code installed and authenticated on a Claude Pro or Max subscription (or an API key). git installed and a GitHub account. A WRDS account with Duo multi-factor enrolled. You need the account by Module 1 and a working <code>ssh wrds</code> login by the end of Module 2. That login checkpoint is a hard requirement for Module 4.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>New to the terminal? Install Claude Desktop first, and let it coach you
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://claude.com/download">Claude Desktop</a> is Anthropic’s app for Mac and Windows (Linux is in beta). It needs no terminal and no configuration, and it is free to download; a Pro or Max plan raises the usage limits. Its <strong>Chat</strong> tab can’t run commands on your computer, but it can walk you through every step on this page in plain language, for your specific machine. Whenever a step here fails, open Claude Desktop, paste in the command you ran and the error you got (or drag in a screenshot), and ask what to do next. That is the same help Module 1’s lab gives, and you can get it as soon as you’re stuck.</p>
+<p>Claude Code (step 3) is the tool that actually <em>runs</em> commands for you. A chat app can only advise you; an agent carries out the steps. Module 1 starts with that difference, and you will see it here before the course begins. The same Desktop app also has a <strong>Code</strong> tab, which runs Claude Code itself with a graphical interface instead of a terminal. The course demos use the terminal, but everything they teach works in the Code tab too, so use it if the terminal stays uncomfortable.</p>
+</div>
+</div>
+<section id="operating-system" class="level2">
+<h2 class="anchored" data-anchor-id="operating-system">1. Operating system</h2>
+<p>macOS and Linux work natively, with nothing special to do. <strong>Windows needs one extra layer:</strong> Claude Code runs inside a small Linux system that Windows provides, called <strong>WSL2</strong> (Windows Subsystem for Linux), not on native Windows. You set it up once, using the steps right below. Start with this habit: once WSL is installed, do <em>everything</em> on this page (Python, Claude Code, git, your project files) inside the Ubuntu window, never in PowerShell or Command Prompt. The most common Windows problem in the course is mixing the two. A Python installed on the Windows side is invisible inside Ubuntu, and vice versa.</p>
+<p><strong>Check (macOS/Linux):</strong> you can open a terminal (Terminal.app or your Linux terminal) and <code>echo hello</code> prints hello. Windows users: do the walkthrough below first.</p>
+<section id="windows-step-by-step-wsl2" class="level3">
+<h3 class="anchored" data-anchor-id="windows-step-by-step-wsl2">Windows, step by step (WSL2)</h3>
+<p>Windows users run into more problems than Mac users, and almost all of them come from skipping a step here or working in the wrong window. Go slowly:</p>
+<ol type="1">
+<li><strong>Open PowerShell as administrator.</strong> Click Start, type <code>PowerShell</code>, right-click <strong>Windows PowerShell</strong>, choose <strong>Run as administrator</strong>, and click Yes.</li>
+<li><strong>Install WSL and Ubuntu.</strong> Type <code>wsl --install</code> and press Enter. It downloads WSL2 and Ubuntu Linux. When it asks, <strong>reboot</strong> your PC.</li>
+<li><strong>Create your Linux login.</strong> After the reboot, an <strong>Ubuntu</strong> window opens on its own (if it doesn’t, open it from Start → <strong>Ubuntu</strong>) and asks for a username and password. These are new and used only for Linux; they are not your Windows login. The username must be all lowercase with no spaces. Pick a password you’ll remember, because you’ll need it again in step 5 below. Nothing appears on screen as you type the password. That is normal: type it and press Enter.</li>
+<li><strong>Know your window.</strong> From here on, wherever this page says “the terminal,” it means this <strong>Ubuntu</strong> window. Reopen it any time from Start → <strong>Ubuntu</strong>. Don’t run the course’s commands in PowerShell or Command Prompt — only in Ubuntu.</li>
+<li><strong>Update it once.</strong> In the Ubuntu window, run <code>sudo apt update &amp;&amp; sudo apt upgrade -y</code> and enter your Linux password when asked.</li>
+<li><strong>Keep your files on the Linux side.</strong> Save your project folders under your Linux home (type <code>cd ~</code> to get there), not in your Windows <code>C:\Users\...</code> folders. Files kept on the Windows side run much slower and make file paths confusing.</li>
+</ol>
+<p><strong>Check (Windows):</strong> the <strong>Ubuntu</strong> window opens and <code>echo hello</code> prints hello. If <code>wsl --install</code> gave an error, the usual causes are that you weren’t in an administrator PowerShell or that virtualization is switched off in your PC’s BIOS. The <a href="https://github.com/hanlulong/AI-research-setup">AI-research-setup guide</a> has a Windows walkthrough with screenshots for both problems.</p>
+</section>
+</section>
+<section id="local-runtime-python-and-r-or-stata" class="level2">
+<h2 class="anchored" data-anchor-id="local-runtime-python-and-r-or-stata">2. Local runtime: Python (and R or Stata)</h2>
+<p>Claude Code writes and runs code using whatever is installed on <em>your</em> machine. It does not come with its own Python or R. The course’s examples are in Python. Module 4 shows how to connect to Stata, and R users can follow along with everything. If you’d rather not type installs by hand, do step 3 first, then <a href="#claude-does-setup">let Claude Code run this section for you</a>.</p>
+<ul>
+<li><strong>Python 3.10+</strong>: <code>python3 --version</code> should print 3.10 or higher. If not: macOS <code>brew install python</code>; Ubuntu/WSL <code>sudo apt update &amp;&amp; sudo apt install python3 python3-pip python3-venv</code>.</li>
+<li>Install the packages the labs use: <code>pip3 install pandas matplotlib duckdb pyarrow requests</code> (add <code>--break-system-packages</code> on newer Ubuntu if pip refuses).</li>
+<li><strong>R users:</strong> confirm <code>Rscript --version</code> runs. <strong>Stata users:</strong> confirm you can launch Stata from your machine and note the path to the executable. Module 4’s <code>.do</code>/<code>.dta</code> handoff needs it.</li>
+</ul>
+<p><strong>Check:</strong> <code>python3 -c "import pandas; print('ok')"</code> prints ok.</p>
+</section>
+<section id="claude-code-install-and-authenticate" class="level2">
+<h2 class="anchored" data-anchor-id="claude-code-install-and-authenticate">3. Claude Code — install and authenticate</h2>
+<p>You need either a <strong>Claude Pro or Max subscription</strong> or an <strong>API key</strong>. Pro (roughly $20/month at the time of writing; check <a href="https://claude.com/pricing">current pricing</a>) is enough for this course. Max tiers give you more usage but are not required. API-key billing charges per token and also works.</p>
+<p>Install (pick one method):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recommended: the native installer (macOS, Linux, WSL); no Node needed</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or Homebrew (macOS)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> claude-code</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># or npm (requires Node 22 or later)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The native installer updates itself automatically. Homebrew and npm installs do not; update them yourself now and then. Anthropic’s <a href="https://code.claude.com/docs/en/setup">setup guide</a> has the current commands for every platform.</p>
+<p>Then, from any folder, run <code>claude</code>. On first launch it walks you through login. Choose your subscription account, or set up the API key when prompted. Grant the terminal access it asks for.</p>
+<p><strong>Check (the most important one):</strong> <code>cd</code> into a fresh empty folder, run <code>claude</code>, and ask it: <em>“Create a file called hello.txt containing one sentence about accounting research, then read it back to me.”</em> If it creates the file and reads it back, and the file is there when you run <code>ls</code>, you are ready for Module 1.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: it installs but won’t launch
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check these three causes, in order: (1) the <code>claude</code> command is not on your PATH yet (open a new terminal window; if that doesn’t help, add the path the installer printed); (2) if you installed with npm, Node is too old (<code>node --version</code> should be 22 or later); (3) on Windows, you installed in PowerShell instead of inside WSL, which is where this course runs. If you spend more than 30 minutes here, stop and bring the error message to Module 1’s lab. Part A sets aside time and staff for this. The <a href="https://github.com/hanlulong/AI-research-setup">AI-research-setup guide</a> listed below also has step-by-step walkthroughs for macOS and Windows.</p>
+</div>
+</div>
+<section id="claude-in-an-editor" class="level3">
+<h3 class="anchored" data-anchor-id="claude-in-an-editor">Prefer a window to a bare terminal? Run Claude Code in VS Code or Cursor</h3>
+<p>The course demos run Claude Code straight from the terminal, which is the fastest way to work once you are used to it. But a blank terminal is intimidating if you have never used one, and you do not have to start there. Claude Code also runs <em>inside</em> a graphical code editor. There you can click on files and see its proposed changes as side-by-side, before-and-after diffs that you accept or reject. It is the <strong>same Claude Code</strong> on the same account you set up in step 3, in an easier window. You have two options.</p>
+<p><strong>Option A — VS Code (free).</strong> VS Code is a free, widely used editor from Microsoft.</p>
+<ol type="1">
+<li>Install it from <a href="https://code.visualstudio.com">code.visualstudio.com</a> and open it. (Windows/WSL users: see the note at the end of this section.)</li>
+<li>Open the <strong>Extensions</strong> panel (the four-squares icon in the left bar, or <code>Ctrl</code>/<code>Cmd</code>+<code>Shift</code>+<code>X</code>), search <strong>Claude Code</strong> (publisher: Anthropic), and click <strong>Install</strong>. You need VS Code version 1.94 or newer.</li>
+<li>Open your project with <strong>File → Open Folder</strong>, then open any file inside it.</li>
+<li>Click the <strong>✱ (spark) icon</strong> at the top-right of the editor, or the <strong>✱ Claude Code</strong> button in the bottom status bar, to open the Claude panel. The first time, click <strong>Sign in</strong> and approve in the browser with the same Claude account from step 3.</li>
+</ol>
+<p>You now have Claude Code in a side panel. It automatically sees whatever code you have selected in the editor (press <code>Alt</code>/<code>Option</code>+<code>K</code> to pin the file and line numbers into your prompt), and you review every edit as a diff before it touches your files. A <strong>Plan</strong> mode writes out what it intends to do before it does anything.</p>
+<p><strong>Option B — Cursor (an editor with AI built in).</strong> Cursor is a version of VS Code with its own AI assistant included.</p>
+<ol type="1">
+<li>Download it from <a href="https://cursor.com">cursor.com</a>, install it like any other app, and open it.</li>
+<li>Cursor’s built-in assistant (called Composer) is <em>its own</em> product, separate from Claude Code. The course’s labs and skills assume Claude Code. To run Claude Code in Cursor, install the same <strong>Claude Code</strong> extension (Extensions panel → search <em>Claude Code</em> by Anthropic), or type <code>claude</code> in Cursor’s built-in terminal (<strong>Terminal → New Terminal</strong>).</li>
+<li>If the Claude panel ever vanishes after a Cursor update, open the Command Palette (<code>Ctrl</code>/<code>Cmd</code>+<code>Shift</code>+<code>P</code>) and run <strong>Reload Window</strong>. This is a known, harmless Cursor issue.</li>
+</ol>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Common beginner mistakes here
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>The panel and the <code>claude</code> command are two separate installs.</strong> The extension runs its own private copy of Claude Code for the side panel. If you also want to type <code>claude</code> in a terminal, you still need the standalone install from step 3.</li>
+<li><strong>The spark ✱ icon only appears once a file is open</strong>, not just a folder. If you don’t see it, open any file, or click <strong>✱ Claude Code</strong> in the status bar, which works even with no file open. If it still won’t appear, check <strong>Help → About</strong> for version 1.94+ and run <strong>Developer: Reload Window</strong> from the Command Palette.</li>
+<li><strong>A free Claude.ai account won’t work.</strong> Claude Code, in the editor or the terminal, needs a Pro or Max subscription or an API key, the same account as step 3.</li>
+</ul>
+</div>
+</div>
+<p><strong>Windows users:</strong> install VS Code on the Windows side, then add Microsoft’s <strong>WSL</strong> extension (Extensions panel → search <em>WSL</em>). Then open your Ubuntu window and type <code>code .</code>. VS Code opens connected <em>into</em> WSL. The editor is a normal Windows window, while Claude Code and your code still run in Linux. This is the easiest setup for a Windows user who is new to the terminal.</p>
+</section>
+<section id="claude-does-setup" class="level3">
+<h3 class="anchored" data-anchor-id="claude-does-setup">Let Claude Code set up the rest for you</h3>
+<p>Once <code>claude</code> runs, you don’t have to type the remaining setup by hand. You can ask Claude Code to do it, which is the kind of work this course teaches. From a terminal in an empty project folder (or the VS Code / Cursor panel above), try a prompt like:</p>
+<blockquote class="blockquote">
+<p>I’m setting up a laptop for an empirical accounting course. Check whether Python 3.10+, git, and the packages pandas, matplotlib, duckdb, pyarrow, and requests are installed. Install whatever’s missing, then set my git <code>user.name</code> and <code>user.email</code> — ask me for them first. Show me one check per item proving it worked, explain each command before you run it, and stop if anything looks risky.</p>
+</blockquote>
+<p>Claude Code asks permission before it runs anything. Approve the steps one at a time, and expect to type your computer’s password for system installs (on Windows, that’s the Linux password from the WSL walkthrough). This prompt covers step 2 (Python) and the git part of step 4. You still create the GitHub account yourself. You also do WSL (on Windows) and the Claude Code install above yourself, because the agent can’t run until they are in place. The WRDS account in step 5 is also yours: it is an account request, not something installed on your machine. If you prefer to do it all by hand, the exact commands are in steps 2 and 4.</p>
+</section>
+</section>
+<section id="git-and-github" class="level2">
+<h2 class="anchored" data-anchor-id="git-and-github">4. git and GitHub</h2>
+<p>git lets you undo mistakes (Module 1) and share work with collaborators (Module 5). Install: macOS <code>xcode-select --install</code> (or <code>brew install git</code>); Ubuntu/WSL <code>sudo apt install git</code>. Create a free <a href="https://github.com">GitHub account</a> if you don’t have one, and set your identity:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"you@university.edu"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Check:</strong> <code>git --version</code> prints a version; you can log in to github.com.</p>
+</section>
+<section id="wrds-account-and-duo-start-this-early" class="level2">
+<h2 class="anchored" data-anchor-id="wrds-account-and-duo-start-this-early">5. WRDS account and Duo — start this early</h2>
+<p>Module 4 runs on <strong>your own WRDS account</strong>. The course never distributes WRDS data or shares logins. If you don’t have an account, request one now through your institution’s WRDS representative. Approval can take days, which is why you request it before the course starts rather than waiting until the week of Module 4.</p>
+<p>There are two deadlines. First, your account must exist and <strong>Duo multi-factor must be enrolled by Module 1</strong> (WRDS Account → Settings → Two-Factor). Second, <strong>by the end of Module 2</strong> you must be able to complete an SSH login: run <code>ssh your_username@wrds-cloud.wharton.upenn.edu</code>, approve the Duo push, see a WRDS prompt, and type <code>exit</code>. The labs use the shorter command <code>ssh wrds</code>. To set it up, add these lines to <code>~/.ssh/config</code> (create the file if it doesn’t exist), with your own username:</p>
+<pre><code>Host wrds
+  HostName wrds-cloud.wharton.upenn.edu
+  User your_username</code></pre>
+<p>After that, <code>ssh wrds</code> does the same thing as the full command. Module 2 ends with a checkpoint where you submit proof of that login or report a problem. Students without working access by Module 4 use the public-data fallback track, which teaches the same skills with public SEC data. Nobody is left without a way to do the lab, but working on your own WRDS account is better.</p>
+<p><strong>Check:</strong> the SSH login above succeeds end-to-end.</p>
+</section>
+<section id="optional-recommended" class="level2">
+<h2 class="anchored" data-anchor-id="optional-recommended">6. Optional, recommended</h2>
+<p>Fifteen minutes spent on your terminal setup will help throughout the course. A modern terminal (e.g., <a href="https://ghostty.org">Ghostty</a>) and a multiplexer (e.g., <a href="https://zellij.dev">Zellij</a> or tmux) make long-running agent sessions much easier to manage. Module 1’s demo shows this setup briefly, but nothing in the course requires it. A code editor helps you read what Claude writes. If a bare terminal feels intimidating, you can <a href="#claude-in-an-editor">run Claude Code inside VS Code or Cursor</a> instead (see step 3).</p>
+<p>For a second opinion on any install step, use <a href="https://github.com/hanlulong/AI-research-setup">hanlulong/AI-research-setup</a>. It is a step-by-step Claude Code setup guide written for economics researchers. It covers macOS and Windows and is kept up to date. It is the guide we point students to when a machine gives them trouble. The <a href="./tools.html">Tools</a> page covers what Claude Code <em>is</em> relative to Claude Desktop, Cursor, and Codex; the <a href="./setup-wrds.html">WRDS setup</a> page covers the Module 4 stack in detail (do that one after Module 3, not now).</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The pre-course checklist
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before Module 1, all of these should be true. Each one was a <strong>Check</strong> line above. Terminal opens and runs commands. <code>python3 -c "import pandas"</code> works (plus R/Stata if applicable). <code>claude</code> launches in a fresh folder, authenticates, and completes the hello.txt round-trip. <code>git --version</code> works and you have a GitHub account. WRDS account exists with Duo enrolled. If any item fails and you can’t fix it in 30 minutes, write down the exact error message and bring it to Module 1. Other students will have the same problem, and it can be fixed. It will not keep you out of the course.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

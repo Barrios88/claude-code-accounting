@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Module 1: Foundations — Tools, Context, and the Research Map – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../modules/02-empirical-loop.html" rel="next">
+<link href="../modules/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="../setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="../modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../labs/index.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="../tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/01-foundations.html">Module 1: Foundations</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/01-foundations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Module 1: Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/02-empirical-loop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 2: Empirical Loop</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/03-edgar-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 3: EDGAR Text</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/04-wrds-mcp-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/05-writing-verify.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 5: Writing &amp; Verification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/06-ai-knowledge-market.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-tool-ladder-five-rungs-one-decision" id="toc-the-tool-ladder-five-rungs-one-decision" class="nav-link active" data-scroll-target="#the-tool-ladder-five-rungs-one-decision">The tool ladder: five rungs, one decision</a></li>
+  <li><a href="#claude-code-as-a-terminal-resident-ra" id="toc-claude-code-as-a-terminal-resident-ra" class="nav-link" data-scroll-target="#claude-code-as-a-terminal-resident-ra">Claude Code as a terminal-resident RA</a></li>
+  <li><a href="#context-window-mechanics-everything-every-turn" id="toc-context-window-mechanics-everything-every-turn" class="nav-link" data-scroll-target="#context-window-mechanics-everything-every-turn">Context window mechanics: everything, every turn</a></li>
+  <li><a href="#degradation-and-intentional-compaction" id="toc-degradation-and-intentional-compaction" class="nav-link" data-scroll-target="#degradation-and-intentional-compaction">Degradation and intentional compaction</a></li>
+  <li><a href="#trust-but-verify-the-ra-standard" id="toc-trust-but-verify-the-ra-standard" class="nav-link" data-scroll-target="#trust-but-verify-the-ra-standard">Trust, but verify — the RA standard</a></li>
+  <li><a href="#goal-first-prompting-four-components" id="toc-goal-first-prompting-four-components" class="nav-link" data-scroll-target="#goal-first-prompting-four-components">Goal-first prompting: four components</a></li>
+  <li><a href="#redirect-dont-argue" id="toc-redirect-dont-argue" class="nav-link" data-scroll-target="#redirect-dont-argue">Redirect, don’t argue</a></li>
+  <li><a href="#plan-mode-a-first-look" id="toc-plan-mode-a-first-look" class="nav-link" data-scroll-target="#plan-mode-a-first-look">Plan Mode: a first look</a></li>
+  <li><a href="#claude.md-instructions-that-persist" id="toc-claude.md-instructions-that-persist" class="nav-link" data-scroll-target="#claude.md-instructions-that-persist">CLAUDE.md: instructions that persist</a></li>
+  <li><a href="#permission-modes-manual-vs.-auto" id="toc-permission-modes-manual-vs.-auto" class="nav-link" data-scroll-target="#permission-modes-manual-vs.-auto">Permission modes: manual vs.&nbsp;auto</a></li>
+  <li><a href="#the-accounting-research-workflow-map" id="toc-the-accounting-research-workflow-map" class="nav-link" data-scroll-target="#the-accounting-research-workflow-map">The accounting research workflow map</a></li>
+  <li><a href="#the-three-module-1-mantras" id="toc-the-three-module-1-mantras" class="nav-link" data-scroll-target="#the-three-module-1-mantras">The three Module 1 mantras</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Module 1: Foundations — Tools, Context, and the Research Map</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-banner"><img src="../assets/illustrations/banners/module-01-foundations.webp" alt="Illustration: a library ladder leaning against bookshelves beside a reading desk" width="1600" height="896"></div>
+<div class="module-links">
+<p><a href="#module-video" class="is-primary"><span class="bi bi-play-btn" aria-hidden="true"></span> Video (12 min)</a> <a href="../assets/slides/day1_slides.pdf"><span class="bi bi-file-earmark-pdf" aria-hidden="true"></span> Module 1 slides (PDF)</a> <a href="../labs/day1.html"><span class="bi bi-tools" aria-hidden="true"></span> Lab</a> <a href="../assets/labs/lab1_starter.zip"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Starter pack (zip)</a></p>
+</div>
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 1 walkthrough (12 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls="" preload="metadata" playsinline="" poster="../assets/video/module1_poster.jpg" aria-labelledby="module-video-label">
+      <source src="../assets/video/module1_foundations.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module1_foundations.en.vtt" srclang="en" label="English" default="">
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module1_foundations.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module1_foundations.mp4" download="">
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 25 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module1_foundations.en.vtt" download="">Captions (WebVTT)</a>
+  </p>
+</div>
+<p>Most people first meet AI through a chat window or a Cowork-style helper in a browser tab, and the first real research task they give it usually breaks it. Ask it to open a Compustat extract, join it to a filing index, and produce a labeled figure, and it stalls. It cannot see your filesystem, it cannot run your code, and it forgets the conversation when you close the tab. The natural conclusion is “AI can’t do real research work.” That is true of the tool you tried. It is not true of agentic AI in general, because you were on a low rung of a ladder that goes much higher.</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day1/EXH-D1-01a_desktop_file_task.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The same request at rung 1: no filesystem, no execution."><img src="../assets/exhibits/day1/EXH-D1-01a_desktop_file_task.png" class="img-fluid figure-img" alt="Mock chat window where an assistant, asked to open a Compustat file, replies that it cannot access local files."></a></p>
+<figcaption>The same request at rung 1: no filesystem, no execution.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day1/EXH-D1-01b_claudecode_file_task.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="And at rung 4: read, script, run, verify."><img src="../assets/exhibits/day1/EXH-D1-01b_claudecode_file_task.png" class="img-fluid figure-img" alt="Mock terminal session where Claude Code reads the same Compustat file, writes a script, runs it, and reports the result."></a></p>
+<figcaption>And at rung 4: read, script, run, verify.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Claude Code is a different kind of tool. It is an agent that runs in your terminal: it reads and writes files, runs your R, Python, or Stata code on your own machine, and carries out a multi-step plan instead of answering one question at a time. It also has no memory of its own, and this module is organized around that fact. Every session starts blank. Everything it “knows” about your project at any moment is whatever has been typed into the current conversation or written to a file it can read. In this module you install it, place it on the tool ladder, and build the habits that make an agent with no memory trustworthy for research: writing state to files, checking output the way you would an RA’s, and being specific about what you want. Module 6 returns to a harder question: what does an agent this capable change about how accounting research gets produced, and which parts of the job stay yours?</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this module, you should be able to place Claude Code correctly on a five-rung tool ladder and explain why the rung matters for a data-intensive accounting task; describe, in your own words, why Claude Code carries no memory between sessions and what that implies for how you work; rewrite a vague research prompt into one that names the input file, the operation, the level of aggregation, and the output; write a minimal CLAUDE.md for a real project and confirm that it loads; and see where this module’s habits fit in the rest of the course: where an agent saves you time, and where the judgment stays with you.</p>
+</div>
+</div>
+<section id="the-tool-ladder-five-rungs-one-decision" class="level2">
+<h2 class="anchored" data-anchor-id="the-tool-ladder-five-rungs-one-decision">The tool ladder: five rungs, one decision</h2>
+<p>AI tools differ in capability, and the level determines which research tasks are feasible at all. Think of five rungs. At the bottom, a plain chat interface answers questions about text you paste in. It is useful for a quick methods question and useless for working with real data. One rung up, an inline assistant inside an editor (think Cursor’s autocomplete or an IDE chat panel) can suggest and insert code as you type. That helps with a quick Stata do-file edit, but you still make every keystroke. Above that, an agentic IDE assistant can make a short chain of edits across a few files without you approving each line. It closes some of the gap, but it is still limited to the editor’s sandbox and its narrower view of your project.</p>
+<p>Claude Code is on the fourth rung. It is a terminal agent with direct filesystem access that can run any local command. It can write a Python script, run it, read the error, fix the script, and rerun it without you retyping anything. This course works at that rung. On the fifth rung, the agent is also connected to external services and sandboxed execution environments through the Model Context Protocol. You will use this in Module 4, where a WRDS MCP server lets Claude query Compustat with your own credentials without ever seeing your password. Where a Cowork-style browser assistant sits depends on how it is configured. By default it sees only a limited, browser-scoped view of your work, which puts it closer to rung two than rung four. That is not a criticism of the tool. It was built for a different job.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day1/FIG-D1-01_tool_ladder.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The five-rung tool ladder, with a Compustat-scale research task unlocked at each rung."><img src="../assets/figures/day1/FIG-D1-01_tool_ladder.png" class="img-fluid figure-img" alt="Diagram of a five-rung ladder. From bottom: plain chat, inline code assistant, agentic IDE assistant, terminal agent, and agent wired to external services, with the research task each rung makes feasible."></a></p>
+<figcaption>The five-rung tool ladder, with a Compustat-scale research task unlocked at each rung.</figcaption>
+</figure>
+</div>
+<p>The <a href="../tools.html">Tools</a> page compares the products in full. In this module, the decision rule matters more than the product names: if the task requires touching real files, running real code, and iterating on its own, you need rung four or above.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: dismissing AI after a Cowork-level disappointment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If your first experience with agentic AI was a browser-based assistant that couldn’t open your data file, you may conclude that AI assistants can’t help with research at all. That conclusion is wrong. The tool did what it was built to do, and it was not built to touch your filesystem. Many students come to this course after that experience, and it is a reasonable one to have had. The fix is to work out which rung the task needs, not to give up on every rung.</p>
+</div>
+</div>
+</section>
+<section id="claude-code-as-a-terminal-resident-ra" class="level2">
+<h2 class="anchored" data-anchor-id="claude-code-as-a-terminal-resident-ra">Claude Code as a terminal-resident RA</h2>
+<p>For this course, think of Claude Code as a research assistant who sits at your terminal, not a search engine you type questions into. It reads the files in your project directory, writes new scripts, executes them using whatever R, Python, or Stata installation already exists on your machine, and reports back what happened — including the error message, if there was one. Because the code runs on your own machine, your local environment has to work. If Python isn’t installed, or your Stata license path isn’t configured, a more capable agent does not fix that. The agent is a capable collaborator, not a virtual computer.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day1/EXH-D1-02_terminal_anatomy.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Anatomy of a Claude Code turn: your prompt, the tool calls, what it saw, the handback, and where you are."><img src="../assets/exhibits/day1/EXH-D1-02_terminal_anatomy.png" class="img-fluid figure-img" alt="Annotated mock Claude Code terminal turn, with labels pointing to the user prompt, the tool calls, what the agent saw, its summary, and the next input line."></a></p>
+<figcaption>Anatomy of a Claude Code turn: your prompt, the tool calls, what it saw, the handback, and where you are.</figcaption>
+</figure>
+</div>
+<p>This changes what it means to use Claude Code well. With a chat tool, you might try to write one perfect prompt and hope for one perfect answer. With Claude Code you are managing a collaborator. It will draft a merge script for a Compustat and CRSP extract, run it, look at the row counts, and tell you what it found, as a first-year RA would. As with an RA, you need to check the work before you rely on it.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: assuming the runtime is handled for you
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Because Claude Code feels conversational, it is tempting to assume it brings its own Python or R environment, as a cloud notebook does. It does not. It uses whatever is installed locally, and local setup is a common Module 1 blocker. Windows is the usual problem case, because a native Python install and a WSL-based one can differ without any warning. If <code>claude</code> launches but a script it writes fails with “command not found,” check your local runtime before assuming something is wrong with the agent.</p>
+</div>
+</div>
+</section>
+<section id="context-window-mechanics-everything-every-turn" class="level2">
+<h2 class="anchored" data-anchor-id="context-window-mechanics-everything-every-turn">Context window mechanics: everything, every turn</h2>
+<p>Claude Code does not remember your project between turns the way a person would. Every time you send a message, the whole conversation so far is sent to the model again as one package. That package includes every prompt, every reply, and every file it has read into the conversation. The model has no separate memory of your project. It knows only what is in that package. Claude Code’s standard context window is 200,000 tokens (some newer models offer up to a million). That sounds large, but reading one large CSV directly into the conversation can use a sizable share of it in a single turn. So don’t ask the agent to read a giant Compustat extract into the conversation to “look at it.” Ask it to write a script that processes the file on disk and reports back a summary. Type <code>/context</code> at any point in a session to see how full the window is and what is filling it. The same habit decides what leaves your machine. Claude Code runs locally, but everything in the conversation is sent to the model: your prompts, Claude’s replies, and anything Claude reads into the conversation, including file contents and command output. A file Claude never opens stays on your disk. So a script that processes a licensed Compustat extract and reports back a row count sends the row count, not the data. Claude Code also keeps a plain-text transcript of each session in <code>~/.claude/projects/</code> on your own machine, for 30 days by default (<a href="https://code.claude.com/docs/en/data-usage">Anthropic’s data-usage page</a> has the details).</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: importing your Dropbox mental model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A hard habit to unlearn is treating a Claude Code session like a shared drive or an email thread, which keeps last week’s work because it is “in the account.” A session does not work that way. Nothing is retained across separate sessions unless it was written to a file that a future session can read. This is the main change in how you think about the tool in this module. The conventions introduced below (CLAUDE.md, progress files, named scripts) all exist because sessions carry no memory.</p>
+</div>
+</div>
+</section>
+<section id="degradation-and-intentional-compaction" class="level2">
+<h2 class="anchored" data-anchor-id="degradation-and-intentional-compaction">Degradation and intentional compaction</h2>
+<p>As a session runs long, two related things happen. First, the conversation grows, with more turns, more file contents, and more back-and-forth, until it nears the window’s capacity. Second, response quality can drop well before the window is full. A session with many turns of trial and error, dead ends, and course corrections keeps all of that in the package that is re-sent every turn, and the noise can make the model reason less carefully about your next request.</p>
+<p>The fix is to compact on purpose instead of letting the window fill by accident. Before a session gets unwieldy, ask Claude to write a short progress file, <code>progress.md</code>, that summarizes what has been decided and done so far: which filters were applied, which files exist, and what is left. Then run <code>/compact</code>, which condenses the conversation history into a much shorter summary retained in place of the full transcript. If something specific must survive compaction, say so. For example, ask Claude to compact while keeping every detail of a particular variable construction decision. For a fully fresh start, close the session and open a new one. Because <code>progress.md</code> and your project’s <code>CLAUDE.md</code> are files, not conversation, the next session can read them and pick up where the last one left off. What you decided in one session is saved on disk instead of being lost when the session ends.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day1/FIG-D1-02_context_compaction.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Left: turns accumulating in a finite context window until it overflows. Right: the intentional compaction cycle — progress.md, then /compact, then a fresh session with a slim, file-backed context."><img src="../assets/figures/day1/FIG-D1-02_context_compaction.png" class="img-fluid figure-img" alt="Two-panel diagram. Left: conversation turns stacking inside a fixed 200K-token context window until it overflows. Right: a three-step cycle — write progress.md, run /compact, start a fresh session that reads the file."></a></p>
+<figcaption>Left: turns accumulating in a finite context window until it overflows. Right: the intentional compaction cycle — progress.md, then /compact, then a fresh session with a slim, file-backed context.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: treating compaction as forgetting everything
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compaction does not erase the session. It replaces a long, noisy transcript with a short summary of what mattered, much as you would hand a project to a colleague with a two-paragraph memo. There are two ways to get this wrong: avoiding <code>/compact</code> for fear of losing progress, or trusting it without first writing the important decisions to a file, where they are guaranteed to persist. Write the file, then compact.</p>
+</div>
+</div>
+</section>
+<section id="trust-but-verify-the-ra-standard" class="level2">
+<h2 class="anchored" data-anchor-id="trust-but-verify-the-ra-standard">Trust, but verify — the RA standard</h2>
+<p>If Claude Code is an RA at your terminal, treat its output the way you already treat a real RA’s work. Trust the process enough to delegate it, and check the result before you build on it. This is ordinary supervision, applied to a new kind of collaborator. Suppose Claude produces a leverage ratio panel from a Compustat extract. Don’t take the whole panel on faith. Pick one firm you know well, say a large, well-covered industrial firm, and check by hand that its computed leverage matches the balance sheet in that year’s 10-K. If that check holds, you have grounds for confidence in the rest of the panel. If it doesn’t, you have caught a construction error before it spread into every downstream table.</p>
+<p>How much checking a result needs depends on the task, and it is hard to tell in advance. Researchers at Harvard, Wharton, MIT and elsewhere gave consultants at Boston Consulting Group realistic assignments, with and without GPT-4. On tasks the model handled well, the consultants who used it finished faster and produced better work. On a task chosen to sit just outside what the model could do, the consultants who used it were more likely to reach the wrong answer than those who worked without it. The authors call this a “jagged technological frontier” (<a href="https://doi.org/10.1287/orsc.2025.21838">Dell’Acqua et al., 2026, <em>Organization Science</em></a>). The same pattern shows up in this course. Claude Code is very reliable at downloading a quarter of FSDS and joining two files on <code>adsh</code>. It is much less reliable at judging whether a keyword count measures what you say it measures, and its answer to that question will read just as fluently. Check hardest where the work depends on judgment, not where it depends on mechanics.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: one number, one independent source
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you accept any computed output in this module, such as a row count, a ratio, or a figure, pick one value you can check against a source Claude did not touch, and check it by hand. It takes a few minutes, and it is the one step in this module’s lab the agent cannot do for you. Only you can decide whether the number looks right.</p>
+</div>
+</div>
+</section>
+<section id="goal-first-prompting-four-components" class="level2">
+<h2 class="anchored" data-anchor-id="goal-first-prompting-four-components">Goal-first prompting: four components</h2>
+<p>Vague prompts rarely produce an obvious error. They produce something that looks plausible but isn’t quite what you meant, and the gap grows over a session. The most useful habit for a beginner is to name four things in every prompt: the <strong>file</strong> you’re operating on, the <strong>operation</strong> to perform, the <strong>level of aggregation</strong> the result should live at, and the <strong>output</strong> you expect back, by name and format.</p>
+<p>Compare two versions of the same request. Vague: “Look at this Compustat file and tell me something about leverage.” Specific: “Read <code>funda_1990_2023.csv</code>. For each gvkey-fiscal year, compute book leverage as long-term debt divided by total assets, winsorize it at the 1st and 99th percentiles, and compute the mean by fiscal year and two-digit SIC code. Save the result as <code>leverage_by_industry_year.csv</code>, and save a line figure with one line per two-digit SIC as <code>leverage_trends.png</code>, formatted for a working-paper draft.” The second version leaves almost nothing to guess. The file is named, the transformation is unambiguous, the aggregation level is explicit, and the two output files are named in advance. Naming the output file in the prompt turns a one-off answer into a reproducible script, and Module 2’s lab depends on that habit.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: describing the goal instead of the task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Analyze this data and tell me what’s interesting” describes a goal, not a task. It sounds thoughtful, but it hands the agent every decision you should make yourself: which variables matter, at what level, and how to report them. Before you send a prompt, check it against the four components above. If any one of file, operation, aggregation, or output is missing, add it before you hit enter.</p>
+</div>
+</div>
+</section>
+<section id="redirect-dont-argue" class="level2">
+<h2 class="anchored" data-anchor-id="redirect-dont-argue">Redirect, don’t argue</h2>
+<p>Sometimes the agent starts down a path that is clearly wrong. It parses every fiscal quarter when you asked about one, or pulls every Compustat variable when you named three. The instinct is to type a correction while it keeps going, or worse, to go back and forth about what you meant. Both waste turns, because each extra turn adds more of the wrong direction to the context that gets re-sent. Instead, press Esc as soon as you notice the agent going off course. Esc stops the current action and gives you a clean point to redirect from, so you are not stacking a correction on a conversation already committed to the wrong plan. State the correction plainly, using the four components from the previous section, and let it start again.</p>
+<p>Correct within two turns of noticing the problem, not ten. Catching a wrong direction early costs little. An eight-turn argument that ends in the same correction costs much more.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: arguing in natural language instead of interrupting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Typing “no, I meant just 2023, not all years” after the agent has already started a four-year pull doesn’t undo the four-year pull. It adds a new instruction on top of a plan that has already gone wrong, and both versions now sit in the context. Interrupt first, then restate. The interruption stops the current plan, and the restatement tells the agent what to do instead.</p>
+</div>
+</div>
+</section>
+<section id="plan-mode-a-first-look" class="level2">
+<h2 class="anchored" data-anchor-id="plan-mode-a-first-look">Plan Mode: a first look</h2>
+<p>For anything bigger than a single script, ask Claude to plan before it builds. Pressing Shift+Tab cycles through the permission modes covered below; stop when the status bar reads <em>plan mode on</em>. In Plan Mode, the agent reads the relevant files, checks its assumptions, and proposes a step-by-step approach before it writes or runs any code. You review the plan, adjust it if something’s off, and only then let it proceed. For a task like building a panel of filing counts by industry and year across several years of filings, planning first can turn a half-dozen false starts, found one at a time, into one considered pass.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day1/EXH-D1-04_plan_mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Plan Mode: the agent proposes; you decide."><img src="../assets/exhibits/day1/EXH-D1-04_plan_mode.png" class="img-fluid figure-img" alt="Mock Plan Mode screen: the agent lists a numbered step-by-step plan and waits for approval before executing anything."></a></p>
+<figcaption>Plan Mode: the agent proposes; you decide.</figcaption>
+</figure>
+</div>
+<p>This module covers Plan Mode only briefly. You will turn it on, read a proposed plan for a bigger task than this module’s lab requires, and set it aside without running it. Module 3 runs the full workflow of planning, building, and clearing context, once you have built more of the related habits.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: canceling out of Plan Mode too early
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Watching Claude think through a multi-step design before writing any code can feel like wasted time, especially the first time you see it. It usually isn’t. A few seconds of planning up front often saves several rounds of correction later, especially for work that touches more than one file or more than one data source. Let the plan finish before deciding whether to act on it.</p>
+</div>
+</div>
+</section>
+<section id="claude.md-instructions-that-persist" class="level2">
+<h2 class="anchored" data-anchor-id="claude.md-instructions-that-persist">CLAUDE.md: instructions that persist</h2>
+<p>One file makes the context-window problem manageable across a whole project. A file named <code>CLAUDE.md</code>, at the root of your project folder, is read automatically at the start of every session opened in that folder. It is standing context you don’t have to retype, and because it is a file on disk, it does not depend on any one conversation. A minimal, useful CLAUDE.md states a language preference, one style convention, and one verification rule. For example, it might say that all output figures should follow a particular journal’s formatting convention, or that any script touching raw data must print a row count before and after filtering.</p>
+<p>Write one now. A handful of lines is enough. Then restart your session and ask Claude what it knows about the project’s conventions, to confirm that the file loaded. A CLAUDE.md is different from a <strong>skill</strong>, which you will meet in Module 3. A CLAUDE.md is project-wide standing context, while a skill is a packaged, reusable procedure for a specific recurring workflow. You will update your CLAUDE.md throughout the course as your conventions settle. This module’s version does not need to be complete, but everything in it should be accurate.</p>
+<p>Keep it short as it grows. Claude reads the whole file at the start of every session, so every line uses context in every conversation, and Anthropic’s own guidance is to keep each CLAUDE.md under about 200 lines because longer files are followed less reliably. Facts belong in CLAUDE.md: your data sources, your conventions, your verification rules. Procedures do not. When a section turns into a step-by-step recipe, move it into a skill (Module 3). Only a skill’s one-line description is loaded in every session; the full instructions load when the skill is used.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: writing CLAUDE.md and expecting it to apply mid-session
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>CLAUDE.md loads at the start of a session, not continuously. If you edit it while a session is already running, that session won’t see the change. You have to start a new one. This confuses people because the file looks like it “isn’t working,” when it simply has not been loaded yet.</p>
+</div>
+</div>
+</section>
+<section id="permission-modes-manual-vs.-auto" class="level2">
+<h2 class="anchored" data-anchor-id="permission-modes-manual-vs.-auto">Permission modes: manual vs.&nbsp;auto</h2>
+<p>Claude Code can ask before it takes an action that touches your filesystem, such as writing a file, running a script, or installing a package. In this module you will see that request for the first time and work with the two modes that matter most. Manual asks you before every action that edits a file, runs a command, or reaches the network. Auto hands that review to a second model, a classifier, which lets routine actions through and blocks ones that look risky, so the agent can move through a multi-step task without stopping to ask each time. Recent versions of Claude Code start new sessions in Auto. Shift+Tab cycles through Manual, an accept-edits mode, and Plan Mode, and the status bar always shows which one you are in. Manual is the safer choice when you are still building trust in a new project or facing an operation that could delete or overwrite work. Auto is the better choice for iterative, exploratory work, which is most of what this course does.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day1/EXH-D1-03_permission_ask.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The permission ask, and the two modes you’ll choose between in this module."><img src="../assets/exhibits/day1/EXH-D1-03_permission_ask.png" class="img-fluid figure-img" alt="Mock terminal permission prompt asking to run a command, with options to approve once or for the rest of the session."></a></p>
+<figcaption>The permission ask, and the two modes you’ll choose between in this module.</figcaption>
+</figure>
+</div>
+<p>Git is what makes Auto safe to use, and it costs nothing to set up. If every meaningful change is a commit, the worst an overeager agent can do is something you can roll back in seconds. You will build the full git habit in Module 5. For now, know that Auto plus git lets you work quickly and still undo mistakes. A third mode skips permission checks entirely. It has legitimate uses, but it belongs inside a sandboxed environment, not on your own machine. Module 5 covers it.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: staying in Manual mode out of caution and never leaving it
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Manual mode feels safer, but in a multi-step pipeline it means approving the same kind of action ten or twenty times in a row. That trains you to click through prompts without reading them, which defeats the purpose of Manual mode. Auto mode with git commits gives you the same protection with far fewer interruptions.</p>
+</div>
+</div>
+</section>
+<section id="the-accounting-research-workflow-map" class="level2">
+<h2 class="anchored" data-anchor-id="the-accounting-research-workflow-map">The accounting research workflow map</h2>
+<p>Now place this module’s habits inside an actual research project: idea, data, measure, analysis, paper. An agent like Claude Code speeds up parts of that pipeline: downloading a bulk filing index, writing the boilerplate to parse it, drafting a first-pass figure, and catching a malformed date column before it corrupts a merge. It does not, and should not, replace the stages that require your judgment: choosing which question is worth asking, deciding whether a text-based measure actually captures the construct you claim it does, and interpreting what a result means for the literature. Some stages go faster with an agent, and the others stay with you.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day1/FIG-D1-03_research_map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The accounting research workflow, with AI-accelerated stages distinguished from judgment-driven stages."><img src="../assets/figures/day1/FIG-D1-03_research_map.png" class="img-fluid figure-img" alt="Flowchart of the research pipeline from idea to data, measure, analysis, and paper, with agent-accelerated stages shaded and judgment-driven stages marked as human."></a></p>
+<figcaption>The accounting research workflow, with AI-accelerated stages distinguished from judgment-driven stages.</figcaption>
+</figure>
+</div>
+<p>This map is a starting point for Module 6’s seminar, not a settled argument. You will return to a harder version of the question after five modules of running the pipeline yourself, when you have a real basis for an opinion about which stages belong to the agent and which belong to you.</p>
+</section>
+<section id="the-three-module-1-mantras" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-module-1-mantras">The three Module 1 mantras</h2>
+<p>These three sentences sum up the module, and you will use them for the rest of the course. They belong on your verification protocol card, which is on the <a href="../verification.html">Verification</a> page.</p>
+<ol type="1">
+<li><strong>Files persist; context doesn’t.</strong> Anything that must outlast this session has to be written to a file.</li>
+<li><strong>Trust, but verify — same as an RA.</strong> Delegate freely, but check at least one result yourself before you sign off.</li>
+<li><strong>Be specific: file, operation, aggregation, output.</strong> Name all four in every prompt.</li>
+</ol>
+<p>Next, go to <a href="../labs/day1.html">this module’s lab</a> to install Claude Code, write your first CLAUDE.md, and run one small task end to end with a verification step. The <a href="../tools.html">Tools</a> page has the full product-by-product comparison behind this module’s tool ladder, and the <a href="../verification.html">Verification</a> page collects the protocol you’ll keep building on across the course.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../modules/index.html" class="pagination-link" aria-label="Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../modules/02-empirical-loop.html" class="pagination-link" aria-label="Module 2: Empirical Loop">
+        <span class="nav-page-text">Module 2: Empirical Loop</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

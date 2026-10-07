@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Module 5: Writing, Safety, and the Verification Capstone – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../modules/06-ai-knowledge-market.html" rel="next">
+<link href="../modules/04-wrds-mcp-scale.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="../setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="../modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../labs/index.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="../tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/05-writing-verify.html">Module 5: Writing &amp; Verification</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/01-foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 1: Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/02-empirical-loop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 2: Empirical Loop</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/03-edgar-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 3: EDGAR Text</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/04-wrds-mcp-scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/05-writing-verify.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Module 5: Writing &amp; Verification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/06-ai-knowledge-market.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#writing-as-thinking-and-the-loop-that-undoes-it" id="toc-writing-as-thinking-and-the-loop-that-undoes-it" class="nav-link active" data-scroll-target="#writing-as-thinking-and-the-loop-that-undoes-it">Writing as thinking, and the loop that undoes it</a></li>
+  <li><a href="#the-banalmeaningful-line" id="toc-the-banalmeaningful-line" class="nav-link" data-scroll-target="#the-banalmeaningful-line">The banal/meaningful line</a></li>
+  <li><a href="#anti-homogenization-the-floor-rises-the-ceiling-doesnt" id="toc-anti-homogenization-the-floor-rises-the-ceiling-doesnt" class="nav-link" data-scroll-target="#anti-homogenization-the-floor-rises-the-ceiling-doesnt">Anti-homogenization: keeping your own voice</a></li>
+  <li><a href="#editor-not-rewriter" id="toc-editor-not-rewriter" class="nav-link" data-scroll-target="#editor-not-rewriter">Editor, not rewriter</a></li>
+  <li><a href="#the-clean-room-referee" id="toc-the-clean-room-referee" class="nav-link" data-scroll-target="#the-clean-room-referee">The clean-room referee</a></li>
+  <li><a href="#style-guides-as-living-documents" id="toc-style-guides-as-living-documents" class="nav-link" data-scroll-target="#style-guides-as-living-documents">Style guides as living documents</a></li>
+  <li><a href="#referee-dag-a-workflow-pattern-not-a-technology" id="toc-referee-dag-a-workflow-pattern-not-a-technology" class="nav-link" data-scroll-target="#referee-dag-a-workflow-pattern-not-a-technology">Referee-DAG: a workflow pattern, not a technology</a></li>
+  <li><a href="#auditing-the-response-letter" id="toc-auditing-the-response-letter" class="nav-link" data-scroll-target="#auditing-the-response-letter">Auditing the response letter</a></li>
+  <li><a href="#verification-debt-the-modules-second-framework" id="toc-verification-debt-the-modules-second-framework" class="nav-link" data-scroll-target="#verification-debt-the-modules-second-framework">Verification debt: the module’s second framework</a></li>
+  <li><a href="#environment-first-sandboxes-and-the-autonomy-ladder" id="toc-environment-first-sandboxes-and-the-autonomy-ladder" class="nav-link" data-scroll-target="#environment-first-sandboxes-and-the-autonomy-ladder">Environment first: sandboxes and the autonomy ladder</a></li>
+  <li><a href="#permission-rules-writing-the-boundary-down" id="toc-permission-rules-writing-the-boundary-down" class="nav-link" data-scroll-target="#permission-rules-writing-the-boundary-down">Permission rules: writing the boundary down</a>
+  <ul class="collapse">
+  <li><a href="#requests-versus-enforcement" id="toc-requests-versus-enforcement" class="nav-link" data-scroll-target="#requests-versus-enforcement">Requests versus enforcement</a></li>
+  </ul></li>
+  <li><a href="#credential-hygiene-the-two-command-audit" id="toc-credential-hygiene-the-two-command-audit" class="nav-link" data-scroll-target="#credential-hygiene-the-two-command-audit">Credential hygiene: the two-command audit</a></li>
+  <li><a href="#paper-trails-documentation-is-a-map-not-a-verdict" id="toc-paper-trails-documentation-is-a-map-not-a-verdict" class="nav-link" data-scroll-target="#paper-trails-documentation-is-a-map-not-a-verdict">Paper trails: check the documentation against the commits</a></li>
+  <li><a href="#no-hand-typed-numbers" id="toc-no-hand-typed-numbers" class="nav-link" data-scroll-target="#no-hand-typed-numbers">No hand-typed numbers</a></li>
+  <li><a href="#git-as-the-operating-system" id="toc-git-as-the-operating-system" class="nav-link" data-scroll-target="#git-as-the-operating-system">Git as the operating system</a></li>
+  <li><a href="#what-to-set-up-after-this-course" id="toc-what-to-set-up-after-this-course" class="nav-link" data-scroll-target="#what-to-set-up-after-this-course">What to set up after this course</a></li>
+  <li><a href="#into-the-capstone" id="toc-into-the-capstone" class="nav-link" data-scroll-target="#into-the-capstone">Into the capstone</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Module 5: Writing, Safety, and the Verification Capstone</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-banner"><img src="../assets/illustrations/banners/module-05-writing-verify.webp" alt="Illustration: a manuscript with checked lines, a magnifying loupe, a fountain pen and a padlock" width="1600" height="896"></div>
+<div class="module-links">
+<p><a href="#module-video" class="is-primary"><span class="bi bi-play-btn" aria-hidden="true"></span> Video (19 min)</a> <a href="../assets/slides/day5_slides.pdf"><span class="bi bi-file-earmark-pdf" aria-hidden="true"></span> Module 5 slides (PDF)</a> <a href="../labs/day5.html"><span class="bi bi-tools" aria-hidden="true"></span> Lab</a> <a href="../assets/labs/lab5_starter.zip"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Starter pack (zip)</a></p>
+</div>
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 5 walkthrough (19 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls="" preload="metadata" playsinline="" poster="../assets/video/module5_poster.jpg" aria-labelledby="module-video-label">
+      <source src="../assets/video/module5_writing_verify.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module5_writing_verify.en.vtt" srclang="en" label="English" default="">
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module5_writing_verify.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module5_writing_verify.mp4" download="">
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 43 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module5_writing_verify.en.vtt" download="">Captions (WebVTT)</a>
+  </p>
+</div>
+<p>Every module in this course has ended with an artifact, such as a script, a figure, a SKILL.md or a Stata extract, that Claude Code helped you build faster than you would have built it alone. This module is about two things that decide whether that speed was worth having. The first is whether the words around those artifacts are actually yours. The second is whether a coauthor, a referee or you a year from now could pick up the repo and trust it without redoing the work. The morning is about the writer: where delegating to an agent sharpens your thinking, and where it replaces it without your noticing. The afternoon is about the record: the sandboxes, credential habits, paper trails and git discipline that make a fast pipeline one you can defend. The capstone lab asks you to take a pipeline you built earlier in this course and make it hold up under both kinds of scrutiny at once.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this module, you should be able to: apply the “can you discuss it without the LLM?” test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; run a clean-room referee that sees only your draft and writes its report to disk; audit a response letter claim by claim against the manuscript and the commit history; place a research task on the verification-debt 2×2 and explain why more autonomy makes unchecked work pile up faster; run the two-command credential audit and know what to do if it fails; write <code>settings.json</code> permission rules and a blocking hook, and say which configuration mechanisms request behavior and which enforce it; explain why documentation tells you where to look but does not prove the work was done, and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.</p>
+</div>
+</div>
+<section id="writing-as-thinking-and-the-loop-that-undoes-it" class="level2">
+<h2 class="anchored" data-anchor-id="writing-as-thinking-and-the-loop-that-undoes-it">Writing as thinking, and the loop that undoes it</h2>
+<p>Start from a claim worth taking seriously: writing is not just how you report your thinking. Much of the thinking happens while you write. If you can’t get a sentence to work, you usually haven’t worked out the argument behind it yet, and the discomfort of drafting is often part of the work. Handing that discomfort to an LLM saves more than typing time. It can also hand off the reasoning that the typing was forcing you to do.</p>
+<p>This failure is hard to notice while it is happening. You give the model a vague prompt, such as “help me explain why this identification strategy is credible.” It produces something fluent and plausible, and you read it, agree, and paste it into the draft. Nothing about that step feels like a mistake, because the paragraph reads fine. The problem is that the work of deciding <em>why</em> the strategy is credible happened inside the model, not in your head. You now have a paragraph you agree with but did not think through. You find out when a discussant, a referee or you six months later asks you to defend the claim, and you can gesture at it but not argue it.</p>
+<p>The test is whether you can discuss the paragraph out loud, without the document or the model in front of you. If you can walk a colleague through the argument in your own words and answer a follow-up question, you did the thinking and the model helped you say it. If you can’t, better prose will not fix it. Go back and work through the claim before you write another sentence about it. A related point: rushed or exhausted writing handed to an LLM tends to come back generic, because a vague, tired prompt gets you the model’s default. If you’re too tired to say what you actually think, stop for the day rather than delegate.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: mistaking fluency for having thought it through
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A paragraph that reads smoothly is not evidence that the argument inside it is yours. A common Module 5 mistake is treating “this sounds right” as equivalent to “I could defend this in a seminar.” They are different tests. The offloading test (can you discuss it without the LLM?) asks more than whether the paragraph reads well, because a language model is built to produce text that reads well whether or not the underlying claim holds up.</p>
+</div>
+</div>
+</section>
+<section id="the-banalmeaningful-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-banalmeaningful-line">The banal/meaningful line</h2>
+<p>The rest of the morning is about one distinction. Some writing in a paper is banal and some is meaningful. This module’s writing practice comes down to telling them apart and treating each one differently.</p>
+<p>Banal writing is writing whose content is already set by something else: the data, the specification, a table you already ran. Variable-definition tables, data appendices, the standard paragraph on how a control was constructed, table notes and robustness-panel headers all fall here. None of them requires an original thought, because the thing they describe already exists and the writing only makes it readable. An agent is a clear improvement for this kind of writing. It is faster, no less accurate than you would be by hand, and it does not get bored, which is when careless errors creep in the tenth time you write the same kind of sentence.</p>
+<p>Meaningful writing differs in kind, not just in difficulty. The identification argument, the statement of your contribution, and the limitations section that says plainly what your evidence can and cannot support are not transcriptions of something that already exists. They are the argument. If you delegate them, you risk more than a worse sentence. You risk a paper whose central claims you never reasoned through, which is the cognitive-offloading failure from the previous section applied to a whole paper instead of one paragraph.</p>
+<p>There is no fixed list. You decide where the line falls, and the skill is drawing it explicitly instead of leaving it implicit and letting it drift. Before the demos, write down one personal delegation rule: one category of writing in your current project that you will always hand to an agent, and one you will never let an agent start, only react to.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: treating the line as obvious in advance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s tempting to assume you already know where your own banal/meaningful line sits, which usually means you haven’t tested it. People get caught in the middle ground. A paragraph narrating a robustness check, for example, can look banal because it “just” describes a table, but it contains a judgment call about which alternative specification matters and why. If a sentence requires you to decide something rather than report something, it is on the meaningful side, however short it is.</p>
+</div>
+</div>
+</section>
+<section id="anti-homogenization-the-floor-rises-the-ceiling-doesnt" class="level2">
+<h2 class="anchored" data-anchor-id="anti-homogenization-the-floor-rises-the-ceiling-doesnt">Anti-homogenization: keeping your own voice</h2>
+<p>There is a second reason to protect the meaningful side of the line, and it has nothing to do with correctness: voice. On current evidence, LLMs reliably turn weak writing into serviceable writing, but they pull writing that already had a distinctive voice toward the same competent, slightly generic register. If everyone drafting in accounting and finance uses the same tool for the same kind of sentence, the field’s prose will tend to sound more alike, not less.</p>
+<p>This is partly a problem for the field and partly a personal one. Accounting journals already have real house styles, which helps a little: a JAR paper and a TAR paper do not read the same today, and those genre conventions keep every paper in every journal from sounding identical. They do not remove the risk within a journal’s own house style, where papers can still drift toward an LLM’s default voice for that register. The skills demoed this morning, a personal style guide and a detector for AI-typical phrasing, exist to push back against that drift. They are not shortcuts that make writing faster.</p>
+</section>
+<section id="editor-not-rewriter" class="level2">
+<h2 class="anchored" data-anchor-id="editor-not-rewriter">Editor, not rewriter</h2>
+<p>The most useful habit for keeping an LLM on the right side of the line is a specific instruction: ask for comments, not rewrites. If you ask a model to fix your prose, you get back sentences you must either accept or reject. Accepting is offloading that looks like editing. Rejecting requires already knowing what’s wrong, in which case you didn’t need to ask. Ask instead for inline comments at the places where the argument is weak, with an explicit instruction not to touch the prose. The model then spends its fluency on diagnosis instead of replacement, and you do the rewriting and the thinking yourself.</p>
+<p>Here is the exact prompt. You’ll see it run live in the first demo on a real identification paragraph:</p>
+<pre><code>Please review this Identification section. I want feedback in the style of
+a New York Times editor — sharp on argument and clarity. Do not directly
+edit my writing. Instead, insert inline &lt;!-- comments --&gt; at the specific
+places where the argument is weak, unclear, or could be tightened. Do not
+rewrite any sentences yourself; leave the prose exactly as written and let
+the comments carry the feedback.</code></pre>
+<p>Without “do not,” you get a rewrite back. A capable model asked to edit will hand you a polished rewrite, and a polished rewrite invites you to stop thinking and start accepting. With “do not,” the model still tells you where the argument is weak, but the sentence-level decisions stay yours. That is the only way those sentences can pass the “can you discuss it without the LLM” test later.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: asking for “comments and suggested edits”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s tempting to soften the constraint: “give me comments, and if you have a better phrasing, suggest it too.” That undoes most of the benefit. Once a proposed rewrite sits next to your sentence, accepting it takes one click and no more thought than accepting a spell-check suggestion. If you want the model’s editorial judgment without its ghostwriting, the “do not rewrite” instruction has to be unambiguous, not a soft preference.</p>
+</div>
+</div>
+</section>
+<section id="the-clean-room-referee" class="level2">
+<h2 class="anchored" data-anchor-id="the-clean-room-referee">The clean-room referee</h2>
+<p>The editor prompt above has a weakness that is easy to miss: it usually runs in the same session where you wrote the section. By then the model has heard every justification you gave along the way. You told it why the sample starts in 2004, why financials are dropped, why the placebo test doesn’t matter. A real referee has heard none of that, which is why a real referee catches what you can no longer see. A model that has watched you argue yourself into a design will tend to accept the design.</p>
+<p>The fix is to give the critique its own clean room. Run it in a fresh session, or in a sub-agent (Module 4), whose only input is the draft itself: no chat history, no <code>DECISIONS.md</code>, no notes on what you meant. Make it read-only, so it can’t “help” by editing the paper. And have it write its report to a file, such as <code>review/referee_identification.md</code>, so the critique survives the session and you can respond to it point by point, the way you would a real report.</p>
+<pre><code>You are refereeing this paper for the Journal of Accounting Research. You
+have only the manuscript in paper/. Do not edit any file. Read the
+identification section and the sample-construction section, then write a
+report to review/referee_identification.md. For every sample filter the
+paper states, check whether the attrition it implies is consistent with
+the N reported in Table 1, and list any filter whose effect on the sample
+is never reported. Aim the criticism at the paper, not the authors.</code></pre>
+<p>Accounting papers often describe one sample and build another: a filter described in the text that never appears in the attrition table, or a Table 1 N that the stated filters can’t produce. A reviewer who never saw your cleaning script has to reconstruct the sample from the prose alone, which is the same test your prose has to pass at the journal.</p>
+<p>The last line of that prompt matters too. Comments aimed at the authors do not make a report tougher. They give you nothing to fix. Keep the reviewer pointed at claims, evidence and gaps.</p>
+<p>This pattern borrows from two public prompt designs worth reading: Scott Cunningham’s <a href="https://github.com/scunning1975/MixtapeTools/blob/main/personas/referee2.md">Referee 2 persona</a>, which audits a paper as an adversarial second referee, and the “Editor” persona in Alessandro Spina’s <a href="https://github.com/aspi6246/Claude-Code-Presentation">Claude Code presentation materials</a>, which files its reports to disk and never touches the author’s files.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: a referee that agrees with you
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Language models lean toward telling you what you want to hear, and a review prompt is where this does the most damage. If your critique comes back mostly praise, or backs down as soon as you object (“good point, that concern doesn’t apply”), you have not been refereed. Ask for the three most serious problems, not an overall assessment. When you disagree with a point, answer it in writing in the report file, not in the chat, where the model can simply concede.</p>
+</div>
+</div>
+</section>
+<section id="style-guides-as-living-documents" class="level2">
+<h2 class="anchored" data-anchor-id="style-guides-as-living-documents">Style guides as living documents</h2>
+<p>A personal style guide is a skill that has read a stack of your own published prose and records what it found. As in Module 3, it works as a written procedure, not a new ability. You build it the way you build any skill. Collect samples you’re proud of, point Claude at the folder, and ask it to describe your sentence length, your hedging habits, how you open a results section and what you never do. Then let it draft a SKILL.md from that analysis. It gets its own demo because of what it gets wrong, not just what it gets right.</p>
+<p><code>barrios-voice</code> is built this way, from a corpus of John Barrios’s own JAR and TAR papers. It records real, specific patterns: sentence-length habits, a preference for stating a coefficient as a dollar amount rather than leaving it as a coefficient, and little tolerance for stacked hedges. Demoed live on a paragraph, it gets a lot right immediately. It also produces passages that read like a caricature: the voice pushed slightly too hard, recognizable but exaggerated, the way a good impressionist is still not quite the person. You can’t engineer that away. Any style guide is a snapshot of how you wrote when it was built, compressed into a markdown file, so it has to be curated and re-run periodically rather than built once and trusted indefinitely.</p>
+<p><code>econ-humanizer</code> solves a related but different problem. It asks whether the text sounds like a language model, not whether it sounds like you. Run on an obviously AI-generated paragraph, it flags the familiar tells: inflated claims of importance (“pivotal,” “groundbreaking,” “underscores”), stacked hedges, the formulaic “this paper contributes to the growing literature on X by Y” sentence, em-dash overuse, the three-part list, and vague attributions like “researchers have shown.” The output is not necessarily <em>your</em> voice; that is <code>barrios-voice</code>’s job. But it reliably removes the parts of a paragraph that read as machine-generated, whoever’s voice sits underneath. Used together, the two skills cover both halves of the homogenization problem. One keeps your voice from flattening into the model’s default. The other removes the model’s fingerprints, so what remains is at least <em>a</em> voice rather than the one every LLM defaults to. (<code>latex-tables</code>, mentioned only in passing, handles the banal side: formatted regression tables, notes and headers. That frees time for the meaningful writing the other two protect.)</p>
+</section>
+<section id="referee-dag-a-workflow-pattern-not-a-technology" class="level2">
+<h2 class="anchored" data-anchor-id="referee-dag-a-workflow-pattern-not-a-technology">Referee-DAG: a workflow pattern, not a technology</h2>
+<p>Revise-and-resubmit decisions are central to accounting publishing. Four referee reports with overlapping and sometimes contradictory requests make a hard planning problem before you’ve written a single revised sentence. The <code>strategic-revision</code> skill treats a stack of referee reports the way a project manager treats a stack of tickets. It splits every distinct comment into a task and works out which tasks depend on others (you can’t rewrite the conclusion before running the robustness check it depends on). It then groups the tasks into blocks that can run in parallel, and it flags the critical path and any places where two referees ask for contradictory things.</p>
+<p>Take the habit from the demo, not the machinery underneath it. Which Python library validates the dependency graph is an implementation detail. The habit that carries over is to break the revision into discrete tasks, map the dependencies explicitly, batch what can run in parallel, and find the critical path and the conflicts before you start writing. It applies to any messy revision with several reviewers, whether or not it involves a paper.</p>
+</section>
+<section id="auditing-the-response-letter" class="level2">
+<h2 class="anchored" data-anchor-id="auditing-the-response-letter">Auditing the response letter</h2>
+<p>The DAG plans a revision. It doesn’t tell you whether the revision you describe actually happened. The response letter says it did, and the letter is both the highest-stakes document in an R&amp;R and an easy place for an LLM to make things up. A model drafting a response will write “We now report results using an alternative leverage definition in Table A2” with complete confidence, whether or not anyone ran the check. That is the same kind of sentence as the fabricated <code>DECISIONS.md</code> entry later in this module, only now it is addressed to an editor.</p>
+<p>So audit the letter before it goes out, the same way you audit a paper trail. For every claim the letter makes, build a three-column check:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claim in the letter</th>
+<th>Where it appears in the revised manuscript</th>
+<th>Commit whose diff implements it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“We add firm fixed effects to Table 4”</td>
+<td>Table 4, columns 3–4; text in §5.2</td>
+<td><code>a41c9e2</code>: adds <code>firm_fe</code> to the Table 4 script</td>
+</tr>
+<tr class="even">
+<td>“We now cluster at the industry level”</td>
+<td>Table 4 notes</td>
+<td><em>(none found)</em></td>
+</tr>
+</tbody>
+</table>
+<p>Any row with an empty cell is a problem. An empty middle column means the letter promises a change the reader can’t find. An empty right column means the manuscript says something no script produces. The second kind is more dangerous: the text was edited to match the promise, but the numbers never changed.</p>
+<p>Claude is good at the first two columns, because it can read both documents and match them up. Ask it to fill in the third column from <code>git log</code> and the diffs, and to leave a cell empty rather than guess. Then check every empty cell yourself, and spot-check two or three filled ones. As with the paper trail, the table tells you where to look. It does not prove the changes were made.</p>
+<p>The idea of mapping each referee concern to the response, the manuscript location and whether that location was verified comes from the R&amp;R mode of the “Editor” persona in Spina’s materials, linked above. The commit column is this course’s addition. It turns a consistency check between two documents into a check against what was actually run.</p>
+</section>
+<section id="verification-debt-the-modules-second-framework" class="level2">
+<h2 class="anchored" data-anchor-id="verification-debt-the-modules-second-framework">Verification debt: the module’s second framework</h2>
+<p>Now turn from the writer to the record. Every task in this course has had two costs: the cost of making the thing and the cost of verifying that it’s correct. Before agentic tools, those costs often moved together. Something expensive to make, like a hand-built panel or a hand-coded measure, had usually been checked along the way, because it was built slowly. Agentic coding breaks that link. A regression table, a keyword-based text measure or an EDGAR extraction pipeline can now be made in minutes, while the cost of checking whether it’s <em>right</em> has fallen far less. The gap between those two costs is <strong>verification debt</strong>: a growing pile of AI-produced output you have not actually checked.</p>
+<p>Plot each research task on two axes, cost to make (x) and cost to verify (y), and the quadrants show where the field is most exposed. The top-right quadrant, labeled “high stakes, both ways” in the figure, is the safer one: expensive to make and expensive to verify, where slow production forced checking along the way. The <strong>danger zone</strong> is top-left: cheap to make, costly to verify. A keyword count over a decade of 10-K Risk Factor sections is a clean example. Claude builds it in ten minutes. Showing that the count measures disclosure change rather than boilerplate copied forward takes an hour of hand-coding a stratified sample and computing something like year-over-year Jaccard similarity. An AI-drafted regression table is a second example: fast to produce, slow to verify against the filter logic and sample construction behind it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day5/FIG-D5-01_verification_debt_2x2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The verification-debt 2×2: cost to make (x-axis) against cost to verify (y-axis), with the danger zone — cheap to make, costly to verify — marked where AI-generated regression tables and text measures typically land."><img src="../assets/figures/day5/FIG-D5-01_verification_debt_2x2.png" class="img-fluid figure-img" alt="Two-by-two grid of cost to make against cost to verify, with the cheap-to-make, costly-to-verify quadrant marked as the danger zone."></a></p>
+<figcaption>The verification-debt 2×2: cost to make (x-axis) against cost to verify (y-axis), with the danger zone — cheap to make, costly to verify — marked where AI-generated regression tables and text measures typically land.</figcaption>
+</figure>
+</div>
+<p>The figure gives the idea, but sorting your own tasks into it is what makes it stick. With a partner, take two tasks from your Module 2 through Module 4 labs and place each on the grid in three minutes. Most pairs find at least one task in or near the danger zone. Naming it out loud is the purpose of the exercise, because unverified work is easier to notice once you’ve had to place a dot for it.</p>
+<p>Autonomy is what makes this urgent. The more freedom you give an agent to work unsupervised, through longer unattended runs and fewer check-ins, the faster verification debt builds up. The checking that would have been spread across many small checkpoints arrives all at once, as a finished-looking repo, figure and headline estimate. Approving each step manually does not solve this by itself. Approving a step you don’t understand is a rubber stamp with extra clicks, not verification. What matters is how much you understand and check as the work happens, not how many times you clicked “yes.”</p>
+</section>
+<section id="environment-first-sandboxes-and-the-autonomy-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="environment-first-sandboxes-and-the-autonomy-ladder">Environment first: sandboxes and the autonomy ladder</h2>
+<p>Before any procedural fix, get the environment right. The environment decides whether an overconfident agent is a minor annoyance or a real problem. The question is not “do I trust this model?” It is “what can this agent see, and what’s the worst thing it could do with what it can see?” If you run Claude Code from your home directory with permission checks fully disabled (<code>--dangerously-skip-permissions</code>, often called “YOLO mode”), your SSH keys, every credential on the machine and every other project you’ve cloned are within reach, however well-behaved the model usually is. The exposure comes from the environment, not the model’s judgment.</p>
+<p>A container changes the kind of risk, not just its size. Tools like <code>claude-container</code> (a Docker wrapper) and <code>agent-safehouse</code> (a lighter, kernel-enforced sandbox for Mac) give an agent its own view of the filesystem. Only the folders you explicitly mount are visible, and the agent cannot widen that view itself, because mounting is decided on the host. That is why skipping permissions inside a container is a different risk from skipping them on your own machine, not a smaller version of it. We show this live in class. Inside a safehouse session, <code>cat ~/.ssh/id_ed25519</code> returns <code>Operation not permitted</code>. The agent did not choose to decline. The kernel will not let the process see the file at all.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day5/EXH-D5-02_safehouse.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Inside a safehouse session: the kernel, not the model’s judgment, is what refuses the request to read a credential file."><img src="../assets/exhibits/day5/EXH-D5-02_safehouse.png" class="img-fluid figure-img" alt="Mock sandboxed session where reading the SSH private key fails with Operation not permitted, denied by the kernel rather than the model."></a></p>
+<figcaption>Inside a safehouse session: the kernel, not the model’s judgment, is what refuses the request to read a credential file.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/figures/day5/FIG-D5-02_autonomy_ladder.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The autonomy ladder: Manual approval → Auto → YOLO-in-sandbox → unattended agent, each rung paired with the environment and verification discipline it requires; “never YOLO on host” is the one rung this ladder does not have."><img src="../assets/figures/day5/FIG-D5-02_autonomy_ladder.png" class="img-fluid figure-img" alt="Ladder diagram from manual approval to auto mode to YOLO-in-sandbox to unattended agent, each rung paired with the environment and verification discipline it requires."></a></p>
+<figcaption>The autonomy ladder: Manual approval → Auto → YOLO-in-sandbox → unattended agent, each rung paired with the environment and verification discipline it requires; “never YOLO on host” is the one rung this ladder does not have.</figcaption>
+</figure>
+</div>
+<p>Read the ladder as two settings that interact, autonomy and environment, not as a ranking from worse to better. Manual approval is the right default in an unfamiliar or unsandboxed project. Auto mode, where routine actions proceed and destructive-looking ones still pause, is the right default for the iterative, exploratory work most of this course involves, as long as git is handling rollback as described below. YOLO is appropriate only once the environment limits the worst case on its own: inside a container, with internet access cut off if the task doesn’t need it, and with nothing mounted beyond the one project folder. The top rung, an agent running unattended for long stretches against a persistent mount, is where the stakes and the container boundary matter most, because nobody is watching in real time.</p>
+<p>One more permission decision belongs here. Installing a third-party skill puts someone else’s instructions into your environment, and it deserves the same scrutiny as installing any other software. A skill published by Anthropic or built by your own group is one thing. A two-star repo from a forum post is another. Read a skill before installing it, the way you’d want a colleague to read a script before running it on your data. A markdown file can still instruct an agent to do something you would not have approved.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: treating sandboxing as a substitute for data governance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A container controls what an agent can <em>do</em>. It does not control what an agent can <em>see</em> once you mount a folder into it, and it does nothing to stop the contents of a mounted file from being sent to a remote model during a normal working session. If a folder contains anything sensitive, such as WRDS-licensed data, unpublished results you don’t want leaving your machine, or anything with individual-level identifiers, mount as little as possible and choose the right API tier. Do not assume the sandbox already handled it.</p>
+</div>
+</div>
+</section>
+<section id="permission-rules-writing-the-boundary-down" class="level2">
+<h2 class="anchored" data-anchor-id="permission-rules-writing-the-boundary-down">Permission rules: writing the boundary down</h2>
+<p>Between trusting the model and running it in a container sits a cheap middle layer that is easy to skip: permission rules. A short <code>settings.json</code> file tells Claude Code which actions to allow, which to always ask about and which to refuse. It applies in every permission mode, so a deny rule holds even when you’ve skipped permission checks entirely. Put it in <code>.claude/settings.json</code> inside the project and commit it, so every coauthor who opens the repository works under the same rules. (<code>.claude/settings.local.json</code> holds personal rules that stay off git; <code>~/.claude/settings.json</code> applies to every project on your machine.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"permissions"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"deny"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(./.env)"</span><span class="ot">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(./.env.*)"</span><span class="ot">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(~/.ssh/**)"</span><span class="ot">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Edit(./data/raw/**)"</span><span class="ot">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Bash(rm -rf *)"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ask"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Bash(git push *)"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Read it line by line. Claude’s file tools can’t open your <code>.env</code> or your SSH keys. Nothing can edit the raw data folder, which is where your downloaded EDGAR filings or the original FSDS extract belong; every cleaning step writes somewhere else. Recursive deletes are refused outright, and pushing to GitHub always stops for a human, whatever mode you’re in. Deny rules are checked first, so no allow rule elsewhere can make an exception to them.</p>
+<p>Know the limits, which are the same ones the container section raised. These rules match Claude’s built-in tools and the literal text of a shell command. <code>Bash(rm -rf *)</code> stops <code>rm -rf data/</code> but not <code>/bin/rm -rf data/</code> or the same command wrapped in <code>bash -c</code>. A <code>Read</code> deny stops Claude’s file reader, but a shell <code>cat .env</code> reaches the same file another way. Permission rules take two minutes to write and are worth having, but they are not a sandbox. Only the operating system enforces a boundary that holds however the command is phrased.</p>
+<section id="requests-versus-enforcement" class="level3">
+<h3 class="anchored" data-anchor-id="requests-versus-enforcement">Requests versus enforcement</h3>
+<p>By this point in the course you’ve met most of the ways to shape what Claude Code does. They fall into two kinds, and confusing the two leads to false confidence:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mechanism</th>
+<th>Where it lives</th>
+<th>What it does</th>
+<th>Kind</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CLAUDE.md</td>
+<td>project root</td>
+<td>standing context, loaded every session</td>
+<td>asks</td>
+</tr>
+<tr class="even">
+<td>Path-scoped rule</td>
+<td><code>.claude/rules/*.md</code> with a <code>paths:</code> line</td>
+<td>instructions that load only when Claude touches matching files</td>
+<td>asks</td>
+</tr>
+<tr class="odd">
+<td>Skill</td>
+<td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td>
+<td>a procedure, loaded when relevant or run as <code>/name</code></td>
+<td>asks</td>
+</tr>
+<tr class="even">
+<td>Sub-agent</td>
+<td><code>.claude/agents/&lt;name&gt;.md</code></td>
+<td>a separate context for a delegated job (Module 4)</td>
+<td>asks</td>
+</tr>
+<tr class="odd">
+<td>Permission rule</td>
+<td><code>settings.json</code>, <code>permissions</code></td>
+<td>allows, asks about, or refuses matching tool calls</td>
+<td>enforces</td>
+</tr>
+<tr class="even">
+<td>Hook</td>
+<td><code>settings.json</code>, <code>hooks</code></td>
+<td>your own script, run at fixed points; can block an action</td>
+<td>enforces</td>
+</tr>
+<tr class="odd">
+<td>Container or sandbox</td>
+<td>outside Claude Code</td>
+<td>an operating-system boundary</td>
+<td>enforces</td>
+</tr>
+</tbody>
+</table>
+<p>Everything in the top half is a request. The model reads it and usually complies, but “usually” is a probability, not a guarantee, and a long session, a compacted context or a confusing instruction can all lower it. Everything in the bottom half runs whether the model agrees or not. So anything that must happen <em>every</em> time, with no exceptions, belongs in the bottom half. “Never modify raw data” in CLAUDE.md is a request the model usually follows. <code>Edit(./data/raw/**)</code> in the deny list is enforced.</p>
+<p>A hook is the most flexible enforcer, because it’s just a script. This one runs the credential grep from the next section automatically. It refuses any commit Claude tries to make while a staged file mentions your WRDS password:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># .claude/hooks/no-secrets.sh</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">COMMAND</span><span class="op">=</span><span class="va">$(</span><span class="ex">jq</span> <span class="at">-r</span> <span class="st">'.tool_input.command'</span><span class="va">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">echo</span> <span class="st">"</span><span class="va">$COMMAND</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-q</span> <span class="st">"git commit"</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="fu">git</span> diff <span class="at">--cached</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-q</span> <span class="st">"WRDS_PASSWORD"</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Blocked: a staged file mentions WRDS_PASSWORD"</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 2</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span> 0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Register it in <code>.claude/settings.json</code> so it runs before every shell command Claude issues:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"hooks"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"PreToolUse"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"matcher"</span><span class="fu">:</span> <span class="st">"Bash"</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"hooks"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"command"</span><span class="fu">,</span> <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"</span><span class="ch">\"</span><span class="st">$CLAUDE_PROJECT_DIR</span><span class="ch">\"</span><span class="st">/.claude/hooks/no-secrets.sh"</span> <span class="fu">}</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Claude Code passes each proposed command to the script as JSON. Exit code 2 blocks the command and shows Claude the message, and exit 0 lets the normal permission flow continue. One caveat: this hook only checks commits <em>Claude</em> makes. Commits you type in your own terminal never pass through it, which is why you still need the after-the-fact audit below. The <a href="https://code.claude.com/docs/en/hooks-guide">hooks guide</a> and the <a href="https://code.claude.com/docs/en/permissions">permissions reference</a> have the full syntax. Check them against your installed version, because both features still change from release to release.</p>
+</section>
+</section>
+<section id="credential-hygiene-the-two-command-audit" class="level2">
+<h2 class="anchored" data-anchor-id="credential-hygiene-the-two-command-audit">Credential hygiene: the two-command audit</h2>
+<p>Everything above sets up the environment before anything goes wrong. Credential hygiene is the matching check afterward: a fast, mechanical way to confirm that nothing sensitive slipped through despite your intentions. Run these two commands from the root of any project before you consider it clean:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--all</span> <span class="at">--full-history</span> <span class="at">--</span> .env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should return nothing. If it returns even one commit, a <code>.env</code> file was committed at some point. That is where WRDS credentials and API keys belong, so this matters. Deleting the file now does not remove it from history, and anyone who clones the repo can still find it in an old commit.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">"WRDS_PASSWORD"</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This grep, and the equivalent one for any other credential name you use, should return zero results anywhere in the project: not in a script, not in a notebook, not in a stray text file. Before you trust a clean result, widen the search to the credential names that apply to your own project (API keys, other passwords).</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: run the audit, and know the fix if it fails
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run both commands against your own capstone project this afternoon. If either one turns something up, deleting the offending line is not enough. Treat any credential that has ever been committed as compromised. Change the password or key first (request a new WRDS password, regenerate the API key), and only then remove it from the repository’s history, not just its latest version. Deleting the current copy is not enough while the secret is still reachable in git history.</p>
+</div>
+</div>
+</section>
+<section id="paper-trails-documentation-is-a-map-not-a-verdict" class="level2">
+<h2 class="anchored" data-anchor-id="paper-trails-documentation-is-a-map-not-a-verdict">Paper trails: check the documentation against the commits</h2>
+<p>Ask for the audit trail before the work happens, in the same prompt that describes the task. Request three things up front. The first is a <code>DECISIONS.md</code> that records every methodological choice, the alternatives considered and rejected, and a rough confidence level. The second is a <code>LOG.md</code> that narrates the session in plain language a coauthor could follow without reading code. The third is a sample-attrition table printed at every stage of any cleaning or filtering step, showing the N, what dropped and why.</p>
+<p>Then check them, because an LLM will write a DECISIONS.md entry saying a piece of work was done when it was not. This is not a hypothetical. It is worth walking through a concrete case, because the entry looks trustworthy until you check it.</p>
+<p>Picture a funda-style Compustat pipeline, a leverage-and-controls panel like the one built in Module 4’s lab or its public-data fallback. The session’s <code>DECISIONS.md</code> includes an entry that reads, in effect: <em>“Added an alternative leverage definition (total liabilities / total assets) as a robustness check; results are consistent with the main specification (see Table A2).”</em> The entry is confident and specific, and it reads like something a careful RA would write after running the check. But no <code>Table A2</code> script exists anywhere in the repository, no commit added an alternative leverage variable, and <code>git log</code> shows no matching work at any point in the session. The documentation describes a robustness check that was never run. Anyone who read it and moved on, instead of checking it against the commit history, would carry a false robustness claim into a paper.</p>
+<p>The fix is a habit, not a tool. Treat every specific claim in a DECISIONS.md or LOG.md as something to check against the commit history, not a fact to file away. Pick one claim, find the commit it should correspond to, and confirm the diff does what the prose says. If no commit matches, the claim is unverified, however confidently it’s written. Documentation tells you where to look. It does not prove the work was done.</p>
+<p>For an example of this discipline formalized for an actual journal submission, with replication code, execution logs and sample identifiers packaged to meet JAR’s data-sharing policy, see Eric Weisbrod’s <a href="https://eweisbrod.github.io/example-project/pages/jar-data-policy.html">example-project template</a>, listed on the <a href="../resources.html">Resources</a> page.</p>
+</section>
+<section id="no-hand-typed-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="no-hand-typed-numbers">No hand-typed numbers</h2>
+<p>A narrower rule follows from the same concern. It predates AI, though AI makes it more important: nobody should type a number into the manuscript by hand. A pipeline script computes a result, such as a coefficient, a standard error or a sample size, and writes it to a <code>results.tex</code> file as a LaTeX macro or table fragment. The paper’s <code>.tex</code> source never states that number directly. It pulls it in with <code>\input{results/table2_main.tex}</code>. When the sample changes or a filter is corrected, rerunning the pipeline regenerates <code>results.tex</code>, and the paper updates at the next compile. Nobody copies a number from a terminal into a draft, so there is no step where a plausible but wrong number can slip into the manuscript unnoticed.</p>
+<p>This discipline was not invented for AI-assisted work; copying numbers by hand has always produced errors that nobody notices. What changes with an LLM in the loop is the failure it guards against. A model asked to draft a results paragraph will, without a hard constraint, write a fluent sentence containing a number that sounds right but was never computed by anything. The <code>\input{}</code> pattern makes that failure impossible, so you don’t have to rely on catching it in proofreading.</p>
+</section>
+<section id="git-as-the-operating-system" class="level2">
+<h2 class="anchored" data-anchor-id="git-as-the-operating-system">Git as the operating system</h2>
+<p>Everything above, from commits as checkpoints to diffs as the unit of review to rollback as the safety net that makes Auto mode reasonable rather than reckless, relies on git, which you’ve been told to wait for since Module 1. This module keeps the lecture short and focuses on habit, because the content is five commands and one rule, not a semester of version-control theory. A one-page git handout with the five commands, a <code>.gitignore</code> starter and the rollback recipe is distributed in class. The live demo, a <code>git diff HEAD~1</code> after a real Claude Code session followed by one rollback, shows how it works in practice.</p>
+<p>The idea to carry forward is that a <strong>commit is the unit of verification</strong>. Nobody reviews an 800-line pipeline well all at once. A 12-line diff from one commit, with a message that says <em>why</em> the change was made, is something you can review every time without it becoming a chore you skip. At the start of every project, tell Claude to commit at every meaningful checkpoint. The request costs one sentence in your opening prompt, and it turns one large unreviewable change into a sequence of small ones you can check. Together with the credential audit and the paper trail above, this is what makes an agent-assisted project <em>auditable</em>. Things will still go wrong, but when they do, you know where to look.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../assets/exhibits/day5/EXH-D5-01_git_diff.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="A reviewable diff: a 12-line commit, with a message that says why the change was made — the unit of verification in practice."><img src="../assets/exhibits/day5/EXH-D5-01_git_diff.png" class="img-fluid figure-img" alt="Mock terminal showing git diff HEAD~1: a twelve-line diff and a commit message explaining why the change was made."></a></p>
+<figcaption>A reviewable diff: a 12-line commit, with a message that says why the change was made — the unit of verification in practice.</figcaption>
+</figure>
+</div>
+<p>One pointer beyond this module, for when a single session is not enough: git has a second feature, the <em>worktree</em>, that gives each of several parallel Claude sessions its own directory while all of them share one repository. You might explore two robustness variants side by side, or rebuild a pipeline in one session while a second revises prose. <a href="https://github.com/craigsc/cmux">cmux</a> wraps the whole pattern into single commands, and the <a href="../tools.html#running-multiple-sessions-in-parallel">Tools page</a> covers it in full. It also covers the main caveat: parallel sessions multiply verification debt as fast as they multiply output, and every worktree needs this module’s checks before it merges.</p>
+</section>
+<section id="what-to-set-up-after-this-course" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-set-up-after-this-course">What to set up after this course</h2>
+<p>The autonomy ladder above is one dial. How much you configure is a second one, and it is easy to overbuild. A sensible order:</p>
+<ol type="1">
+<li><strong>Every project, from day one:</strong> a CLAUDE.md with your data sources, conventions and verification rules, plus a progress log, and git.</li>
+<li><strong>When a correction repeats:</strong> the third time you give Claude the same instruction, turn it into a skill. Add permission rules as soon as a project holds credentials or licensed data.</li>
+<li><strong>When a pattern repeats across projects:</strong> sub-agents for jobs you delegate often, hooks for checks that must run every time, and skills installed globally rather than per project.</li>
+</ol>
+<p>Build each piece when a real repetition or a real risk calls for it, not in advance. A setup you designed before you knew your own workflow is one you will spend time maintaining instead of using. This progression echoes the three-tier adoption structure in Alessandro Spina’s Claude Code brownbag, listed on the <a href="../resources.html">Resources</a> page.</p>
+</section>
+<section id="into-the-capstone" class="level2">
+<h2 class="anchored" data-anchor-id="into-the-capstone">Into the capstone</h2>
+<p>The rest of this module puts all of this together. <a href="../labs/day5.html">The capstone lab</a> asks you to take a pipeline from Module 3 or Module 4 and harden it against the rubric this module just covered: reproducibility, verification, hygiene and, as a stretch, a container rerun with output showing the blocked access. Before you start, and before the demos that take up most of the remaining lecture time, take thirty seconds to write down your answer to two questions: one task you will always delegate without a second thought, and one you will never let an agent start, only react to. You’ll be asked for both again at the end of this module. Module 6 returns to a harder version of the same question, applied not to one paper but to what a PhD is for.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../modules/04-wrds-mcp-scale.html" class="pagination-link" aria-label="Module 4: WRDS MCP &amp; Scale">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Module 4: WRDS MCP &amp; Scale</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../modules/06-ai-knowledge-market.html" class="pagination-link" aria-label="Module 6: AI &amp; Knowledge Market">
+        <span class="nav-page-text">Module 6: AI &amp; Knowledge Market</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

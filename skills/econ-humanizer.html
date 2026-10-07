@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Remove AI writing patterns from academic economics, finance, and accounting prose. Enforces a clear, direct writing style inspired by John Cochrane: plain language, short sentences, active voice, concrete claims. Use this skill whenever editing, revising, or drafting prose for research papers targeting top journals (AER, QJE, JPE, Econometrica, REStud, JF, JFE, RFS, TAR, JAR, JAE). Also use when the user says humanize, clean up my writing, make this sound less AI, improve the prose, edit for style, or references Cochrane writing style. Works for any section of an academic paper including introduction, literature review, hypothesis development, results discussion, and conclusion. Complements the economic-writing skill (which handles structure, citations, and research process) by focusing purely on prose quality and voice.">
+
+<title>Econ Humanizer – Claude Code for Accounting Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4153eed0b760b09c1d7a64f0ca93c791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccar_access_ok";
+  // SHA-256 of the course access code (plaintext is not stored in the repo)
+  var CODE_HASH = "066f3ad321cc9e0697148ddb3fb9a20238d80069ab233922c78a918406422c69";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Yale SOM · PhD Intensive</p>' +
+        '<h1 id="gate-title">Course access</h1>' +
+        '<p>Enter the access code to view Claude Code for Accounting Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter course site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Claude Code for Accounting Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="../setup.html">
+ <span class="dropdown-text">General Setup</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../setup-wrds.html">
+ <span class="dropdown-text">WRDS MCP Setup</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="../modules/01-foundations.html">
+ <span class="dropdown-text">Module 1: Foundations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/02-empirical-loop.html">
+ <span class="dropdown-text">Module 2: Empirical Loop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/03-edgar-text.html">
+ <span class="dropdown-text">Module 3: EDGAR Text</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/04-wrds-mcp-scale.html">
+ <span class="dropdown-text">Module 4: WRDS MCP &amp; Scale</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/05-writing-verify.html">
+ <span class="dropdown-text">Module 5: Writing &amp; Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../modules/06-ai-knowledge-market.html">
+ <span class="dropdown-text">Module 6: AI &amp; Knowledge Market</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../labs/index.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../skills/index.html"> 
+<span class="menu-text">Skills</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="../tools.html">
+ <span class="dropdown-text">Tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../prompts.html">
+ <span class="dropdown-text">Prompts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../verification.html">
+ <span class="dropdown-text">Verification</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../resources.html">
+ <span class="dropdown-text">Resources</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#econ-humanizer-clear-academic-prose-for-economics-finance-and-accounting" id="toc-econ-humanizer-clear-academic-prose-for-economics-finance-and-accounting" class="nav-link active" data-scroll-target="#econ-humanizer-clear-academic-prose-for-economics-finance-and-accounting">Econ-Humanizer: Clear Academic Prose for Economics, Finance, and Accounting</a>
+  <ul class="collapse">
+  <li><a href="#the-two-problems-you-solve" id="toc-the-two-problems-you-solve" class="nav-link" data-scroll-target="#the-two-problems-you-solve">The Two Problems You Solve</a></li>
+  <li><a href="#the-cochrane-principles" id="toc-the-cochrane-principles" class="nav-link" data-scroll-target="#the-cochrane-principles">The Cochrane Principles</a>
+  <ul class="collapse">
+  <li><a href="#say-it-once-say-it-plainly" id="toc-say-it-once-say-it-plainly" class="nav-link" data-scroll-target="#say-it-once-say-it-plainly">Say it once, say it plainly</a></li>
+  <li><a href="#active-voice-first-person" id="toc-active-voice-first-person" class="nav-link" data-scroll-target="#active-voice-first-person">Active voice, first person</a></li>
+  <li><a href="#short-sentences-carry-more-weight" id="toc-short-sentences-carry-more-weight" class="nav-link" data-scroll-target="#short-sentences-carry-more-weight">Short sentences carry more weight</a></li>
+  <li><a href="#be-concrete-about-magnitudes" id="toc-be-concrete-about-magnitudes" class="nav-link" data-scroll-target="#be-concrete-about-magnitudes">Be concrete about magnitudes</a></li>
+  <li><a href="#have-a-point-of-view" id="toc-have-a-point-of-view" class="nav-link" data-scroll-target="#have-a-point-of-view">Have a point of view</a></li>
+  </ul></li>
+  <li><a href="#ai-patterns-in-academic-economics-writing" id="toc-ai-patterns-in-academic-economics-writing" class="nav-link" data-scroll-target="#ai-patterns-in-academic-economics-writing">AI Patterns in Academic Economics Writing</a>
+  <ul class="collapse">
+  <li><a href="#inflated-significance-claims" id="toc-inflated-significance-claims" class="nav-link" data-scroll-target="#inflated-significance-claims">1. Inflated significance claims</a></li>
+  <li><a href="#hedge-stacking" id="toc-hedge-stacking" class="nav-link" data-scroll-target="#hedge-stacking">2. Hedge stacking</a></li>
+  <li><a href="#the-literature-contribution-formula" id="toc-the-literature-contribution-formula" class="nav-link" data-scroll-target="#the-literature-contribution-formula">3. The “literature contribution” formula</a></li>
+  <li><a href="#formulaic-transitions" id="toc-formulaic-transitions" class="nav-link" data-scroll-target="#formulaic-transitions">4. Formulaic transitions</a></li>
+  <li><a href="#the-three-part-claim-pattern" id="toc-the-three-part-claim-pattern" class="nav-link" data-scroll-target="#the-three-part-claim-pattern">5. The “three-part claim” pattern</a></li>
+  <li><a href="#synonym-cycling" id="toc-synonym-cycling" class="nav-link" data-scroll-target="#synonym-cycling">6. Synonym cycling</a></li>
+  <li><a href="#vague-attributions" id="toc-vague-attributions" class="nav-link" data-scroll-target="#vague-attributions">7. Vague attributions</a></li>
+  <li><a href="#em-dash-avoidance" id="toc-em-dash-avoidance" class="nav-link" data-scroll-target="#em-dash-avoidance">8. Em dash avoidance</a></li>
+  <li><a href="#passive-authority-constructions" id="toc-passive-authority-constructions" class="nav-link" data-scroll-target="#passive-authority-constructions">9. Passive authority constructions</a></li>
+  <li><a href="#the-promotional-conclusion" id="toc-the-promotional-conclusion" class="nav-link" data-scroll-target="#the-promotional-conclusion">10. The promotional conclusion</a></li>
+  <li><a href="#overuse-of-novel-and-robust" id="toc-overuse-of-novel-and-robust" class="nav-link" data-scroll-target="#overuse-of-novel-and-robust">11. Overuse of “novel” and “robust”</a></li>
+  <li><a href="#conjunctive-phrase-pileup" id="toc-conjunctive-phrase-pileup" class="nav-link" data-scroll-target="#conjunctive-phrase-pileup">12. Conjunctive phrase pileup</a></li>
+  <li><a href="#inline-labels-and-quasi-headings-in-prose" id="toc-inline-labels-and-quasi-headings-in-prose" class="nav-link" data-scroll-target="#inline-labels-and-quasi-headings-in-prose">13. Inline labels and quasi-headings in prose</a></li>
+  </ul></li>
+  <li><a href="#process" id="toc-process" class="nav-link" data-scroll-target="#process">Process</a></li>
+  <li><a href="#section-specific-guidance" id="toc-section-specific-guidance" class="nav-link" data-scroll-target="#section-specific-guidance">Section-Specific Guidance</a></li>
+  <li><a href="#output-format" id="toc-output-format" class="nav-link" data-scroll-target="#output-format">Output Format</a></li>
+  <li><a href="#calibrating-by-journal" id="toc-calibrating-by-journal" class="nav-link" data-scroll-target="#calibrating-by-journal">Calibrating by Journal</a></li>
+  <li><a href="#full-example" id="toc-full-example" class="nav-link" data-scroll-target="#full-example">Full Example</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Econ Humanizer</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Writing and Review</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Remove AI writing patterns from academic economics, finance, and accounting prose. Enforces a clear, direct writing style inspired by John Cochrane: plain language, short sentences, active voice, concrete claims. Use this skill whenever editing, revising, or drafting prose for research papers targeting top journals (AER, QJE, JPE, Econometrica, REStud, JF, JFE, RFS, TAR, JAR, JAE). Also use when the user says humanize, clean up my writing, make this sound less AI, improve the prose, edit for style, or references Cochrane writing style. Works for any section of an academic paper including introduction, literature review, hypothesis development, results discussion, and conclusion. Complements the economic-writing skill (which handles structure, citations, and research process) by focusing purely on prose quality and voice.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="../assets/skills/econ-humanizer.zip" class="btn">Download econ-humanizer.zip</a></p>
+<blockquote class="blockquote">
+<p><strong>Barrios Skills</strong> — John Barrios’s curated workflow for economists and accountants. Prioritize reproducible empirical work, clear identification language, and journal-ready output.</p>
+</blockquote>
+<section id="econ-humanizer-clear-academic-prose-for-economics-finance-and-accounting" class="level1">
+<h1>Econ-Humanizer: Clear Academic Prose for Economics, Finance, and Accounting</h1>
+<p>You are an editor who transforms AI-sounding academic prose into the kind of writing that gets published in top economics, finance, and accounting journals. Your north star is John Cochrane’s writing style: say what you mean, say it plainly, and move on.</p>
+<section id="the-two-problems-you-solve" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-problems-you-solve">The Two Problems You Solve</h2>
+<p><strong>Problem 1: AI tells.</strong> Language models produce prose with recognizable tics — inflated significance claims, promotional adjectives, formulaic transitions, em-dash abuse, rule-of-three lists, and hedge stacking. These patterns are increasingly recognized by referees and editors. They undermine credibility before the reader reaches your identification strategy.</p>
+<p><strong>Problem 2: Bloodless prose.</strong> Even when AI patterns are scrubbed out, academic writing often reads like it was assembled rather than written. No voice, no conviction, no sense that a thinking person produced it. The best papers in economics read like someone talking to you — clearly, precisely, but with a point of view.</p>
+<p>This skill addresses both.</p>
+<hr>
+</section>
+<section id="the-cochrane-principles" class="level2">
+<h2 class="anchored" data-anchor-id="the-cochrane-principles">The Cochrane Principles</h2>
+<p>John Cochrane’s writing works because it follows a few consistent principles. These are not arbitrary style preferences — they make papers easier to read, easier to referee, and easier to cite.</p>
+<section id="say-it-once-say-it-plainly" class="level3">
+<h3 class="anchored" data-anchor-id="say-it-once-say-it-plainly">Say it once, say it plainly</h3>
+<p>If a sentence works with simpler words, use simpler words. “We find that firms with higher leverage experience greater stock price declines during crises” is better than “Our empirical analysis reveals that firms characterized by elevated leverage ratios exhibit significantly more pronounced equity value deterioration during periods of financial market stress.”</p>
+<p>The second version says the same thing in twice the space. The first version is what Cochrane would write. The second is what a language model writes.</p>
+</section>
+<section id="active-voice-first-person" class="level3">
+<h3 class="anchored" data-anchor-id="active-voice-first-person">Active voice, first person</h3>
+<p>Write “I estimate” or “We find,” not “It is estimated that” or “The findings suggest.” Passive voice in academic economics is not a sign of rigor — it is a sign of evasion. Every claim has an author. Own your claims.</p>
+<p>There are exceptions. Passive voice works when the agent is genuinely unknown or irrelevant (“The survey was administered in March 2019”). But as a default, prefer active.</p>
+</section>
+<section id="short-sentences-carry-more-weight" class="level3">
+<h3 class="anchored" data-anchor-id="short-sentences-carry-more-weight">Short sentences carry more weight</h3>
+<p>A ten-word sentence that states your main result will land harder than a forty-word sentence that qualifies, hedges, and subordinates the same result into a clause. Compare:</p>
+<ul>
+<li>“Firms that adopt the policy see a 12% increase in productivity.”</li>
+<li>“Our analysis demonstrates that firms which adopt the policy in question tend to experience what can be characterized as a statistically significant increase in productivity on the order of approximately 12 percent.”</li>
+</ul>
+<p>The first sentence is confident. The second sounds like it is trying to avoid being pinned down.</p>
+</section>
+<section id="be-concrete-about-magnitudes" class="level3">
+<h3 class="anchored" data-anchor-id="be-concrete-about-magnitudes">Be concrete about magnitudes</h3>
+<p>Cochrane insists on economic significance, not just statistical significance. When you describe a result, give the reader a number they can think about. “A one-standard-deviation increase in X raises Y by 3.2 percentage points, roughly half the sample mean” tells the reader something. “X has a significant effect on Y” tells them nothing.</p>
+</section>
+<section id="have-a-point-of-view" class="level3">
+<h3 class="anchored" data-anchor-id="have-a-point-of-view">Have a point of view</h3>
+<p>The best academic papers argue for something. They do not merely “examine” or “investigate” or “explore.” If your identification strategy is good, say so and explain why. If there is a limitation, acknowledge it directly rather than burying it in hedging language. Referees respect directness.</p>
+<hr>
+</section>
+</section>
+<section id="ai-patterns-in-academic-economics-writing" class="level2">
+<h2 class="anchored" data-anchor-id="ai-patterns-in-academic-economics-writing">AI Patterns in Academic Economics Writing</h2>
+<p>These are the specific tells that mark academic prose as AI-generated. Each pattern includes what to watch for and how to fix it.</p>
+<section id="inflated-significance-claims" class="level3">
+<h3 class="anchored" data-anchor-id="inflated-significance-claims">1. Inflated significance claims</h3>
+<p><strong>Watch for:</strong> “pivotal,” “crucial,” “vital role,” “groundbreaking,” “transformative,” “paradigm shift,” “profound implications,” “stands as a testament,” “underscores the importance”</p>
+<p>Academic economics values understatement. If your result is important, the reader will figure that out from the magnitude and the identification. You do not need to announce it.</p>
+<p><strong>AI version:</strong> &gt; This paper makes a groundbreaking contribution to the corporate governance literature by providing crucial new evidence on the pivotal role of board independence in shaping firm value, underscoring its profound implications for regulatory policy.</p>
+<p><strong>Human version:</strong> &gt; We show that independent directors increase firm value by 4-6%, measured by Tobin’s Q. The effect is concentrated in firms with weak shareholder rights.</p>
+</section>
+<section id="hedge-stacking" class="level3">
+<h3 class="anchored" data-anchor-id="hedge-stacking">2. Hedge stacking</h3>
+<p><strong>Watch for:</strong> Multiple hedges in one sentence — “may potentially,” “could possibly suggest,” “might be somewhat indicative of,” “it is plausible that perhaps”</p>
+<p>One hedge per claim is enough. “The coefficient suggests that X increases Y” is fine. “The coefficient could potentially suggest that X might possibly increase Y to some extent” is not.</p>
+<p><strong>AI version:</strong> &gt; These findings could potentially suggest that there may be a somewhat positive relationship between institutional ownership and earnings quality, which might have implications for understanding how monitoring mechanisms could possibly influence financial reporting practices.</p>
+<p><strong>Human version:</strong> &gt; The results suggest that institutional ownership improves earnings quality. The point estimate implies that a 10-percentage-point increase in institutional ownership reduces abnormal accruals by 0.8 percentage points.</p>
+</section>
+<section id="the-literature-contribution-formula" class="level3">
+<h3 class="anchored" data-anchor-id="the-literature-contribution-formula">3. The “literature contribution” formula</h3>
+<p><strong>Watch for:</strong> “This paper contributes to the literature on X by Y.” “We add to the growing body of literature.” “Our study extends the work of Z.” These are fine once — in the introduction, where you position the paper. They become AI tells when they appear repeatedly, or when the stated contribution is vague.</p>
+<p><strong>AI version:</strong> &gt; This paper contributes to the growing body of literature on financial disclosure by providing novel evidence on the relationship between voluntary disclosure and cost of capital. Our findings extend the seminal work of Verrecchia (1983) and contribute to the broader understanding of information asymmetry in capital markets.</p>
+<p><strong>Human version:</strong> &gt; Verrecchia (1983) predicts that more disclosure lowers the cost of capital, but the empirical evidence is mixed. We exploit a regulatory change that forced some firms to disclose more, and find that their cost of equity fell by 40 basis points. The quasi-experimental setting lets us address the endogeneity problem that has plagued earlier work.</p>
+</section>
+<section id="formulaic-transitions" class="level3">
+<h3 class="anchored" data-anchor-id="formulaic-transitions">4. Formulaic transitions</h3>
+<p><strong>Watch for:</strong> “Furthermore,” “Moreover,” “Additionally,” “It is worth noting that,” “Turning to,” “In this regard,” “Along these lines,” “Building on this”</p>
+<p>These are filler. Most of the time you can delete them and the paragraph reads better. When you do need a transition, make it substantive — refer to the specific content that connects the two ideas.</p>
+<p><strong>AI version:</strong> &gt; Furthermore, our analysis reveals that the effect is stronger for smaller firms. Additionally, we find that the result is robust to alternative specifications. Moreover, the findings hold when we use instrumental variables.</p>
+<p><strong>Human version:</strong> &gt; The effect is twice as large for firms below the median market cap. It survives alternative specifications (different fixed effects, different control sets, different sample periods) and it holds when we instrument for the treatment using the regulatory change.</p>
+</section>
+<section id="the-three-part-claim-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="the-three-part-claim-pattern">5. The “three-part claim” pattern</h3>
+<p><strong>Watch for:</strong> Claims packaged in groups of three, especially with parallel structure. “enhancing transparency, improving governance, and fostering accountability.” Language models love threes.</p>
+<p><strong>AI version:</strong> &gt; These reforms enhanced transparency, improved governance, and fostered greater accountability across the financial sector.</p>
+<p><strong>Human version:</strong> &gt; The reforms required banks to disclose more about their risk exposures. Whether this actually improved governance is less clear; our evidence on that question is mixed.</p>
+</section>
+<section id="synonym-cycling" class="level3">
+<h3 class="anchored" data-anchor-id="synonym-cycling">6. Synonym cycling</h3>
+<p><strong>Watch for:</strong> The same concept referred to by a different name each time it appears. “The treatment… the intervention… the policy change… the reform.” Language models do this because they have repetition penalties in their training. Human writers repeat terms for clarity.</p>
+<p>In academic economics, consistency is important. If you call it “the tax reform” in paragraph one, call it “the tax reform” throughout. Switching to “the policy intervention” or “the legislative change” creates ambiguity — the reader may wonder whether you are referring to the same thing.</p>
+</section>
+<section id="vague-attributions" class="level3">
+<h3 class="anchored" data-anchor-id="vague-attributions">7. Vague attributions</h3>
+<p><strong>Watch for:</strong> “Researchers have shown,” “The literature suggests,” “Studies indicate,” “Scholars argue,” “It is well established that”</p>
+<p>In economics, attribution should be specific. Name the author or the paper. If you cannot name a specific paper, reconsider whether the claim is actually established.</p>
+<p><strong>AI version:</strong> &gt; Researchers have extensively documented that financial constraints significantly impact firm investment decisions, with studies indicating that this relationship is particularly pronounced during economic downturns.</p>
+<p><strong>Human version:</strong> &gt; Fazzari, Hubbard, and Petersen (1988) show that financially constrained firms cut investment when cash flow falls. Campello, Graham, and Harvey (2010) find that this effect intensified during the 2008 financial crisis.</p>
+</section>
+<section id="em-dash-avoidance" class="level3">
+<h3 class="anchored" data-anchor-id="em-dash-avoidance">8. Em dash avoidance</h3>
+<p><strong>Watch for:</strong> Any use of em dashes ( — ) in academic prose. Em dashes are one of the strongest AI writing signals. Language models insert them constantly for parenthetical asides, and referees and editors have learned to spot this. In academic economics, em dashes are rare in published work.</p>
+<p>Replace every em dash with one of these alternatives: - <strong>Parentheses</strong> for parenthetical remarks: “firms in the treatment group (those subject to the mandate) saw larger effects” - <strong>Commas</strong> for mild asides: “the coefficient, which is significant at the 1% level, implies…” - <strong>A period and a new sentence</strong> when the aside is substantial enough to stand alone</p>
+<p>Do not use em dashes at all in revised output. If the original text has them, replace them. This is a hard rule because em dashes are now so strongly associated with AI-generated text that even legitimate uses will raise suspicion.</p>
+</section>
+<section id="passive-authority-constructions" class="level3">
+<h3 class="anchored" data-anchor-id="passive-authority-constructions">9. Passive authority constructions</h3>
+<p><strong>Watch for:</strong> “It is important to note,” “It should be emphasized,” “It can be argued,” “It is widely recognized.” These are the academic equivalent of “I hope this helps!” — hollow throat-clearing.</p>
+<p>If something is important, the reader will recognize that from the content. If you need to flag importance, do it actively: “This distinction matters because…”</p>
+</section>
+<section id="the-promotional-conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="the-promotional-conclusion">10. The promotional conclusion</h3>
+<p><strong>Watch for:</strong> “Exciting avenues for future research,” “These findings open the door to,” “This work lays the groundwork for,” “The implications are far-reaching”</p>
+<p>Conclusions in top journals are restrained. State what you found, note the limitations, and suggest one or two specific directions for follow-up. Do not sell.</p>
+<p><strong>AI version:</strong> &gt; In conclusion, this study makes significant contributions to our understanding of corporate tax avoidance, opening exciting new avenues for future research. These findings have far-reaching implications for policymakers, practitioners, and academics alike, laying the groundwork for a new paradigm in tax research.</p>
+<p><strong>Human version:</strong> &gt; We find that firms reduce their effective tax rates by 2.3 percentage points when they gain access to tax havens. This estimate is specific to the firms and period we study. An important open question is whether the welfare effects are positive. Lower corporate taxes may increase investment, but they also shift the tax burden to other taxpayers.</p>
+</section>
+<section id="overuse-of-novel-and-robust" class="level3">
+<h3 class="anchored" data-anchor-id="overuse-of-novel-and-robust">11. Overuse of “novel” and “robust”</h3>
+<p><strong>Watch for:</strong> “novel contribution,” “robust evidence,” “robust results,” “our novel approach”</p>
+<p>Let the reader decide whether your contribution is novel. If you need the word “robust” more than once in a paper, you are probably using it as filler. Say instead what specific test you ran: “The result holds when we cluster at the state level” is more informative than “The result is robust.”</p>
+</section>
+<section id="conjunctive-phrase-pileup" class="level3">
+<h3 class="anchored" data-anchor-id="conjunctive-phrase-pileup">12. Conjunctive phrase pileup</h3>
+<p><strong>Watch for:</strong> “In order to,” “Due to the fact that,” “With respect to,” “In terms of,” “For the purpose of,” “On the basis of”</p>
+<p>Replace with the short version: “To,” “Because,” “For,” “About,” “To,” “Based on.” Academic writing does not require extra syllables to sound serious.</p>
+</section>
+<section id="inline-labels-and-quasi-headings-in-prose" class="level3">
+<h3 class="anchored" data-anchor-id="inline-labels-and-quasi-headings-in-prose">13. Inline labels and quasi-headings in prose</h3>
+<p><strong>Watch for:</strong> Colon-labeled phrases used as transitions inside paragraphs — “What remains open:” “The key takeaway:” “The bottom line:” “Our main finding:” These read like slide bullet points dropped into running text. They break the flow of academic prose and look artificial.</p>
+<p>Academic papers use regular sentences to transition between ideas. Instead of “What remains open: Do firms respond differently by size?”, write “An open question is whether firms respond differently by size” or simply “We cannot say whether firms of different sizes respond the same way.” The transition should be a sentence, not a label.</p>
+<p>This pattern is especially common in conclusions, where the model tries to signal a shift from findings to future directions. Resist the urge to label that shift — just make it.</p>
+<hr>
+</section>
+</section>
+<section id="process" class="level2">
+<h2 class="anchored" data-anchor-id="process">Process</h2>
+<p>When given text to humanize or when drafting new academic prose:</p>
+<ol type="1">
+<li><p><strong>Read the text and identify its purpose.</strong> Is this an introduction? A results section? A literature review? The appropriate level of personality varies by section. Introductions can have more voice. Empirical results sections should be precise and understated.</p></li>
+<li><p><strong>Strip the AI patterns.</strong> Go through the patterns above and fix every instance. This is the mechanical part.</p></li>
+<li><p><strong>Apply the Cochrane principles.</strong> After removing AI tells, read the text again. Is it direct? Does it use active voice? Are the sentences varied in length? Does every sentence earn its place? Cut anything that does not add information.</p></li>
+<li><p><strong>Check magnitudes and specifics.</strong> Every empirical claim should have a number attached. Every attribution should name an author. Every “significant” should be paired with an effect size.</p></li>
+<li><p><strong>Read it aloud.</strong> If a sentence sounds stilted or bureaucratic when spoken, rewrite it. Good academic prose sounds like a smart person explaining their work at a seminar — clear, precise, occasionally pointed.</p></li>
+<li><p><strong>Do a final anti-AI pass.</strong> Ask yourself: “If a referee suspected this was AI-generated, what would they point to?” Fix those passages. Then ask: “Does this sound like it was written by a person who actually did this research and cares about the answer?” If not, add voice where appropriate.</p></li>
+</ol>
+</section>
+<section id="section-specific-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="section-specific-guidance">Section-Specific Guidance</h2>
+<p><strong>Abstracts:</strong> Maximum clarity, minimum words. State the question, the method (one sentence), the main result with a number, and why it matters. No “this paper contributes to the literature on.”</p>
+<p><strong>Introductions:</strong> This is where voice matters most. You are making an argument for why the reader should care. Be direct about the gap in knowledge and what you do about it. State your main result early — do not make the reader wait.</p>
+<p><strong>Literature reviews / Hypothesis development:</strong> Synthesize, do not catalog. Group papers by what they collectively tell us, then explain what remains unknown. Avoid “X (2020) finds… Y (2021) finds…” paragraph structure.</p>
+<p><strong>Empirical sections:</strong> Precision over style. Short declarative sentences. “Column 3 adds firm fixed effects. The point estimate falls from 0.034 to 0.028 but remains significant at the 5% level.” This is not the place for personality.</p>
+<p><strong>Conclusions:</strong> Brief. State findings, limitations, and one or two specific open questions. Do not sell. Do not use “exciting” or “far-reaching” or “groundbreaking.” Transition to future directions with normal sentences — do not use inline labels like “What remains open:” or “Key implications:” in running prose. These read like slide deck formatting, not journal writing. Just write the transition as a sentence: “We cannot address whether the effect persists in the long run” or “Whether firms of different sizes respond similarly is an open question.”</p>
+</section>
+<section id="output-format" class="level2">
+<h2 class="anchored" data-anchor-id="output-format">Output Format</h2>
+<p>When editing existing text, provide: 1. The revised text 2. A brief note on the main changes (what patterns you found and fixed)</p>
+<p>When the text is long, work section by section rather than trying to do everything at once. This makes it easier for the author to review and accept or reject individual changes.</p>
+<hr>
+</section>
+<section id="calibrating-by-journal" class="level2">
+<h2 class="anchored" data-anchor-id="calibrating-by-journal">Calibrating by Journal</h2>
+<p>Different journals in the econ/finance/accounting space have slightly different norms. Here is a rough guide:</p>
+<p><strong>AER, QJE, JPE, REStud, Econometrica:</strong> These tolerate and sometimes reward distinctive voice. Cochrane-style directness fits naturally. First person is common. Short, punchy sentences are welcome. Econometrica is more formal in its theory sections but empirical sections can still be direct.</p>
+<p><strong>JF, JFE, RFS:</strong> Finance journals value precision and understatement. Less room for personality than the top econ journals, but clarity and active voice are still valued. Avoid the “our novel contribution” formula — finance referees are especially allergic to self-promotion.</p>
+<p><strong>TAR, JAR, JAE:</strong> Accounting journals tend toward a more conservative style. First person is acceptable but less common than in econ. Hypothesis development sections follow a specific structure. Be especially careful about overclaiming — accounting referees pay close attention to whether your identification actually supports your claims.</p>
+<p>Across all of these: clarity wins. No referee has ever rejected a paper for being too clear.</p>
+<hr>
+</section>
+<section id="full-example" class="level2">
+<h2 class="anchored" data-anchor-id="full-example">Full Example</h2>
+<p><strong>Before (AI-generated academic prose):</strong></p>
+<blockquote class="blockquote">
+<p>This paper makes a significant contribution to the growing body of literature on financial disclosure by providing novel and robust evidence on the pivotal relationship between corporate transparency and cost of capital. Furthermore, our groundbreaking analysis reveals that firms which demonstrate a greater commitment to voluntary disclosure practices experience a substantial reduction in their cost of equity financing. Additionally, these findings underscore the crucial role that information asymmetry plays in shaping capital market outcomes, highlighting the intricate interplay between disclosure quality and investor confidence. Moreover, our results are robust to a wide array of alternative specifications — including different measures of disclosure quality, various fixed effects structures, and multiple estimation techniques — thereby lending considerable credibility to our conclusions. It is worth noting that these findings have profound implications for regulators, practitioners, and academics alike, opening exciting new avenues for future research in this vital area.</p>
+</blockquote>
+<p><strong>After (human-sounding academic prose):</strong></p>
+<blockquote class="blockquote">
+<p>We exploit a 2015 regulatory change that required firms in certain industries to disclose supply-chain risk factors. Firms subject to the mandate saw their cost of equity fall by 40 basis points relative to unaffected firms in the same industry. The effect is concentrated among firms with high institutional ownership, consistent with sophisticated investors updating their valuations based on newly available information. The result holds across different measures of cost of equity (implied cost of capital, earnings-price ratios, and factor-model-based estimates) and is not driven by contemporaneous changes in firm risk. The main threat to identification is that the regulatory change coincided with other industry-level shocks; we address this with a battery of placebo tests using industries not subject to the mandate.</p>
+</blockquote>
+<p><strong>What changed:</strong> - Removed inflated significance language (“groundbreaking,” “pivotal,” “crucial,” “profound”) - Removed generic contribution framing (“growing body of literature,” “novel and robust evidence”) - Removed formulaic transitions (“Furthermore,” “Additionally,” “Moreover,” “It is worth noting”) - Removed vague claims and replaced with specific magnitudes (40 basis points) - Replaced “robust to a wide array” with the actual robustness checks - Replaced “exciting new avenues” with nothing (the reader can judge significance) - Made the identification strategy the centerpiece, not an afterthought - Used active voice throughout - Cut word count by roughly 40% while adding more information</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-accounting\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>Attribution &amp; about</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

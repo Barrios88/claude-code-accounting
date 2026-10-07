@@ -1,0 +1,1164 @@
+WEBVTT
+Kind: captions
+Language: en
+
+NOTE Module 2: The Empirical Loop narrated walkthrough. Generated from the
+narration script and per-segment audio durations (0.7 s gap per slide).
+
+s01-001
+00:00:00.000 --> 00:00:01.037
+Welcome back.
+
+s01-002
+00:00:01.087 --> 00:00:04.570
+This is Module 2 of Claude Code
+for Accounting Research,
+
+s01-003
+00:00:04.620 --> 00:00:09.930
+the empirical loop on the SEC's Financial
+Statement Data Sets. I'm John Barrios.
+
+s01-004
+00:00:09.980 --> 00:00:14.747
+So in this module we take one accounting
+question from a vague idea all the way
+
+s01-005
+00:00:14.797 --> 00:00:16.110
+to a verified figure.
+
+s02-006
+00:00:16.860 --> 00:00:18.682
+Here's how the live session runs.
+
+s02-007
+00:00:18.732 --> 00:00:22.027
+About forty minutes of lecture
+on the dataset, the loop,
+
+s02-008
+00:00:22.077 --> 00:00:24.405
+and the habits that keep
+the work reproducible.
+
+s02-009
+00:00:24.455 --> 00:00:29.002
+Then a thirty-five minute demo,
+where I build R&D intensity by industry,
+
+s02-010
+00:00:29.052 --> 00:00:32.077
+starting from an empty folder
+and ending with a figure.
+
+s02-011
+00:00:32.127 --> 00:00:33.419
+A ten-minute break.
+
+s02-012
+00:00:33.469 --> 00:00:37.522
+Then an eighty-minute lab where you do
+the same thing with your own measure.
+
+s02-013
+00:00:37.572 --> 00:00:41.897
+And we close with a debrief,
+the exit ticket, and the WRDS checkpoint,
+
+s02-014
+00:00:41.947 --> 00:00:43.535
+which is a hard gate.
+
+s02-015
+00:00:43.585 --> 00:00:47.290
+This video covers the lecture slides
+and previews the demo and the lab.
+
+s03-016
+00:00:48.040 --> 00:00:53.460
+So Module 1 gave you three habits: files
+persist, trust but verify, and be specific.
+
+s03-017
+00:00:53.510 --> 00:00:57.971
+But you only used them on
+one script and one number.
+
+s03-018
+00:00:58.021 --> 00:01:01.601
+In this module we take one accounting
+question through the full pipeline,
+
+s03-019
+00:01:01.651 --> 00:01:03.031
+end to end.
+
+s03-020
+00:01:03.081 --> 00:01:04.986
+The diagram is that loop.
+
+s03-021
+00:01:05.036 --> 00:01:09.155
+A vague idea becomes a precise task,
+then scripts, data, a figure, and a README,
+
+s03-022
+00:01:09.205 --> 00:01:13.193
+and the verify step at the end
+leads you to the next question.
+
+s03-023
+00:01:13.243 --> 00:01:16.579
+Every one of those stages
+ends up as a file on disk,
+
+s03-024
+00:01:16.629 --> 00:01:19.510
+so a later session can
+pick it up from there.
+
+s04-025
+00:01:20.260 --> 00:01:25.882
+The data for this module is the SEC's
+Financial Statement Data Sets, FSDS.
+
+s04-026
+00:01:25.932 --> 00:01:28.164
+It comes as one zip file
+per quarter, it's free,
+
+s04-027
+00:01:28.214 --> 00:01:32.926
+and you don't need a WRDS
+account or any other credentials.
+
+s04-028
+00:01:32.976 --> 00:01:35.579
+Two files inside each zip matter.
+
+s04-029
+00:01:35.629 --> 00:01:41.933
+sub.txt has one row per filing:
+the accession number, called ADSH, plus the CIK,
+
+s04-030
+00:01:41.983 --> 00:01:46.003
+the SIC code, the form
+type, and the period.
+
+s04-031
+00:01:46.053 --> 00:01:49.435
+num.txt has one row per tagged value:
+the ADSH, the XBRL tag, the date,
+
+s04-032
+00:01:49.485 --> 00:01:52.934
+the number of quarters, and the value.
+
+s04-033
+00:01:52.984 --> 00:01:56.931
+You join the two on ADSH,
+and every time you join,
+
+s04-034
+00:01:56.981 --> 00:02:00.035
+you state the row counts before and after.
+
+s04-035
+00:02:00.085 --> 00:02:05.650
+Compustat has the same shape, which is
+why we learn it here before Module 4.
+
+s05-036
+00:02:06.400 --> 00:02:11.005
+Before the first figure, have
+Claude write a DATA_PROFILE.md.
+
+s05-037
+00:02:11.055 --> 00:02:14.789
+It's a short file that says what one row
+of each table is and what can go wrong
+
+s05-038
+00:02:14.839 --> 00:02:16.037
+with it.
+
+s05-039
+00:02:16.087 --> 00:02:19.490
+You ask for it in the opening prompt,
+next to DECISIONS.md and LOG.md,
+
+s05-040
+00:02:19.540 --> 00:02:22.504
+so it gets written before
+any measure is computed,
+
+s05-041
+00:02:22.554 --> 00:02:24.674
+and every later session can read it.
+
+s05-042
+00:02:24.724 --> 00:02:29.435
+That's where you catch the errors you
+wouldn't see in a clean-looking figure.
+
+s05-043
+00:02:29.485 --> 00:02:33.445
+This is the files-persist habit
+from Module 1, applied to the data.
+
+s05-044
+00:02:33.495 --> 00:02:36.910
+And in Module 4 you'll ask the
+same questions of Compustat.
+
+s06-045
+00:02:37.660 --> 00:02:41.239
+For FSDS, the profile
+answers four questions.
+
+s06-046
+00:02:41.289 --> 00:02:42.352
+First, what is one row?
+
+s06-047
+00:02:42.402 --> 00:02:43.510
+In sub.txt it's one filing.
+
+s06-048
+00:02:43.560 --> 00:02:49.244
+In num.txt it's one value: a tag, for a date,
+over a number of quarters, in a unit,
+
+s06-049
+00:02:49.294 --> 00:02:51.139
+within a filing.
+
+s06-050
+00:02:51.189 --> 00:02:53.022
+Second, is that row unique?
+
+s06-051
+00:02:53.072 --> 00:02:56.767
+Have Claude look up the key
+columns in the SEC's documentation,
+
+s06-052
+00:02:56.817 --> 00:03:02.296
+then count the rows and the distinct
+key combinations and report both.
+
+s06-053
+00:03:02.346 --> 00:03:08.154
+Third, tag coverage: the share of 10-Ks in
+each pinned quarter that report each tag.
+
+s06-054
+00:03:08.204 --> 00:03:10.511
+If a third of filers never report a tag,
+
+s06-055
+00:03:10.561 --> 00:03:14.500
+your measure partly reflects
+which firms report it.
+
+s06-056
+00:03:14.550 --> 00:03:15.907
+Fourth, known problems.
+
+s06-057
+00:03:15.957 --> 00:03:19.730
+A 10-K shows the prior year
+next to the current one,
+
+s06-058
+00:03:19.780 --> 00:03:24.332
+so the same firm-year value
+appears in more than one filing,
+
+s06-059
+00:03:24.382 --> 00:03:27.583
+and 10-K/A amendments
+restate earlier values.
+
+s06-060
+00:03:27.633 --> 00:03:30.330
+For each one, write down
+which filing you keep.
+
+s07-061
+00:03:31.080 --> 00:03:36.622
+Here's the question for the demo: how has
+R&D intensity evolved across industries?
+
+s07-062
+00:03:36.672 --> 00:03:38.783
+It's a reasonable research question.
+
+s07-063
+00:03:38.833 --> 00:03:42.914
+As a prompt, though, it doesn't say
+which years, which industry grouping,
+
+s07-064
+00:03:42.964 --> 00:03:46.530
+which measure of R&D, or what
+the output should look like.
+
+s07-065
+00:03:46.580 --> 00:03:48.141
+So the agent has to guess,
+
+s07-066
+00:03:48.191 --> 00:03:52.218
+and you spend your first several turns
+finding out which guesses were wrong.
+
+s07-067
+00:03:52.268 --> 00:03:57.142
+Module 1's four components, file,
+operation, aggregation, and output,
+
+s07-068
+00:03:57.192 --> 00:03:59.005
+close most of that gap.
+
+s07-069
+00:03:59.055 --> 00:04:02.421
+A pipeline with more than one
+file adds two more decisions:
+
+s07-070
+00:04:02.471 --> 00:04:04.070
+the join and the paper trail.
+
+s08-071
+00:04:04.820 --> 00:04:08.524
+So before you type anything,
+answer five questions.
+
+s08-072
+00:04:08.574 --> 00:04:13.864
+Which files: which FSDS quarters,
+and which two files inside each.
+
+s08-073
+00:04:13.914 --> 00:04:17.309
+Which join: on what key,
+and how you'll check it.
+
+s08-074
+00:04:17.359 --> 00:04:21.661
+Which measure: R&D over total assets,
+but which XBRL tags, and filtered how.
+
+s08-075
+00:04:21.711 --> 00:04:26.686
+Which aggregation: what statistic,
+grouped by what, over what time unit.
+
+s08-076
+00:04:26.736 --> 00:04:31.921
+And which output: what figure, saved
+under what name, alongside what table.
+
+s08-077
+00:04:31.971 --> 00:04:36.598
+You're the domain expert, so you
+make each of those calls yourself,
+
+s08-078
+00:04:36.648 --> 00:04:39.250
+before the agent has to guess at them.
+
+s09-079
+00:04:40.000 --> 00:04:42.833
+Three habits go in before
+the opening prompt,
+
+s09-080
+00:04:42.883 --> 00:04:45.570
+because adding them
+later costs a lot more.
+
+s09-081
+00:04:45.620 --> 00:04:48.053
+First, empty-folder discipline.
+
+s09-082
+00:04:48.103 --> 00:04:52.799
+Every project starts in a fresh directory,
+so you make a folder called lab 2,
+
+s09-083
+00:04:52.849 --> 00:04:55.202
+move into it, and launch Claude there.
+
+s09-084
+00:04:55.252 --> 00:04:59.555
+An agent that opens in a folder full
+of last month's Stata do-files will
+
+s09-085
+00:04:59.605 --> 00:05:03.497
+sometimes let those files shape
+what it thinks the project is.
+
+s09-086
+00:05:03.547 --> 00:05:04.941
+Second, named scripts.
+
+s09-087
+00:05:04.991 --> 00:05:08.717
+Ask yourself, if I deleted the
+whole conversation right now,
+
+s09-088
+00:05:08.767 --> 00:05:10.674
+would the pipeline still run?
+
+s09-089
+00:05:10.724 --> 00:05:12.982
+Third, paper-trail prompting.
+
+s09-090
+00:05:13.032 --> 00:05:15.764
+You ask for the data profile,
+DECISIONS.md, LOG.md,
+
+s09-091
+00:05:15.814 --> 00:05:19.800
+and the attrition rows in the
+same prompt that starts the work,
+
+s09-092
+00:05:19.850 --> 00:05:24.990
+before any code runs, so the record gets
+written while you're making the choices.
+
+s10-093
+00:05:25.740 --> 00:05:28.650
+This is the opening prompt from the demo,
+
+s10-094
+00:05:28.700 --> 00:05:33.368
+and it's the piece of this module
+you'll reuse the most. It has six parts.
+
+s10-095
+00:05:33.418 --> 00:05:37.736
+Data: the FSDS quarters,
+sub and num, with the columns named.
+
+s10-096
+00:05:37.786 --> 00:05:43.627
+In the demo that's the fourth quarter
+of each year from 2010 through 2023.
+
+s10-097
+00:05:43.677 --> 00:05:47.997
+Join: merge on ADSH, state the
+row counts before and after,
+
+s10-098
+00:05:48.047 --> 00:05:50.853
+and flag anything that doesn't match.
+
+s10-099
+00:05:50.903 --> 00:05:54.539
+Measure: R&D expense over total
+assets, with the tags named,
+
+s10-100
+00:05:54.589 --> 00:05:59.327
+how the quarters field is handled,
+and a filter to 10-Ks.
+
+s10-101
+00:05:59.377 --> 00:06:02.624
+Aggregation: the median
+by two-digit SIC and year.
+
+s10-102
+00:06:02.674 --> 00:06:07.828
+Output: the figure and the CSV,
+both named before anything runs.
+
+s10-103
+00:06:07.878 --> 00:06:13.553
+And the paper trail: named scripts only,
+the data profile, DECISIONS, LOG,
+
+s10-104
+00:06:13.603 --> 00:06:16.730
+and an attrition row every
+time the sample size changes.
+
+s11-105
+00:06:17.480 --> 00:06:21.135
+The first figure is almost
+never right, and that's normal.
+
+s11-106
+00:06:21.185 --> 00:06:25.093
+Don't answer that with one long
+prompt that tries to fix everything.
+
+s11-107
+00:06:25.143 --> 00:06:27.327
+Do small, targeted rounds.
+
+s11-108
+00:06:27.377 --> 00:06:29.625
+Fix the axes and labels and look at it,
+
+s11-109
+00:06:29.675 --> 00:06:34.419
+then fix the industry-bucket granularity
+and look again. Count the rounds.
+
+s11-110
+00:06:34.469 --> 00:06:38.307
+Two or three is typical, and if you're
+past three and it isn't converging,
+
+s11-111
+00:06:38.357 --> 00:06:40.638
+stop and rethink the request.
+
+s11-112
+00:06:40.688 --> 00:06:43.609
+The tree on the slide is
+for when output goes wrong.
+
+s11-113
+00:06:43.659 --> 00:06:46.290
+If it's an execution
+glitch, let it recover.
+
+s11-114
+00:06:46.340 --> 00:06:49.586
+If the strategy is wrong,
+press Escape and redirect.
+
+s11-115
+00:06:49.636 --> 00:06:52.927
+And if a targeted redirect
+hasn't fixed it within two turns,
+
+s11-116
+00:06:52.977 --> 00:06:56.550
+stop and re-plan instead of
+arguing with it for ten more.
+
+s12-117
+00:06:57.300 --> 00:07:01.316
+Before you accept any computed
+result, run at least two checks.
+
+s12-118
+00:07:01.366 --> 00:07:03.875
+The first is a benchmark comparison.
+
+s12-119
+00:07:03.925 --> 00:07:06.825
+Pick industries where you
+already have a strong prior.
+
+s12-120
+00:07:06.875 --> 00:07:11.218
+Pharma and tech should show clearly higher
+R&D intensity than utilities or retail,
+
+s12-121
+00:07:11.268 --> 00:07:14.077
+so check that the figure shows that.
+
+s12-122
+00:07:14.127 --> 00:07:17.791
+The second is a plausibility
+check tied to a known event.
+
+s12-123
+00:07:17.841 --> 00:07:22.484
+Around 2020, the series should show some
+response to the disruption of that year.
+
+s12-124
+00:07:22.534 --> 00:07:24.592
+You don't need to know the
+direction ahead of time,
+
+s12-125
+00:07:24.642 --> 00:07:28.328
+but a perfectly smooth line through a
+period you know was turbulent tells you
+
+s12-126
+00:07:28.378 --> 00:07:32.076
+something upstream was
+over-aggregated or built wrong.
+
+s12-127
+00:07:32.126 --> 00:07:34.701
+Name both checks before
+the figure renders.
+
+s12-128
+00:07:34.751 --> 00:07:37.490
+And before either one,
+plot the raw series.
+
+s13-129
+00:07:38.240 --> 00:07:41.335
+So before you compute a
+median by industry and year,
+
+s13-130
+00:07:41.385 --> 00:07:46.213
+plot the firm-level ratio itself,
+every observation, by fiscal year.
+
+s13-131
+00:07:46.263 --> 00:07:49.374
+Do it once before you
+winsorize and once after.
+
+s13-132
+00:07:49.424 --> 00:07:51.902
+A lot of times the
+problems are right there.
+
+s13-133
+00:07:51.952 --> 00:07:55.491
+A few firms reporting R&D
+larger than their total assets.
+
+s13-134
+00:07:55.541 --> 00:07:58.311
+A year where the number
+of observations collapses.
+
+s13-135
+00:07:58.361 --> 00:08:01.954
+A cluster of exact zeros that
+should be missing values.
+
+s13-136
+00:08:02.004 --> 00:08:06.374
+Each of those is obvious in a raw scatter,
+and you'd never see it in a median.
+
+s13-137
+00:08:06.424 --> 00:08:09.301
+The raw plot doesn't replace
+the two named checks.
+
+s13-138
+00:08:09.351 --> 00:08:12.990
+You use it to find data problems
+before you summarize anything.
+
+s14-139
+00:08:13.740 --> 00:08:18.439
+The common failure in this module is
+treating a plausible-looking figure as a
+
+s14-140
+00:08:18.489 --> 00:08:19.240
+verified one.
+
+s14-141
+00:08:19.290 --> 00:08:23.000
+Clean axis labels, a sensible legend,
+smooth lines... it looks right.
+
+s14-142
+00:08:23.050 --> 00:08:27.504
+But none of that tells you whether
+the tag selection, the filter,
+
+s14-143
+00:08:27.554 --> 00:08:29.016
+or the join was right.
+
+s14-144
+00:08:29.066 --> 00:08:33.671
+Claude Code can tell you the median R&D
+intensity came out at four percent for
+
+s14-145
+00:08:33.721 --> 00:08:35.087
+SIC code 28.
+
+s14-146
+00:08:35.137 --> 00:08:36.878
+It can't tell you, on its own authority,
+
+s14-147
+00:08:36.928 --> 00:08:41.830
+whether four percent is plausible
+for pharmaceutical R&D in 2019.
+
+s14-148
+00:08:41.880 --> 00:08:45.741
+That's accounting and finance judgment,
+which you have to bring yourself.
+
+s14-149
+00:08:45.791 --> 00:08:48.410
+So run the checks even
+when the plot looks clean.
+
+s15-150
+00:08:49.160 --> 00:08:52.039
+So the verification habit for this module:
+
+s15-151
+00:08:52.089 --> 00:08:55.647
+decide your benchmark comparison and
+your plausibility check before the figure
+
+s15-152
+00:08:55.697 --> 00:08:56.082
+renders.
+
+s15-153
+00:08:56.132 --> 00:08:57.161
+If you name them in advance,
+
+s15-154
+00:08:57.211 --> 00:09:01.965
+you're less likely to look at whatever
+the figure shows and reason backward to a
+
+s15-155
+00:09:02.015 --> 00:09:04.464
+story that makes it look right.
+
+s15-156
+00:09:04.514 --> 00:09:07.794
+Write both checks into your README,
+with the source you're checking against,
+
+s15-157
+00:09:07.844 --> 00:09:10.790
+so anyone reading the project
+can see what you checked.
+
+s16-158
+00:09:11.540 --> 00:09:15.671
+These are the same three mantras
+from Module 1, applied to more work.
+
+s16-159
+00:09:15.721 --> 00:09:18.315
+Files persist and context doesn't.
+
+s16-160
+00:09:18.365 --> 00:09:23.322
+Here that means DECISIONS.md, LOG.md,
+and attrition rows at every stage,
+
+s16-161
+00:09:23.372 --> 00:09:24.674
+not just at the end.
+
+s16-162
+00:09:24.724 --> 00:09:25.500
+Trust, but verify.
+
+s16-163
+00:09:25.550 --> 00:09:29.948
+Here that means two named sanity
+checks before you sign off,
+
+s16-164
+00:09:29.998 --> 00:09:35.431
+instead of a general sense that the
+figure looks fine. And be specific.
+
+s16-165
+00:09:35.481 --> 00:09:40.157
+That's six parts now: data, join, measure,
+aggregation, output, and paper trail.
+
+s16-166
+00:09:40.207 --> 00:09:44.348
+A full pipeline has more decisions
+in it than a single script,
+
+s16-167
+00:09:44.398 --> 00:09:46.850
+and you state each one in the prompt.
+
+s17-168
+00:09:47.600 --> 00:09:50.379
+Here's what autonomous
+error recovery looks like.
+
+s17-169
+00:09:50.429 --> 00:09:53.630
+This is a stylized transcript,
+not a screenshot.
+
+s17-170
+00:09:53.680 --> 00:09:57.947
+The prompt asks for the
+fourth-quarter 2023 FSDS zip.
+
+s17-171
+00:09:57.997 --> 00:10:00.281
+The download script runs and
+gets a bare 403 Forbidden,
+
+s17-172
+00:10:00.331 --> 00:10:05.929
+because the SEC rejects bulk-file
+requests that don't identify who's asking.
+
+s17-173
+00:10:05.979 --> 00:10:09.843
+Claude reads the error, adds a
+User-Agent header with an email address,
+
+s17-174
+00:10:09.893 --> 00:10:12.442
+runs the script again,
+and the file comes down,
+
+s17-175
+00:10:12.492 --> 00:10:14.969
+without you typing any part of the fix.
+
+s17-176
+00:10:15.019 --> 00:10:16.987
+So here you watch rather than drive,
+
+s17-177
+00:10:17.037 --> 00:10:20.030
+and you step in only if
+the strategy looks wrong.
+
+s18-178
+00:10:20.780 --> 00:10:25.041
+In the live session, the demo runs
+thirty-five minutes in five steps.
+
+s18-179
+00:10:25.091 --> 00:10:30.234
+First I read the opening prompt aloud,
+slowly, because it's the template you keep.
+
+s18-180
+00:10:30.284 --> 00:10:31.921
+That takes about eight minutes.
+
+s18-181
+00:10:31.971 --> 00:10:35.752
+Then the download and the
+403 recovery, which we watch.
+
+s18-182
+00:10:35.802 --> 00:10:40.845
+Then cleaning and the join on ADSH,
+with the attrition rows printing as it goes.
+
+s18-183
+00:10:40.895 --> 00:10:44.078
+Then the first-draft figure
+and two rounds of refinement.
+
+s18-184
+00:10:44.128 --> 00:10:47.150
+And last, the sanity checks,
+the sign-off, and the README,
+
+s18-185
+00:10:47.200 --> 00:10:49.290
+which gets written at the very end.
+
+s19-186
+00:10:50.040 --> 00:10:51.859
+In the first half of the demo,
+
+s19-187
+00:10:51.909 --> 00:10:54.563
+the six-part prompt goes up
+on the screen and I read it.
+
+s19-188
+00:10:54.613 --> 00:10:56.163
+I don't retype it.
+
+s19-189
+00:10:56.213 --> 00:11:00.957
+You'll see the same 403-and-recover
+pattern from Module 1, on a bigger file.
+
+s19-190
+00:11:01.007 --> 00:11:02.516
+Then the join.
+
+s19-191
+00:11:02.566 --> 00:11:06.431
+Watch the row count in each file
+before the join and the count after,
+
+s19-192
+00:11:06.481 --> 00:11:10.038
+and any ADSH values that
+get flagged as unmatched.
+
+s19-193
+00:11:10.088 --> 00:11:15.103
+While the attrition rows print, I'll stop
+and read one DECISIONS.md entry out loud,
+
+s19-194
+00:11:15.153 --> 00:11:19.865
+for example which quarters value it
+kept for assets versus R&D, and why,
+
+s19-195
+00:11:19.915 --> 00:11:23.190
+so you see the paper trail being
+written as the choices get made.
+
+s20-196
+00:11:23.940 --> 00:11:28.063
+In the second half, the first draft
+of the figure will render wrong,
+
+s20-197
+00:11:28.113 --> 00:11:29.376
+and we count the rounds together.
+
+s20-198
+00:11:29.426 --> 00:11:32.010
+Round one is axes and labels.
+
+s20-199
+00:11:32.060 --> 00:11:34.630
+Round two is the
+industry-bucket granularity,
+
+s20-200
+00:11:34.680 --> 00:11:39.443
+for example cutting down to a readable
+number of two-digit SIC lines.
+
+s20-201
+00:11:39.493 --> 00:11:43.429
+Then I run both sanity checks
+and say what each one is testing.
+
+s20-202
+00:11:43.479 --> 00:11:45.493
+The README gets written
+only after they pass,
+
+s20-203
+00:11:45.543 --> 00:11:48.930
+so it describes a pipeline
+that's already been verified.
+
+s21-204
+00:11:49.680 --> 00:11:53.052
+Then the lab: eighty minutes,
+one continuous block,
+
+s21-205
+00:11:53.102 --> 00:11:56.709
+from an empty folder to a
+verified figure and a README.
+
+s21-206
+00:11:56.759 --> 00:11:58.284
+You choose one measure.
+
+s21-207
+00:11:58.334 --> 00:12:04.244
+Base is book leverage, long-term debt over
+total assets, by two-digit SIC and year.
+
+s21-208
+00:12:04.294 --> 00:12:09.240
+Standard is the demo's R&D intensity,
+but grouped by one-digit SIC.
+
+s21-209
+00:12:09.290 --> 00:12:11.525
+Stretch is revenue concentration,
+
+s21-210
+00:12:11.575 --> 00:12:14.924
+the share of total revenue from
+the ten largest filers each year,
+
+s21-211
+00:12:14.974 --> 00:12:17.177
+which takes more cleaning judgment.
+
+s21-212
+00:12:17.227 --> 00:12:21.271
+Your measure is different from the demo's,
+so the verification is your own.
+
+s21-213
+00:12:21.321 --> 00:12:27.940
+Use the five quarters the starter pack pins:
+the fourth quarter of 2012, 2015, 2018,
+
+s21-214
+00:12:27.990 --> 00:12:30.052
+2021, and 2023.
+
+s21-215
+00:12:30.102 --> 00:12:32.454
+And the requirements are the
+same as the demo: named scripts,
+
+s21-216
+00:12:32.504 --> 00:12:37.870
+DECISIONS and LOG requested upfront,
+an attrition table, and one figure.
+
+s22-217
+00:12:38.620 --> 00:12:42.059
+This is the checklist you work
+through before you call the lab done.
+
+s22-218
+00:12:42.109 --> 00:12:46.052
+It's self-graded, pass or fail,
+and I spot-check a sample.
+
+s22-219
+00:12:46.102 --> 00:12:50.177
+The pipeline reruns start to finish
+from the README in a fresh clone.
+
+s22-220
+00:12:50.227 --> 00:12:55.659
+Sub and num are joined on ADSH,
+with row counts stated before and after.
+
+s22-221
+00:12:55.709 --> 00:13:00.948
+Every change in sample size is in the
+attrition table and explained in DECISIONS.md.
+
+s22-222
+00:13:00.998 --> 00:13:04.559
+The data profile covers the row definition,
+the uniqueness test, tag coverage,
+
+s22-223
+00:13:04.609 --> 00:13:06.955
+and known problems.
+
+s22-224
+00:13:07.005 --> 00:13:11.311
+Two sanity checks are written down with
+sources, and the raw series is plotted.
+
+s22-225
+00:13:11.361 --> 00:13:12.970
+And the figure comes from a script.
+
+s23-226
+00:13:13.720 --> 00:13:18.145
+Now the WRDS checkpoint,
+and this one is a hard gate.
+
+s23-227
+00:13:18.195 --> 00:13:21.159
+By the end of this module
+you submit one of two things.
+
+s23-228
+00:13:21.209 --> 00:13:24.383
+Either a tunnel status screenshot
+showing ssh wrds connecting,
+
+s23-229
+00:13:24.433 --> 00:13:27.723
+the Duo push arriving,
+and the connection succeeding.
+
+s23-230
+00:13:27.773 --> 00:13:31.567
+Or a flag on your exit ticket
+saying exactly what went wrong.
+
+s23-231
+00:13:31.617 --> 00:13:36.294
+I triage those that night, and fixes
+get announced the morning of Module 3.
+
+s23-232
+00:13:36.344 --> 00:13:39.886
+Fixing an account or Duo
+problem takes at least two days.
+
+s23-233
+00:13:39.936 --> 00:13:43.226
+If your WRDS access isn't
+working at this checkpoint,
+
+s23-234
+00:13:43.276 --> 00:13:48.368
+you're provisionally on the public-data
+fallback track for Module 4,
+
+s23-235
+00:13:48.418 --> 00:13:50.057
+so you can plan for it now.
+
+s23-236
+00:13:50.107 --> 00:13:53.750
+If you get it working before Module 4,
+you can switch to the live track.
+
+s24-237
+00:13:54.500 --> 00:13:56.143
+We close with a debrief.
+
+s24-238
+00:13:56.193 --> 00:13:58.825
+Whose first-draft figure
+was actually right?
+
+s24-239
+00:13:58.875 --> 00:14:01.534
+Expect close to zero, and that's normal.
+
+s24-240
+00:14:01.584 --> 00:14:05.856
+What did Claude recover from on its own,
+and where did you have to step in?
+
+s24-241
+00:14:05.906 --> 00:14:10.920
+Then the exit ticket: the standard three
+questions, plus one sentence on sub-agents.
+
+s24-242
+00:14:10.970 --> 00:14:14.776
+If you saw Claude start one during
+your lab, what do you think it was for?
+
+s24-243
+00:14:14.826 --> 00:14:17.133
+We answer that properly in Module 4.
+
+s24-244
+00:14:17.183 --> 00:14:20.424
+And make sure your WRDS
+checkpoint is submitted.
+
+s24-245
+00:14:20.474 --> 00:14:21.490
+See you in the lab.
