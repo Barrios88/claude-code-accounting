@@ -344,14 +344,13 @@ a.btn {
   &:hover { color: $accent; text-decoration: underline; }
 }
 
-// Module / lab materials bar: Slides (PDF) · Lab · Starter pack
+// Module / lab materials bar: Video · Slides (PDF) · Lab · Starter pack.
+// One filled primary, the rest quiet outlined buttons of the same size.
 .module-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin: 0 0 1.6rem;
-  padding: 0 0 1.1rem;
-  border-bottom: 1px solid $hairline;
+  margin: 0 0 2rem;
 
   p { display: contents; margin: 0; }
 
@@ -359,28 +358,31 @@ a.btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.38rem 0.85rem;
-    border: 1px solid $som-navy;
-    border-radius: 4px;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid $hairline-strong;
+    border-radius: $radius;
     background: #fff;
     color: $som-navy !important;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     font-weight: 500;
     line-height: 1.35;
     text-decoration: none !important;
-    &:hover { background: $blue-tint; color: $som-navy !important; }
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+    &:hover { border-color: $som-navy; background: $mist; }
   }
   a.btn, a.is-primary {
     background: $som-navy;
+    border-color: $som-navy;
     color: #fff !important;
-    &:hover { background: darken($som-navy, 6%); color: #fff !important; }
+    font-weight: 600;
+    &:hover { background: darken($som-navy, 6%); }
   }
-  .bi { font-size: 1rem; line-height: 1; }
+  .bi { font-size: 0.95rem; line-height: 1; opacity: 0.85; }
 }
 
-// Module walkthrough video (Module 1): 16:9 frame on the text column
+// Module walkthrough video: 16:9 frame on the text column
 .module-video {
-  margin: 0 0 2.2rem;
+  margin: 0 0 2.5rem;
   scroll-margin-top: 5rem;
 
   .module-video__label {
@@ -388,19 +390,18 @@ a.btn {
     align-items: center;
     gap: 0.45rem;
     margin: 0 0 0.6rem;
-    font-family: $serif;
-    font-size: 1.08rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: $som-navy;
-    .bi { font-size: 1.15rem; }
+    .bi { font-size: 1rem; color: $yale-gray; }
   }
   .module-video__frame {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: $som-navy;
+    background: #fff;
     border: 1px solid $hairline;
-    border-radius: 4px;
+    border-radius: $radius;
     overflow: hidden;
   }
   video {
@@ -419,13 +420,15 @@ a.btn {
     color: #fff;
   }
   .module-video__meta {
-    margin: 0.5rem 0 0;
-    font-size: 0.86rem;
+    margin: 0.55rem 0 0;
+    font-size: 0.85rem;
     color: $yale-gray;
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem 0.5rem;
     align-items: center;
+    a { color: $yale-gray; }
+    a:hover { color: $accent; }
   }
 }
 // Browsers without aspect-ratio support (old Safari): padding-box fallback
@@ -435,12 +438,12 @@ a.btn {
 }
 
 // ---------------------------------------------------------------------------
-// Callouts, recolored to the navy system (style guide §3). The course uses
-// real Quarto callout types with the first inner heading lifted into the
-// callout title:
-//   note    = learning objectives / general notes  (navy on blue tint)
-//   warning = common failures                       (warning tone on mist)
-//   tip     = verify-this protocol boxes            (accent on mist)
+// Callouts: one understated family. Neutral mist panel; color appears only
+// as the 3px left marker and the title. The course uses real Quarto callout
+// types with the first inner heading lifted into the callout title:
+//   note    = learning objectives / general notes  (navy marker)
+//   warning = common failures                       (warning-tone marker)
+//   tip     = verify-this protocol boxes            (accent marker)
 // Selectors are prefixed with `div` to outrank Quarto's own
 // `div.callout-<type>.callout` border colors.
 // ---------------------------------------------------------------------------
@@ -449,31 +452,28 @@ div.callout.callout-warning,
 div.callout.callout-tip,
 div.callout.callout-important,
 div.callout.callout-caution {
-  border-radius: 4px;
+  background-color: $mist;
+  border: none;
+  border-left: 3px solid $som-navy;
+  border-radius: 0 $radius $radius 0;
   box-shadow: none;
-  border-top: none;
-  border-right: none;
-  border-bottom: none;
-  border-left-width: 4px;
-  border-left-style: solid;
-  margin: 1.6rem 0;
+  margin: 2rem 0;
 
   .callout-header {
     background: transparent !important;
     border-bottom: none;
-    font-family: $serif;
-    font-size: 1.04rem;
+    font-family: $font-family-sans-serif;
+    font-size: 0.95rem;
     font-weight: 600;
-    padding-top: 0.6rem;
+    padding-top: 0.75rem;
   }
   .callout-title-container { font-weight: 600; }
-  .callout-body-container { padding-bottom: 0.25rem; }
-  .callout-body { color: $ink; font-size: 0.98rem; }
+  .callout-body-container { padding-bottom: 0.35rem; }
+  .callout-body { color: $ink; font-size: 0.97rem; }
 }
 
 div.callout.callout-note {
   border-left-color: $som-navy;
-  background-color: $blue-tint;
   .callout-header { color: $som-navy; }
 }
 
@@ -481,13 +481,11 @@ div.callout.callout-warning,
 div.callout.callout-important,
 div.callout.callout-caution {
   border-left-color: $warning;
-  background-color: $mist;
   .callout-header { color: $warning; }
 }
 
 div.callout.callout-tip {
   border-left-color: $accent;
-  background-color: $mist;
   .callout-header { color: $som-navy; }
 }
 
@@ -497,14 +495,14 @@ div.callout.callout-tip {
 main ul.task-list {
   list-style: none;
   padding-left: 0;
-  margin: 0.75rem 0 0.4rem;
+  margin: 1rem 0 0.5rem;
 
   li {
     margin: 0;
-    padding: 0.5rem 0.25rem;
-    border-bottom: 1px solid $hairline;
+    padding: 0.6rem 0.25rem;
+    border-bottom: 1px solid $rule;
   }
-  li:first-child { border-top: 1px solid $hairline; }
+  li:first-child { border-top: 1px solid $rule; }
   label {
     display: block;
     position: relative;
@@ -515,8 +513,8 @@ main ul.task-list {
     position: absolute;
     left: 0;
     top: 0.22rem;
-    width: 1.15rem;
-    height: 1.15rem;
+    width: 1.1rem;
+    height: 1.1rem;
     margin: 0;
     accent-color: $som-navy;
     cursor: pointer;
@@ -526,27 +524,29 @@ main ul.task-list {
 .checklist-status {
   font-size: 0.85rem;
   color: $yale-gray;
-  margin: 0.35rem 0 1rem;
+  margin: 0.5rem 0 1.5rem;
+  font-variant-numeric: tabular-nums;
 }
 .checklist-reset {
   margin-left: 0.5rem;
-  padding: 0.05rem 0.55rem;
+  padding: 0.1rem 0.6rem;
   border: 1px solid $hairline;
-  border-radius: 3px;
+  border-radius: $radius;
   background: #fff;
   color: $som-navy;
   font-size: 0.8rem;
   cursor: pointer;
-  &:hover { background: $blue-tint; }
+  &:hover { border-color: $som-navy; background: $mist; }
 }
 
 // ---------------------------------------------------------------------------
-// Tables: blue-tint header, hairline horizontal rules, no vertical rules
+// Tables: tinted header (style guide §3), hairline horizontal rules only,
+// no zebra striping
 // ---------------------------------------------------------------------------
 main table {
-  font-size: 0.94rem;
+  font-size: 0.93rem;
   line-height: 1.5;
-  margin: 1.25rem 0 1.75rem;
+  margin: 1.5rem 0 2rem;
 
   thead th {
     // Bootstrap paints cells via --bs-table-bg; set both so the tint wins
@@ -555,26 +555,28 @@ main table {
     color: $som-navy;
     font-weight: 600;
     vertical-align: bottom;
-    border-bottom: 1px solid darken($hairline, 6%) !important;
+    border-top: 1px solid $hairline !important;
+    border-bottom: 1px solid $hairline-strong !important;
   }
-  th, td { padding: 0.55rem 0.75rem !important; }
-  td { vertical-align: top; border-color: $hairline; }
-  tbody tr:nth-child(even) { background-color: $mist; }
+  th, td { padding: 0.6rem 0.75rem !important; }
+  td { vertical-align: top; border-color: $rule; }
   td:first-child { font-weight: 500; }
 }
-// Neutralize Quarto's table striping hover so rows stay calm
+// Neutralize Quarto's table striping/hover so rows stay calm
 .table > :not(caption) > * > * { box-shadow: none; }
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: transparent; }
 
 // ---------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------
 pre, div.sourceCode {
   background-color: $mist;
-  border: 1px solid $hairline;
-  border-radius: 4px;
+  border: 1px solid $rule;
+  border-radius: $radius;
 }
+div.sourceCode { margin: 1.25rem 0 1.5rem; }
 div.sourceCode pre { border: none; }
-pre code, div.sourceCode code { font-size: 0.86rem; line-height: 1.55; }
+pre code, div.sourceCode code { font-size: 0.85rem; line-height: 1.6; }
 :not(pre) > code {
   background-color: $mist;
   color: $ink;
@@ -586,18 +588,18 @@ pre code, div.sourceCode code { font-size: 0.86rem; line-height: 1.55; }
   overflow-wrap: anywhere;
 }
 .code-copy-button {
-  opacity: 0.85;
+  opacity: 0.7;
   &:hover, &:focus-visible { opacity: 1; }
 }
 
-// Blockquotes carry the course's reusable prompts — style as prompt cards
-// instead of Bootstrap's pale default
+// Blockquotes carry the course's reusable prompts: same family as callouts
 blockquote.blockquote {
   font-size: 1rem;
-  border-left: 4px solid $primary;
-  background: $blue-tint;
+  margin: 1.5rem 0;
+  border-left: 3px solid $som-navy;
+  background: $mist;
   padding: 0.9rem 1.2rem;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 $radius $radius 0;
   color: $ink;
 }
 blockquote.blockquote > :last-child { margin-bottom: 0; }
@@ -608,12 +610,12 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
 // Hairline frame so white-background diagrams and terminal mockups don't
 // float on the white page
 .quarto-figure img, figure img {
-  border: 1px solid $hairline;
-  border-radius: 4px;
+  border: 1px solid $rule;
+  border-radius: $radius;
   max-width: 100%;
   height: auto;
 }
-.quarto-figure { margin: 1.5rem 0 1.75rem; }
+.quarto-figure { margin: 2rem 0; }
 
 // Captions
 .figure-caption, figcaption, caption {
@@ -624,42 +626,51 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
 }
 
 // ---------------------------------------------------------------------------
-// Navigation chrome: sidebar, TOC, prev/next
+// Navigation chrome: navbar, sidebar, TOC, prev/next, footer
 // ---------------------------------------------------------------------------
+@media (max-width: 420px) {
+  .navbar-title { font-size: 1rem; }
+}
+
 #quarto-sidebar {
   .sidebar-title { font-family: $serif; color: $som-navy; }
   .sidebar-item .sidebar-link {
-    font-size: 0.9rem;
-    color: $ink;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: #4a4f57;
     border-left: 2px solid transparent;
-    padding-left: 0.6rem;
+    padding: 0.2rem 0 0.2rem 0.65rem;
   }
-  .sidebar-item .sidebar-link:hover { color: $accent; }
+  .sidebar-item .sidebar-link:hover { color: $som-navy; }
   .sidebar-item .sidebar-link.active {
     color: $som-navy;
     font-weight: 600;
     border-left-color: $som-navy;
   }
 }
+@media (min-width: 992px) {
+  #quarto-sidebar { border-right: 1px solid $rule; }
+}
 
 #TOC, nav#TOC, #quarto-margin-sidebar nav[role="doc-toc"] {
   #toc-title, h2 {
-    font-family: $font-family-sans-serif;
-    font-size: 0.74rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: $yale-gray;
+    @extend %kicker;
     border-bottom: none;
     margin-top: 0;
+    padding-bottom: 0;
   }
-  ul li a { font-size: 0.84rem; line-height: 1.35; }
+  ul li a {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: #4a4f57;
+    &:hover { color: $som-navy; }
+  }
   ul li a.active { color: $som-navy; font-weight: 600; border-left-color: $som-navy; }
 }
 
-// Prev/next page navigation as two clear cards
+// Prev/next page navigation as two quiet cards
 nav.page-navigation {
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   gap: 1rem;
 
   .nav-page { flex: 1 1 0; }
@@ -670,20 +681,25 @@ nav.page-navigation {
     width: 100%;
     padding: 0.85rem 1rem;
     border: 1px solid $hairline;
-    border-radius: 4px;
+    border-radius: $radius;
     color: $som-navy;
     font-weight: 600;
     text-decoration: none;
-    &:hover { border-color: $som-navy; background: $mist; }
+    transition: border-color 0.12s ease, background-color 0.12s ease;
+    &:hover { border-color: $hairline-strong; background: $mist; }
   }
   .nav-page-next a.pagination-link { justify-content: flex-end; text-align: right; }
 }
 
-// Footer
+// Footer: quiet mist band, gray text (style guide §3)
 .nav-footer, .page-footer {
   background-color: $mist !important;
-  border-top: 1px solid #d9dee5;
-  font-size: 0.9rem;
+  border-top: 1px solid $rule;
+  font-size: 0.85rem;
+  color: $yale-gray;
+  min-height: 3.5rem;
+  a { color: $yale-gray; text-decoration: underline; text-decoration-color: $hairline-strong; text-underline-offset: 0.2em; }
+  a:hover { color: $som-navy; }
 }
 
 // ---------------------------------------------------------------------------
@@ -695,18 +711,17 @@ nav.page-navigation {
   margin-bottom: 0.5rem;
 }
 
-// Listing grid: clamp long trigger-style descriptions to three lines so the
-// 41 cards stay scannable; full text lives on the page
+// Listing grid: same hairline card as the module cards. Clamp long
+// trigger-style descriptions to three lines; full text lives on the page.
 .quarto-grid-item {
   border: 1px solid $hairline;
-  border-top: 3px solid $som-navy;
-  border-radius: 4px;
+  border-radius: $radius;
   height: 100%;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border-top-color: $accent;
+    border-color: $hairline-strong;
+    box-shadow: $shadow-soft;
   }
 
   .card-title { color: $som-navy; font-family: $serif; font-size: 1.08rem; font-weight: 600; }
@@ -717,20 +732,23 @@ nav.page-navigation {
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 0.9rem;
-    color: $ink;
+    color: #4a4f57;
   }
 
   .listing-categories .listing-category {
-    color: $som-navy;
-    border-color: $blue-tint;
-    background: $blue-tint;
+    color: $yale-gray;
+    border: none;
+    background: none;
+    padding: 0;
     font-size: 0.68rem;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
   }
 }
-.quarto-listing-category-title { font-family: $serif; color: $som-navy; }
+.quarto-listing-category-title { @extend %kicker; }
 .quarto-listing-category .category {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  color: #4a4f57;
   &.active { font-weight: 600; color: $som-navy; }
 }
 .quarto-listing-filter .form-control,
