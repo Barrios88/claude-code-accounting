@@ -11,7 +11,7 @@ The dataset for this module, and the reason it's the right one to learn on, is t
 ::: {.callout-note icon=false}
 ## Learning objectives
 
-By the end of this module, you should be able to describe the FSDS file structure — `sub.txt` and `num.txt`, pipe-delimited, joined on `adsh` — and explain how it maps onto the shape of Compustat; write and read a six-part opening prompt that specifies the data, the join, the measure, the aggregation, the output, and the paper trail, before any code gets written; run the full empirical loop yourself, end to end, in a single lab session, from an empty folder to a verified figure and a README a stranger could rerun; treat a wrong first-draft figure as the expected first output of a pipeline, not a sign that something is broken, and apply one to three small, targeted refinement rounds instead of one long, over-specified prompt; and apply at least two sanity checks — one benchmark comparison, one plausibility check — before you sign off on any computed result.
+By the end of this module, you should be able to describe the FSDS file structure — `sub.txt` and `num.txt`, pipe-delimited, joined on `adsh` — and explain how it maps onto the shape of Compustat; write and read a six-part opening prompt that specifies the data, the join, the measure, the aggregation, the output, and the paper trail, before any code gets written; run the full empirical loop yourself, end to end, in a single lab session, from an empty folder to a verified figure and a README a stranger could rerun; treat a wrong first-draft figure as the expected first output of a pipeline, not a sign that something is broken, and apply one to three small, targeted refinement rounds instead of one long, over-specified prompt; write a `DATA_PROFILE.md` that states what one row is, tests that it is unique, and reports tag coverage before any figure exists; and apply at least two sanity checks — one benchmark comparison, one plausibility check — plus a plot of the raw series, before you sign off on any computed result.
 :::
 
 ## The full loop, once, end to end
@@ -31,6 +31,20 @@ The join key that ties these two files together is `adsh` — the filing's acces
 ![`sub.txt` and `num.txt`, joined on `adsh`: filing metadata meets tagged values.](../assets/figures/day2/FIG-D2-02_sub_num_join.png){fig-alt="Diagram of two tables, sub.txt filing metadata and num.txt tagged values, joined by arrows on the shared adsh accession-number key."}
 
 This structure is also why FSDS is worth learning before Compustat rather than instead of it. Compustat's `funda` table is, at a conceptual level, doing the same job `num.txt` does — one row per firm-year per reported variable — while its company file plays the same role `sub.txt` plays, giving you the industry code and the identifying metadata you join everything else against. Learn the join-key discipline here, on free data with no account to wait for, and Module 4's WRDS pipeline will feel like a bigger, better-documented version of something you already know rather than something entirely new.
+
+## Profile the data before you plot it
+
+Before the first figure, have Claude write a `DATA_PROFILE.md`: a short file that records what one row of each table actually is, and what can go wrong with it. It takes a few minutes, it lives on disk where every later session can read it, and it catches the errors that a clean-looking figure will hide. Ask for it in the opening prompt, alongside `DECISIONS.md` and `LOG.md`, so it gets written before any measure is computed. For FSDS, the profile should answer the questions below.
+
+**What is one row?** In `sub.txt`, one filing. In `num.txt`, one reported value: a tag, for a date, over a number of quarters, in a unit, within a filing. Write that sentence down in the profile.
+
+**Is that row actually unique?** Don't take the answer on faith from either Claude or your own memory. Have Claude look up the key columns in the SEC's own FSDS documentation, then *test* it: count rows, count distinct combinations of those columns, and report both numbers. If they differ, you have duplicates, and you need to know why before you aggregate anything.
+
+**How complete are the tags you plan to use?** For each tag in your measure — `Assets`, `ResearchAndDevelopmentExpense`, `LongTermDebt` — report the share of 10-K filings in each pinned quarter that report it at all. A measure built on a tag that a third of filers never use is a measure of who uses the tag.
+
+**What are the known traps?** A 10-K reports the prior year alongside the current one, so the same firm-year value appears in more than one filing; decide which filing's value you keep, and write the rule down. And amended filings (`10-K/A`) restate values that an earlier filing already reported; decide whether you keep the original or the amendment, and say so.
+
+The profile is the data-layer version of Module 1's first mantra: files persist, context doesn't. It also sets up Module 4, where the same questions, asked of Compustat, become the metadata table and the iron-law filters.
 
 ## From vague idea to precise task, one more time
 
@@ -93,6 +107,8 @@ The first is a benchmark comparison: pick one or two industries where you alread
 
 Decide what your benchmark comparison and your plausibility check are going to be *before* the figure renders, not after. Naming the check in advance keeps you from unconsciously reasoning backward from whatever the figure happens to show to a story that makes it look right. Write both checks down, along with the source you're checking against, as part of your README — a check that isn't written down is a check nobody but you will ever know you ran.
 :::
+
+One more check costs almost nothing and belongs before both of these: plot the raw series before you aggregate it. Before computing a median by industry and year, plot the firm-level ratio itself — every observation, by fiscal year — once before winsorizing and once after. A handful of firms reporting R&D larger than their total assets, a year where the number of observations collapses, a cluster of exact zeros that should be missing values: each shows up immediately in a raw scatter and disappears into a median. This check does not replace the two you named in advance; it tells you whether the series you are about to summarize deserves summarizing at all.
 
 These two checks are domain knowledge exercises, not something an agent can substitute for. Claude Code can tell you the median R&D intensity came out at 4% for SIC code 28; it cannot tell you, on its own authority, whether 4% is a plausible number for pharmaceutical R&D intensity in 2019 — that's accounting and finance judgment, and it is the judgment this course is built to protect.
 

@@ -9,7 +9,7 @@ This module's lab runs the exact loop you just watched in the demo — empty fol
 ::: {.callout-note icon=false}
 ## What you're building in this module
 
-By the end of the lab you will have: a fresh project folder with a complete pipeline of named scripts — download, clean-and-join, measure, figure — none of which exist only as chat output; a `DECISIONS.md` and `LOG.md` that were requested in your opening prompt, not added afterward, plus an attrition table explaining every sample-size change; one publication-style figure with two sanity checks written down and sourced; and a README a labmate could use to reproduce your entire pipeline in a fresh clone of the folder.
+By the end of the lab you will have: a fresh project folder with a complete pipeline of named scripts — download, clean-and-join, measure, figure — none of which exist only as chat output; a `DECISIONS.md` and `LOG.md` that were requested in your opening prompt, not added afterward, plus an attrition table explaining every sample-size change; a `DATA_PROFILE.md` written before your first figure; one publication-style figure with two sanity checks written down and sourced; and a README a labmate could use to reproduce your entire pipeline in a fresh clone of the folder.
 :::
 
 ## Choose your measure
@@ -38,6 +38,10 @@ Work through every line before you consider the lab complete. This is a self-gra
 - [ ] `sub`/`num` joined on `adsh` (state row counts before/after join)
 
 - [ ] Attrition table present; every sample-size change explained in DECISIONS.md
+
+- [ ] `DATA_PROFILE.md` written before the first figure: what one row is, a uniqueness test with both counts, tag coverage by quarter, and your rule for prior-year duplicates and `10-K/A` amendments
+
+- [ ] Raw firm-level series plotted before aggregation (and before and after winsorizing, if you winsorize)
 
 - [ ] Two sanity checks written down: one benchmark comparison, one plausibility check — with sources
 
