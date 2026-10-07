@@ -1,0 +1,60 @@
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccar_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>

@@ -2,7 +2,11 @@
 title: "Module 5: Writing, Safety, and the Verification Capstone"
 ---
 
-[Module 5 slides (PDF)](../assets/slides/day5_slides.pdf) · [Lab](../labs/day5.qmd)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 5 slides (PDF)](../assets/slides/day5_slides.pdf)
+[[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day5.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab5_starter.zip)
+:::
 
 Every module in this course has ended with an artifact, such as a script, a figure, a SKILL.md or a Stata extract, that Claude Code helped you build faster than you would have built it alone. This module is about two things that decide whether that speed was worth having. The first is whether the words around those artifacts are actually yours. The second is whether a coauthor, a referee or you a year from now could pick up the repo and trust it without redoing the work. The morning is about the writer: where delegating to an agent sharpens your thinking, and where it replaces it without your noticing. The afternoon is about the record: the sandboxes, credential habits, paper trails and git discipline that make a fast pipeline one you can defend. The capstone lab asks you to take a pipeline you built earlier in this course and make it hold up under both kinds of scrutiny at once.
 

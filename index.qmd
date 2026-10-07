@@ -18,20 +18,96 @@ A hands-on PhD course on agentic AI for empirical accounting research, with five
 :::
 :::
 
+::: {.start-path}
+[Start here]{.start-path__label}
+
+1. [General Setup](setup.qmd)
+2. [WRDS MCP Setup](setup-wrds.qmd)
+3. [Module 1: Foundations](modules/01-foundations.qmd)
+4. [Module 1 Lab](labs/day1.qmd)
+:::
+
 Each of the five build modules runs about three hours: a short lecture, a live demo, an extended lab and a debrief. Each one ends with something you keep, such as a reproducible pipeline, a publication-style figure, a text-extraction skill, or a regression-ready Compustat extract on your own WRDS account. Every module covers speed, but it also covers what you need before that speed is usable in a paper: verification, paper trails, credential hygiene, and judgment about whether a measure is valid, which no agent supplies. Module 6 is a discussion seminar on AI, the production of knowledge, and the academic research market. It ends with a position memo instead of a lab.
 
 The course assumes no Claude Code experience. It does assume a laptop you control, a working WRDS account, and that you are willing to run code live.
 
 ## The six modules
 
-| Module | Session | The question it answers | Materials |
-|:---:|---------|------------------------|-----------|
-| 1 | [Foundations](modules/01-foundations.qmd) | What kind of tool is this, and how do I stay in control? | [Lab](labs/day1.qmd) · [Slides](assets/slides/day1_slides.pdf) |
-| 2 | [The Empirical Loop](modules/02-empirical-loop.qmd) | Can I go from idea to verified figure, reproducibly? | [Lab](labs/day2.qmd) · [Slides](assets/slides/day2_slides.pdf) |
-| 3 | [EDGAR Text → Data, + Skills](modules/03-edgar-text.qmd) | Can I build a text measure I'd defend to a referee? | [Lab](labs/day3.qmd) · [Slides](assets/slides/day3_slides.pdf) |
-| 4 | [WRDS MCP at Scale](modules/04-wrds-mcp-scale.qmd) | Can Claude work my licensed data, safely, on my account? | [Lab](labs/day4.qmd) · [Slides](assets/slides/day4_slides.pdf) |
-| 5 | [Writing, Safety, Verification](modules/05-writing-verify.qmd) | What do I delegate, and how do I make my work auditable? | [Lab](labs/day5.qmd) · [Slides](assets/slides/day5_slides.pdf) |
-| 6 | [Seminar: AI & the Research Market](modules/06-ai-knowledge-market.qmd) | What will I still be paid for? | [Slides](assets/slides/day6_slides.pdf) |
+::::::: {.module-grid}
+
+:::: {.module-card}
+[Module 1]{.module-card__kicker}
+
+[[Foundations](modules/01-foundations.qmd)]{.module-card__title}
+
+[What kind of tool is this, and how do I stay in control?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/01-foundations.qmd){.module-card__open} [Lab](labs/day1.qmd) [Slides (PDF)](assets/slides/day1_slides.pdf)
+:::
+::::
+
+:::: {.module-card}
+[Module 2]{.module-card__kicker}
+
+[[The Empirical Loop](modules/02-empirical-loop.qmd)]{.module-card__title}
+
+[Can I go from idea to verified figure, reproducibly?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/02-empirical-loop.qmd){.module-card__open} [Lab](labs/day2.qmd) [Slides (PDF)](assets/slides/day2_slides.pdf)
+:::
+::::
+
+:::: {.module-card}
+[Module 3]{.module-card__kicker}
+
+[[EDGAR Text → Data, + Skills](modules/03-edgar-text.qmd)]{.module-card__title}
+
+[Can I build a text measure I'd defend to a referee?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/03-edgar-text.qmd){.module-card__open} [Lab](labs/day3.qmd) [Slides (PDF)](assets/slides/day3_slides.pdf)
+:::
+::::
+
+:::: {.module-card}
+[Module 4]{.module-card__kicker}
+
+[[WRDS MCP at Scale](modules/04-wrds-mcp-scale.qmd)]{.module-card__title}
+
+[Can Claude work my licensed data, safely, on my account?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/04-wrds-mcp-scale.qmd){.module-card__open} [Lab](labs/day4.qmd) [Slides (PDF)](assets/slides/day4_slides.pdf)
+:::
+::::
+
+:::: {.module-card}
+[Module 5]{.module-card__kicker}
+
+[[Writing, Safety, Verification](modules/05-writing-verify.qmd)]{.module-card__title}
+
+[What do I delegate, and how do I make my work auditable?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/05-writing-verify.qmd){.module-card__open} [Lab](labs/day5.qmd) [Slides (PDF)](assets/slides/day5_slides.pdf)
+:::
+::::
+
+:::: {.module-card .module-card--seminar}
+[Module 6 · Seminar]{.module-card__kicker}
+
+[[Seminar: AI & the Research Market](modules/06-ai-knowledge-market.qmd)]{.module-card__title}
+
+[What will I still be paid for?]{.module-card__question}
+
+::: {.module-card__links}
+[Open module →](modules/06-ai-knowledge-market.qmd){.module-card__open} [Slides (PDF)](assets/slides/day6_slides.pdf)
+:::
+::::
+
+:::::::
 
 ## Beyond the modules
 

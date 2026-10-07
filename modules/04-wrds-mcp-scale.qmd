@@ -2,7 +2,11 @@
 title: "Module 4: WRDS MCP, Scale, and the Stata Bridge"
 ---
 
-[Module 4 slides (PDF)](../assets/slides/day4_slides.pdf) · [Lab](../labs/day4.qmd)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
+[[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day4.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab4_starter.zip)
+:::
 
 Module 3 ended with the filing text parsed and each firm identified by its CIK. The next step is to attach fundamentals (leverage, profitability, size) to every firm-year in the panel. Those fundamentals live in Compustat and CRSP, and unlike EDGAR text they are not available as a public bulk file. Three barriers stand in the way: authentication (a licensed WRDS account behind MFA), licensing (a subscription your institution pays for, which you may not redistribute), and scale (Compustat's full annual file has hundreds of variables and decades of history, far more than you can read into a chat window). A plain chat tool cannot get past any of the three. This module's stack handles all three in order, and you will watch it work on a real account with real data.
 

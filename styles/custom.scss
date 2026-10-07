@@ -3,27 +3,110 @@
 // Style system ported from MGT 816 course site (theme-yale.scss) — D-018.
 // SOM navy, matched to som.yale.edu
 $som-navy: #002856;
+// High Intensity Blue: the only accent (style guide §1)
+$accent: #286DC0;
 $primary: $som-navy;
 $link-color: $som-navy;
+$link-hover-color: $accent;
 $navbar-bg: $som-navy;
 $navbar-fg: #ffffff;
 
 // Course design-system support tokens (figures/callouts continuity)
 // Warm gray darkened from #978D85 for WCAG AA contrast on white and $mist
 $yale-gray: #6f665e;
-$ink: #212529;
-$mist: #f8f9fa;
+$ink: #222222;
+$mist: #f5f7fa;
 $blue-tint: #e7edf4;
-$warning: #c0392b;
+$hairline: #d8dee6;
+// Style guide warning tone (crimson-adjacent), used sparingly
+$warning: #b83a4b;
+
+// Typography — web fallback stack from the style guide (§2)
+$font-family-sans-serif: "Public Sans", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+$headings-font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+$headings-color: $som-navy;
+$headings-font-weight: 600;
+$body-color: $ink;
+$font-size-base: 1.0625rem;      // 17px body
+$line-height-base: 1.6;
+$h1-font-size: 2rem;
+$h2-font-size: 1.5rem;
+$h3-font-size: 1.2rem;
+$h4-font-size: 1.05rem;
+$code-color: $ink;
+
+// Reading measure: ~75–85 characters per line at 17px
+$grid-body-width: 760px;
+$grid-sidebar-width: 240px;
+$grid-margin-width: 240px;
+
+$toc-color: $som-navy;
 
 /*-- scss:rules --*/
 
+$serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+body { -webkit-font-smoothing: antialiased; }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: $serif;
+  letter-spacing: -0.005em;
+}
+
+// Docked-sidebar pages (modules, labs) get a wider grid column from Quarto;
+// cap the text column so lines stay near 85 characters
+body.docked main#quarto-document-content { max-width: 800px; }
+
+// Page titles and section rhythm
+#title-block-header { margin-bottom: 1.25rem; }
+h1.title { line-height: 1.2; }
+main h2, main .h2 {
+  margin-top: 2.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid $hairline;
+}
+main h3, main .h3 { margin-top: 1.9rem; }
+main p, main li { hyphens: manual; }
+main li + li { margin-top: 0.2rem; }
+
+// Links: navy text, accent underline so links read as links next to navy headings
+main a:not(.btn):not(.nav-link):not(.pagination-link):not(.quarto-grid-link) {
+  text-decoration-color: rgba($accent, 0.55);
+  text-underline-offset: 0.18em;
+  &:hover { color: $accent; text-decoration-color: $accent; }
+}
+
+// Visible focus everywhere (WCAG 2.4.7)
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.navbar a:focus-visible,
+.navbar button:focus-visible,
+.hero-band a:focus-visible {
+  outline-color: #fff;
 }
 
 .navbar-brand {
   font-weight: 600;
+}
+.navbar-title { font-family: $serif; letter-spacing: 0.01em; }
+
+// Navbar active page: white text, accent underline (style guide §3)
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+@media (min-width: 992px) {
+  .navbar .navbar-nav .nav-link.active {
+    box-shadow: inset 0 -3px 0 lighten($accent, 18%);
+  }
 }
 
 // SOM-style masthead (text-only variant — no Yale/SOM marks on this
@@ -34,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .som-masthead__inner {
   margin: 0;
-  padding: 0.7rem 1.1rem;
+  padding: 0.6rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -42,52 +125,58 @@ h1, h2, h3, h4, h5, h6 {
 }
 .som-masthead__brand {
   color: $som-navy;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.05rem;
+  font-family: $serif;
+  font-size: 1.02rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-decoration: none;
 }
 .som-masthead__course {
   color: $som-navy;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.95rem;
+  font-family: $serif;
+  font-size: 0.88rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
 }
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .som-masthead__course { display: none; }
+  .som-masthead__brand { font-size: 0.92rem; }
 }
 
-// Landing-page hero band (resolves the FIG-SH-01 hero slot, D-017):
+// ---------------------------------------------------------------------------
+// Landing page
+// ---------------------------------------------------------------------------
+
+// Hero band (resolves the FIG-SH-01 hero slot, D-017):
 // navy card with the course title, lede, fact row, and two CTAs
 .hero-band {
   background: $som-navy;
   color: #fff;
   border-radius: 6px;
-  padding: 2.25rem 2.5rem 2rem;
-  margin: 1.25rem 0 2rem;
+  padding: 2.4rem 2.6rem 2.1rem;
+  margin: 1.25rem 0 1.75rem;
 
   h1 {
     color: #fff;
     margin-top: 0;
     padding-top: 0;
-    font-size: 2rem;
+    font-size: 2.2rem;
     border-bottom: none;
   }
 
   p {
     color: rgba(255, 255, 255, 0.92);
     max-width: 44rem;
+    font-size: 1.08rem;
   }
 
   .hero-facts {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: $serif;
     font-size: 0.85rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #b9c8da;
+    color: #c3d1e2;
     margin: 1.25rem 0 0.25rem;
   }
 
@@ -96,6 +185,7 @@ h1, h2, h3, h4, h5, h6 {
   .hero-buttons a {
     background-color: #fff;
     color: $som-navy !important;
+    font-weight: 600;
   }
   .hero-buttons a:hover {
     background-color: $blue-tint;
@@ -105,6 +195,7 @@ h1, h2, h3, h4, h5, h6 {
     background: transparent;
     color: #fff !important;
     border: 1px solid rgba(255, 255, 255, 0.65);
+    font-weight: 500;
   }
   .hero-buttons a.btn-ghost:hover {
     background: rgba(255, 255, 255, 0.12);
@@ -115,11 +206,152 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 576px) {
   .hero-band {
     padding: 1.5rem 1.25rem;
-    h1 { font-size: 1.5rem; }
+    h1 { font-size: 1.6rem; }
+    p { font-size: 1rem; }
   }
 }
 
+// "Start here" path: Setup -> WRDS setup -> Module 1 -> Lab 1
+.start-path {
+  margin: 0 0 2rem;
+  padding: 1rem 1.25rem;
+  background: $mist;
+  border: 1px solid $hairline;
+  border-left: 4px solid $accent;
+  border-radius: 4px;
+
+  .start-path__label {
+    display: block;
+    margin: 0 0 0.55rem;
+    font-family: $serif;
+    font-weight: 600;
+    color: $som-navy;
+  }
+  ol {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.4rem;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    counter-increment: step;
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    font-size: 0.95rem;
+  }
+  li::before {
+    content: counter(step);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.45rem;
+    height: 1.45rem;
+    margin-right: 0.45rem;
+    border-radius: 50%;
+    background: $som-navy;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  li:not(:last-child)::after {
+    content: "\2192";
+    margin: 0 0.35rem 0 0.6rem;
+    color: $yale-gray;
+  }
+  a { font-weight: 600; }
+}
+@media (max-width: 576px) {
+  .start-path ol { flex-direction: column; }
+  .start-path li:not(:last-child)::after { content: none; }
+}
+
+// Module card grid (landing page)
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 2rem;
+}
+.module-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.05rem 1.15rem 0.9rem;
+  background: #fff;
+  border: 1px solid $hairline;
+  border-top: 3px solid $som-navy;
+  border-radius: 4px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+  &:hover, &:focus-within {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-color: darken($hairline, 8%);
+    border-top-color: $accent;
+  }
+
+  &.module-card--seminar { border-top-color: $yale-gray; background: $mist; }
+
+  p { margin: 0; }
+
+  .module-card__kicker {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $yale-gray;
+    margin-bottom: 0.3rem;
+  }
+  .module-card__title {
+    display: block;
+    font-family: $serif;
+    font-size: 1.16rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.45rem;
+    a { color: $som-navy; text-decoration: none; }
+    a:hover { color: $accent; text-decoration: underline; }
+    // The title link covers the whole card, so clicking anywhere opens the module.
+    a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
+  }
+  .module-card__question {
+    display: block;
+    color: $ink;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-style: italic;
+    padding-bottom: 0.85rem;
+  }
+  .module-card__links {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    border-top: 1px solid $hairline;
+    font-size: 0.88rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    p { display: contents; }
+    a { font-weight: 500; position: relative; z-index: 1; }
+    a.module-card__open {
+      background: $som-navy;
+      color: #fff !important;
+      text-decoration: none;
+      padding: 0.3rem 0.75rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    a.module-card__open:hover, a.module-card__open:focus-visible { background: $accent; }
+  }
+  &:hover { cursor: pointer; }
+}
+
+// ---------------------------------------------------------------------------
 // Buttons (hero + syllabus actions + landing CTA), MGT 816 style
+// ---------------------------------------------------------------------------
 .hero-buttons,
 .syllabus-actions {
   display: flex;
@@ -162,6 +394,96 @@ a.btn:hover {
 
 .cta-setup { margin-top: 1.25rem; }
 
+// Module / lab materials bar: Slides (PDF) · Lab · Starter pack
+.module-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.6rem;
+  padding: 0 0 1.1rem;
+  border-bottom: 1px solid $hairline;
+
+  p { display: contents; margin: 0; }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.38rem 0.85rem;
+    border: 1px solid $som-navy;
+    border-radius: 4px;
+    background: #fff;
+    color: $som-navy !important;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.35;
+    text-decoration: none !important;
+    &:hover { background: $blue-tint; color: $som-navy !important; }
+  }
+  a.btn, a.is-primary {
+    background: $som-navy;
+    color: #fff !important;
+    &:hover { background: darken($som-navy, 6%); color: #fff !important; }
+  }
+  .bi { font-size: 1rem; line-height: 1; }
+}
+
+// Module walkthrough video (Module 1): 16:9 frame on the text column
+.module-video {
+  margin: 0 0 2.2rem;
+  scroll-margin-top: 7rem;
+
+  .module-video__label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.6rem;
+    font-family: $serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: $som-navy;
+    .bi { font-size: 1.15rem; }
+  }
+  .module-video__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: $som-navy;
+    border: 1px solid $hairline;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+  }
+  video:focus-visible { outline: 3px solid $accent; outline-offset: -3px; }
+  video::cue {
+    font-family: $font-family-sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    background: rgba(0, 20, 45, 0.82);
+    color: #fff;
+  }
+  .module-video__meta {
+    margin: 0.5rem 0 0;
+    font-size: 0.86rem;
+    color: $yale-gray;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+  }
+}
+// Browsers without aspect-ratio support (old Safari): padding-box fallback
+@supports not (aspect-ratio: 16 / 9) {
+  .module-video .module-video__frame { height: 0; padding-top: 56.25%; }
+  .module-video video { position: absolute; inset: 0; }
+}
+
 // "This week"-style highlight box (used for notices)
 .this-week {
   border-left: 4px solid $primary;
@@ -185,61 +507,161 @@ a.btn:hover {
   font-style: italic;
 }
 
-// Course callouts, recolored to the navy system. The course uses real Quarto
-// callout types with the first inner heading lifted into the callout title:
+// ---------------------------------------------------------------------------
+// Callouts, recolored to the navy system (style guide §3). The course uses
+// real Quarto callout types with the first inner heading lifted into the
+// callout title:
 //   note    = learning objectives / general notes  (navy on blue tint)
-//   warning = common failures                       (warning red on mist)
-//   tip     = verify-this protocol boxes            (navy on mist)
-.callout.callout-note,
-.callout.callout-warning,
-.callout.callout-tip {
+//   warning = common failures                       (warning tone on mist)
+//   tip     = verify-this protocol boxes            (accent on mist)
+// Selectors are prefixed with `div` to outrank Quarto's own
+// `div.callout-<type>.callout` border colors.
+// ---------------------------------------------------------------------------
+div.callout.callout-note,
+div.callout.callout-warning,
+div.callout.callout-tip,
+div.callout.callout-important,
+div.callout.callout-caution {
   border-radius: 4px;
   box-shadow: none;
   border-top: none;
   border-right: none;
   border-bottom: none;
+  border-left-width: 4px;
+  border-left-style: solid;
+  margin: 1.6rem 0;
 
   .callout-header {
-    background: transparent;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.02rem;
+    background: transparent !important;
+    border-bottom: none;
+    font-family: $serif;
+    font-size: 1.04rem;
     font-weight: 600;
+    padding-top: 0.6rem;
   }
-  .callout-body { color: $ink; }
+  .callout-title-container { font-weight: 600; }
+  .callout-body-container { padding-bottom: 0.25rem; }
+  .callout-body { color: $ink; font-size: 0.98rem; }
 }
 
-.callout.callout-note {
-  border-left: 4px solid $primary;
+div.callout.callout-note {
+  border-left-color: $som-navy;
   background-color: $blue-tint;
-  .callout-header { color: $primary; }
+  .callout-header { color: $som-navy; }
 }
 
-.callout.callout-warning {
-  border-left: 4px solid $warning;
+div.callout.callout-warning,
+div.callout.callout-important,
+div.callout.callout-caution {
+  border-left-color: $warning;
   background-color: $mist;
   .callout-header { color: $warning; }
 }
 
-.callout.callout-tip {
-  border-left: 4px solid $primary;
+div.callout.callout-tip {
+  border-left-color: $accent;
   background-color: $mist;
-  .callout-header { color: $primary; }
+  .callout-header { color: $som-navy; }
 }
 
-// Tables: navy-tinted header, hairline rules
-table {
-  thead th {
-    background-color: $blue-tint;
-    color: $primary;
-    font-weight: 600;
-    border-bottom: 1px solid #d8dee6;
+// ---------------------------------------------------------------------------
+// Lab checklists (task lists): larger targets, clear checked state
+// ---------------------------------------------------------------------------
+main ul.task-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.75rem 0 0.4rem;
+
+  li {
+    margin: 0;
+    padding: 0.5rem 0.25rem;
+    border-bottom: 1px solid $hairline;
   }
-  tbody tr:nth-child(even) { background-color: $mist; }
+  li:first-child { border-top: 1px solid $hairline; }
+  label {
+    display: block;
+    position: relative;
+    padding-left: 1.9rem;
+    cursor: pointer;
+  }
+  input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 0.22rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    accent-color: $som-navy;
+    cursor: pointer;
+  }
+  li.is-checked label { color: $yale-gray; }
+}
+.checklist-status {
+  font-size: 0.85rem;
+  color: $yale-gray;
+  margin: 0.35rem 0 1rem;
+}
+.checklist-reset {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.55rem;
+  border: 1px solid $hairline;
+  border-radius: 3px;
+  background: #fff;
+  color: $som-navy;
+  font-size: 0.8rem;
+  cursor: pointer;
+  &:hover { background: $blue-tint; }
 }
 
+// ---------------------------------------------------------------------------
+// Tables: blue-tint header, hairline horizontal rules, no vertical rules
+// ---------------------------------------------------------------------------
+main table {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  margin: 1.25rem 0 1.75rem;
+
+  thead th {
+    // Bootstrap paints cells via --bs-table-bg; set both so the tint wins
+    --bs-table-bg: #{$blue-tint};
+    background-color: $blue-tint !important;
+    color: $som-navy;
+    font-weight: 600;
+    vertical-align: bottom;
+    border-bottom: 1px solid darken($hairline, 6%) !important;
+  }
+  th, td { padding: 0.55rem 0.75rem !important; }
+  td { vertical-align: top; border-color: $hairline; }
+  tbody tr:nth-child(even) { background-color: $mist; }
+  td:first-child { font-weight: 500; }
+}
+// Neutralize Quarto's table striping hover so rows stay calm
+.table > :not(caption) > * > * { box-shadow: none; }
+
+// ---------------------------------------------------------------------------
 // Code
-pre { background-color: $mist; border: 1px solid #d8dee6; }
-:not(pre) > code { background-color: $mist; color: $ink; }
+// ---------------------------------------------------------------------------
+pre, div.sourceCode {
+  background-color: $mist;
+  border: 1px solid $hairline;
+  border-radius: 4px;
+}
+div.sourceCode pre { border: none; }
+pre code, div.sourceCode code { font-size: 0.86rem; line-height: 1.55; }
+:not(pre) > code {
+  background-color: $mist;
+  color: $ink;
+  font-size: 0.86em;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  // Long commands wrap instead of pushing the page wider on phones
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.code-copy-button {
+  opacity: 0.85;
+  &:hover, &:focus-visible { opacity: 1; }
+}
 
 // Blockquotes carry the course's reusable prompts — style as prompt cards
 // instead of Bootstrap's pale default
@@ -249,20 +671,85 @@ blockquote.blockquote {
   background: $blue-tint;
   padding: 0.9rem 1.2rem;
   border-radius: 0 4px 4px 0;
+  color: $ink;
 }
 blockquote.blockquote > :last-child { margin-bottom: 0; }
 
-// Figures: hairline frame so white-background diagrams and terminal
-// mockups don't float on the white page
+// ---------------------------------------------------------------------------
+// Figures
+// ---------------------------------------------------------------------------
+// Hairline frame so white-background diagrams and terminal mockups don't
+// float on the white page
 .quarto-figure img, figure img {
-  border: 1px solid #d8dee6;
+  border: 1px solid $hairline;
   border-radius: 4px;
+  max-width: 100%;
+  height: auto;
 }
+.quarto-figure { margin: 1.5rem 0 1.75rem; }
 
 // Captions
 .figure-caption, figcaption, caption {
   font-size: 0.85rem;
   color: $yale-gray;
+  line-height: 1.45;
+  margin-top: 0.5rem;
+}
+
+// ---------------------------------------------------------------------------
+// Navigation chrome: sidebar, TOC, prev/next
+// ---------------------------------------------------------------------------
+#quarto-sidebar {
+  .sidebar-title { font-family: $serif; color: $som-navy; }
+  .sidebar-item .sidebar-link {
+    font-size: 0.9rem;
+    color: $ink;
+    border-left: 2px solid transparent;
+    padding-left: 0.6rem;
+  }
+  .sidebar-item .sidebar-link:hover { color: $accent; }
+  .sidebar-item .sidebar-link.active {
+    color: $som-navy;
+    font-weight: 600;
+    border-left-color: $som-navy;
+  }
+}
+
+#TOC, nav#TOC, #quarto-margin-sidebar nav[role="doc-toc"] {
+  #toc-title, h2 {
+    font-family: $font-family-sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $yale-gray;
+    border-bottom: none;
+    margin-top: 0;
+  }
+  ul li a { font-size: 0.84rem; line-height: 1.35; }
+  ul li a.active { color: $som-navy; font-weight: 600; border-left-color: $som-navy; }
+}
+
+// Prev/next page navigation as two clear cards
+nav.page-navigation {
+  margin-top: 3rem;
+  gap: 1rem;
+
+  .nav-page { flex: 1 1 0; }
+  .nav-page a.pagination-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid $hairline;
+    border-radius: 4px;
+    color: $som-navy;
+    font-weight: 600;
+    text-decoration: none;
+    &:hover { border-color: $som-navy; background: $mist; }
+  }
+  .nav-page-next a.pagination-link { justify-content: flex-end; text-align: right; }
 }
 
 // Footer
@@ -272,23 +759,30 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
   font-size: 0.9rem;
 }
 
-// Skill catalog subtitle
+// ---------------------------------------------------------------------------
+// Skills catalog
+// ---------------------------------------------------------------------------
 .skill-subtitle {
   color: $yale-gray;
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
 }
 
-// Skills catalog listing grid: clamp long trigger-style descriptions to
-// three lines so the 41 cards stay scannable; full text lives on the page
+// Listing grid: clamp long trigger-style descriptions to three lines so the
+// 41 cards stay scannable; full text lives on the page
 .quarto-grid-item {
-  border: 1px solid #d8dee6;
+  border: 1px solid $hairline;
+  border-top: 3px solid $som-navy;
   border-radius: 4px;
-  transition: box-shadow 0.15s ease;
+  height: 100%;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 
-  &:hover { box-shadow: 0 2px 8px rgba(0, 40, 86, 0.12); }
+  &:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-top-color: $accent;
+  }
 
-  .card-title { color: $primary; font-size: 1.05rem; }
+  .card-title { color: $som-navy; font-family: $serif; font-size: 1.08rem; font-weight: 600; }
 
   .card-text {
     display: -webkit-box;
@@ -300,11 +794,20 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
   }
 
   .listing-categories .listing-category {
-    color: $primary;
+    color: $som-navy;
     border-color: $blue-tint;
     background: $blue-tint;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
   }
 }
+.quarto-listing-category-title { font-family: $serif; color: $som-navy; }
+.quarto-listing-category .category {
+  font-size: 0.92rem;
+  &.active { font-weight: 600; color: $som-navy; }
+}
+.quarto-listing-filter .form-control,
+.input-group-text { border-color: $hairline; }
 
 /* Mobile: wide tables scroll inside themselves instead of breaking the page */
 @media (max-width: 768px) {
@@ -316,6 +819,8 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
   }
   .hero-buttons a,
   .syllabus-actions a { flex: 1 1 auto; text-align: center; }
+  nav.page-navigation .nav-page-text { font-size: 0.9rem; }
+  .module-links a { flex: 1 1 auto; justify-content: center; }
 }
 
 /* Keep anchor jumps clear of the sticky masthead + navbar (~100px combined) */
@@ -331,14 +836,26 @@ blockquote.blockquote > :last-child { margin-bottom: 0; }
   #quarto-margin-sidebar,
   .nav-footer,
   .page-footer,
+  nav.page-navigation,
+  .checklist-reset,
+  .code-copy-button,
   .quarto-page-breadcrumbs { display: none !important; }
 
-  body { padding-top: 0 !important; }
+  body { padding-top: 0 !important; font-size: 11pt; }
+
+  .module-links a,
+  .module-card { border-color: #999 !important; background: none !important; color: #000 !important; }
+  .module-grid { grid-template-columns: 1fr 1fr; }
 
   blockquote.blockquote,
   section[class*="callout-"],
   div[class*="callout-"] {
-    background: none;
+    background: none !important;
     border-left-width: 3px;
   }
+  pre, div.sourceCode { white-space: pre-wrap; }
+
+  // Video can't play on paper: drop the player, keep the label and link
+  .module-video__frame { display: none !important; }
+  .module-video { margin-bottom: 1rem; }
 }

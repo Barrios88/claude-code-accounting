@@ -2,7 +2,11 @@
 title: "Module 4 Lab: WRDS Pull to Analysis-Ready Panel"
 ---
 
-[Download the starter pack (zip)](../assets/labs/lab4_starter.zip){.btn} · [Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](../assets/labs/lab4_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
+[[]{.bi .bi-journal-text aria-hidden="true"} Module 4 notes](../modules/04-wrds-mcp-scale.qmd)
+:::
 
 This lab builds one pipeline on two tracks: live WRDS data if your account and tunnel are ready, or an equivalent public dataset if they aren't. Both tracks run through the same five steps: a feasibility-assessment prompt, a filtered pull, mandatory inspection, a Parquet/DuckDB landing, and a metadata table. The two tracks count equally. What you are learning is the procedure, and the data source underneath it can be swapped. Some students choose the fallback track even with a working WRDS connection because it is faster to iterate on. That is a legitimate choice.
 
