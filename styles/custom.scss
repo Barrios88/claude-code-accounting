@@ -77,6 +77,7 @@ body.docked main#quarto-document-content { max-width: 800px; }
 // Page titles and section rhythm (spacing scale: 0.5 / 1 / 1.5 / 2 / 3 rem)
 #title-block-header { margin: 0.5rem 0 1.5rem; }
 h1.title {
+  margin-bottom: 1rem;
   font-size: 2.05rem;
   line-height: 1.2;
   letter-spacing: -0.012em;
@@ -745,7 +746,11 @@ nav.page-navigation {
     letter-spacing: 0.08em;
   }
 }
-.quarto-listing-category-title { @extend %kicker; }
+.quarto-listing-category-title {
+  @extend %kicker;
+  font-size: 0.72rem !important; // Quarto renders this as an h5-sized div
+  margin-bottom: 0.5rem;
+}
 .quarto-listing-category .category {
   font-size: 0.88rem;
   color: #4a4f57;
@@ -763,7 +768,10 @@ nav.page-navigation {
     -webkit-overflow-scrolling: touch;
   }
   nav.page-navigation .nav-page-text { font-size: 0.9rem; }
-  .module-links a { flex: 1 1 auto; justify-content: center; }
+}
+@media (max-width: 576px) {
+  h1.title { font-size: 1.65rem; line-height: 1.22; }
+  main h2, main .h2 { margin-top: 2.5rem; font-size: 1.35rem; }
 }
 
 /* Keep anchor jumps clear of the sticky navbar */

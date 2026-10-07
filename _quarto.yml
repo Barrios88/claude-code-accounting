@@ -94,7 +94,7 @@ website:
   page-footer:
     background: "#F5F7FA"
     foreground: "#6f665e"
-    left:
+    center:
       - "John Barrios · Yale School of Management · "
       - text: "Attribution & about"
         href: about.qmd
