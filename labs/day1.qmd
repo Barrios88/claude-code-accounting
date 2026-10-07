@@ -59,5 +59,5 @@ Complete the standard three-question exit ticket (one concept that clicked, one 
 ::: {.callout-warning icon=false}
 ## Homework: confirm your WRDS/Duo runway now
 
-Confirm that you have an active WRDS account and that Duo two-factor authentication is enrolled on it. Before Module 2, test that `ssh wrds` connects and completes a Duo push. This is required. Module 2's lab ends with a hard checkpoint on this connection, and Module 4's main lab depends on it. Allow at least two days to resolve account or Duo problems through WRDS support; the night before Module 4 is too late. If you run into trouble, raise it at Module 2's checkpoint, not after.
+Confirm that you have an active WRDS account and that Duo two-factor authentication is enrolled on it. Set up the `ssh wrds` shortcut ([Setup](../setup.qmd), step 5) and test that it connects and completes a Duo push. Aim to do this before Module 2. The hard deadline is the checkpoint at the end of Module 2's lab, and Module 4's main lab depends on this connection. Allow at least two days to resolve account or Duo problems through WRDS support; the night before Module 4 is too late. If you run into trouble, raise it at Module 2's checkpoint, not after.
 :::

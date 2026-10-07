@@ -2,54 +2,54 @@
 title: "General Setup"
 ---
 
-Everything on this page happens **before Module 1**. The course moves fast because the environment work is done in advance — a laptop that can't run Claude Code on the first morning costs you the whole first lab. Budget 45–90 minutes, more if you're on Windows. Work top to bottom; each step ends with a check that tells you it worked.
+Do everything on this page **before Module 1**. The course moves fast because this setup is done in advance. If your laptop can't run Claude Code on the first morning, you lose the whole first lab. Budget 45–90 minutes, more if you're on Windows. Work from top to bottom. Each step ends with a check that tells you it worked.
 
 ::: {.callout-note icon=false}
 ## What you need by Module 1 (summary)
 
-A laptop you have admin rights on (macOS or Linux natively; Windows via WSL2). A working local Python — plus R or Stata if that's your language. Claude Code installed and authenticated on a Claude Pro or Max subscription (or an API key). git installed and a GitHub account. And a WRDS account with Duo multi-factor enrolled — the account by Module 1, a working `ssh wrds` login by end of Module 2 (that checkpoint is a hard gate for Module 4).
+A laptop you have admin rights on (macOS or Linux natively; Windows via WSL2). A working local Python, plus R or Stata if that's your language. Claude Code installed and authenticated on a Claude Pro or Max subscription (or an API key). git installed and a GitHub account. A WRDS account with Duo multi-factor enrolled. You need the account by Module 1 and a working `ssh wrds` login by the end of Module 2. That login checkpoint is a hard requirement for Module 4.
 :::
 
 ::: {.callout-tip icon=false}
 ## New to the terminal? Install Claude Desktop first, and let it coach you
 
-[Claude Desktop](https://claude.com/download) is the plain chat app (Mac and Windows) — no terminal, nothing to configure, free to download, with a Pro or Max plan raising the usage limits. It can't run commands on your computer itself, but it can walk you through every step on this page in plain language, fitted to your exact machine. Whenever a step here fails, open Claude Desktop, paste the command you ran and the error you got back — or drag in a screenshot — and ask what to do next. That's the same help Module 1's lab gives, available the moment you're stuck.
+[Claude Desktop](https://claude.com/download) is the plain chat app for Mac and Windows. It needs no terminal and no configuration, and it is free to download; a Pro or Max plan raises the usage limits. It can't run commands on your computer, but it can walk you through every step on this page in plain language, for your specific machine. Whenever a step here fails, open Claude Desktop, paste in the command you ran and the error you got (or drag in a screenshot), and ask what to do next. That is the same help Module 1's lab gives, and you can get it as soon as you're stuck.
 
-The steps that actually *run* things for you come later, from Claude Code (step 3): a chat app advises, a terminal agent acts. That difference is the first thing Module 1 teaches — you're seeing it here before the course even starts.
+Claude Code (step 3) is the tool that actually *runs* commands for you. A chat app can only advise you; a terminal agent carries out the steps. Module 1 starts with that difference, and you will see it here before the course begins.
 :::
 
 ## 1. Operating system
 
-macOS and Linux work natively — nothing special to do. **Windows needs one extra layer:** Claude Code runs inside a small Linux that Windows provides, called **WSL2** (Windows Subsystem for Linux), not on native Windows. You set it up once; the step-by-step is right below. The habit to lock in from the start: once WSL is installed, do *everything* on this page — Python, Claude Code, git, your project files — inside the Ubuntu window, never in PowerShell or Command Prompt. The most common Windows failure in the whole course is mixing the two worlds — a Python installed on the Windows side is invisible inside Ubuntu, and vice versa.
+macOS and Linux work natively, with nothing special to do. **Windows needs one extra layer:** Claude Code runs inside a small Linux system that Windows provides, called **WSL2** (Windows Subsystem for Linux), not on native Windows. You set it up once, using the steps right below. Start with this habit: once WSL is installed, do *everything* on this page (Python, Claude Code, git, your project files) inside the Ubuntu window, never in PowerShell or Command Prompt. The most common Windows problem in the course is mixing the two. A Python installed on the Windows side is invisible inside Ubuntu, and vice versa.
 
 **Check (macOS/Linux):** you can open a terminal (Terminal.app or your Linux terminal) and `echo hello` prints hello. Windows users: do the walkthrough below first.
 
 ### Windows, step by step (WSL2)
 
-Windows users hit more snags than Mac users, and almost all of them come from skipping a step here or working in the wrong window. Go slowly:
+Windows users run into more problems than Mac users, and almost all of them come from skipping a step here or working in the wrong window. Go slowly:
 
 1. **Open PowerShell as administrator.** Click Start, type `PowerShell`, right-click **Windows PowerShell**, choose **Run as administrator**, and click Yes.
 2. **Install WSL and Ubuntu.** Type `wsl --install` and press Enter. It downloads WSL2 and Ubuntu Linux. When it asks, **reboot** your PC.
-3. **Create your Linux login.** After the reboot, an **Ubuntu** window opens on its own (if it doesn't, open it from Start → **Ubuntu**) and asks for a username and password. These are brand-new, just for Linux — not your Windows login. The username must be all lowercase with no spaces; pick a password you'll remember, because you'll need it again in step 5 below. The password stays invisible as you type it; that's normal — type it and press Enter.
+3. **Create your Linux login.** After the reboot, an **Ubuntu** window opens on its own (if it doesn't, open it from Start → **Ubuntu**) and asks for a username and password. These are new and used only for Linux; they are not your Windows login. The username must be all lowercase with no spaces. Pick a password you'll remember, because you'll need it again in step 5 below. Nothing appears on screen as you type the password. That is normal: type it and press Enter.
 4. **Know your window.** From here on, wherever this page says "the terminal," it means this **Ubuntu** window. Reopen it any time from Start → **Ubuntu**. Don't run the course's commands in PowerShell or Command Prompt — only in Ubuntu.
 5. **Update it once.** In the Ubuntu window, run `sudo apt update && sudo apt upgrade -y` and enter your Linux password when asked.
 6. **Keep your files on the Linux side.** Save your project folders under your Linux home (type `cd ~` to get there), not in your Windows `C:\Users\...` folders. Files kept on the Windows side run much slower and make file paths confusing.
 
-**Check (Windows):** the **Ubuntu** window opens and `echo hello` prints hello. If `wsl --install` errored, the usual causes are that you weren't in an administrator PowerShell, or that virtualization is switched off in your PC's BIOS — the [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) has a Windows walkthrough with screenshots for exactly these snags.
+**Check (Windows):** the **Ubuntu** window opens and `echo hello` prints hello. If `wsl --install` gave an error, the usual causes are that you weren't in an administrator PowerShell or that virtualization is switched off in your PC's BIOS. The [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) has a Windows walkthrough with screenshots for both problems.
 
 ## 2. Local runtime: Python (and R or Stata)
 
-Claude Code writes and runs code using whatever is installed on *your* machine — it does not bundle a Python or R of its own. The course's examples are Python; a Stata bridge is taught in Module 4, and R users can follow along with everything. If you'd rather not type installs by hand, do step 3 first, then [let Claude Code run this section for you](#claude-does-setup).
+Claude Code writes and runs code using whatever is installed on *your* machine. It does not come with its own Python or R. The course's examples are in Python. Module 4 shows how to connect to Stata, and R users can follow along with everything. If you'd rather not type installs by hand, do step 3 first, then [let Claude Code run this section for you](#claude-does-setup).
 
 - **Python 3.10+**: `python3 --version` should print 3.10 or higher. If not: macOS `brew install python`; Ubuntu/WSL `sudo apt update && sudo apt install python3 python3-pip python3-venv`.
-- Install the handful of packages the labs lean on: `pip3 install pandas matplotlib duckdb pyarrow requests` (add `--break-system-packages` on newer Ubuntu if pip refuses).
-- **R users:** confirm `Rscript --version` runs. **Stata users:** confirm you can launch Stata from your machine and know the path to the executable — Module 4's `.do`/`.dta` handoff needs it.
+- Install the packages the labs use: `pip3 install pandas matplotlib duckdb pyarrow requests` (add `--break-system-packages` on newer Ubuntu if pip refuses).
+- **R users:** confirm `Rscript --version` runs. **Stata users:** confirm you can launch Stata from your machine and note the path to the executable. Module 4's `.do`/`.dta` handoff needs it.
 
 **Check:** `python3 -c "import pandas; print('ok')"` prints ok.
 
 ## 3. Claude Code — install and authenticate
 
-You need either a **Claude Pro or Max subscription** or an **API key**. Pro (roughly \$20/month at the time of writing — check [current pricing](https://claude.com/pricing)) is sufficient for this course; Max tiers buy more usage headroom but are not required. API-key billing is pay-per-token and also works fine.
+You need either a **Claude Pro or Max subscription** or an **API key**. Pro (roughly \$20/month at the time of writing; check [current pricing](https://claude.com/pricing)) is enough for this course. Max tiers give you more usage but are not required. API-key billing charges per token and also works.
 
 Install (either method):
 
@@ -61,19 +61,19 @@ npm install -g @anthropic-ai/claude-code
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-Then, from any folder, run `claude`. On first launch it walks you through login — choose your subscription account (or configure the API key when prompted). Grant the terminal access it asks for.
+Then, from any folder, run `claude`. On first launch it walks you through login. Choose your subscription account, or set up the API key when prompted. Grant the terminal access it asks for.
 
-**Check (the one that matters):** `cd` into a fresh empty folder, run `claude`, and ask it: *"Create a file called hello.txt containing one sentence about accounting research, then read it back to me."* If it creates the file, reads it back, and the file exists when you `ls` — you are ready for Module 1.
+**Check (the most important one):** `cd` into a fresh empty folder, run `claude`, and ask it: *"Create a file called hello.txt containing one sentence about accounting research, then read it back to me."* If it creates the file and reads it back, and the file is there when you run `ls`, you are ready for Module 1.
 
 ::: {.callout-warning icon=false}
 ## Common failure: it installs but won't launch
 
-Three usual suspects, in order: (1) Node too old — `node --version` should be 18+; (2) npm's global bin directory not on your PATH — the installer prints the path to add; (3) on Windows, you installed in PowerShell instead of inside WSL. If you burn more than 30 minutes here, stop and bring the error message to Module 1's lab — Part A has time and staff for exactly this, and the [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) below has step-by-step walkthroughs for both macOS and Windows.
+Check these three causes, in order: (1) Node is too old (`node --version` should be 18+); (2) npm's global bin directory is not on your PATH (the installer prints the path to add); (3) on Windows, you installed in PowerShell instead of inside WSL. If you spend more than 30 minutes here, stop and bring the error message to Module 1's lab. Part A sets aside time and staff for this. The [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) listed below also has step-by-step walkthroughs for macOS and Windows.
 :::
 
 ### Prefer a window to a bare terminal? Run Claude Code in VS Code or Cursor {#claude-in-an-editor}
 
-The course demos run Claude Code straight from the terminal, and that is the fastest way to work once it feels familiar. But a blank terminal is intimidating if you have never lived in one, and you do not have to start there. Claude Code also runs *inside* a graphical code editor, where you get clickable files and can see its proposed changes as side-by-side, before-and-after diffs that you accept or reject. It is the **same Claude Code** on the same account you set up in step 3 — just a friendlier window. Two options.
+The course demos run Claude Code straight from the terminal, which is the fastest way to work once you are used to it. But a blank terminal is intimidating if you have never used one, and you do not have to start there. Claude Code also runs *inside* a graphical code editor. There you can click on files and see its proposed changes as side-by-side, before-and-after diffs that you accept or reject. It is the **same Claude Code** on the same account you set up in step 3, in an easier window. You have two options.
 
 **Option A — VS Code (free).** VS Code is a free, widely used editor from Microsoft.
 
@@ -82,35 +82,35 @@ The course demos run Claude Code straight from the terminal, and that is the fas
 3. Open your project with **File → Open Folder**, then open any file inside it.
 4. Click the **✱ (spark) icon** at the top-right of the editor, or the **✱ Claude Code** button in the bottom status bar, to open the Claude panel. The first time, click **Sign in** and approve in the browser with the same Claude account from step 3.
 
-You now have Claude Code in a side panel: it automatically sees whatever code you have selected in the editor (press `Alt`/`Option`+`K` to pin the file and line numbers into your prompt), and you review every edit as a diff before it touches your files. A **Plan** mode writes out what it intends to do before it does anything.
+You now have Claude Code in a side panel. It automatically sees whatever code you have selected in the editor (press `Alt`/`Option`+`K` to pin the file and line numbers into your prompt), and you review every edit as a diff before it touches your files. A **Plan** mode writes out what it intends to do before it does anything.
 
 **Option B — Cursor (an editor with AI built in).** Cursor is a version of VS Code with its own AI assistant included.
 
 1. Download it from [cursor.com](https://cursor.com), install it like any other app, and open it.
-2. Cursor's built-in assistant (called Composer) is *its own* product, separate from Claude Code — the course's labs and skills assume Claude Code. To run Claude Code in Cursor, install the same **Claude Code** extension (Extensions panel → search *Claude Code* by Anthropic), or type `claude` in Cursor's built-in terminal (**Terminal → New Terminal**).
-3. If the Claude panel ever vanishes after a Cursor update, open the Command Palette (`Ctrl`/`Cmd`+`Shift`+`P`) and run **Reload Window** — a known Cursor quirk, harmless.
+2. Cursor's built-in assistant (called Composer) is *its own* product, separate from Claude Code. The course's labs and skills assume Claude Code. To run Claude Code in Cursor, install the same **Claude Code** extension (Extensions panel → search *Claude Code* by Anthropic), or type `claude` in Cursor's built-in terminal (**Terminal → New Terminal**).
+3. If the Claude panel ever vanishes after a Cursor update, open the Command Palette (`Ctrl`/`Cmd`+`Shift`+`P`) and run **Reload Window**. This is a known, harmless Cursor issue.
 
 ::: {.callout-note icon=false}
-## Traps that catch beginners here
+## Common beginner mistakes here
 
 - **The panel and the `claude` command are two separate installs.** The extension runs its own private copy of Claude Code for the side panel. If you also want to type `claude` in a terminal, you still need the standalone install from step 3.
-- **The spark ✱ icon only appears once a file is open**, not just a folder. If you don't see it, open any file — or click **✱ Claude Code** in the status bar, which works even with no file open. If it still won't appear, check **Help → About** for version 1.94+ and run **Developer: Reload Window** from the Command Palette.
-- **A free Claude.ai account won't work.** Claude Code — in the editor or the terminal — needs a Pro or Max subscription or an API key, the same account as step 3.
+- **The spark ✱ icon only appears once a file is open**, not just a folder. If you don't see it, open any file, or click **✱ Claude Code** in the status bar, which works even with no file open. If it still won't appear, check **Help → About** for version 1.94+ and run **Developer: Reload Window** from the Command Palette.
+- **A free Claude.ai account won't work.** Claude Code, in the editor or the terminal, needs a Pro or Max subscription or an API key, the same account as step 3.
 :::
 
-**Windows users:** install VS Code on the Windows side, then add Microsoft's **WSL** extension (Extensions panel → search *WSL*). Now open your Ubuntu window and type `code .` — VS Code opens connected *into* WSL, so the editor is the friendly Windows GUI while Claude Code and your code still run in Linux, where they belong. This is the most comfortable setup for a Windows user new to the terminal.
+**Windows users:** install VS Code on the Windows side, then add Microsoft's **WSL** extension (Extensions panel → search *WSL*). Then open your Ubuntu window and type `code .`. VS Code opens connected *into* WSL. The editor is a normal Windows window, while Claude Code and your code still run in Linux. This is the easiest setup for a Windows user who is new to the terminal.
 
 ### Let Claude Code set up the rest for you {#claude-does-setup}
 
-Once `claude` runs, you don't have to type the remaining setup by hand — you can hand it to Claude Code, which is the whole point of the course. From a terminal in an empty project folder (or the VS Code / Cursor panel above), try a prompt like:
+Once `claude` runs, you don't have to type the remaining setup by hand. You can ask Claude Code to do it, which is the kind of work this course teaches. From a terminal in an empty project folder (or the VS Code / Cursor panel above), try a prompt like:
 
 > I'm setting up a laptop for an empirical accounting course. Check whether Python 3.10+, git, and the packages pandas, matplotlib, duckdb, pyarrow, and requests are installed. Install whatever's missing, then set my git `user.name` and `user.email` — ask me for them first. Show me one check per item proving it worked, explain each command before you run it, and stop if anything looks risky.
 
-Claude Code asks permission before it runs anything: approve the steps one at a time, and expect to type your computer's password for system installs (on Windows, that's the Linux password from the WSL walkthrough). That handles step 2 (Python) and the git half of step 4 — creating the GitHub account is still yours. So are WSL (on Windows) and the Claude Code install above — they're what make an agent possible in the first place — and the WRDS account in step 5, which is an account request, not a machine install. Prefer to do it by hand? The exact commands are in steps 2 and 4.
+Claude Code asks permission before it runs anything. Approve the steps one at a time, and expect to type your computer's password for system installs (on Windows, that's the Linux password from the WSL walkthrough). This prompt covers step 2 (Python) and the git part of step 4. You still create the GitHub account yourself. You also do WSL (on Windows) and the Claude Code install above yourself, because the agent can't run until they are in place. The WRDS account in step 5 is also yours: it is an account request, not something installed on your machine. If you prefer to do it all by hand, the exact commands are in steps 2 and 4.
 
 ## 4. git and GitHub
 
-git is the course's safety net (Module 1) and its collaboration layer (Module 5). Install: macOS `xcode-select --install` (or `brew install git`); Ubuntu/WSL `sudo apt install git`. Create a free [GitHub account](https://github.com) if you don't have one, and set your identity:
+git lets you undo mistakes (Module 1) and share work with collaborators (Module 5). Install: macOS `xcode-select --install` (or `brew install git`); Ubuntu/WSL `sudo apt install git`. Create a free [GitHub account](https://github.com) if you don't have one, and set your identity:
 
 ```bash
 git config --global user.name "Your Name"
@@ -121,20 +121,28 @@ git config --global user.email "you@university.edu"
 
 ## 5. WRDS account and Duo — start this early
 
-Module 4 runs on **your own WRDS account**; the course never distributes WRDS data or shares logins. If you don't have an account, request one now through your institution's WRDS representative — approval can take days, which is why this is a pre-course item, not a Module 3 one.
+Module 4 runs on **your own WRDS account**. The course never distributes WRDS data or shares logins. If you don't have an account, request one now through your institution's WRDS representative. Approval can take days, which is why you request it before the course starts rather than waiting until the week of Module 4.
 
-Two stages, two deadlines: your account exists and **Duo multi-factor is enrolled by Module 1** (WRDS Account → Settings → Two-Factor); and you can complete an SSH login — `ssh your_username@wrds-cloud.wharton.upenn.edu`, approve the Duo push, see a WRDS prompt, type `exit` — **by end of Module 2**. Module 2 closes with a checkpoint where you submit proof of that login or flag a problem; students without working access by Module 4 use the public-data fallback track (same skills, public SEC data), so nobody is stranded — but the real thing is better.
+There are two deadlines. First, your account must exist and **Duo multi-factor must be enrolled by Module 1** (WRDS Account → Settings → Two-Factor). Second, **by the end of Module 2** you must be able to complete an SSH login: run `ssh your_username@wrds-cloud.wharton.upenn.edu`, approve the Duo push, see a WRDS prompt, and type `exit`. The labs use the shorter command `ssh wrds`. To set it up, add these lines to `~/.ssh/config` (create the file if it doesn't exist), with your own username:
+
+```
+Host wrds
+  HostName wrds-cloud.wharton.upenn.edu
+  User your_username
+```
+
+After that, `ssh wrds` does the same thing as the full command. Module 2 ends with a checkpoint where you submit proof of that login or report a problem. Students without working access by Module 4 use the public-data fallback track, which teaches the same skills with public SEC data. Nobody is left without a way to do the lab, but working on your own WRDS account is better.
 
 **Check:** the SSH login above succeeds end-to-end.
 
 ## 6. Optional, recommended
 
-Fifteen minutes of terminal comfort pays off across the course: a modern terminal (e.g., [Ghostty](https://ghostty.org)) and a multiplexer (e.g., [Zellij](https://zellij.dev) or tmux) make long-running agent sessions much more pleasant — Module 1's demo shows this setup briefly, but nothing in the course requires it. A code editor helps for reading what Claude writes — and if a bare terminal feels intimidating, you can [run Claude Code inside VS Code or Cursor](#claude-in-an-editor) instead (see step 3).
+Fifteen minutes spent on your terminal setup will help throughout the course. A modern terminal (e.g., [Ghostty](https://ghostty.org)) and a multiplexer (e.g., [Zellij](https://zellij.dev) or tmux) make long-running agent sessions much easier to manage. Module 1's demo shows this setup briefly, but nothing in the course requires it. A code editor helps you read what Claude writes. If a bare terminal feels intimidating, you can [run Claude Code inside VS Code or Cursor](#claude-in-an-editor) instead (see step 3).
 
-For a second opinion on any install step, [hanlulong/AI-research-setup](https://github.com/hanlulong/AI-research-setup) is a step-by-step Claude Code setup guide written for economics researchers, covering macOS and Windows, and kept current — it is the reference we point students to when a machine misbehaves. The [Tools](tools.qmd) page covers what Claude Code *is* relative to Claude Desktop, Cursor, and Codex; the [WRDS setup](setup-wrds.qmd) page covers the Module 4 stack in detail (do that one after Module 3, not now).
+For a second opinion on any install step, use [hanlulong/AI-research-setup](https://github.com/hanlulong/AI-research-setup). It is a step-by-step Claude Code setup guide written for economics researchers. It covers macOS and Windows and is kept up to date. It is the guide we point students to when a machine gives them trouble. The [Tools](tools.qmd) page covers what Claude Code *is* relative to Claude Desktop, Cursor, and Codex; the [WRDS setup](setup-wrds.qmd) page covers the Module 4 stack in detail (do that one after Module 3, not now).
 
 ::: {.callout-tip icon=false}
 ## The pre-course checklist
 
-Before Module 1, all of these should be true — each one was a **Check** line above. Terminal opens and runs commands. `python3 -c "import pandas"` works (plus R/Stata if applicable). `claude` launches in a fresh folder, authenticates, and completes the hello.txt round-trip. `git --version` works and you have a GitHub account. WRDS account exists with Duo enrolled. If any box fails and resists 30 minutes of effort, note the exact error message and bring it to Module 1 — you will not be the only one, and it is a solvable problem, not a disqualifying one.
+Before Module 1, all of these should be true. Each one was a **Check** line above. Terminal opens and runs commands. `python3 -c "import pandas"` works (plus R/Stata if applicable). `claude` launches in a fresh folder, authenticates, and completes the hello.txt round-trip. `git --version` works and you have a GitHub account. WRDS account exists with Duo enrolled. If any item fails and you can't fix it in 30 minutes, write down the exact error message and bring it to Module 1. Other students will have the same problem, and it can be fixed. It will not keep you out of the course.
 :::

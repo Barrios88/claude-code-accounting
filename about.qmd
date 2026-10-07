@@ -4,7 +4,7 @@ title: "About & Attribution"
 
 ## About this course
 
-**Claude Code for Accounting Research: AI Agents for the Empirical Researcher** is a five-module, hands-on intensive plus a closing half-day seminar, built for accounting PhD students and faculty with mixed Stata/Python backgrounds and no assumed experience with agentic AI tools. It teaches Claude Code as a research assistant that lives in the terminal — one that reads and writes files, runs your existing code, and iterates — and it spends as much time on verification as on capability, because faster output is worthless if you can't trust it. The five build modules cover: foundations and the tool ladder, an empirical loop on free SEC data, EDGAR text as a measured panel plus a first Skill, WRDS at scale through an MCP server with a Stata bridge, and writing/safety/verification as a capstone. A closing seminar asks what an agent this capable changes about how accounting research gets produced, and which parts of the job stay with the researcher.
+**Claude Code for Accounting Research: AI Agents for the Empirical Researcher** is a five-module, hands-on intensive plus a closing half-day seminar. It is built for accounting PhD students and faculty with mixed Stata/Python backgrounds, and it assumes no experience with agentic AI tools. It teaches Claude Code as a research assistant that runs in the terminal. It reads and writes files, runs your existing code, and iterates. The course spends as much time on verification as on capability, because faster output is of no use if you can't trust it. The five build modules cover foundations and the tool ladder; an empirical loop on free SEC data; EDGAR text as a measured panel, plus a first Skill; WRDS at scale through an MCP server with a Stata bridge; and writing, safety and verification as a capstone. The closing seminar asks how an agent this capable changes the way accounting research gets produced, and which parts of the job stay with the researcher.
 
 ## Instructor
 
@@ -16,14 +16,14 @@ title: "About & Attribution"
 
 **Goldsmith-Pinkham / Markus Academy series.** Several of this course's teaching examples and prompt patterns were inspired by Paul Goldsmith-Pinkham's "Claude Code for Economists" series for the Markus Academy (Ep. 162).
 
-**Barrios Skills collection.** The [Skills catalog](skills/index.qmd) is a snapshot of the Barrios Skills collection, included under its MIT license (reproduced in full at `skills/LICENSE.txt` and linked from the catalog index). The live collection at [barrios88.github.io/barrios-skills](https://barrios88.github.io/barrios-skills/) remains the canonical, actively updated source; this site's copy is a point-in-time snapshot taken when the course was built.
+**Barrios Skills collection.** The [Skills catalog](skills/index.qmd) is a snapshot of the Barrios Skills collection, included under its MIT license (reproduced in full at `skills/LICENSE.txt` and linked from the catalog index). The live collection at [barrios88.github.io/barrios-skills](https://barrios88.github.io/barrios-skills/) is the canonical source and is updated regularly. The copy on this site was taken when the course was built and is not updated.
 
-**Figure and exhibit policy.** Figures on this site (the tool ladder, the empirical loop, the verification-debt 2×2, and the rest) are original diagrams drawn for this course. A small number of exhibits show what a Claude Code or Claude Desktop session looks like in practice — for example, the Module 1 terminal-anatomy and permission-prompt exhibits. These are mock-ups of a typical interaction, not screenshots or transcripts of any single real session; each is labeled as such in its caption.
+**Figure and exhibit policy.** Figures on this site (the tool ladder, the empirical loop, the verification-debt 2×2, and the rest) are original diagrams drawn for this course. A small number of exhibits show what a Claude Code or Claude Desktop session looks like in practice, for example the Module 1 terminal-anatomy and permission-prompt exhibits. These are mock-ups of a typical interaction, not screenshots or transcripts of a real session. Each caption says so.
 
-**External links.** The links on the [Resources](resources.qmd) page point to real, existing projects — including the one item flagged as unvetted rather than recommended.
+**External links.** The links on the [Resources](resources.qmd) page point to real, existing projects. That includes the one item flagged as unvetted rather than recommended.
 
 **No Yale trademarks.** This is a personal course site by a Yale faculty member, not an official Yale or Yale School of Management site.
 
 ## Contact
 
-For questions about the course, its materials, or a request to reuse or adapt something on this site, reach out to John Barrios through his Yale School of Management faculty listing.
+For questions about the course or its materials, or to ask about reusing or adapting something on this site, contact John Barrios through his Yale School of Management faculty listing.

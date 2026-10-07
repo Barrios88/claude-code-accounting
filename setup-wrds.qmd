@@ -2,23 +2,23 @@
 title: "WRDS MCP Setup"
 ---
 
-This page walks you through installing and connecting the `wrds-mcp` server before Module 4. Do this with at least two days of runway — Module 1's homework already asked you to confirm your WRDS account and Duo enrollment, and Module 4's lab depends on that connection working, not on you troubleshooting it live in class.
+This page walks you through installing and connecting the `wrds-mcp` server before Module 4. Finish it at least two days before Module 4. Module 1's homework already asked you to confirm your WRDS account and Duo enrollment. Module 4's lab assumes the connection already works; there is no time to troubleshoot it in class.
 
 ## What you need before starting
 
 | Requirement | Notes |
 |---|---|
 | Active WRDS account | Your own institutional account. You must know your username and password. |
-| Duo MFA enrolled | Enrolled on *your* WRDS account specifically — not just your Yale Duo. |
+| Duo MFA enrolled | Enrolled on *your* WRDS account specifically, not just your university's Duo. |
 | Python 3.10 or later | Check with `python3 --version`. |
 | Claude Code **or** Cursor | Either works; registration steps differ slightly (covered in Step 4). |
 | The `barrios-skills` repository | Clone or pull it from its source location. It contains the `mcp/wrds-mcp/` package and the `tunnel/` scripts this page uses. |
 
-You will approve one Duo push at the start of each work session. After that, every query issued through Claude Code or Cursor routes through the persistent tunnel — no further MFA interruptions for the rest of that session.
+You will approve one Duo push at the start of each work session. After that, every query you send through Claude Code or Cursor goes through the persistent tunnel, and you will not get another MFA prompt for the rest of that session.
 
 ## Step 1 — Install `wrds-mcp` into a dedicated virtual environment
 
-Never install into your system Python or an environment shared with something else. From a terminal:
+Do not install into your system Python or into an environment that other projects use. From a terminal:
 
 ```bash
 cd barrios-skills/mcp/wrds-mcp
@@ -34,11 +34,11 @@ which wrds-mcp
 # Expected: /Users/YOUR_USER/.wrds-mcp-env/bin/wrds-mcp
 ```
 
-> **Locked fact:** the package uses **paramiko** — a pure-Python SSH library — for the Duo tunnel. `sshpass` is **not** required and cannot authenticate to the WRDS bastion, because that bastion only accepts keyboard-interactive authentication, which is how Duo is delivered, and `sshpass` does not support that authentication method. `paramiko` installs automatically as a package dependency. If an older doc tells you to `brew install sshpass`, skip that line.
+> **Locked fact:** the package uses **paramiko**, a pure-Python SSH library, for the Duo tunnel. `sshpass` is **not** required and cannot log in to the WRDS bastion. The bastion accepts only keyboard-interactive authentication, which is how Duo is delivered, and `sshpass` does not support that method. `paramiko` installs automatically as a package dependency. If an older doc tells you to `brew install sshpass`, skip that line.
 
 ## Step 2 — Configure credentials safely
 
-**Never put a real password in a git-tracked file, and never type one directly into a prompt to Claude.** Write your `.gitignore` entry for the credential file below *before* you create the file — not after.
+**Never put a real password in a git-tracked file, and never type one directly into a prompt to Claude.** Keep the credential file outside every project folder. The path below, in your home directory, does that. If you ever keep a copy inside a project, add it to `.gitignore` *before* you create it, not after.
 
 ### Recommended: private env file
 
@@ -48,7 +48,7 @@ cp barrios-skills/mcp/wrds-mcp/.env.example ~/.wrds-mcp.env
 chmod 600 ~/.wrds-mcp.env
 ```
 
-The file follows this format (also available as `env_example.txt` in the Module 4 lab starter pack — placeholder values only, never real credentials):
+The file uses this format. The same template is in the Module 4 lab starter pack as `env_example.txt`, with placeholder values only and never real credentials:
 
 ```bash
 # ~/.wrds-mcp.env
@@ -75,7 +75,7 @@ export WRDS_USERNAME="YOUR_WRDS_USERNAME"
 export WRDS_PASSWORD="YOUR_WRDS_PASSWORD"
 ```
 
-Both approaches work with the tunnel scripts below. The MCP server reads credentials from the environment at runtime — it never stores them, and they never appear in anything Claude reads as part of a conversation.
+Both approaches work with the tunnel scripts below. The MCP server reads credentials from its environment when it runs; they are not part of your conversation with Claude. Step 4 does save them in one place: your user-level MCP configuration (`~/.claude.json` for Claude Code, `~/.cursor/mcp.json` for Cursor). Both files sit in your home directory, outside any project. Keep them private, never copy them into a repository, and consider a `Read` deny rule for them (Module 5).
 
 ### Environment variables reference
 
@@ -84,15 +84,15 @@ Both approaches work with the tunnel scripts below. The MCP server reads credent
 | `WRDS_USERNAME` | **Yes** | — | Your WRDS login |
 | `WRDS_PASSWORD` | **Yes** | — | Your WRDS password |
 | `WRDS_TUNNEL_PORT` | No | `49600` | Local port the MCP server connects through |
-| `WRDS_LOCAL_PORT` | No | `49600` | Local port the tunnel daemon binds to — set identical to `WRDS_TUNNEL_PORT` |
+| `WRDS_LOCAL_PORT` | No | `49600` | Local port the tunnel daemon binds to; set it to the same value as `WRDS_TUNNEL_PORT` |
 | `WRDS_DUO_RESPONSE` | No | `push` | How to answer Duo: `push`, `phone`, or a passcode |
-| `WRDS_PYBIN` | No | `python3` | Python binary with `paramiko` installed — point this at `~/.wrds-mcp-env/bin/python3` if that's where you installed the package |
+| `WRDS_PYBIN` | No | `python3` | Python binary with `paramiko` installed; point this at `~/.wrds-mcp-env/bin/python3` if that's where you installed the package |
 | `WRDS_TUNNEL_STATE_DIR` | No | `~/.wrds-tunnel/` | Override PID/log directory |
-| `WRDS_DOWNLOAD_DIR` | No | `~/wrds_data` | Where `wrds_download_data` saves extracts — this is the fixed landing location referenced throughout the course |
+| `WRDS_DOWNLOAD_DIR` | No | `~/wrds_data` | Where `wrds_download_data` saves extracts. The course uses this location throughout. |
 
 ## Step 3 — Start the persistent Duo tunnel (once per session)
 
-The tunnel daemon opens **one** SSH session to WRDS-cloud and holds it open for the rest of your working session. You approve Duo once; every subsequent MCP query reuses that same connection.
+The tunnel daemon opens **one** SSH session to WRDS-cloud and holds it open for the rest of your working session. You approve Duo once, and every later MCP query reuses that connection.
 
 ![The full connection chain: your plain-language request, the wrds-mcp server, the persistent Duo tunnel, and WRDS PostgreSQL — four hops, with credentials touching only one of them.](assets/figures/day4/FIG-D4-01_wrds_mcp_architecture.png){fig-alt="Architecture diagram of four hops: Claude Code, the wrds-mcp server, a paramiko Duo tunnel on local port 49600, and WRDS PostgreSQL, with credentials touching only the server's environment file."}
 
@@ -117,26 +117,26 @@ Check status at any time:
 bash tunnel_status.sh
 ```
 
-**Tear the tunnel down at the end of every session — this is not optional.** An open tunnel is an open, authenticated connection to a licensed institutional resource sitting idle for no reason. Make tearing it down the literal last thing you do:
+**Shut the tunnel down at the end of every session. This is required.** An open tunnel is a logged-in connection to a licensed institutional resource, left open with no one using it. Make shutting it down the last thing you do:
 
 ```bash
 bash tunnel_down.sh
 ```
 
-**Order matters:** the tunnel must be running *before* you send your first MCP query. If Claude Code reports nothing listening on `WRDS_TUNNEL_PORT`, run `tunnel_up.sh` again before troubleshooting anything else. Tunnel logs and PID live at `~/.wrds-tunnel/daemon.log` and `~/.wrds-tunnel/daemon.pid`.
+**Start the tunnel first.** It must be running *before* you send your first MCP query. If Claude Code reports nothing listening on `WRDS_TUNNEL_PORT`, run `tunnel_up.sh` again before troubleshooting anything else. Tunnel logs and PID live at `~/.wrds-tunnel/daemon.log` and `~/.wrds-tunnel/daemon.pid`.
 
 ## Step 4 — Register the MCP server
 
 ### Claude Code
 
-Run this once from any terminal — credentials are stored in your user-level MCP configuration, not inside any project directory:
+Run this once from any terminal. It saves your credentials in your user-level MCP configuration (`~/.claude.json`), not inside any project directory. Claude Code's own options come first; everything after `--` is the command that starts the server:
 
 ```bash
-claude mcp add wrds-mcp ~/.wrds-mcp-env/bin/wrds-mcp \
-  -s user \
+claude mcp add --scope user \
   --env WRDS_USERNAME=YOUR_WRDS_USERNAME \
   --env WRDS_PASSWORD=YOUR_WRDS_PASSWORD \
-  --env WRDS_TUNNEL_PORT=49600
+  --env WRDS_TUNNEL_PORT=49600 \
+  --transport stdio wrds-mcp -- ~/.wrds-mcp-env/bin/wrds-mcp
 ```
 
 Inspect the registration:
@@ -165,7 +165,7 @@ Edit `~/.cursor/mcp.json` (create it if it doesn't exist yet):
 }
 ```
 
-Replace `YOUR_MACOS_USERNAME` with your actual macOS username (run `whoami` to confirm), then restart Cursor.
+Replace `YOUR_MACOS_USERNAME` with your actual username (run `whoami` to confirm), then restart Cursor. On Linux or WSL the path starts with `/home/` instead of `/Users/`.
 
 ## Step 5 — Verify the setup
 
@@ -173,13 +173,13 @@ With the tunnel running, ask Claude Code or Cursor:
 
 > "Use wrds-mcp to list the available WRDS libraries."
 
-A working chain returns a non-empty list of schema names (`comp`, `crsp`, `tr_insiders`, and similar). That confirms agent → MCP → tunnel → WRDS Postgres end to end.
+If everything is connected, you get back a non-empty list of schema names (`comp`, `crsp`, `tr_insiders`, and similar). That confirms the whole chain works: agent → MCP → tunnel → WRDS Postgres.
 
 You can also confirm Compustat access specifically:
 
 > "Use wrds_describe_table to describe comp.funda."
 
-A response with column names and types confirms `funda` is reachable — the exact table Module 4's lab pulls from.
+A response with column names and types confirms you can reach `funda`, the table Module 4's lab pulls from.
 
 ## Troubleshooting
 
@@ -191,7 +191,7 @@ A response with column names and types confirms `funda` is reachable — the exa
 | `connection refused` on port 49600 | Tunnel is not running | Run `bash tunnel_up.sh` |
 | `Port already in use` warning | Stale tunnel process on the port | Run `bash tunnel_down.sh`, then `bash tunnel_up.sh` |
 | MCP shows `wrds-mcp` registered but tools fail | `WRDS_TUNNEL_PORT` missing from the MCP config | Re-register with `--env WRDS_TUNNEL_PORT=49600`; confirm with `claude mcp get wrds-mcp` |
-| Queries succeed but the data looks wrong | Missing Compustat iron-law filters | Apply all four filters from the [module page](modules/04-wrds-mcp-scale.qmd) — check `indfmt`, `datafmt`, `popsrc`, `consol` |
+| Queries succeed but the data looks wrong | Missing Compustat iron-law filters | Apply all four filters from the [module page](modules/04-wrds-mcp-scale.qmd): check `indfmt`, `datafmt`, `popsrc`, `consol` |
 | `wrds-mcp: command not found` | Virtual environment not activated, or wrong path in config | Confirm `~/.wrds-mcp-env/bin/wrds-mcp` exists; use the full path in your MCP config |
 | Tunnel drops mid-session | Paramiko auto-reconnects, but you may need to re-approve Duo | Re-run `tunnel_up.sh`; check `~/.wrds-tunnel/daemon.log` |
 
@@ -207,9 +207,9 @@ Confirm all of the following before Module 4:
 
 - [ ] `wrds-mcp` installed in its own virtual environment and `which wrds-mcp` resolves
 - [ ] `~/.wrds-mcp.env` exists, is filled in with your own credentials, and is `chmod 600`
-- [ ] `.gitignore` excludes your credential file, written *before* the file existed
+- [ ] Your credential file lives outside every project folder (or, if a copy is inside one, `.gitignore` excluded it *before* the file existed)
 - [ ] Tunnel comes up cleanly with `tunnel_up.sh` and a single Duo approval
 - [ ] `wrds_list_libraries` and `wrds_describe_table` on `comp.funda` both return real results
 - [ ] You have run `tunnel_down.sh` at least once and confirmed it actually closes the connection
 
-If any box above doesn't check out with at least two days of runway before Module 4, flag it — don't wait until the morning of class.
+If any item above is not done two days before Module 4, raise it then. Don't wait until the morning of class.

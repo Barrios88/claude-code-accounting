@@ -47,7 +47,7 @@ Work through every line below before you consider the lab complete. This is a se
 
 - [ ] Cache works: re-running the pipeline downloads zero already-fetched filings
 
-- [ ] Quality report: extraction rate stated; every failure has a one-line diagnosis
+- [ ] Quality report: extraction rate stated and at least 95 percent before you move to Part B; every failure has a one-line diagnosis
 
 - [ ] Result table reproduced by named scripts from README
 

@@ -2,11 +2,11 @@
 title: "Prompts"
 ---
 
-Every build module in this course produces at least one prompt worth keeping past the module it was written for. This page collects them in one place, quoted exactly as they appear in the module notes, with a short note on when to reach for each one. There is nothing magic about any of them — they're just the specific, front-loaded phrasing the rest of the course argues you should be writing anyway. Treat this page as a set of templates, not a script to copy blindly into a task it wasn't written for.
+Every build module in this course produces at least one prompt worth keeping after the module ends. This page collects them in one place, quoted exactly as they appear in the module notes, with a short note on when to use each one. None of them is special. Each is the specific, front-loaded phrasing the rest of the course argues you should be writing anyway. Treat them as templates, not scripts to paste into a task they weren't written for.
 
 ## Module 1 — the four-component makeover
 
-The habit underneath every prompt on this page: name the file, the operation, the level of aggregation, and the output, before you hit enter. [Module 1](modules/01-foundations.qmd) demonstrates it as a before/after pair.
+Every prompt on this page rests on one habit: name the file, the operation, the level of aggregation and the output before you hit enter. [Module 1](modules/01-foundations.qmd) demonstrates it as a before/after pair.
 
 Vague:
 
@@ -16,11 +16,11 @@ Specific:
 
 > Read `funda_1990_2023.csv`. For each gvkey-fiscal year, compute book leverage as long-term debt divided by total assets, winsorize it at the 1st and 99th percentiles, and compute the mean by fiscal year and two-digit SIC code. Save the result as `leverage_by_industry_year.csv`, and save a line figure with one line per two-digit SIC as `leverage_trends.png`, formatted for a working-paper draft.
 
-**Usage note.** Before sending any one-off analysis request, check it against the four components — file, operation, aggregation, output. If one is missing, add it; a request that names all four rarely needs a second round to fix a misunderstanding.
+**Usage note.** Before sending any one-off analysis request, check it against the four components — file, operation, aggregation, output. If one is missing, add it. A request that names all four rarely needs a second round to fix a misunderstanding.
 
 ## Module 2 — the six-part opening prompt
 
-[Module 2](modules/02-empirical-loop.qmd) extends the four-component habit to a full pipeline by adding a join and a paper trail. This is the module's single most reusable artifact — worth keeping as a template for any measure you build from a two-table dataset.
+[Module 2](modules/02-empirical-loop.qmd) extends the four-component habit to a full pipeline by adding a join and a paper trail. Of everything in the module, this prompt is the one you are most likely to reuse. Keep it as a template for any measure you build from a two-table dataset.
 
 > **DATA:** Download the FSDS quarterly zip files for these fourteen quarters — Q4 of each year from 2010 through 2023 — from the SEC's Financial Statement Data Sets page. From each quarter we need two files: `sub.txt` (filing metadata: `adsh`, `cik`, `sic`, `form`, fiscal year end, period) and `num.txt` (tagged numeric values: `adsh`, `tag`, `ddate`, `qtrs`, `value`).
 >
@@ -34,41 +34,41 @@ Specific:
 >
 > **PAPER TRAIL:** Write every stage as a named script — no output that exists only as a chat reply. Keep a `DECISIONS.md` recording every methodological choice as it's made — which tag was chosen when more than one was available, how duplicate rows were handled, any filter applied and why. Keep a `LOG.md` with a timestamped line for every major step. Print an attrition row — n before, n after, reason — every time the sample size changes.
 
-**Usage note.** Adapt this to any two-file, join-on-a-key dataset (a Compustat `funda`/company-file pull works the same way): fill in your own DATA, JOIN, MEASURE, AGGREGATION, and OUTPUT, and keep the PAPER TRAIL clause verbatim — it's the part most people drop when they're in a hurry, and the part that turns a one-off analysis into something a coauthor can rerun.
+**Usage note.** Adapt this to any two-file, join-on-a-key dataset (a Compustat `funda`/company-file pull works the same way): fill in your own DATA, JOIN, MEASURE, AGGREGATION and OUTPUT, and keep the PAPER TRAIL clause verbatim. People in a hurry often drop that clause, and it is the part that lets a coauthor rerun a one-off analysis.
 
 ## Module 2 — the paper-trail request, standalone
 
-The PAPER TRAIL clause above is worth pulling out and reusing on its own, appended to any prompt that starts a multi-step build — not just the FSDS pipeline it was written for:
+The PAPER TRAIL clause above also works on its own. Append it to any prompt that starts a multi-step build, not just the FSDS pipeline it was written for:
 
 > Write every stage as a named script — no output that exists only as a chat reply. Keep a `DECISIONS.md` recording every methodological choice as it's made — which tag was chosen when more than one was available, how duplicate rows were handled, any filter applied and why. Keep a `LOG.md` with a timestamped line for every major step. Print an attrition row — n before, n after, reason — every time the sample size changes.
 
-**Usage note.** Request this in the *same* prompt that starts the work, not as an afterthought once the analysis is done — a paper trail requested after the fact is reconstructed from memory, and reconstructed memory is the state [Module 1](modules/01-foundations.qmd) warns you not to rely on. [Module 5](modules/05-writing-verify.qmd) adds the corresponding discipline: check every specific claim these files make against the actual commit history before you trust it.
+**Usage note.** Request this in the *same* prompt that starts the work, not after the analysis is done. A paper trail requested after the fact is reconstructed from memory, which is what [Module 1](modules/01-foundations.qmd) warns you not to rely on. [Module 5](modules/05-writing-verify.qmd) adds the matching check: before you trust any specific claim in these files, compare it with the actual commit history.
 
 ## Module 3 — the front-loaded EDGAR prompt
 
-[Module 3](modules/03-edgar-text.qmd) makes the case that a better first prompt beats better code: state the operational facts you already know (CIK resolution, the rate limit, the User-Agent requirement) before any script gets written, rather than letting the agent discover them one failed request at a time.
+[Module 3](modules/03-edgar-text.qmd) argues that a better first prompt saves more time than better code. State the operational facts you already know (CIK resolution, the rate limit, the User-Agent requirement) before any script is written, so the agent doesn't discover them one failed request at a time.
 
 > Fetch the Item 1A Risk Factors section from the 10-Ks filed by the CIKs in `pinned_ciks.csv`, for fiscal years 2021–2023, using the EDGAR full-text search and submissions endpoints. Respect a 10 request/second rate limit and set the User-Agent header to `<name>@<institution>.edu` on every request. Cache raw filing HTML to `data/filings/` so a re-run never re-downloads a file that already succeeded.
 
-**Usage note.** Use this shape for any EDGAR pull: name the identifier list, the section or form type, the date range, the two operational facts (rate limit, User-Agent), and the caching requirement, in that order, before you send the prompt.
+**Usage note.** Use this shape for any EDGAR pull. Name the identifier list, the section or form type, the date range, the two operational facts (rate limit, User-Agent) and the caching requirement, in that order, before you send the prompt.
 
 ## Module 3 — "why are N missing"
 
-Once an extraction pass runs, [Module 3](modules/03-edgar-text.qmd) recommends a specific follow-up pattern for the failures rather than re-running the whole pipeline: ask Claude directly why N filings are missing or flagged, and let it read the cached HTML for those specific cases and report back what's structurally different about them.
+After an extraction pass runs, [Module 3](modules/03-edgar-text.qmd) recommends a specific follow-up for the failures instead of re-running the whole pipeline. Ask Claude directly why N filings are missing or flagged. Let it read the cached HTML for those filings and report what is structurally different about them.
 
-**Usage note.** This works because the raw files are already cached to disk — the agent can inspect the actual failing cases instead of guessing, and you get a diagnosis (a genuine edge case vs. a fixable regex gap) instead of a re-run. Blunt and specific beats a vague "something's wrong, please investigate."
+**Usage note.** This works because the raw files are already cached to disk. The agent can inspect the actual failing cases instead of guessing, and you get a diagnosis (a genuine edge case or a fixable regex gap) instead of a re-run. A blunt, specific question works better than a vague "something's wrong, please investigate."
 
 ## Module 4 — the feasibility-assessment prompt
 
-[Module 4](modules/04-wrds-mcp-scale.qmd) singles this one out as worth learning by its exact wording, because the phrasing is what reliably surfaces blockers before an agent commits to a build rather than discovering them mid-pull.
+[Module 4](modules/04-wrds-mcp-scale.qmd) asks you to learn this one word for word. The phrasing gets the agent to raise blockers before it commits to a build, instead of running into them mid-pull.
 
 > "I want a firm-year panel with leverage and ROA for US industrials 2000–2023 from funda. Tell me what's involved before you try anything complicated. What might be missing?"
 
-**Usage note.** Use this before any nontrivial pull or linkage task — a classification job, a cross-dataset join, anything with more than one moving part. It asks the agent to reason about filters, variables, and known data-format transitions *before* executing a single query, turning a mid-pull surprise into an upfront one.
+**Usage note.** Use this before any nontrivial pull or linkage task: a classification job, a cross-dataset join, anything with more than one moving part. It asks the agent to reason about filters, variables and known data-format transitions *before* it runs a single query, so you learn about problems up front instead of mid-pull.
 
 ## Module 5 — editor, not rewriter
 
-[Module 5](modules/05-writing-verify.qmd) uses this exact prompt live on a real identification paragraph, to get feedback on an argument without surrendering authorship of the sentences.
+[Module 5](modules/05-writing-verify.qmd) uses this exact prompt live on a real identification paragraph. It gets feedback on the argument while you keep writing the sentences.
 
 ```
 Please review this Identification section. I want feedback in the style of
@@ -79,8 +79,8 @@ rewrite any sentences yourself; leave the prose exactly as written and let
 the comments carry the feedback.
 ```
 
-**Usage note.** The two words doing all the work are "do not." Soften them — "comments, and suggestions if you have them" — and you're back to accepting a polished rewrite with one click, which defeats the entire purpose. Use this for any meaningful-side writing (an identification argument, a contribution statement, a limitations section) that you want feedback on without handing over the thinking.
+**Usage note.** Without "do not," you get a rewrite back. If you soften the instruction to "comments, and suggestions if you have them," you are back to accepting a polished rewrite with one click, and you lose the benefit of the prompt. Use this for any meaningful writing (an identification argument, a contribution statement, a limitations section) where you want feedback without handing over the thinking.
 
 ---
 
-Several prompt patterns on this page are adapted from Paul Goldsmith-Pinkham's Markus Academy series (Ep. 162, "Claude Code for Economists"); the prose above is original course material, not a transcript of that series. See the [About](about.qmd) page for the full attribution note.
+Several prompt patterns on this page are adapted from Paul Goldsmith-Pinkham's Markus Academy series (Ep. 162, "Claude Code for Economists"); the prose on this page is original course material, not a transcript of that series. See the [About](about.qmd) page for the full attribution note.
