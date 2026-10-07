@@ -22,7 +22,6 @@ That's it. One file changed, whole site updated — navigation, styling, and all
 | Tools guide / prompt gallery / verification card / resources / about | `tools.qmd` · `prompts.qmd` · `verification.qmd` · `resources.qmd` · `about.qmd` |
 | Navbar links, site title, footer text | `_quarto.yml` (one file controls the chrome on every page) |
 | Colors, fonts, buttons | `styles/custom.scss` |
-| The masthead bar text | `styles/som-masthead.html` |
 
 **Special case — skill pages.** The 41 pages under `skills/` are generated from your Barrios_Skills collection by a script. Don't edit them directly (a re-sync overwrites them); edit the source skill in `~/Documents/Barrios_Skills/skills/` and re-run the sync (or ask Claude).
 

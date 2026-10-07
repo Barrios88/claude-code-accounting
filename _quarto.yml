@@ -107,7 +107,6 @@ format:
     include-in-header:
       - styles/access-gate.html
       - styles/fonts.html
-    include-before-body: styles/som-masthead.html
     include-after-body: styles/site-ui.html
     toc: true
     toc-title: "On this page"

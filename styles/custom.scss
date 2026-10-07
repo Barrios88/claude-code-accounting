@@ -109,41 +109,6 @@ summary:focus-visible,
   }
 }
 
-// SOM-style masthead (text-only variant — no Yale/SOM marks on this
-// personal public site, per course identity policy)
-.som-masthead {
-  background: #fff;
-  border-bottom: 1px solid #d9dee5;
-}
-.som-masthead__inner {
-  margin: 0;
-  padding: 0.6rem 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.som-masthead__brand {
-  color: $som-navy;
-  font-family: $serif;
-  font-size: 1.02rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-}
-.som-masthead__course {
-  color: $som-navy;
-  font-family: $serif;
-  font-size: 0.88rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-@media (max-width: 768px) {
-  .som-masthead__course { display: none; }
-  .som-masthead__brand { font-size: 0.92rem; }
-}
-
 // ---------------------------------------------------------------------------
 // Landing page
 // ---------------------------------------------------------------------------
@@ -431,7 +396,7 @@ a.btn:hover {
 // Module walkthrough video (Module 1): 16:9 frame on the text column
 .module-video {
   margin: 0 0 2.2rem;
-  scroll-margin-top: 7rem;
+  scroll-margin-top: 5rem;
 
   .module-video__label {
     display: flex;
@@ -823,14 +788,13 @@ nav.page-navigation {
   .module-links a { flex: 1 1 auto; justify-content: center; }
 }
 
-/* Keep anchor jumps clear of the sticky masthead + navbar (~100px combined) */
+/* Keep anchor jumps clear of the sticky navbar */
 :target {
-  scroll-margin-top: 7rem;
+  scroll-margin-top: 5rem;
 }
 
 /* Print: verification.qmd is meant to be printed as a protocol card */
 @media print {
-  .som-masthead,
   #quarto-header,
   #quarto-sidebar,
   #quarto-margin-sidebar,
