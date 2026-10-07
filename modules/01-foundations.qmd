@@ -128,6 +128,8 @@ One file makes the context-window problem manageable across a whole project. A f
 
 Write one now. A handful of lines is enough. Then restart your session and ask Claude what it knows about the project's conventions, to confirm that the file loaded. A CLAUDE.md is different from a **skill**, which you will meet in Module 3. A CLAUDE.md is project-wide standing context, while a skill is a packaged, reusable procedure for a specific recurring workflow. You will update your CLAUDE.md throughout the course as your conventions settle. This module's version does not need to be complete, but everything in it should be accurate.
 
+Keep it short as it grows. Claude reads the whole file at the start of every session, so every line uses context in every conversation, and Anthropic's own guidance is to keep each CLAUDE.md under about 200 lines because longer files are followed less reliably. Facts belong in CLAUDE.md: your data sources, your conventions, your verification rules. Procedures do not. When a section turns into a step-by-step recipe, move it into a skill (Module 3). Only a skill's one-line description is loaded in every session; the full instructions load when the skill is used.
+
 ::: {.callout-warning icon=false}
 ## Common failure: writing CLAUDE.md and expecting it to apply mid-session
 

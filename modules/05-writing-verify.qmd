@@ -287,6 +287,16 @@ The idea to carry forward is that a **commit is the unit of verification**. Nobo
 
 One pointer beyond this module, for when a single session is not enough: git has a second feature, the *worktree*, that gives each of several parallel Claude sessions its own directory while all of them share one repository. You might explore two robustness variants side by side, or rebuild a pipeline in one session while a second revises prose. [cmux](https://github.com/craigsc/cmux) wraps the whole pattern into single commands, and the [Tools page](../tools.qmd#running-multiple-sessions-in-parallel) covers it in full. It also covers the main caveat: parallel sessions multiply verification debt as fast as they multiply output, and every worktree needs this module's checks before it merges.
 
+## What to set up after this course
+
+The autonomy ladder above is one dial. How much you configure is a second one, and it is easy to overbuild. A sensible order:
+
+1. **Every project, from day one:** a CLAUDE.md with your data sources, conventions and verification rules, plus a progress log, and git.
+2. **When a correction repeats:** the third time you give Claude the same instruction, turn it into a skill. Add permission rules as soon as a project holds credentials or licensed data.
+3. **When a pattern repeats across projects:** sub-agents for jobs you delegate often, hooks for checks that must run every time, and skills installed globally rather than per project.
+
+Build each piece when a real repetition or a real risk calls for it, not in advance. A setup you designed before you knew your own workflow is one you will spend time maintaining instead of using. This progression echoes the three-tier adoption structure in Alessandro Spina's Claude Code brownbag, listed on the [Resources](../resources.qmd) page.
+
 ## Into the capstone
 
 The rest of this module puts all of this together. [The capstone lab](../labs/day5.qmd) asks you to take a pipeline from Module 3 or Module 4 and harden it against the rubric this module just covered: reproducibility, verification, hygiene and, as a stretch, a container rerun with output showing the blocked access. Before you start, and before the demos that take up most of the remaining lecture time, take thirty seconds to write down your answer to two questions: one task you will always delegate without a second thought, and one you will never let an agent start, only react to. You'll be asked for both again at the end of this module. Module 6 returns to a harder version of the same question, applied not to one paper but to what a PhD is for.
