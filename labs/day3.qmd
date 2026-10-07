@@ -40,6 +40,8 @@ Do not skip the test-fire. Open a fresh session, not the one you built the skill
 
 Once your skill fires correctly, install one or two skills from the course's Barrios Skills catalog. `latex-tables` and `stata-regression` are good choices whatever your primary language. Then read one mature `SKILL.md` from the catalog to see what a skill looks like after several rounds of revision. Look at how its description is phrased and how its steps are structured. That is the standard your own skill is working toward, even if this module's version does not reach it yet.
 
+**Stretch, if you finish early:** build a second skill, `paper-reader`, from `paper_reader_SKILL_skeleton.md` in the starter pack. Test it in a fresh session on one paper from your own reading list. Then check every number in its notes (each N and each coefficient) against the PDF's tables, and write down how many were wrong.
+
 ::: {.callout-tip icon=false}
 ## Verify this: your full checklist
 

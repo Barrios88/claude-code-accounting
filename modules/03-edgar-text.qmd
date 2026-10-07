@@ -13,7 +13,7 @@ This module has two parts built around one lesson. In the morning you build a re
 ::: {.callout-note icon=false}
 ## Learning objectives
 
-By the end of this module, you should be able to: front-load an EDGAR pipeline prompt with the CIK concept, the rate limit, and the User-Agent requirement, and explain why doing so up front saves iteration time; describe why 10-K section extraction needs a multi-regex fallback rather than a single pattern, and read a quality report to diagnose the difference between a genuine edge case and a fixable regex gap; critique a keyword-count disclosure measure on construct-validity grounds and specify a stratified human-audit protocol you would run before publishing it; explain why a `SKILL.md` description has to be written as a trigger condition rather than a title, and demonstrate the difference on a skill you build yourself; and place this module's habits inside the "Show Other People" framing, in which a skill turns something you did painfully once into something nobody on your team has to relearn.
+By the end of this module, you should be able to: front-load an EDGAR pipeline prompt with the CIK concept, the rate limit, and the User-Agent requirement, and explain why doing so up front saves iteration time; describe why 10-K section extraction needs a multi-regex fallback rather than a single pattern, and read a quality report to diagnose the difference between a genuine edge case and a fixable regex gap; critique a keyword-count disclosure measure on construct-validity grounds and specify a stratified human-audit protocol you would run before publishing it; explain why a `SKILL.md` description has to be written as a trigger condition rather than a title, and demonstrate the difference on a skill you build yourself; design a paper-reading skill whose notes cite a table and column for every number, and check those numbers against the PDF; and place this module's habits inside the "Show Other People" framing, in which a skill turns something you did painfully once into something nobody on your team has to relearn.
 :::
 
 ## EDGAR mechanics, and front-loading the facts that matter
@@ -105,6 +105,23 @@ Turning a painful procedure into a working skill follows a short, repeatable seq
 ![A skill, firing: a fresh session recognizes the trigger condition in the description and runs the packaged procedure without re-explanation.](../assets/exhibits/day3/EXH-D3-02_skill_trigger.png){fig-alt="Mock session where a natural request matches a skill's trigger description and the packaged procedure runs without re-explanation."}
 
 Two notes on scope. A skill can live at the project level (`.claude/skills/`, checked into your project's git repository, so a coauthor who clones the repo gets it automatically) or globally (`~/.claude/skills/`, available in every project on your machine). The rule of thumb: use project scope for anything tied to one paper's pipeline, and global scope for something you'll use across many projects regardless of topic, such as a writing-style skill rather than a firm-specific data pipeline. Getting this wrong costs context, not correctness. Every globally installed skill's description loads into every session you open, whether or not that session needs it. A global folder full of narrow, project-specific skills uses up context in every unrelated conversation you have from then on.
+
+## A second skill: reading a paper the same way every time
+
+The EDGAR skill packages a data pipeline. The same idea works for a task you do even more often: reading a paper. A PhD student reads dozens of empirical papers a term, and the notes are usually uneven. One paper gets a careful account of its identification; the next gets two lines about the result. A paper-reading skill fixes the format, so every paper you read produces the same set of notes:
+
+- **Question:** what the paper asks, in one sentence.
+- **Setting:** the institutional detail the design depends on, such as the regulation, the market, or the reporting rule.
+- **Sample:** data sources, years, filters, and the N after each filter, with the table where each N appears.
+- **Identifying variation:** what changes for some firms and not others, and why that variation is plausibly unrelated to the outcome.
+- **Main result:** the headline coefficient and standard error, with table and column, and what the magnitude means in economic terms.
+- **Replication:** whether you could get the data, and which parts of the analysis you could rebuild.
+
+The description should name the requests it is for: "Use when the user asks to read, summarize, or take notes on an academic paper (a PDF, or an SSRN or arXiv link), or asks what a paper's identification strategy or main result is." The output should be a notes file on disk, one per paper, so your reading accumulates into something you can search later instead of disappearing with the chat.
+
+Long PDFs need one extra step. A 60-page paper with an online appendix takes up a large share of the context window, so have the skill split the PDF into sections, read them in order, and write the notes as it goes. Scott Cunningham's [`split-pdf` skill](https://github.com/scunning1975/MixtapeTools) does this splitting, and Alessandro Spina's skills brownbag, listed on the [Resources](../resources.qmd) page, includes a paper-review skill built around an identification-first template like the one above.
+
+The verification step matters more here than almost anywhere in the course. Numbers summarized from a PDF are easy to get wrong: an N taken from an earlier filter step, a coefficient from the wrong column, a robustness estimate reported as the main result. The notes read just as fluently when a number is wrong. So the skill must cite a table and column for every number it reports, and you check each one against the PDF before the notes go into your literature file. Check every number the first few times you use the skill, until you know how often it slips.
 
 ## The bridge to Module 4
 
