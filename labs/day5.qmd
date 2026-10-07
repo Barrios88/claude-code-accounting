@@ -4,71 +4,71 @@ title: "Module 5 Lab: The Verification Capstone"
 
 [Download the starter pack (zip)](../assets/labs/lab5_starter.zip){.btn} · [Module 5 slides (PDF)](../assets/slides/day5_slides.pdf)
 
-This module's lab has no new dataset and no new pipeline to build. Instead, you take a pipeline you already have — from Module 3's EDGAR text panel or Module 4's WRDS (or public-fallback) `funda`-style pipeline — and harden it against the rubric below until it would survive a coauthor, a referee, or your own future self picking it up cold. Everything you need is in `lab5_starter.zip`: the rubric reproduced below (this is your grading instrument, not just a suggestion list), an audit-command card, `DECISIONS.md`/`LOG.md` templates, a container quick-start for the environment stretch, and a tiny worked example of the `results.tex` / `\input{}` pattern. Nothing in the starter pack is data — you're pointing it at a pipeline you already built across this course.
+This lab has no new dataset and no new pipeline to build. You take a pipeline you already have, either Module 3's EDGAR text panel or Module 4's WRDS (or public-fallback) `funda`-style pipeline, and harden it against the rubric below. The goal is a repo that a coauthor, a referee or you a year from now could pick up cold and trust. Everything you need is in `lab5_starter.zip`: the rubric reproduced below (you grade yourself against it), an audit-command card, `DECISIONS.md`/`LOG.md` templates, a container quick-start for the environment stretch, and a small worked example of the `results.tex` / `\input{}` pattern. The starter pack contains no data. You point it at a pipeline you built earlier in this course.
 
 ::: {.callout-note icon=false}
 ## What you're building in this module
 
-By the end of the lab you will have: one existing pipeline (Module 3 or Module 4) rerun clean from a README alone, with a git history of meaningful, checkpointed commits; a `DECISIONS.md`, `LOG.md`, and attrition table that you have personally cross-checked against the commit log, with one specific claim verified (or found wanting) in the diff; one number traced end-to-end from raw data through a `results.tex` file to a rendered output, with nothing hand-typed along the way; a clean credential audit with both command outputs pasted into your notes; one banal writing artifact you delegated and one meaningful artifact you wrote yourself; and, if you have time, a rerun of the same pipeline inside a container with a pasted proof that the sandbox boundary actually held.
+By the end of the lab you will have: one existing pipeline (Module 3 or Module 4) rerun clean from a README alone, with a git history of meaningful, checkpointed commits; a `DECISIONS.md`, `LOG.md` and attrition table that you have cross-checked yourself against the commit log, with one specific claim checked against the diff (it holds up or it doesn't); one number traced end-to-end from raw data through a `results.tex` file to a rendered output, with nothing typed by hand along the way; a clean credential audit with both command outputs pasted into your notes; one banal writing artifact you delegated and one meaningful artifact you wrote yourself; and, if you have time, a rerun of the same pipeline inside a container, with pasted output showing that the sandbox blocked access outside the project folder.
 :::
 
 ## Pick your pipeline
 
-Choose Module 3's EDGAR text pipeline (CIK lookup → filing extraction → DuckDB store → keyword or section-level result) or Module 4's WRDS `funda` pipeline (or its public-FSDS fallback, if you were on that track) — whichever you have in better shape right now. You are not building anything new in this module; you are making the existing thing defensible. If neither pipeline is in a runnable state, spend the first ten minutes getting it back to "it ran once" before you start hardening it — the rubric assumes a working baseline, not a rescue project.
+Choose Module 3's EDGAR text pipeline (CIK lookup → filing extraction → DuckDB store → keyword or section-level result) or Module 4's WRDS `funda` pipeline (or its public-FSDS fallback, if you were on that track) — whichever is in better shape right now. You are not building anything new. You are making an existing pipeline defensible. If neither pipeline runs, spend the first ten minutes getting one back to the point where it has run once, then start hardening it. The rubric assumes a pipeline that already works; it does not cover rebuilding a broken one.
 
 ## The capstone rubric
 
-This is the exact rubric you'll self-grade against at the end of the lab, and the one the instructor spot-checks live in the debrief. It has four sections; the fourth is a stretch, not a requirement.
+You grade yourself against this rubric at the end of the lab, and I spot-check it live in the debrief. It has four sections. The fourth is a stretch, not a requirement.
 
 **Reproducibility**
 
-- The pipeline reruns start-to-finish from your README's instructions alone, in a clean clone of the repository (a fresh folder, not your working directory) — no step that only works because you remember something the README doesn't say.
-- Git history shows meaningful commits at every real checkpoint (download, clean, measure, figure/table), each with a message that says *why*, not just *what* — not one giant commit that reads as a single undifferentiated blob.
+- The pipeline reruns start-to-finish from your README's instructions alone, in a clean clone of the repository (a fresh folder, not your working directory). No step may depend on something you remember that the README doesn't say.
+- Git history shows meaningful commits at every real checkpoint (download, clean, measure, figure/table), each with a message that says *why*, not just *what*. One giant commit for the whole pipeline does not pass.
 
 **Verification**
 
-- `DECISIONS.md`, `LOG.md`, and a sample-attrition table are all present, and you have cross-checked them against the commit history rather than taken them on faith. Pick one specific claim from `DECISIONS.md`, find the commit (or commits) it should correspond to, and write down — in your own notes, not just in your head — whether the diff actually supports the claim.
+- `DECISIONS.md`, `LOG.md`, and a sample-attrition table are all present, and you have checked them against the commit history instead of assuming they are accurate. Pick one specific claim from `DECISIONS.md`, find the commit (or commits) it should correspond to, and write down in your notes whether the diff supports the claim.
 - Two sanity checks are recorded with sources: one benchmark comparison (a number checked against something Claude didn't touch) and one plausibility check (does the pattern make sense given what you know about the setting).
-- One number is traced end-to-end: from the raw data, through the script that computes it, into a `results.tex` file, and into a rendered output — with zero hand-typing anywhere along that chain. Write down which number you traced and the file path at each stage.
+- One number is traced end-to-end: from the raw data, through the script that computes it, into a `results.tex` file, and into a rendered output, with nothing typed by hand anywhere along that chain. Write down which number you traced and the file path at each stage.
 
 **Hygiene**
 
-- Both credential-audit commands (`git log --all --full-history -- .env` and a `grep -r` for your project's credential names) are run against this repository, and both outputs are pasted into your lab notes — not just described as "clean," shown.
+- Both credential-audit commands (`git log --all --full-history -- .env` and a `grep -r` for your project's credential names) are run against this repository, and both outputs are pasted into your lab notes. Describing them as "clean" is not enough; paste the output.
 - `.gitignore` is correct: credentials, raw licensed data, and any WRDS-derived files are excluded, and a `git log --all -- .env`-style check confirms none of them were ever committed.
-- If your pipeline used WRDS, the Duo/SSH tunnel is confirmed down, not left open.
+- If your pipeline used WRDS, you have confirmed the Duo/SSH tunnel is closed.
 - One banal writing artifact was delegated to Claude (for example, a variable-definition table generated directly from your metadata table) and one meaningful artifact was written by hand: a three-sentence note stating your pipeline's contribution or a specific limitation, in your own words, that you could defend without the document in front of you.
 
 **Environment (stretch)**
 
-- Rerun the pipeline — or a meaningful slice of it — inside `claude-container` or `agent-safehouse`, and paste the blocked-access proof: the command you ran that should fail outside the mounted project folder, and the "operation not permitted"-style output confirming it did.
+- Rerun the pipeline, or a meaningful part of it, inside `claude-container` or `agent-safehouse`, and paste the output showing blocked access: the command you ran that should fail outside the mounted project folder, and the "operation not permitted"-style output confirming it did.
 
 ::: {.callout-tip icon=false}
-## Verify this: self-grade honestly, then expect a spot-check
+## Verify this: grade yourself honestly, then expect a spot-check
 
-Work through the rubric above and mark each line pass/fail against your own repository, not against what you intended to do. The instructor will spot-check three or four projects live during the debrief — for at least one of them, that spot-check will be the DECISIONS.md-against-commits exercise from the Verification section, run cold on your repo in front of the room. A rubric line marked "pass" should survive that.
+Go through the rubric above and mark each line pass or fail based on what is in your repository, not what you intended to do. I will spot-check three or four projects live during the debrief. For at least one of them, the spot-check will be the DECISIONS.md-against-commits exercise from the Verification section, run on your repo with no preparation, in front of the room. Mark a line "pass" only if it would hold up under that check.
 :::
 
 ## Environment stretch: quick-start
 
-If you're attempting the container stretch, `lab_starter/container_quickstart.md` has the two paths — `claude-container` (Docker-based) and `agent-safehouse` (lighter, Mac-native) — with the exact commands for each. The point of the stretch is not speed; it's producing one concrete piece of evidence that the sandbox boundary is real, the same kind of proof you saw in this morning's lecture (`cat ~/.ssh/id_ed25519` failing with "Operation not permitted" from inside the sandbox). A pipeline that runs identically inside the container, plus one blocked-access command that fails exactly as it should, is the whole deliverable for this section — don't try to move your entire course's work into the container.
+If you're attempting the container stretch, `lab_starter/container_quickstart.md` gives the exact commands for both options: `claude-container` (Docker-based) and `agent-safehouse` (lighter, Mac-native). Speed doesn't matter here. The goal is one concrete piece of evidence that the sandbox blocks access, the same kind you saw in this morning's lecture (`cat ~/.ssh/id_ed25519` failing with "Operation not permitted" from inside the sandbox). The full deliverable for this section is a pipeline that runs the same way inside the container, plus one blocked-access command that fails as it should. Don't try to move all your course work into the container.
 
 ## Optional drills: referee and response letter
 
-If you finish the rubric with time left, try one of these on your own pipeline. Both apply this morning's sections to your own work.
+If you finish the rubric with time left, try one of these on your own pipeline. Each one applies a section from this morning to your own work.
 
 - **Clean-room referee.** Write a two-paragraph sample-construction description for your pipeline, as it would appear in a paper. Start a fresh session that sees only that text and your attrition table, and ask it, read-only, to write a referee report to `review/` checking whether the stated filters can produce your final N. Note one thing it caught that you had stopped seeing.
 - **Response-letter audit.** Write a short mock response letter (three or four claims) describing changes you actually made to your pipeline today, plus one change you did not make. Ask Claude to build the three-column audit table against your repository and leave cells empty rather than guess. Did it find the change you never made? Use only your own pipeline and a mock letter here, never a real referee report or a confidential review.
 
 ## Debrief and exit ticket
 
-Come back together for the live spot-check: the instructor will pull up three or four repositories and, together, audit one `DECISIONS.md` claim against its commit log in front of the room. Notice what's easy to verify and what isn't — that gap is the verification-debt 2×2 from this morning, applied to your own work instead of a hypothetical.
+We come back together for the live spot-check. I will pull up three or four repositories, and together we audit one `DECISIONS.md` claim against its commit log in front of the room. Notice what is easy to verify and what isn't. The difference is the verification-debt 2×2 from this morning, applied to your own work instead of a hypothetical one.
 
-After the spot-check, each student states, out loud, one banal task they will always delegate and one meaningful task they will never let an agent originate — the delegation rule from this morning's writing framework, now committed to publicly rather than just written down. This folds in the coauthor-handoff question directly: what would a real coauthor need to see in this repository before they'd trust it without re-doing your work themselves?
+After the spot-check, each student says out loud one banal task they will always delegate and one meaningful task they will never let an agent start. This is the delegation rule from this morning's writing framework, stated to the room instead of only written down. It also answers the coauthor-handoff question: what would a real coauthor need to see in this repository before trusting it without redoing your work?
 
 Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's specific item: your one-sentence delegation rule, in writing.
 
 ::: {.callout-warning icon=false}
 ## Module 6 readings — distributed this module, due before Module 6
 
-Before you leave, you'll receive the Module 6 reading packet: excerpts from Korinek, excerpts from Bloom, Jones, Van Reenen, and Webb, the full Macnamara et al. paper, the *Nature* editorial on AI and transparent science, Lusher, Yang, and Carrell, plus an accounting-specific swap option in place of the last item if the seminar leans accounting rather than economics. Total reading time is under 90 minutes across all five pieces — the estimated times are in the packet itself. This is read-before-class material, not optional background: Module 6 is a discussion seminar with no lecture to fall back on, and the discussion assumes you've done the reading, not that you'll skim it during the framing lecture.
+Before you leave, you'll receive the Module 6 reading packet: excerpts from Korinek, excerpts from Bloom, Jones, Van Reenen, and Webb, the full Macnamara et al. paper, the *Nature* editorial on AI and transparent science, Lusher, Yang, and Carrell, plus an accounting-specific swap option in place of the last item if the seminar leans accounting rather than economics. Total reading time is under 90 minutes across all five pieces; the packet lists an estimated time for each. Read it before class. It is not optional background. Module 6 is a discussion seminar, and the discussion assumes you have done the reading, so don't plan to skim it during the framing lecture.
 :::

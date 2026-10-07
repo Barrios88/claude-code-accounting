@@ -42,7 +42,7 @@ There is no fixed list. You decide where the line falls, and the skill is drawin
 It's tempting to assume you already know where your own banal/meaningful line sits, which usually means you haven't tested it. People get caught in the middle ground. A paragraph narrating a robustness check, for example, can look banal because it "just" describes a table, but it contains a judgment call about which alternative specification matters and why. If a sentence requires you to decide something rather than report something, it is on the meaningful side, however short it is.
 :::
 
-## Anti-homogenization: the floor rises, the ceiling doesn't
+## Anti-homogenization: keeping your own voice {#anti-homogenization-the-floor-rises-the-ceiling-doesnt}
 
 There is a second reason to protect the meaningful side of the line, and it has nothing to do with correctness: voice. On current evidence, LLMs reliably turn weak writing into serviceable writing, but they pull writing that already had a distinctive voice toward the same competent, slightly generic register. If everyone drafting in accounting and finance uses the same tool for the same kind of sentence, the field's prose will tend to sound more alike, not less.
 

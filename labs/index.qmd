@@ -2,7 +2,7 @@
 title: "Labs"
 ---
 
-Five labs, one per build module, each 80 minutes inside the module session. Every lab page carries the full instructions, the tiered task menu (base / standard / stretch), and the verify checklist you self-grade against — pass/fail, spot-checked in the debrief. Starter packs are small zips: templates and checklists, never data and never credentials. You download data yourself from public sources, and Module 4's WRDS pull runs on your own account (a public-data fallback track covers anyone whose access isn't live yet).
+There are five labs, one per build module, and each takes 80 minutes of the module session. Each lab page has the full instructions, the tiered task menu (base / standard / stretch), and the verify checklist you grade yourself against. The checklist is pass/fail and spot-checked in the debrief. Starter packs are small zips of templates and checklists. They never contain data or credentials. You download data yourself from public sources, and Module 4's WRDS pull runs on your own account. A public-data fallback track covers anyone whose WRDS access isn't live yet.
 
 | Lab | Builds | Starter |
 |-----|--------|---------|
@@ -12,4 +12,4 @@ Five labs, one per build module, each 80 minutes inside the module session. Ever
 | [Module 4 — WRDS pipeline (live or fallback track)](day4.qmd) | Filtered funda extract → Parquet/DuckDB → metadata table (+ .dta) | [zip](../assets/labs/lab4_starter.zip) |
 | [Module 5 — Capstone: harden a pipeline](day5.qmd) | One earlier pipeline made reproducible, verified, and hygienic against the rubric | [zip](../assets/labs/lab5_starter.zip) |
 
-The capstone rubric on the [Module 5 page](day5.qmd) is the course's summative standard: reruns from the README, paper trail cross-checked against commits, no hand-typed numbers, credentials audited clean. Module 6 has no lab — its deliverable is the position memo described on the [seminar page](../modules/06-ai-knowledge-market.qmd).
+The capstone rubric on the [Module 5 page](day5.qmd) is the course's final standard. Under it, the pipeline reruns from the README, the paper trail matches the commits, no numbers are typed by hand, and a credentials audit comes back clean. Module 6 has no lab. Its deliverable is the position memo described on the [seminar page](../modules/06-ai-knowledge-market.qmd).
