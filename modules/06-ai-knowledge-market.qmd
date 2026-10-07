@@ -73,7 +73,7 @@ The institutional reference point for this discussion is *Nature*'s editorial po
 
 Two complications make this less tidy. First, a spotless audit trail can still deliver a wrong estimate. Documentation tells you where to look; it does not prove the work was done. You saw this yourself when the DECISIONS.md file claimed a robustness check that the commit history did not contain. Second, the field has supplied a case study. In 2024 a working paper claimed that a randomized rollout of an AI materials-discovery tool raised researcher output by 44%. It circulated to acclaim from some of the most prominent economists in the field before it was found to be fabricated and withdrawn, and its author was severed from MIT. The provenance-checking machinery of economics failed *before* AI was writing papers. Does AI make that machinery stronger (audit trails, replication at near-zero cost) or weaker (volume, plausibility at scale)? That is the sharpest version of Question 2, and it is still open.
 
-A ten-minute segment in this block takes up a narrower epistemics question from your Module 5 toolkit. When a second model reviews the first model's code, what is being verified? Correlated training plausibly produces correlated blind spots. The review catches real errors, and you saw it catch one, but it is not independent in the sense a statistician means.
+A ten-minute segment in this block takes up a narrower epistemics question raised by Module 5's clean-room referee. When a second model, or a fresh session of the same model, reviews the first model's work, what is being verified? Correlated training plausibly produces correlated blind spots. The review catches real errors, and you saw it catch one, but it is not independent in the sense a statistician means.
 
 ## Question 3 — The market for papers
 
@@ -89,7 +89,7 @@ The economics of the answer is older than the technology. When a production inpu
 
 The seminar runs about two and a half hours. A forty-minute framing lecture covers the three questions above. Three structured discussion blocks of roughly thirty minutes each follow. Each block has position statements from the assigned debaters, open discussion, and an instructor synthesis, and each closes on a named question. The dissertation-placement exercise opens Block 1. There is no lab and nothing to install. The course's build modules are your evidence base; cite them the way you would cite data.
 
-**Required readings** (distributed Module 5; roughly 80–100 minutes total):
+**Required readings** (distributed Module 5; under 90 minutes total):
 
 - Korinek, Anton (2023). "Generative AI for Economic Research: Use Cases and Implications for Economists." *Journal of Economic Literature* 61(4): 1281–1317. Read pp. 1281–1290 and the speculative section, pp. 1310–1317.
 - Bloom, Nicholas, Charles I. Jones, John Van Reenen, and Michael Webb (2020). "Are Ideas Getting Harder to Find?" *American Economic Review* 110(4): 1104–1144. Read the introduction and conclusion.
@@ -97,7 +97,7 @@ The seminar runs about two and a half hours. A forty-minute framing lecture cove
 - Editors of *Nature* (2023). "Tools Such as ChatGPT Threaten Transparent Science; Here Are Our Ground Rules for Their Use." *Nature* 613: 612. Read in full (2 pages).
 - Lusher, Lester, Wenni Yang, and Scott E. Carrell (2023). "Congestion on the Information Superhighway: Inefficiencies in Economics Working Papers." *Journal of Public Economics* 225: 104978. Read in full (~8 pages).
 
-**Recommended for accounting depth:** Kim, Muhn, and Nikolaev (2024), "Financial Statement Analysis with Large Language Models" (SSRN 4835311), in which GPT-4 outperforms the median analyst at predicting earnings changes. That one case study raises both Question 2 and Question 3. Also Dong, Stratopoulos, and Wang (2024), "A Scoping Review of ChatGPT Research in Accounting and Finance," *International Journal of Accounting Information Systems* 55: 100715, for the current state of research in the field.
+**Accounting-specific option:** if the seminar leans accounting rather than economics, swap one of these in for Lusher, Yang, and Carrell. Kim, Muhn, and Nikolaev (2024), "Financial Statement Analysis with Large Language Models" (SSRN 4835311), in which GPT-4 outperforms the median analyst at predicting earnings changes. That one case study raises both Question 2 and Question 3. Or Dong, Stratopoulos, and Wang (2024), "A Scoping Review of ChatGPT Research in Accounting and Finance," *International Journal of Accounting Information Systems* 55: 100715, for the current state of research in the field.
 
 ::: {.callout-tip icon=false}
 ## The position memo — "What I will still be paid for in 2036"
