@@ -21,6 +21,8 @@ $blue-tint: #e7edf4;
 $rule: #e4e8ee;
 $hairline: #d8dee6;
 $hairline-strong: #b9c2ce;
+// Boundary for interactive controls: >= 3:1 on white (WCAG 1.4.11)
+$control-border: #8794a5;
 // Style guide warning tone (crimson-adjacent), used sparingly
 $warning: #b83a4b;
 // One radius and one (optional) shadow for every component
@@ -363,7 +365,7 @@ a.btn {
     align-items: center;
     gap: 0.4rem;
     padding: 0.4rem 0.85rem;
-    border: 1px solid $hairline-strong;
+    border: 1px solid $control-border;
     border-radius: $radius;
     background: #fff;
     color: $som-navy !important;
@@ -534,7 +536,7 @@ main ul.task-list {
 .checklist-reset {
   margin-left: 0.5rem;
   padding: 0.1rem 0.6rem;
-  border: 1px solid $hairline;
+  border: 1px solid $control-border;
   border-radius: $radius;
   background: #fff;
   color: $som-navy;
@@ -760,7 +762,7 @@ nav.page-navigation {
   &.active { font-weight: 600; color: $som-navy; }
 }
 .quarto-listing-filter .form-control,
-.input-group-text { border-color: $hairline; }
+.input-group-text { border-color: $control-border; }
 
 /* Mobile: wide tables scroll inside themselves instead of breaking the page */
 @media (max-width: 768px) {
