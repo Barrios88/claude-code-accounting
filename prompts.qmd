@@ -80,7 +80,3 @@ the comments carry the feedback.
 ```
 
 **Usage note.** Without "do not," you get a rewrite back. If you soften the instruction to "comments, and suggestions if you have them," you are back to accepting a polished rewrite with one click, and you lose the benefit of the prompt. Use this for any meaningful writing (an identification argument, a contribution statement, a limitations section) where you want feedback without handing over the thinking.
-
----
-
-Several prompt patterns on this page are adapted from Paul Goldsmith-Pinkham's Markus Academy series (Ep. 162, "Claude Code for Economists"); the prose on this page is original course material, not a transcript of that series. See the [About](about.qmd) page for the full attribution note.
