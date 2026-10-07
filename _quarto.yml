@@ -72,6 +72,22 @@ website:
           text: "Module 5: Writing & Verification"
         - href: modules/06-ai-knowledge-market.qmd
           text: "Module 6: AI & Knowledge Market"
+    - id: labs
+      title: "Labs"
+      style: docked
+      contents:
+        - href: labs/index.qmd
+          text: Overview
+        - href: labs/day1.qmd
+          text: "Module 1 Lab"
+        - href: labs/day2.qmd
+          text: "Module 2 Lab"
+        - href: labs/day3.qmd
+          text: "Module 3 Lab"
+        - href: labs/day4.qmd
+          text: "Module 4 Lab"
+        - href: labs/day5.qmd
+          text: "Module 5 Lab"
   page-footer:
     background: "#F5F7FA"
     foreground: "#6f665e"
@@ -85,9 +101,13 @@ format:
     theme:
       - cosmo
       - styles/custom.scss
-    include-in-header: styles/access-gate.html
+    include-in-header:
+      - styles/access-gate.html
+      - styles/fonts.html
     include-before-body: styles/som-masthead.html
+    include-after-body: styles/site-ui.html
     toc: true
+    toc-title: "On this page"
     toc-depth: 3
     code-copy: true
     smooth-scroll: true
