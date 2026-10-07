@@ -2,7 +2,11 @@
 title: "Module 3: EDGAR Text — Structured Data, and Your First Skill"
 ---
 
-[Module 3 slides (PDF)](../assets/slides/day3_slides.pdf) · [Lab](../labs/day3.qmd)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 3 slides (PDF)](../assets/slides/day3_slides.pdf)
+[[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day3.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab3_starter.zip)
+:::
 
 Accounting research meets AI most naturally in text. A 10-K's Risk Factors section, its MD&A, and its footnotes are disclosures an agent can fetch, parse, and count at a scale no RA could match by hand. They are also the raw material for measures like "tariff exposure" or "cyber risk disclosure" that show up three sections later in a paper's main table. That same combination makes this the most dangerous module of the course so far. A keyword count is not a construct. Getting from "the filing contains the word 'tariff' eleven times" to "this firm is meaningfully exposed to trade policy risk" is a measurement claim, and measurement claims are where accounting expertise matters most. No amount of agent capability substitutes for knowing what a disclosure measure is supposed to capture and where it can fail to capture it without anyone noticing.
 

@@ -2,7 +2,11 @@
 title: "Module 1 Lab: Install, Project Setup, One Verified Task"
 ---
 
-[Download the starter pack (zip)](../assets/labs/lab1_starter.zip){.btn} · [Module 1 slides (PDF)](../assets/slides/day1_slides.pdf)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](../assets/labs/lab1_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 1 slides (PDF)](../assets/slides/day1_slides.pdf)
+[[]{.bi .bi-journal-text aria-hidden="true"} Module 1 notes](../modules/01-foundations.qmd)
+:::
 
 In this lab you install Claude Code, authenticate it, and set it up for a real project. Then you run one small, reproducible task through it from start to finish, with a verification step you do yourself. Nothing here touches WRDS or any licensed dataset. Everything uses public SEC data, so there are no credentials to protect and no account approval to wait for. Download the starter pack (`lab1_starter.zip`) before you begin. It contains a `CLAUDE.md.template`, a `verify_checklist.md`, and a `prompts_tried.md` log.
 

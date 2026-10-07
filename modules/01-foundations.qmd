@@ -2,7 +2,11 @@
 title: "Module 1: Foundations — Tools, Context, and the Research Map"
 ---
 
-[Module 1 slides (PDF)](../assets/slides/day1_slides.pdf) · [Lab](../labs/day1.qmd)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 1 slides (PDF)](../assets/slides/day1_slides.pdf)
+[[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day1.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab1_starter.zip)
+:::
 
 Most people first meet AI through a chat window or a Cowork-style helper in a browser tab, and the first real research task they give it usually breaks it. Ask it to open a Compustat extract, join it to a filing index, and produce a labeled figure, and it stalls. It cannot see your filesystem, it cannot run your code, and it forgets the conversation when you close the tab. The natural conclusion is "AI can't do real research work." That is true of the tool you tried. It is not true of agentic AI in general, because you were on a low rung of a ladder that goes much higher.
 

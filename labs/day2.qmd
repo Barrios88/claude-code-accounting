@@ -2,7 +2,11 @@
 title: "Module 2 Lab: Empty Folder to Verified Figure"
 ---
 
-[Download the starter pack (zip)](../assets/labs/lab2_starter.zip){.btn} · [Module 2 slides (PDF)](../assets/slides/day2_slides.pdf)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](../assets/labs/lab2_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 2 slides (PDF)](../assets/slides/day2_slides.pdf)
+[[]{.bi .bi-journal-text aria-hidden="true"} Module 2 notes](../modules/02-empirical-loop.qmd)
+:::
 
 In this lab you run the same loop you watched in the demo: empty folder, download script, clean panel, publication-style figure, reproducibility README. The difference is that you choose the measure. The demo built R&D intensity, and your lab measure is a different one, so when you check your figure at the end you are checking your own work rather than a copy of the demo. The starter pack (`lab2_starter.zip`) contains an opening-prompt template with blanks for your measure, tags, and aggregation; a verify checklist; and a card explaining `DECISIONS.md` and `LOG.md`. The zip has no data in it. FSDS is public, and downloading it yourself is part of the exercise.
 

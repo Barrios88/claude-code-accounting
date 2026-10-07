@@ -2,7 +2,9 @@
 title: "Module 6: AI, the Production of Knowledge, and the Academic Research Market"
 ---
 
-[Module 6 slides (PDF)](../assets/slides/day6_slides.pdf)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 6 slides (PDF)](../assets/slides/day6_slides.pdf)
+:::
 
 For five modules you have been building. You pulled a firm-year panel from public filings in an afternoon, turned a folder of 10-Ks into a defensible text measure, connected an agent to WRDS on your own credentials, and hardened one of those pipelines into a repo a stranger could rerun from the README. In 2019, each of those tasks would have taken a competent RA a week or more. This seminar is about that change. There is no lab in this module. You already know how to do these things. The question now is what it means for the profession that anyone can.
 

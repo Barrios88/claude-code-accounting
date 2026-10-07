@@ -2,7 +2,11 @@
 title: "Module 3 Lab: EDGAR Pipeline, Validity Protocol, First Skill"
 ---
 
-[Download the starter pack (zip)](../assets/labs/lab3_starter.zip){.btn} · [Module 3 slides (PDF)](../assets/slides/day3_slides.pdf)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](../assets/labs/lab3_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 3 slides (PDF)](../assets/slides/day3_slides.pdf)
+[[]{.bi .bi-journal-text aria-hidden="true"} Module 3 notes](../modules/03-edgar-text.qmd)
+:::
 
 This lab has three parts, and each one builds on the last. First you build a real 10-K text pipeline end to end. Then you stop and write (prose, not code) a validity protocol for the measure you just built. Finally, you convert the whole pipeline into your first `SKILL.md`. The starter pack (`lab3_starter.zip`) contains a pinned list of twenty CIKs across four industry groups, a front-loaded prompt template, a `SKILL.md` skeleton with anatomy comments already in place, and this lab's verify checklist. No filing data ships with the starter pack. EDGAR is public, so you fetch everything live, the same way you would for a real project.
 

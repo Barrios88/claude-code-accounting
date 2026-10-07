@@ -2,7 +2,11 @@
 title: "Module 2: The Empirical Loop on SEC FSDS"
 ---
 
-[Module 2 slides (PDF)](../assets/slides/day2_slides.pdf) · [Lab](../labs/day2.qmd)
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 2 slides (PDF)](../assets/slides/day2_slides.pdf)
+[[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day2.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab2_starter.zip)
+:::
 
 Module 1 gave you the mental model: files persist and context doesn't, delegate and then verify, and say what you mean in four parts (file, operation, aggregation, output). So far you have not tested that model on a real research question. This module does. We take one accounting question, how R&D intensity has evolved across industries, from a vague idea to a verified, publication-style figure. You watch that happen in the demo, then do it yourself with a different measure. The lecture is short and mostly mechanical: what the dataset looks like, what the stages of the loop are, and which habits keep the work reproducible. Most of the learning happens in the demo and the lab, which run the same pipeline at two speeds.
 
