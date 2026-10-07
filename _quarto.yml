@@ -4,6 +4,7 @@ project:
   # Files referenced only from raw HTML (the Module 1 <video> embed)
   resources:
     - assets/video/*
+    - assets/illustrations/*
 
 execute:
   freeze: auto
@@ -94,7 +95,7 @@ website:
   page-footer:
     background: "#F5F7FA"
     foreground: "#6f665e"
-    left:
+    center:
       - "John Barrios · Yale School of Management · "
       - text: "Attribution & about"
         href: about.qmd
@@ -107,7 +108,6 @@ format:
     include-in-header:
       - styles/access-gate.html
       - styles/fonts.html
-    include-before-body: styles/som-masthead.html
     include-after-body: styles/site-ui.html
     toc: true
     toc-title: "On this page"
