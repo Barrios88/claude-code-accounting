@@ -56,6 +56,8 @@ The fallback sample (`lab/fallback_sample/fallback_panel.parquet`) is built enti
 
 Export only the analysis-ready table you actually built — never a full `funda` pull, on either track — to `.dta`, and run the provided `.do` file from the starter pack (`stata_bridge_extension.md`), which regresses ROA on leverage with fiscal-year and two-digit-SIC fixed effects. Connect each variable's Stata `label variable` line back to your metadata table: if you documented `dltt` as "long-term debt, millions of dollars" in DuckDB, that same label belongs on the Stata variable, not a fresh guess at what it means.
 
+Then run the two-language check from this module's notes. In a fresh session, give Claude only a written description of the model — outcome, regressors, the two sets of fixed effects, how standard errors are clustered — and ask for a Python version that reads the same `.dta` file. Don't show it the `.do` file. Compare the leverage coefficient from both runs to six decimal places and paste both numbers into your notes. If the standard errors differ, find the default that explains the gap and write it down.
+
 ## Extension (either track): fan it out with sub-agents
 
 This exercise answers the question from the Module 2 exit ticket. Ask Claude to split a profile of your landed Parquet file across parallel sub-agents, one per block of fiscal years (three or four blocks is plenty). Each sub-agent reports row counts, the share of missing `at` and `sale`, and any duplicate firm-year pairs, and writes those numbers to its own file in a `checks/` folder. In your prompt, tell each sub-agent to read your metadata table before it queries anything. Then:

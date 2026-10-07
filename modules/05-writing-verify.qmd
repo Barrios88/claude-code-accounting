@@ -9,7 +9,7 @@ Every module in this course has ended with an artifact — a script, a figure, a
 ::: {.callout-note icon=false}
 ## Learning objectives
 
-By the end of this module, you should be able to: apply the "can you discuss it without the LLM?" test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; run a clean-room referee that sees only your draft and writes its report to disk; audit a response letter claim by claim against the manuscript and the commit history; place a research task on the verification-debt 2×2 and explain why more autonomy makes the danger zone arrive faster; run the two-command credential audit and know what to do if it fails; explain why "documentation is a map, not a verdict" and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.
+By the end of this module, you should be able to: apply the "can you discuss it without the LLM?" test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; run a clean-room referee that sees only your draft and writes its report to disk; audit a response letter claim by claim against the manuscript and the commit history; place a research task on the verification-debt 2×2 and explain why more autonomy makes the danger zone arrive faster; run the two-command credential audit and know what to do if it fails; write `settings.json` permission rules and a blocking hook, and say which configuration mechanisms request behavior and which enforce it; explain why "documentation is a map, not a verdict" and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.
 :::
 
 ## Writing as thinking, and the loop that undoes it
@@ -161,6 +161,81 @@ One more permission decision belongs here: installing a third-party skill instal
 
 A container controls what an agent can *do*; it does not control what an agent can *see* once you mount a folder into it, and it does nothing to stop the contents of a mounted file from being sent to a remote model as part of a normal working session. If a folder contains anything sensitive — WRDS-licensed data, unpublished results you don't want leaving your machine, anything with individual-level identifiers — the fix is minimizing what gets mounted and choosing the right API tier, not assuming the sandbox already handled it.
 :::
+
+## Permission rules: writing the boundary down
+
+Between "trust the model" and "run it in a container" sits a cheap middle layer that is easy to skip: permission rules. A short `settings.json` file tells Claude Code which actions to allow, which to always ask about, and which to refuse, and it applies in every permission mode — a deny rule holds even when you've skipped permission checks entirely. Put it in `.claude/settings.json` inside the project and commit it, so every coauthor who opens the repository works inside the same boundary. (`.claude/settings.local.json` holds personal rules that stay off git; `~/.claude/settings.json` applies to every project on your machine.)
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(~/.ssh/**)",
+      "Edit(./data/raw/**)",
+      "Bash(rm -rf *)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ]
+  }
+}
+```
+
+Read it line by line. Claude's file tools can't open your `.env` or your SSH keys. Nothing can edit the raw data folder, which is where your downloaded EDGAR filings or the original FSDS extract belong — every cleaning step writes somewhere else. Recursive deletes are refused outright, and pushing to GitHub always stops for a human, whatever mode you're in. Deny rules are checked first, so no allow rule elsewhere can carve an exception out of them.
+
+Know the limits, because they're the same lesson as the container section above. These rules match Claude's built-in tools and the literal text of a shell command. `Bash(rm -rf *)` stops `rm -rf data/` but not `/bin/rm -rf data/` or the same command wrapped in `bash -c`. A `Read` deny stops Claude's file reader, but a shell `cat .env` is a different route to the same file. Permission rules take two minutes to write and are worth having, but they are not a sandbox; only the operating system enforces a boundary that holds however the command is phrased.
+
+### Requests versus enforcement
+
+By this point in the course you've met most of the ways to shape what Claude Code does. They split cleanly into two kinds, and mixing them up is a common source of false confidence:
+
+| Mechanism | Where it lives | What it does | Kind |
+|---|---|---|---|
+| CLAUDE.md | project root | standing context, loaded every session | asks |
+| Path-scoped rule | `.claude/rules/*.md` with a `paths:` line | instructions that load only when Claude touches matching files | asks |
+| Skill | `.claude/skills/<name>/SKILL.md` | a procedure, loaded when relevant or run as `/name` | asks |
+| Sub-agent | `.claude/agents/<name>.md` | a separate context for a delegated job (Module 4) | asks |
+| Permission rule | `settings.json`, `permissions` | allows, asks about, or refuses matching tool calls | enforces |
+| Hook | `settings.json`, `hooks` | your own script, run at fixed points; can block an action | enforces |
+| Container or sandbox | outside Claude Code | an operating-system boundary | enforces |
+
+Everything in the top half is a request. The model reads it and usually complies — but "usually" is a probability, not a guarantee, and a long session, a compacted context, or a confusing instruction can all lower it. Everything in the bottom half runs whether the model agrees or not. The rule that follows: anything that must happen *every* time, with no exceptions, belongs in the bottom half. "Never modify raw data" written in CLAUDE.md is a hope; `Edit(./data/raw/**)` in the deny list is a fact.
+
+A hook is the most flexible of the enforcers, because it's just a script. This one turns the credential grep from the next section into something that runs on its own, refusing any commit Claude tries to make while a staged file mentions your WRDS password:
+
+```bash
+#!/bin/bash
+# .claude/hooks/no-secrets.sh
+COMMAND=$(jq -r '.tool_input.command')
+if echo "$COMMAND" | grep -q "git commit"; then
+  if git diff --cached | grep -q "WRDS_PASSWORD"; then
+    echo "Blocked: a staged file mentions WRDS_PASSWORD" >&2
+    exit 2
+  fi
+fi
+exit 0
+```
+
+Register it in `.claude/settings.json` so it runs before every shell command Claude issues:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/no-secrets.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Claude Code passes each proposed command to the script as JSON; exit code 2 blocks the command and shows Claude the message, and exit 0 lets the normal permission flow continue. One honest caveat: this hook guards commits *Claude* makes. Commits you type in your own terminal never pass through it, which is why the after-the-fact audit below still matters. The [hooks guide](https://code.claude.com/docs/en/hooks-guide) and the [permissions reference](https://code.claude.com/docs/en/permissions) have the full syntax; check them against your installed version, because both features still change from release to release.
 
 ## Credential hygiene: the two-command audit
 
