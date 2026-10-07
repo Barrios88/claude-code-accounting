@@ -795,8 +795,30 @@ nav.page-navigation {
   scroll-margin-top: 5rem;
 }
 
+
+// Module page banners (assets/illustrations/banners): an editorial strip shown
+// above the page title. Flex order lifts it above Quarto's title block.
+body:has(.module-banner) main.content { display: flex; flex-direction: column; }
+.module-banner {
+  order: -1;
+  margin: 0 0 1.75rem;
+  img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    object-position: 70% 50%;
+    border: 1px solid $hairline;
+    border-radius: $radius;
+  }
+}
+@media (max-width: 576px) {
+  .module-banner img { height: 110px; }
+}
+
 /* Print: verification.qmd is meant to be printed as a protocol card */
 @media print {
+  .module-banner { display: none !important; }
   #quarto-header,
   #quarto-sidebar,
   #quarto-margin-sidebar,

@@ -2,6 +2,10 @@
 title: "Module 4: WRDS MCP, Scale, and the Stata Bridge"
 ---
 
+```{=html}
+<div class="module-banner"><img src="../assets/illustrations/banners/module-04-wrds-mcp.webp" alt="Illustration: archive shelving stacks connected by fine threads to a single reading table" width="1600" height="896"></div>
+```
+
 ::: {.module-links}
 [[]{.bi .bi-play-btn aria-hidden="true"} Video (14 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
