@@ -58,7 +58,7 @@ Export only the analysis-ready table you actually built — never a full `funda`
 
 ## Extension (either track): fan it out with sub-agents
 
-This one answers the question from the Module 2 exit ticket. Ask Claude to split a profile of your landed Parquet file across parallel sub-agents, one per block of fiscal years (three or four blocks is plenty). Each sub-agent reports row counts, the share of missing `at` and `sale`, and any duplicate firm-year pairs, and writes those numbers to its own file in a `checks/` folder. In your prompt, tell each sub-agent to read your metadata table before it queries anything. Then:
+This exercise answers the question from the Module 2 exit ticket. Ask Claude to split a profile of your landed Parquet file across parallel sub-agents, one per block of fiscal years (three or four blocks is plenty). Each sub-agent reports row counts, the share of missing `at` and `sale`, and any duplicate firm-year pairs, and writes those numbers to its own file in a `checks/` folder. In your prompt, tell each sub-agent to read your metadata table before it queries anything. Then:
 
 - Ask the main session to compare the files and flag the block that looks least like the others.
 - Open one of the `checks/` files yourself and confirm one number in it against a DuckDB query you run directly.

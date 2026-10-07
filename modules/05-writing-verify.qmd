@@ -9,7 +9,7 @@ Every module in this course has ended with an artifact — a script, a figure, a
 ::: {.callout-note icon=false}
 ## Learning objectives
 
-By the end of this module, you should be able to: apply the "can you discuss it without the LLM?" test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; place a research task on the verification-debt 2×2 and explain why more autonomy makes the danger zone arrive faster; run the two-command credential audit and know what to do if it fails; explain why "documentation is a map, not a verdict" and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.
+By the end of this module, you should be able to: apply the "can you discuss it without the LLM?" test to catch cognitive offloading in your own writing; classify a writing task as banal (delegate) or meaningful (protect) and state a personal delegation rule; use the editor-not-rewriter prompt to get LLM feedback without surrendering authorship; run a clean-room referee that sees only your draft and writes its report to disk; audit a response letter claim by claim against the manuscript and the commit history; place a research task on the verification-debt 2×2 and explain why more autonomy makes the danger zone arrive faster; run the two-command credential audit and know what to do if it fails; explain why "documentation is a map, not a verdict" and how to check a DECISIONS.md claim against the actual commit history; and use the five core git commands well enough to treat a commit as the unit of verification.
 :::
 
 ## Writing as thinking, and the loop that undoes it
@@ -71,6 +71,34 @@ The two words doing all the work are "do not." Without them, a capable editor-mo
 It's tempting to soften the constraint — "give me comments, and if you have a better phrasing, suggest it too." This defeats the purpose almost entirely. The moment a proposed rewrite sits next to your sentence, accepting it is one click and requires no more thought than accepting a spell-check suggestion. If you want the model's editorial judgment without its ghostwriting, the "do not rewrite" instruction has to be unambiguous, not a soft preference.
 :::
 
+## The clean-room referee
+
+The editor prompt above has a weakness that is easy to miss: it usually runs in the same session where you wrote the section. By then the model has heard every justification you gave along the way. You told it why the sample starts in 2004, why financials are dropped, why the placebo test doesn't matter. A real referee has heard none of that, and that is exactly why a real referee catches what you can no longer see. A model that has watched you argue yourself into a design will tend to accept the design.
+
+The fix is to give the critique its own clean room. Run it in a fresh session, or in a sub-agent (Module 4), whose only input is the draft itself: no chat history, no `DECISIONS.md`, no notes on what you meant. Make it read-only, so it can't "help" by editing the paper. And have it write its report to a file, such as `review/referee_identification.md`, so the critique survives the session and you can respond to it point by point, the way you would a real report.
+
+```
+You are refereeing this paper for the Journal of Accounting Research. You
+have only the manuscript in paper/. Do not edit any file. Read the
+identification section and the sample-construction section, then write a
+report to review/referee_identification.md. For every sample filter the
+paper states, check whether the attrition it implies is consistent with
+the N reported in Table 1, and list any filter whose effect on the sample
+is never reported. Aim the criticism at the paper, not the authors.
+```
+
+Sample construction is a common place for an accounting paper to say one thing and do another: a filter described in the text that never appears in the attrition table, or a Table 1 N that the stated filters can't produce. A reviewer who never saw your cleaning script has to reconstruct the sample from the prose alone, which is exactly the test your prose has to pass at the journal.
+
+The last line of that prompt matters too. A referee report that attacks the authors is a worse report, not a tougher one. It gives you nothing to fix. Keep the reviewer pointed at claims, evidence and gaps.
+
+This pattern borrows from two public prompt designs worth reading: Scott Cunningham's [Referee 2 persona](https://github.com/scunning1975/MixtapeTools/blob/main/personas/referee2.md), which audits a paper as an adversarial second referee, and the "Editor" persona in Alessandro Spina's [Claude Code presentation materials](https://github.com/aspi6246/Claude-Code-Presentation), which files its reports to disk and never touches the author's files.
+
+::: {.callout-warning icon=false}
+## Common failure: a referee that agrees with you
+
+Language models lean toward telling you what you want to hear, and a review prompt is where this does the most damage. If your critique comes back mostly praise, or concedes as soon as you push back ("good point, that concern doesn't apply"), you have not been refereed. Ask for the three most serious problems, not an assessment. And when you disagree with a point, answer it in writing in the report file, rather than arguing in the chat where the model can simply concede.
+:::
+
 ## Style guides as living documents
 
 A personal style guide — a skill that has read a stack of your own published prose and encodes what it found — is one of the more mature examples of a skill functioning as an SOP rather than a power-up, the framing you met in Module 3. It is built the same way any skill is built: collect samples you're proud of, point Claude at the folder, ask it to characterize sentence length, hedging habits, how you open a results section, what you never do, and let it draft a SKILL.md from that analysis. What makes it worth a demo of its own is what it gets wrong, not just what it gets right.
@@ -84,6 +112,23 @@ A personal style guide — a skill that has read a stack of your own published p
 R&R culture is close to the center of gravity in accounting publishing, and four referee reports with overlapping, sometimes contradictory demands is a hard planning problem before you've written a single revised sentence. The `strategic-revision` skill treats a stack of referee reports the way a project manager treats a stack of tickets: it parses every distinct comment into a task, infers which tasks block which others (you can't rewrite the conclusion before running the robustness check the conclusion depends on), organizes the result into execution blocks that can run in parallel, and flags a critical path plus any points where two referees ask for contradictory things.
 
 Take the pattern from the demo, not the machinery underneath it. Whether the dependency graph gets validated with a particular Python library is an implementation detail; decomposing into discrete tasks, mapping dependencies explicitly, batching what runs in parallel, and surfacing the critical path and conflicts before you start writing is the transferable habit — it generalizes to any messy multi-reviewer revision problem, on a paper or off one.
+
+## Auditing the response letter
+
+The DAG plans a revision. It doesn't tell you whether the revision you describe actually happened. The response letter says it did — and the letter is both the highest-stakes document in R&R culture and an easy place for an LLM to make things up. A model drafting a response will write "We now report results using an alternative leverage definition in Table A2" with complete confidence, whether or not anyone ran the check. That is the same sentence as the fabricated `DECISIONS.md` entry later in this module, only now it is addressed to an editor.
+
+So audit the letter before it goes out, the same way you audit a paper trail. For every claim the letter makes, build a three-column check:
+
+| Claim in the letter | Where it appears in the revised manuscript | Commit whose diff implements it |
+|---|---|---|
+| "We add firm fixed effects to Table 4" | Table 4, columns 3–4; text in §5.2 | `a41c9e2`: adds `firm_fe` to the Table 4 script |
+| "We now cluster at the industry level" | Table 4 notes | *(none found)* |
+
+Any row with an empty cell is a problem. An empty middle column means the letter promises a change the reader can't find. An empty right column means the manuscript says something no script produces. The second kind is the dangerous one: the text was edited to match the promise, but the numbers never changed.
+
+Claude is good at the first two columns, because it can read both documents and match them up. Ask it to fill in the third column from `git log` and the diffs, and to leave a cell empty rather than guess. Then check every empty cell yourself, and spot-check two or three filled ones. As with the paper trail, the table is a map of where to look, not a verdict.
+
+The idea of mapping each referee concern to the response, the manuscript location and whether that location was verified comes from the R&R mode of the "Editor" persona in Spina's materials, linked above. The commit column is this course's addition: it is what turns a consistency check between two documents into a check against what was actually run.
 
 ## Verification debt: the module's second framework
 

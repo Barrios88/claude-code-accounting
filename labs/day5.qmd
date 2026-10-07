@@ -52,6 +52,13 @@ Work through the rubric above and mark each line pass/fail against your own repo
 
 If you're attempting the container stretch, `lab_starter/container_quickstart.md` has the two paths — `claude-container` (Docker-based) and `agent-safehouse` (lighter, Mac-native) — with the exact commands for each. The point of the stretch is not speed; it's producing one concrete piece of evidence that the sandbox boundary is real, the same kind of proof you saw in this morning's lecture (`cat ~/.ssh/id_ed25519` failing with "Operation not permitted" from inside the sandbox). A pipeline that runs identically inside the container, plus one blocked-access command that fails exactly as it should, is the whole deliverable for this section — don't try to move your entire course's work into the container.
 
+## Optional drills: referee and response letter
+
+If you finish the rubric with time left, try one of these on your own pipeline. Both apply this morning's sections to your own work.
+
+- **Clean-room referee.** Write a two-paragraph sample-construction description for your pipeline, as it would appear in a paper. Start a fresh session that sees only that text and your attrition table, and ask it, read-only, to write a referee report to `review/` checking whether the stated filters can produce your final N. Note one thing it caught that you had stopped seeing.
+- **Response-letter audit.** Write a short mock response letter (three or four claims) describing changes you actually made to your pipeline today, plus one change you did not make. Ask Claude to build the three-column audit table against your repository and leave cells empty rather than guess. Did it find the change you never made? Use only your own pipeline and a mock letter here, never a real referee report or a confidential review.
+
 ## Debrief and exit ticket
 
 Come back together for the live spot-check: the instructor will pull up three or four repositories and, together, audit one `DECISIONS.md` claim against its commit log in front of the room. Notice what's easy to verify and what isn't — that gap is the verification-debt 2×2 from this morning, applied to your own work instead of a hypothetical.
