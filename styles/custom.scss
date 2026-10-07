@@ -95,7 +95,8 @@ main li + li { margin-top: 0.25rem; }
 main strong { font-weight: 600; }
 
 // Links: navy text, thin offset underline in a soft accent; full accent on hover
-main a:not(.btn):not(.nav-link):not(.pagination-link):not(.quarto-grid-link) {
+// :where() keeps specificity low so component link styles (cards, buttons) win
+main :where(a:not(.btn):not(.nav-link):not(.pagination-link):not(.quarto-grid-link)) {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-decoration-color: rgba($accent, 0.45);
@@ -139,251 +140,209 @@ summary:focus-visible,
 // Landing page
 // ---------------------------------------------------------------------------
 
-// Hero band (resolves the FIG-SH-01 hero slot, D-017):
-// navy card with the course title, lede, fact row, and two CTAs
+// Hero (FIG-SH-01 hero slot, D-017): a quiet title block on white under the
+// navy navbar: kicker, title, lede, fact line, one primary action.
 .hero-band {
-  background: $som-navy;
-  color: #fff;
-  border-radius: 6px;
-  padding: 2.4rem 2.6rem 2.1rem;
-  margin: 1.25rem 0 1.75rem;
+  padding: 1.75rem 0 2.25rem;
+  margin: 0 0 2.25rem;
+  border-bottom: 1px solid $rule;
 
+  .hero-kicker {
+    @extend %kicker;
+    display: block;
+    margin: 0 0 0.9rem;
+  }
   h1 {
-    color: #fff;
-    margin-top: 0;
-    padding-top: 0;
-    font-size: 2.2rem;
+    margin: 0 0 1rem;
+    padding: 0;
     border-bottom: none;
+    font-size: 2.75rem;
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    color: $som-navy;
   }
-
   p {
-    color: rgba(255, 255, 255, 0.92);
-    max-width: 44rem;
-    font-size: 1.08rem;
+    max-width: 40rem;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #3b4048;
   }
-
-  .hero-facts {
-    font-family: $serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #c3d1e2;
-    margin: 1.25rem 0 0.25rem;
+  .hero-facts, .hero-facts p {
+    @extend %kicker;
+    margin: 1.4rem 0 0;
+    font-variant-numeric: tabular-nums;
   }
-
-  .hero-buttons { margin-bottom: 0; }
-
-  .hero-buttons a {
-    background-color: #fff;
-    color: $som-navy !important;
-    font-weight: 600;
-  }
-  .hero-buttons a:hover {
-    background-color: $blue-tint;
-    color: $som-navy !important;
-  }
-  .hero-buttons a.btn-ghost {
-    background: transparent;
-    color: #fff !important;
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    font-weight: 500;
-  }
-  .hero-buttons a.btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff !important;
-  }
+  .hero-facts p { margin: 0; }
+  .hero-buttons { margin: 1.75rem 0 0; gap: 0.75rem 1.5rem; }
 }
 
 @media (max-width: 576px) {
   .hero-band {
-    padding: 1.5rem 1.25rem;
-    h1 { font-size: 1.6rem; }
-    p { font-size: 1rem; }
+    padding: 1.5rem 0 1.75rem;
+    h1 { font-size: 2rem; }
+    p { font-size: 1.05rem; }
   }
 }
 
 // "Start here" path: Setup -> WRDS setup -> Module 1 -> Lab 1
 .start-path {
-  margin: 0 0 2rem;
+  margin: 0 0 2.5rem;
   padding: 1rem 1.25rem;
-  background: $mist;
   border: 1px solid $hairline;
-  border-left: 4px solid $accent;
-  border-radius: 4px;
+  border-radius: $radius;
 
   .start-path__label {
+    @extend %kicker;
     display: block;
-    margin: 0 0 0.55rem;
-    font-family: $serif;
-    font-weight: 600;
-    color: $som-navy;
+    margin: 0 0 0.6rem;
   }
   ol {
     list-style: none;
     counter-reset: step;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 0.4rem;
+    gap: 0.5rem 0.25rem;
     margin: 0;
     padding: 0;
   }
   li {
     counter-increment: step;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     margin: 0 !important;
     font-size: 0.95rem;
   }
   li::before {
     content: counter(step);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.45rem;
-    height: 1.45rem;
     margin-right: 0.45rem;
-    border-radius: 50%;
-    background: $som-navy;
-    color: #fff;
-    font-size: 0.78rem;
+    color: $yale-gray;
+    font-size: 0.82rem;
     font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
   li:not(:last-child)::after {
     content: "\2192";
-    margin: 0 0.35rem 0 0.6rem;
-    color: $yale-gray;
+    margin: 0 0.6rem;
+    color: $hairline-strong;
   }
-  a { font-weight: 600; }
+  a { font-weight: 500; }
 }
 @media (max-width: 576px) {
   .start-path ol { flex-direction: column; }
   .start-path li:not(:last-child)::after { content: none; }
 }
 
-// Module card grid (landing page)
+// Module card grid (landing page): hairline cards, no colored rules
 .module-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
   gap: 1rem;
-  margin: 1.25rem 0 2rem;
+  margin: 1.25rem 0 2.5rem;
 }
 .module-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1.05rem 1.15rem 0.9rem;
+  padding: 1.15rem 1.25rem 1rem;
   background: #fff;
   border: 1px solid $hairline;
-  border-top: 3px solid $som-navy;
-  border-radius: 4px;
+  border-radius: $radius;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 
   &:hover, &:focus-within {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border-color: darken($hairline, 8%);
-    border-top-color: $accent;
+    border-color: $hairline-strong;
+    box-shadow: $shadow-soft;
   }
-
-  &.module-card--seminar { border-top-color: $yale-gray; background: $mist; }
+  &:hover { cursor: pointer; }
 
   p { margin: 0; }
 
   .module-card__kicker {
+    @extend %kicker;
     display: block;
-    font-size: 0.74rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: $yale-gray;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
   }
   .module-card__title {
     display: block;
     font-family: $serif;
-    font-size: 1.16rem;
+    font-size: 1.2rem;
     font-weight: 600;
     line-height: 1.3;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.5rem;
     a { color: $som-navy; text-decoration: none; }
-    a:hover { color: $accent; text-decoration: underline; }
     // The title link covers the whole card, so clicking anywhere opens the module.
     a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
   }
   .module-card__question {
     display: block;
-    color: $ink;
+    color: #4a4f57;
     font-size: 0.95rem;
     line-height: 1.5;
-    font-style: italic;
-    padding-bottom: 0.85rem;
+    padding-bottom: 1rem;
   }
   .module-card__links {
     margin-top: auto;
-    padding-top: 0.6rem;
-    border-top: 1px solid $hairline;
+    padding-top: 0.75rem;
+    border-top: 1px solid $rule;
     font-size: 0.88rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
+    align-items: baseline;
+    gap: 0.25rem 1.1rem;
     p { display: contents; }
-    a { font-weight: 500; position: relative; z-index: 1; }
-    a.module-card__open {
-      background: $som-navy;
-      color: #fff !important;
+    a {
+      position: relative;
+      z-index: 1;
+      color: $yale-gray;
+      font-weight: 500;
       text-decoration: none;
-      padding: 0.3rem 0.75rem;
-      border-radius: 3px;
-      font-weight: 600;
+      &:hover { color: $accent; text-decoration: underline; }
     }
-    a.module-card__open:hover, a.module-card__open:focus-visible { background: $accent; }
+    a.module-card__open {
+      color: $som-navy;
+      font-weight: 600;
+      margin-right: auto;
+    }
   }
-  &:hover { cursor: pointer; }
+  &:hover .module-card__links a.module-card__open,
+  .module-card__links a.module-card__open:hover { color: $accent; text-decoration: underline; }
 }
 
 // ---------------------------------------------------------------------------
-// Buttons (hero + syllabus actions + landing CTA), MGT 816 style
+// Buttons: one primary (filled navy) and one quiet text action
 // ---------------------------------------------------------------------------
-.hero-buttons,
-.syllabus-actions {
+.hero-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin: 1.5rem 0;
   align-items: center;
+  // Quarto wraps the links in a <p>; let them be flex items directly
+  p { display: contents; }
 }
 
-.hero-buttons a,
-.syllabus-actions a,
-.cta-setup,
+.hero-buttons a:not(.hero-link),
 a.btn {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.15rem;
   background-color: $primary;
-  color: #fff !important;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.hero-buttons a:hover,
-.syllabus-actions a:hover,
-.cta-setup:hover,
-a.btn:hover {
-  background-color: darken($primary, 8%);
-  color: #fff !important;
-  text-decoration: none;
-}
-
-.syllabus-actions .btn-secondary {
-  background-color: #fff;
-  color: $primary !important;
   border: 1px solid $primary;
-}
-.syllabus-actions .btn-secondary:hover {
-  background-color: #f0f4f8;
+  color: #fff !important;
+  border-radius: $radius;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none !important;
+  &:hover { background-color: darken($primary, 6%); color: #fff !important; }
 }
 
-.cta-setup { margin-top: 1.25rem; }
+.hero-buttons a.hero-link {
+  color: $som-navy;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  &:hover { color: $accent; text-decoration: underline; }
+}
 
 // Module / lab materials bar: Slides (PDF) · Lab · Starter pack
 .module-links {
@@ -473,29 +432,6 @@ a.btn:hover {
 @supports not (aspect-ratio: 16 / 9) {
   .module-video .module-video__frame { height: 0; padding-top: 56.25%; }
   .module-video video { position: absolute; inset: 0; }
-}
-
-// "This week"-style highlight box (used for notices)
-.this-week {
-  border-left: 4px solid $primary;
-  padding: 0.75rem 1rem;
-  margin: 1.5rem 0;
-  background: $mist;
-}
-
-.due-badge {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  background: $warning;
-  color: #fff;
-  border-radius: 3px;
-  font-size: 0.85em;
-  font-weight: 600;
-}
-
-.locked-link {
-  color: #6c757d;
-  font-style: italic;
 }
 
 // ---------------------------------------------------------------------------
@@ -808,8 +744,6 @@ nav.page-navigation {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .hero-buttons a,
-  .syllabus-actions a { flex: 1 1 auto; text-align: center; }
   nav.page-navigation .nav-page-text { font-size: 0.9rem; }
   .module-links a { flex: 1 1 auto; justify-content: center; }
 }

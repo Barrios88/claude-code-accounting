@@ -4,6 +4,8 @@ toc: false
 ---
 
 ::: {.hero-band}
+[John Barrios · Yale School of Management]{.hero-kicker}
+
 # Claude Code for Accounting Research
 
 A hands-on PhD course on agentic AI for empirical accounting research, with five build modules and a closing seminar. It starts at first install and ends at a verified WRDS-to-Stata pipeline. The seminar then discusses what these tools mean for the profession.
@@ -14,7 +16,7 @@ A hands-on PhD course on agentic AI for empirical accounting research, with five
 
 ::: {.hero-buttons}
 [Start with Setup](setup.qmd)
-[View Syllabus](syllabus.qmd){.btn-ghost}
+[View the syllabus →](syllabus.qmd){.hero-link}
 :::
 :::
 
