@@ -315,6 +315,8 @@ summary:focus-visible,
     margin-bottom: 0.45rem;
     a { color: $som-navy; text-decoration: none; }
     a:hover { color: $accent; text-decoration: underline; }
+    // The title link covers the whole card, so clicking anywhere opens the module.
+    a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
   }
   .module-card__question {
     display: block;
@@ -333,8 +335,18 @@ summary:focus-visible,
     flex-wrap: wrap;
     gap: 0.25rem 1rem;
     p { display: contents; }
-    a { font-weight: 500; }
+    a { font-weight: 500; position: relative; z-index: 1; }
+    a.module-card__open {
+      background: $som-navy;
+      color: #fff !important;
+      text-decoration: none;
+      padding: 0.3rem 0.75rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    a.module-card__open:hover, a.module-card__open:focus-visible { background: $accent; }
   }
+  &:hover { cursor: pointer; }
 }
 
 // ---------------------------------------------------------------------------

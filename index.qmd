@@ -43,7 +43,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [What kind of tool is this, and how do I stay in control?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/01-foundations.qmd) [Lab](labs/day1.qmd) [Slides (PDF)](assets/slides/day1_slides.pdf)
+[Open module →](modules/01-foundations.qmd){.module-card__open} [Lab](labs/day1.qmd) [Slides (PDF)](assets/slides/day1_slides.pdf)
 :::
 ::::
 
@@ -55,7 +55,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [Can I go from idea to verified figure, reproducibly?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/02-empirical-loop.qmd) [Lab](labs/day2.qmd) [Slides (PDF)](assets/slides/day2_slides.pdf)
+[Open module →](modules/02-empirical-loop.qmd){.module-card__open} [Lab](labs/day2.qmd) [Slides (PDF)](assets/slides/day2_slides.pdf)
 :::
 ::::
 
@@ -67,7 +67,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [Can I build a text measure I'd defend to a referee?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/03-edgar-text.qmd) [Lab](labs/day3.qmd) [Slides (PDF)](assets/slides/day3_slides.pdf)
+[Open module →](modules/03-edgar-text.qmd){.module-card__open} [Lab](labs/day3.qmd) [Slides (PDF)](assets/slides/day3_slides.pdf)
 :::
 ::::
 
@@ -79,7 +79,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [Can Claude work my licensed data, safely, on my account?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/04-wrds-mcp-scale.qmd) [Lab](labs/day4.qmd) [Slides (PDF)](assets/slides/day4_slides.pdf)
+[Open module →](modules/04-wrds-mcp-scale.qmd){.module-card__open} [Lab](labs/day4.qmd) [Slides (PDF)](assets/slides/day4_slides.pdf)
 :::
 ::::
 
@@ -91,7 +91,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [What do I delegate, and how do I make my work auditable?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/05-writing-verify.qmd) [Lab](labs/day5.qmd) [Slides (PDF)](assets/slides/day5_slides.pdf)
+[Open module →](modules/05-writing-verify.qmd){.module-card__open} [Lab](labs/day5.qmd) [Slides (PDF)](assets/slides/day5_slides.pdf)
 :::
 ::::
 
@@ -103,7 +103,7 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 [What will I still be paid for?]{.module-card__question}
 
 ::: {.module-card__links}
-[Notes](modules/06-ai-knowledge-market.qmd) [Slides (PDF)](assets/slides/day6_slides.pdf)
+[Open module →](modules/06-ai-knowledge-market.qmd){.module-card__open} [Slides (PDF)](assets/slides/day6_slides.pdf)
 :::
 ::::
 
