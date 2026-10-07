@@ -8,7 +8,7 @@ Accounting research meets AI most naturally in text. A 10-K's Risk Factors secti
 
 This module has two parts built around one lesson. In the morning you build a real pipeline: CIK resolution, filing retrieval, section extraction, a DuckDB store, and a keyword measure. You build it the way a paper actually gets built. Most of it can be automated, but the last stretch is hard and requires you, not the agent, to look at the failures by hand. In the afternoon, you take everything painful about that pipeline (the retries, the regex fixes, the caching logic you had to get right) and turn it into a `SKILL.md`. A skill is a packaged, reusable procedure that any future session, yours or a coauthor's, can run without you explaining it again. Both parts teach the same lesson. A procedure that took real effort to work out should be written down once, carefully, so that nobody, including you a year from now, has to work it out again.
 
-![The EDGAR pipeline: CIK resolution, filing retrieval, section extraction, and a DuckDB store, with a quality report at every stage.](../assets/figures/day3/FIG-D3-01_edgar_pipeline.png){fig-alt="Pipeline diagram: CIK resolution, filing retrieval, section extraction, and a DuckDB store, with a quality report attached to each stage."}
+![The EDGAR pipeline: CIK resolution, filing retrieval, section extraction, and a DuckDB store, with a quality report on what was extracted.](../assets/figures/day3/FIG-D3-01_edgar_pipeline.png){fig-alt="Pipeline diagram: CIK resolution, filing retrieval, section extraction, and a DuckDB store, with a quality report attached to each stage."}
 
 ::: {.callout-note icon=false}
 ## Learning objectives

@@ -6,7 +6,7 @@ title: "Module 4 Lab: WRDS Pull to Analysis-Ready Panel"
 
 This lab builds one pipeline on two tracks: live WRDS data if your account and tunnel are ready, or an equivalent public dataset if they aren't. Both tracks run through the same five steps: a feasibility-assessment prompt, a filtered pull, mandatory inspection, a Parquet/DuckDB landing, and a metadata table. The two tracks count equally. What you are learning is the procedure, and the data source underneath it can be swapped. Some students choose the fallback track even with a working WRDS connection because it is faster to iterate on. That is a legitimate choice.
 
-The lab starter pack (`lab4_starter.zip`) contains `.env.example`, the iron-law checklist, the metadata-table template, the verify checklist, and the fallback-sample build script. **The zip never contains WRDS data.** The fallback sample is built entirely from public SEC data, and every WRDS-derived file you produce in this module stays in your own `~/wrds_data` or project folder.
+The lab starter pack (`lab4_starter.zip`) contains `env_example.txt` (the credential-file template), the iron-law checklist, the metadata-table template, the verify checklist, the Stata bridge extension, and the fallback-sample build script with its README. **The zip never contains WRDS data.** The fallback sample is built entirely from public SEC data, and every WRDS-derived file you produce in this module stays in your own `~/wrds_data` or project folder.
 
 ::: {.callout-note icon=false}
 ## What you're building in this module
@@ -28,8 +28,10 @@ If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP
 4. **Inspect — write all four down, with real numbers, before proceeding:**
    - Row count, compared to what you expected going in.
    - `.head()` or `.sample()` eyeball of the actual values.
+   - Null check: the share of missing values in each column you plan to use.
    - `fyear` min/max, checked against your requested range.
-   - One benchmark firm's value checked against a figure from a source Claude did not touch (its own 10-K, or a number you already knew).
+
+   Then check one benchmark firm's value against a source Claude did not touch (its own 10-K, or a number you already knew).
 5. **Land it.** Convert the extract to Parquet, attach it in DuckDB, and build a `compustat_metadata` table documenting at least eight variables (varname, label, units, one screening note each) using the template from the starter pack.
 6. **Fresh-session check.** Close your session entirely, open a new one, and orient it with nothing but `SELECT * FROM metadata`. Confirm the fresh session can describe your variables correctly from that alone.
 7. **Tunnel teardown.** Run `tunnel_down.sh` and confirm with `tunnel_status.sh` that the tunnel is closed. This step is required, and it is last on the list on purpose.
@@ -38,16 +40,18 @@ If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP
 
 **Duo unresolved, tunnel failure, or your own choice — identical pipeline, public data.**
 
-The fallback sample (`lab/fallback_sample/fallback_panel.parquet`) is built entirely from the SEC's public Financial Statement Data Sets. It needs no WRDS account, credentials, or institutional access, and anyone can rebuild it with the provided build script. Its columns are named to mirror a `funda`-style pull: `firm_id` (CIK, standing in for `gvkey`), `company_name` (for `conm`), `period` (for `datadate`), `at`, `sale`, `ni`. It is not Compustat. XBRL tags vary by filer and period in ways Compustat's standardization smooths over, and `firm_id` cannot be joined to CRSP or Compustat without a crosswalk, which this sample doesn't include. Every mechanical step below, however, is the same as on the live track.
+The fallback sample (`fallback_panel.parquet`) is built entirely from the SEC's public Financial Statement Data Sets by `build_fallback_sample.py` in the starter pack. It needs no WRDS account, credentials, or institutional access. Its columns are named to mirror a `funda`-style pull: `firm_id` (CIK, standing in for `gvkey`), `company_name` (for `conm`), `period` (for `datadate`), `at`, `sale`, `ni`. It is not Compustat. XBRL tags vary by filer and period in ways Compustat's standardization smooths over, and `firm_id` cannot be joined to CRSP or Compustat without a crosswalk, which this sample doesn't include. Every mechanical step below, however, is the same as on the live track.
 
-1. **Environment.** You need no tunnel, `.env`, or Duo. Confirm that `fallback_panel.parquet` (or `.csv`) is present from the starter pack.
+1. **Environment.** You need no tunnel, `.env`, or Duo. Build the sample once, from the starter-pack folder: `pip install requests pandas pyarrow`, then `export SEC_USER_AGENT="Your Name your.email@yale.edu"` (SEC requires your name and email on every request), then `python build_fallback_sample.py --quarter 2023q4 --out-dir .`. Confirm that `fallback_panel.parquet` and `fallback_panel.csv` appear. See `README_fallback.md` for details.
 2. **Feasibility-assessment prompt.** Ask the same question, adapted to the fallback panel's actual columns: *"I want a firm-year panel with leverage and profitability measures from this sample. Tell me what's involved before you try anything complicated. What might be missing?"* The answer should still raise real issues, such as missing revenue tags for some filers and the CIK/gvkey gap, even without WRDS involved.
 3. **Pull.** There's no live query here, but treat the load the same way. Select columns explicitly; never read every column in the file. Document which SEC XBRL tags feed each variable. This is the fallback's equivalent of the iron-law filters: write down which tags you used and why, even though there's no `WHERE` clause to paste.
 4. **Inspect — the same four checks, on the fallback data:**
    - Row count, compared to what the README states (≤ 5,000 firm-year observations).
    - `.head()` or `.sample()` eyeball.
+   - Null check: the share of missing `at`, `sale` and `ni` (expect `sale` to be missing more often, because revenue tags vary by filer).
    - `period` min/max, checked against the quarter the sample was built from.
-   - One firm's `at` or `sale` value checked against that company's own public 10-K filing.
+
+   Then check one firm's `at` or `sale` value against that company's own public 10-K filing.
 5. **Land it.** Follow the same Parquet/DuckDB/metadata steps as the live track. Build a `metadata` table with at least eight variables documented, including a screening note that flags where SEC tag coverage is inconsistent.
 6. **Fresh-session check.** Same as the live track: close, reopen, orient with `SELECT * FROM metadata` alone.
 7. **No tunnel to tear down.** Skip this step and go to the verify checklist below.
@@ -72,7 +76,7 @@ Work through every line below. It is self-graded and pass/fail, as in every othe
 
 - [ ] `.env` exists, is gitignored, and `grep -r` for your WRDS password over the entire project returns nothing (live track; on the fallback track this passes automatically, but check anyway)
 - [ ] All four iron-law filters are present in the query — paste the `WHERE` clause into the box below (fallback track: paste the list of XBRL tags you used and why)
-- [ ] Four inspection checks written down with actual numbers: rows, `fyear`/`period` min/max, sample eyeball, one benchmark firm checked against a source Claude didn't touch
+- [ ] Four inspection checks written down with actual numbers: rows, sample eyeball, null shares, `fyear`/`period` min/max; plus one benchmark firm checked against a source Claude didn't touch
 - [ ] Metadata table is queryable in DuckDB, with at least 8 variables documented (units + one screening note each)
 - [ ] Explicit variable list in every query — no `SELECT *` anywhere in any script
 - [ ] No WRDS-derived file anywhere outside `~/wrds_data` or your project data directory; nothing WRDS-derived committed to git
