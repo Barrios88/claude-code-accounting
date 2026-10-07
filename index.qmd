@@ -3,11 +3,7 @@ pagetitle: "Claude Code for Accounting Research"
 toc: false
 ---
 
-::: {.hero-band .hero-band--art}
-```{=html}
-<img class="hero-art" src="assets/illustrations/home-header-vector-light.webp" alt="" aria-hidden="true">
-```
-
+::: {.hero-band}
 [John Barrios · Yale School of Management]{.hero-kicker}
 
 # Claude Code for Accounting Research
