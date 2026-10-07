@@ -8,32 +8,31 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background:
-      radial-gradient(ellipse at top, rgba(0, 40, 86, 0.12), transparent 55%),
-      #f5f7fa;
+    background: #f5f7fa;
   }
   html.access-locked #course-access-gate { display: flex; }
   #course-access-gate .gate-card {
     width: min(26rem, 100%);
     background: #fff;
-    border: 1px solid #d9dee5;
-    border-top: 4px solid #002856;
-    padding: 2rem 1.75rem 1.75rem;
-    box-shadow: 0 10px 30px rgba(0, 40, 86, 0.08);
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
   #course-access-gate .gate-kicker {
-    margin: 0 0 0.5rem;
-    color: #002856;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
   }
   #course-access-gate h1 {
     margin: 0 0 0.75rem;
     color: #002856;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.45rem;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
     font-weight: 600;
     border: 0;
     padding: 0;
@@ -57,8 +56,8 @@
   }
   #course-access-gate input[type="password"] {
     width: 100%;
-    border: 1px solid #c5CCD6;
-    border-radius: 2px;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
     padding: 0.7rem 0.8rem;
     font-size: 1rem;
     color: #212529;
@@ -70,7 +69,7 @@
   }
   #course-access-gate button {
     border: 0;
-    border-radius: 2px;
+    border-radius: 4px;
     background: #002856;
     color: #fff;
     padding: 0.7rem 1rem;
@@ -78,11 +77,12 @@
     font-weight: 600;
     cursor: pointer;
   }
-  #course-access-gate button:hover { background: #003a7a; }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
   #course-access-gate .gate-error {
     display: none;
     margin: 0;
-    color: #c0392b;
+    color: #b83a4b;
     font-size: 0.875rem;
   }
   #course-access-gate.show-error .gate-error { display: block; }
