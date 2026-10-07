@@ -10,9 +10,9 @@ Every module in this course comes back to one decision: which rung of the tool l
 
 ### Claude Desktop
 
-**What it is.** A chat application with Projects (persistent context you upload once and reuse across conversations) and MCP support. MCP lets it connect to external tools and data sources through the same protocol Module 4 uses for WRDS. It does not have direct filesystem access to your machine, and it cannot execute code or run a script against a local file the way a terminal agent can.
+**What it is.** Anthropic's desktop app, with three tabs. **Chat** is a conversation app with Projects (persistent context you upload once and reuse across conversations) and connectors, which link it to external tools and data through MCP, the same protocol Module 4 uses for WRDS. In Chat, Claude works with what you paste or upload; it does not work directly in the folders on your machine. **Code** runs Claude Code itself, the same engine as the terminal version, with a graphical interface, a diff viewer and parallel sessions; everything this page says about Claude Code below applies to it. (**Cowork**, for longer agentic tasks, is not used in this course.)
 
-**When to reach for it.** Anything that is a conversation rather than a pipeline: a quick methods question, drafting an email, thinking through a referee comment before you touch the manuscript, or summarizing a PDF you've uploaded to a Project. It sits on the first or second rung of the ladder. It is useful for thinking work and no help once a task requires touching a file on disk.
+**When to reach for it.** The Chat tab is for anything that is a conversation rather than a pipeline: a quick methods question, drafting an email, thinking through a referee comment before you touch the manuscript, or summarizing a PDF you've uploaded to a Project. It sits on the first or second rung of the ladder: useful for thinking work, and no help once a task requires working on files on disk. For that, switch to the Code tab, or to Claude Code in the terminal.
 
 **Cost / plan.** A Claude Pro or Max subscription (Claude Max is a higher-usage tier for people running many long sessions), or pay-as-you-go API access if you'd rather not subscribe. Pricing tiers change, so check current rates before budgeting for a cohort.
 
@@ -20,11 +20,11 @@ Every module in this course comes back to one decision: which rung of the tool l
 
 ### Cursor
 
-**What it is.** An agentic code editor. It is a fork of VS Code with inline AI edits, a chat panel that can propose and apply changes across several files, and its own agent mode that plans and executes a short chain of edits inside the editor's sandbox. It sits a rung above Claude Desktop and a rung below Claude Code. It can act on its own, but only within the editor's project view, not a full terminal session.
+**What it is.** An agentic code editor. It is a fork of VS Code with inline AI edits, a chat panel that can propose and apply changes across several files, and an agent mode that plans a chain of edits and can run terminal commands as it goes. Paid plans add cloud agents that work in the background. On this course's ladder it sits on the agentic-IDE rung: it is built around editing code you are looking at in the editor, while Claude Code is built around long runs across your whole project from the terminal.
 
 **When to reach for it.** Mixed Stata/Python users who want a GUI rather than a terminal prompt, and who mostly edit code rather than run open-ended multi-step pipelines. Typical tasks are cleaning up a do-file, refactoring a script, or working through inline suggestions while you read the diff in the window you're already working in.
 
-**Cost / plan.** A paid Cursor subscription (Pro tier, roughly comparable in price to Claude Pro) is required for meaningful agentic use beyond a free trial. Cursor can also be configured to call Anthropic's models directly, which is useful to know if your institution already has an Anthropic API budget.
+**Cost / plan.** A paid Cursor subscription (Pro tier, roughly comparable in price to Claude Pro, with higher tiers for heavy use) is needed for meaningful agentic use beyond the free plan. Cursor can also be configured to call Anthropic's models directly, which is useful to know if your institution already has an Anthropic API budget.
 
 **Install pointer.** Download it from Cursor's official site. Sign in, connect a model provider if you want something other than the bundled default, and open a project folder to get started.
 
@@ -36,7 +36,7 @@ Every module in this course comes back to one decision: which rung of the tool l
 
 **Cost / plan.** Same subscription as Claude Desktop (Pro or Max) or an API key. Claude Code is a separate install but draws on the same account. Max is meant for heavy agentic use: long sessions, large context, and frequent tool calls.
 
-**Install pointer.** Install it from the terminal following Anthropic's official Claude Code documentation. It requires a working local development environment (Node, and whatever R/Python/Stata installation your research already depends on), because Claude Code runs your code rather than shipping its own.
+**Install pointer.** Install it with Anthropic's native installer (one terminal command; see the [Setup](setup.qmd) page), or use the Code tab in Claude Desktop. It does not need Node. It does need whatever R, Python or Stata installation your research already depends on, because Claude Code runs your code rather than shipping its own.
 
 ### Codex
 
@@ -44,7 +44,7 @@ Every module in this course comes back to one decision: which rung of the tool l
 
 **When to reach for it.** If your institution's AI budget or existing subscriptions run through OpenAI rather than Anthropic, or if you want a second agent's judgment on the same codebase. Some researchers run two agents against the same repo as a cheap adversarial check. The concepts this course teaches (context management, verification discipline, skills as SOPs, MCP-style tool access) transfer directly. The syntax and a handful of defaults differ.
 
-**Cost / plan.** A ChatGPT Plus/Pro/Team subscription (Codex is bundled into the higher tiers) or OpenAI API usage.
+**Cost / plan.** Included with paid ChatGPT plans (Plus and above, including Business and Enterprise), with more usage on the higher tiers, or billed through OpenAI API usage. There is no separate Codex subscription.
 
 **Install pointer.** Install it following OpenAI's official Codex documentation, either as a CLI package or an IDE extension, depending on which you want.
 
@@ -77,4 +77,4 @@ Other options, briefly. [manaflow-ai/cmux](https://github.com/manaflow-ai/cmux) 
 
 ---
 
-*Last reviewed: July 2026. Tool capabilities, pricing, and install steps change often. Treat the profiles above as a starting point, and check each vendor's current documentation before you commit a cohort to one.*
+*Last reviewed: October 2026. Tool capabilities, pricing, and install steps change often. Treat the profiles above as a starting point, and check each vendor's current documentation before you commit a cohort to one.*

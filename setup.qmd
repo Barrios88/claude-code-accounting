@@ -13,9 +13,9 @@ A laptop you have admin rights on (macOS or Linux natively; Windows via WSL2). A
 ::: {.callout-tip icon=false}
 ## New to the terminal? Install Claude Desktop first, and let it coach you
 
-[Claude Desktop](https://claude.com/download) is the plain chat app for Mac and Windows. It needs no terminal and no configuration, and it is free to download; a Pro or Max plan raises the usage limits. It can't run commands on your computer, but it can walk you through every step on this page in plain language, for your specific machine. Whenever a step here fails, open Claude Desktop, paste in the command you ran and the error you got (or drag in a screenshot), and ask what to do next. That is the same help Module 1's lab gives, and you can get it as soon as you're stuck.
+[Claude Desktop](https://claude.com/download) is Anthropic's app for Mac and Windows (Linux is in beta). It needs no terminal and no configuration, and it is free to download; a Pro or Max plan raises the usage limits. Its **Chat** tab can't run commands on your computer, but it can walk you through every step on this page in plain language, for your specific machine. Whenever a step here fails, open Claude Desktop, paste in the command you ran and the error you got (or drag in a screenshot), and ask what to do next. That is the same help Module 1's lab gives, and you can get it as soon as you're stuck.
 
-Claude Code (step 3) is the tool that actually *runs* commands for you. A chat app can only advise you; a terminal agent carries out the steps. Module 1 starts with that difference, and you will see it here before the course begins.
+Claude Code (step 3) is the tool that actually *runs* commands for you. A chat app can only advise you; an agent carries out the steps. Module 1 starts with that difference, and you will see it here before the course begins. The same Desktop app also has a **Code** tab, which runs Claude Code itself with a graphical interface instead of a terminal. The course demos use the terminal, but everything they teach works in the Code tab too, so use it if the terminal stays uncomfortable.
 :::
 
 ## 1. Operating system
@@ -51,15 +51,20 @@ Claude Code writes and runs code using whatever is installed on *your* machine. 
 
 You need either a **Claude Pro or Max subscription** or an **API key**. Pro (roughly \$20/month at the time of writing; check [current pricing](https://claude.com/pricing)) is enough for this course. Max tiers give you more usage but are not required. API-key billing charges per token and also works.
 
-Install (either method):
+Install (pick one method):
 
 ```bash
-# npm (requires Node 18+; macOS: brew install node / Ubuntu: sudo apt install nodejs npm)
-npm install -g @anthropic-ai/claude-code
-
-# or the standalone installer
+# Recommended: the native installer (macOS, Linux, WSL); no Node needed
 curl -fsSL https://claude.ai/install.sh | bash
+
+# or Homebrew (macOS)
+brew install --cask claude-code
+
+# or npm (requires Node 22 or later)
+npm install -g @anthropic-ai/claude-code
 ```
+
+The native installer updates itself automatically. Homebrew and npm installs do not; update them yourself now and then. Anthropic's [setup guide](https://code.claude.com/docs/en/setup) has the current commands for every platform.
 
 Then, from any folder, run `claude`. On first launch it walks you through login. Choose your subscription account, or set up the API key when prompted. Grant the terminal access it asks for.
 
@@ -68,7 +73,7 @@ Then, from any folder, run `claude`. On first launch it walks you through login.
 ::: {.callout-warning icon=false}
 ## Common failure: it installs but won't launch
 
-Check these three causes, in order: (1) Node is too old (`node --version` should be 18+); (2) npm's global bin directory is not on your PATH (the installer prints the path to add); (3) on Windows, you installed in PowerShell instead of inside WSL. If you spend more than 30 minutes here, stop and bring the error message to Module 1's lab. Part A sets aside time and staff for this. The [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) listed below also has step-by-step walkthroughs for macOS and Windows.
+Check these three causes, in order: (1) the `claude` command is not on your PATH yet (open a new terminal window; if that doesn't help, add the path the installer printed); (2) if you installed with npm, Node is too old (`node --version` should be 22 or later); (3) on Windows, you installed in PowerShell instead of inside WSL, which is where this course runs. If you spend more than 30 minutes here, stop and bring the error message to Module 1's lab. Part A sets aside time and staff for this. The [AI-research-setup guide](https://github.com/hanlulong/AI-research-setup) listed below also has step-by-step walkthroughs for macOS and Windows.
 :::
 
 ### Prefer a window to a bare terminal? Run Claude Code in VS Code or Cursor {#claude-in-an-editor}
