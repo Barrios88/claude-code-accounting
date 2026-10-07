@@ -3,8 +3,35 @@ title: "Module 6: AI, the Production of Knowledge, and the Academic Research Mar
 ---
 
 ::: {.module-links}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (8 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 6 slides (PDF)](../assets/slides/day6_slides.pdf)
 :::
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 6 walkthrough (8 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="../assets/video/module6_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="../assets/video/module6_seminar.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module6_seminar.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module6_seminar.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module6_seminar.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 17 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module6_seminar.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
 
 For five modules you have been building. You pulled a firm-year panel from public filings in an eighty-minute lab, turned a folder of 10-Ks into a defensible text measure, connected an agent to WRDS on your own credentials, and hardened one of those pipelines into a repo a stranger could rerun from the README. In 2019, each of those tasks would have taken a competent RA days to weeks. This seminar is about that change. There is no lab in this module. You already know how to do these things. The question now is what it means for the profession that anyone can.
 

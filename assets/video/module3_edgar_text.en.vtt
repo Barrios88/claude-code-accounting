@@ -1,0 +1,1144 @@
+WEBVTT
+Kind: captions
+Language: en
+
+NOTE Module 3: EDGAR Text narrated walkthrough. Generated from the
+narration script and per-segment audio durations (0.7 s gap per slide).
+
+s01-001
+00:00:00.000 --> 00:00:01.102
+Welcome back.
+
+s01-002
+00:00:01.152 --> 00:00:05.240
+I'm John Barrios, and this is Module 3:
+EDGAR text, structured data,
+
+s01-003
+00:00:05.290 --> 00:00:07.431
+and your first skill.
+
+s01-004
+00:00:07.481 --> 00:00:10.806
+We're going to turn 10-K text
+into a panel you can measure,
+
+s01-005
+00:00:10.856 --> 00:00:13.470
+and then write that
+procedure down as a skill.
+
+s02-006
+00:00:14.220 --> 00:00:16.475
+So here's how the live session runs.
+
+s02-007
+00:00:16.525 --> 00:00:20.483
+We open with a quick follow-up
+on the Duo triage from Module 2.
+
+s02-008
+00:00:20.533 --> 00:00:25.231
+Then a little under forty minutes of lecture
+on EDGAR mechanics, the text pipeline,
+
+s02-009
+00:00:25.281 --> 00:00:27.541
+measurement validity, and skills.
+
+s02-010
+00:00:27.591 --> 00:00:32.329
+The demo has two acts: the EDGAR pipeline,
+and then building a SKILL.md live.
+
+s02-011
+00:00:32.379 --> 00:00:33.510
+A ten-minute break,
+
+s02-012
+00:00:33.560 --> 00:00:38.236
+then an eighty-minute lab where you go
+from pipeline to result table to your
+
+s02-013
+00:00:38.286 --> 00:00:39.276
+first skill.
+
+s02-014
+00:00:39.326 --> 00:00:43.446
+We close with a debrief, the exit
+ticket, and a bridge to Module 4.
+
+s02-015
+00:00:43.496 --> 00:00:45.450
+This video covers the lecture slides.
+
+s03-016
+00:00:46.200 --> 00:00:49.231
+This module has two halves and one lesson.
+
+s03-017
+00:00:49.281 --> 00:00:52.938
+Text is where AI meets accounting
+research most naturally.
+
+s03-018
+00:00:52.988 --> 00:00:56.144
+Risk factors, the MD&A, footnotes...
+
+s03-019
+00:00:56.194 --> 00:01:00.694
+an agent can fetch and count those
+at a scale no RA could match by hand.
+
+s03-020
+00:01:00.744 --> 00:01:05.467
+It's also where it's most dangerous,
+because a keyword count is not a construct.
+
+s03-021
+00:01:05.517 --> 00:01:10.636
+In the first half you build the pipeline:
+CIK, fetch, extract, DuckDB,
+
+s03-022
+00:01:10.686 --> 00:01:12.028
+and a measure.
+
+s03-023
+00:01:12.078 --> 00:01:16.835
+In the second half you write the procedure
+you just worked out as a SKILL.md.
+
+s03-024
+00:01:16.885 --> 00:01:21.990
+Both halves rest on the Module 1 mantra,
+files persist and context doesn't.
+
+s04-025
+00:01:22.740 --> 00:01:25.946
+Here's the pipeline you'll build:
+a list of CIKs, fetch the filings,
+
+s04-026
+00:01:25.996 --> 00:01:31.809
+cache the raw HTML, extract the
+sections with a chain of regex patterns,
+
+s04-027
+00:01:31.859 --> 00:01:36.442
+run a quality report, load into
+DuckDB, and produce a result table.
+
+s04-028
+00:01:36.492 --> 00:01:39.073
+The loop on top means
+that when you fix a regex,
+
+s04-029
+00:01:39.123 --> 00:01:41.882
+the re-run only touches the cached misses.
+
+s04-030
+00:01:41.932 --> 00:01:47.306
+The CIK is the SEC's firm identifier,
+assigned once and never reused.
+
+s04-031
+00:01:47.356 --> 00:01:51.609
+EDGAR has a full-text search endpoint
+and a per-filer submissions endpoint.
+
+s04-032
+00:01:51.659 --> 00:01:55.355
+And two hard rules: no more
+than 10 requests per second,
+
+s04-033
+00:01:55.405 --> 00:01:59.363
+and a User-Agent header with your
+name and email on every request.
+
+s04-034
+00:01:59.413 --> 00:02:02.610
+Skip the header and the first
+request comes back with a 403.
+
+s05-035
+00:02:03.360 --> 00:02:06.126
+Here are two ways to ask
+for the same pipeline.
+
+s05-036
+00:02:06.176 --> 00:02:09.868
+The vague one: get me the
+risk factors from some 10-Ks.
+
+s05-037
+00:02:09.918 --> 00:02:11.132
+It names the goal,
+
+s05-038
+00:02:11.182 --> 00:02:15.402
+but it leaves every operational fact for
+the agent to find by trial and error.
+
+s05-039
+00:02:15.452 --> 00:02:19.996
+It hits the 403, recovers,
+hits the rate limit, backs off,
+
+s05-040
+00:02:20.046 --> 00:02:21.834
+and only then starts parsing.
+
+s05-041
+00:02:21.884 --> 00:02:28.216
+The front-loaded version names the section,
+the file of CIKs, fiscal 2021 to 2023,
+
+s05-042
+00:02:28.266 --> 00:02:32.446
+both endpoints, the rate limit, the User-Agent,
+and where to cache the raw HTML.
+
+s05-043
+00:02:32.496 --> 00:02:37.527
+You end up with the same pipeline
+either way, just in fewer rounds.
+
+s05-044
+00:02:37.577 --> 00:02:41.310
+So for any task with known constraints,
+put them in the first prompt.
+
+s06-045
+00:02:42.060 --> 00:02:46.206
+Every 10-K is supposed to have an Item 1A,
+Risk Factors, and an Item 7, the MD&A,
+
+s06-046
+00:02:46.256 --> 00:02:50.541
+so you'd expect one regular
+expression to find each.
+
+s06-047
+00:02:50.591 --> 00:02:52.276
+In practice the headings vary a lot.
+
+s06-048
+00:02:52.326 --> 00:02:57.065
+You'll see Item 1A in all caps,
+Item 1A with a trailing period,
+
+s06-049
+00:02:57.115 --> 00:03:00.227
+the heading split across a
+table-of-contents anchor,
+
+s06-050
+00:03:00.277 --> 00:03:05.231
+and cross-references to Item 1A elsewhere
+in the filing that pull the match to
+
+s06-051
+00:03:05.281 --> 00:03:06.193
+the wrong spot.
+
+s06-052
+00:03:06.243 --> 00:03:10.174
+So you build an ordered fallback chain:
+try the cleanest pattern first,
+
+s06-053
+00:03:10.224 --> 00:03:15.957
+and if the match is suspiciously
+short, fall through to looser ones.
+
+s06-054
+00:03:16.007 --> 00:03:18.778
+And log which pattern
+fired for each filing.
+
+s06-055
+00:03:18.828 --> 00:03:21.007
+A bad extraction doesn't throw an error.
+
+s06-056
+00:03:21.057 --> 00:03:24.410
+It returns what looks like a
+very short Risk Factors section.
+
+s07-057
+00:03:25.160 --> 00:03:29.960
+You can't afford that kind of iteration
+if every regex tweak means scraping the
+
+s07-058
+00:03:30.010 --> 00:03:30.924
+whole firm list again.
+
+s07-059
+00:03:30.974 --> 00:03:36.259
+So cache the raw HTML to disk the first
+time you download it, one file per filing,
+
+s07-060
+00:03:36.309 --> 00:03:38.337
+before any extraction runs.
+
+s07-061
+00:03:38.387 --> 00:03:43.537
+Then you fix a regex, re-run, and the
+pipeline should make zero network requests.
+
+s07-062
+00:03:43.587 --> 00:03:47.889
+The second habit is a quality report after
+every pass, with successes, failures,
+
+s07-063
+00:03:47.939 --> 00:03:51.957
+and flags for sections that
+came back suspiciously short.
+
+s07-064
+00:03:52.007 --> 00:03:55.086
+At this stage the most useful
+prompt is a simple one:
+
+s07-065
+00:03:55.136 --> 00:03:59.677
+ask Claude why N filings are missing,
+let it read the cached HTML for those cases,
+
+s07-066
+00:03:59.727 --> 00:04:02.870
+and then you decide whether
+the fix is worth making.
+
+s08-067
+00:04:03.620 --> 00:04:08.497
+The common failure here is treating the
+quality-report number as the deliverable.
+
+s08-068
+00:04:08.547 --> 00:04:11.348
+Ninety-nine percent extraction
+sounds like a result,
+
+s08-069
+00:04:11.398 --> 00:04:15.082
+but it doesn't tell you which filings
+are in the missing one percent.
+
+s08-070
+00:04:15.132 --> 00:04:18.892
+If the hardest one percent are
+older filers, smaller filers,
+
+s08-071
+00:04:18.942 --> 00:04:20.792
+or firms with unusual structures,
+
+s08-072
+00:04:20.842 --> 00:04:24.451
+a pipeline that quietly drops
+them has a selection problem.
+
+s08-073
+00:04:24.501 --> 00:04:27.549
+So keep a one-line
+diagnosis for every failure.
+
+s08-074
+00:04:27.599 --> 00:04:30.530
+Then you can say which firms
+are out of your sample and why.
+
+s09-075
+00:04:31.280 --> 00:04:34.872
+Once the sections are extracted,
+they need somewhere to live.
+
+s09-076
+00:04:34.922 --> 00:04:38.968
+DuckDB is a single file with
+no configuration and no server,
+
+s09-077
+00:04:39.018 --> 00:04:42.978
+and you can read and write it from
+Python, R, or the command line.
+
+s09-078
+00:04:43.028 --> 00:04:48.061
+Three tables are enough here: filings,
+one row per CIK and fiscal year; sections,
+
+s09-079
+00:04:48.111 --> 00:04:52.219
+the extracted text;
+and keywords, the counts.
+
+s09-080
+00:04:52.269 --> 00:04:54.468
+You don't need to be fluent in SQL.
+
+s09-081
+00:04:54.518 --> 00:04:58.191
+Describe the aggregate in plain
+English and let Claude write the query,
+
+s09-082
+00:04:58.241 --> 00:05:01.059
+but read the query before
+you trust the numbers.
+
+s09-083
+00:05:01.109 --> 00:05:04.777
+Instead of a folder of forty CSVs,
+you get one file, edgar_panel.duckdb,
+
+s09-084
+00:05:04.827 --> 00:05:10.110
+that a coauthor can open without
+asking you which version is current.
+
+s10-085
+00:05:10.860 --> 00:05:15.660
+Now the measurement question, and this is
+where your accounting training comes in.
+
+s10-086
+00:05:15.710 --> 00:05:20.494
+Say your keyword table shows a firm's
+Risk Factors section mentions tariff 14
+
+s10-087
+00:05:20.544 --> 00:05:23.167
+times this year, up from 6 last year.
+
+s10-088
+00:05:23.217 --> 00:05:25.740
+Is that rising trade-policy exposure?
+
+s10-089
+00:05:25.790 --> 00:05:28.716
+It could be, or it could be a
+law firm updating its template,
+
+s10-090
+00:05:28.766 --> 00:05:33.043
+with the old language copied
+forward and one paragraph added.
+
+s10-091
+00:05:33.093 --> 00:05:36.915
+A keyword count measures how often
+a word shows up in a document.
+
+s10-092
+00:05:36.965 --> 00:05:42.261
+Exposure to trade-policy risk is a construct
+about the firm's economic situation.
+
+s10-093
+00:05:42.311 --> 00:05:45.298
+The gap between those two
+is construct validity,
+
+s10-094
+00:05:45.348 --> 00:05:49.119
+and it's a common way for a disclosure
+measure to be wrong and still get through
+
+s10-095
+00:05:49.169 --> 00:05:49.850
+peer review.
+
+s11-096
+00:05:50.600 --> 00:05:55.694
+Boilerplate is the failure to watch for,
+because it's common and you can detect it.
+
+s11-097
+00:05:55.744 --> 00:06:00.331
+Filers reuse risk-factor language year
+over year far more than you'd expect,
+
+s11-098
+00:06:00.381 --> 00:06:04.384
+and a keyword count treats a copied
+paragraph the same as a rewritten one.
+
+s11-099
+00:06:04.434 --> 00:06:07.354
+So compute year-over-year
+similarity, Jaccard or cosine,
+
+s11-100
+00:06:07.404 --> 00:06:10.732
+between this year's
+section and last year's.
+
+s11-101
+00:06:10.782 --> 00:06:14.722
+High similarity with a rising count
+looks like boilerplate inflation.
+
+s11-102
+00:06:14.772 --> 00:06:18.815
+Low similarity with a rising count is
+closer to a real disclosure change,
+
+s11-103
+00:06:18.865 --> 00:06:20.205
+where the firm rewrote the section.
+
+s11-104
+00:06:20.255 --> 00:06:22.508
+These are diagnostics.
+
+s11-105
+00:06:22.558 --> 00:06:23.577
+They don't prove a measure is valid,
+
+s11-106
+00:06:23.627 --> 00:06:26.950
+and they don't replace the
+audit sample on the next slide.
+
+s12-107
+00:06:27.700 --> 00:06:33.037
+The check that settles it, and the one you
+can't delegate, is a human audit sample.
+
+s12-108
+00:06:33.087 --> 00:06:35.679
+A defensible protocol has three parts.
+
+s12-109
+00:06:35.729 --> 00:06:37.934
+First, stratify the sample.
+
+s12-110
+00:06:37.984 --> 00:06:41.263
+Pull filings with high, middle,
+and low values of the measure,
+
+s12-111
+00:06:41.313 --> 00:06:46.168
+across firm size and industry,
+so you're not only checking the easy cases.
+
+s12-112
+00:06:46.218 --> 00:06:49.931
+About fifty filings is a reasonable
+target for a working paper.
+
+s12-113
+00:06:49.981 --> 00:06:53.296
+Second, write the rubric
+before you start reading,
+
+s12-114
+00:06:53.346 --> 00:06:57.225
+what counts as real exposure language
+versus a boilerplate mention,
+
+s12-115
+00:06:57.275 --> 00:06:59.905
+and don't adjust it filing by filing.
+
+s12-116
+00:06:59.955 --> 00:07:04.485
+Third, if more than one person codes,
+report inter-rater agreement.
+
+s12-117
+00:07:04.535 --> 00:07:06.610
+If it's only you, say so plainly.
+
+s13-118
+00:07:07.360 --> 00:07:09.994
+So be clear on what the lab asks for.
+
+s13-119
+00:07:10.044 --> 00:07:12.248
+Fifty filings can't
+prove a measure is valid,
+
+s13-120
+00:07:12.298 --> 00:07:16.097
+and claiming they did would
+be its own validity failure.
+
+s13-121
+00:07:16.147 --> 00:07:20.065
+What you hand in is the protocol
+you'd run before trusting the measure:
+
+s13-122
+00:07:20.115 --> 00:07:25.378
+which fifty filings, stratified how,
+coded against what rubric, and by whom.
+
+s13-123
+00:07:25.428 --> 00:07:26.579
+Write that down in three sentences,
+
+s13-124
+00:07:26.629 --> 00:07:29.710
+before you've convinced
+yourself the number is fine.
+
+s14-125
+00:07:30.460 --> 00:07:32.378
+Now the second half.
+
+s14-126
+00:07:32.428 --> 00:07:34.484
+Look back at what the pipeline
+took: a front-loaded prompt,
+
+s14-127
+00:07:34.534 --> 00:07:39.845
+a fallback chain built from failures,
+caching, a quality report you read by hand,
+
+s14-128
+00:07:39.895 --> 00:07:41.083
+and a validity check.
+
+s14-129
+00:07:41.133 --> 00:07:42.762
+That's a standard operating procedure,
+
+s14-130
+00:07:42.812 --> 00:07:47.216
+and you'll want to run it again
+on a different topic or firm list,
+
+s14-131
+00:07:47.266 --> 00:07:50.562
+or when a referee asks for a revision.
+
+s14-132
+00:07:50.612 --> 00:07:54.174
+A skill is that procedure written down
+so a fresh session can run it without you
+
+s14-133
+00:07:54.224 --> 00:07:56.251
+explaining it again.
+
+s14-134
+00:07:56.301 --> 00:08:00.295
+People who build these describe
+the purpose as Show Other People:
+
+s14-135
+00:08:00.345 --> 00:08:04.547
+something you re-explain every session
+becomes something a coauthor can run.
+
+s14-136
+00:08:04.597 --> 00:08:08.090
+And the steps you just worked through
+are already the outline of the skill.
+
+s15-137
+00:08:08.840 --> 00:08:12.373
+A skill is a folder with
+a SKILL.md file in it.
+
+s15-138
+00:08:12.423 --> 00:08:15.897
+At the top is the frontmatter,
+a name and a description.
+
+s15-139
+00:08:15.947 --> 00:08:19.436
+Below that is the body, the procedure
+in numbered steps: resolve CIKs,
+
+s15-140
+00:08:19.486 --> 00:08:21.925
+fetch and cache, extract
+with the fallback chain,
+
+s15-141
+00:08:21.975 --> 00:08:28.326
+load into DuckDB and write the quality
+report, then produce the result table.
+
+s15-142
+00:08:28.376 --> 00:08:32.523
+The folder can also hold supporting
+files that the steps point to.
+
+s15-143
+00:08:32.573 --> 00:08:35.139
+Only the description
+loads in every session.
+
+s15-144
+00:08:35.189 --> 00:08:37.322
+The body loads when the skill runs.
+
+s15-145
+00:08:37.372 --> 00:08:38.694
+And skills respond to requests.
+
+s15-146
+00:08:38.744 --> 00:08:40.895
+They don't run on a schedule,
+
+s15-147
+00:08:40.945 --> 00:08:45.430
+so a job like a nightly data refresh
+needs a scheduled task or a hook instead.
+
+s16-148
+00:08:46.180 --> 00:08:49.899
+The description is the field that
+decides whether the skill ever runs.
+
+s16-149
+00:08:49.949 --> 00:08:54.096
+Here's the version a lot of people
+write first: EDGAR filing tool.
+
+s16-150
+00:08:54.146 --> 00:08:58.068
+It looks right, the YAML
+parses, and it never fires.
+
+s16-151
+00:08:58.118 --> 00:09:02.008
+The description is the trigger condition
+Claude matches against your request,
+
+s16-152
+00:09:02.058 --> 00:09:04.327
+and a title gives it nothing to match.
+
+s16-153
+00:09:04.377 --> 00:09:07.338
+Someone asks for risk factor
+counts for these tickers,
+
+s16-154
+00:09:07.388 --> 00:09:09.915
+and nothing in EDGAR filing
+tool connects to that.
+
+s16-155
+00:09:09.965 --> 00:09:12.969
+The right version says what
+a real request looks like:
+
+s16-156
+00:09:13.019 --> 00:09:17.972
+use when the user asks to scrape 10-K
+filings, build an EDGAR text dataset,
+
+s16-157
+00:09:18.022 --> 00:09:22.125
+or names tickers or CIKs along
+with a form type and a date range.
+
+s16-158
+00:09:22.175 --> 00:09:24.210
+The procedure underneath doesn't change.
+
+s17-159
+00:09:24.960 --> 00:09:27.830
+This is what a quality report
+looks like in a session.
+
+s17-160
+00:09:27.880 --> 00:09:30.973
+The panel is stylized,
+it's not a screenshot.
+
+s17-161
+00:09:31.023 --> 00:09:35.531
+Claude runs the report script:
+60 filings attempted, 56 fine, 4 failed.
+
+s17-162
+00:09:35.581 --> 00:09:38.702
+Then you ask why the 4 are missing,
+
+s17-163
+00:09:38.752 --> 00:09:42.767
+and Claude reads those cached filings
+and comes back with a diagnosis.
+
+s17-164
+00:09:42.817 --> 00:09:45.707
+Here, the heading sat inside
+a table-of-contents anchor,
+
+s17-165
+00:09:45.757 --> 00:09:49.164
+so the first-pass regex
+matched the wrong location.
+
+s17-166
+00:09:49.214 --> 00:09:52.430
+Read what the report flagged
+before you re-run anything.
+
+s18-167
+00:09:53.180 --> 00:09:57.334
+In the live session, the first act
+of the demo is the EDGAR pipeline,
+
+s18-168
+00:09:57.384 --> 00:09:59.279
+compressed into about twenty minutes.
+
+s18-169
+00:09:59.329 --> 00:10:01.991
+I type the vague prompt
+and the front-loaded one,
+
+s18-170
+00:10:02.041 --> 00:10:04.132
+and we count the rounds each one takes.
+
+s18-171
+00:10:04.182 --> 00:10:09.825
+Then Plan Mode the way you'll
+actually use it: write the full plan,
+
+s18-172
+00:10:09.875 --> 00:10:12.608
+save it to plan.md, clear the context,
+and execute from the file.
+
+s18-173
+00:10:12.658 --> 00:10:15.005
+We run the first two phases live,
+
+s18-174
+00:10:15.055 --> 00:10:18.453
+CIK resolution and the filing
+index for about eight firms.
+
+s18-175
+00:10:18.503 --> 00:10:22.756
+Then I walk you through a pre-run of
+the last two phases: the quality report,
+
+s18-176
+00:10:22.806 --> 00:10:24.084
+the regex fix,
+
+s18-177
+00:10:24.134 --> 00:10:28.410
+and the re-run that takes extraction
+from about 95 percent to about 99.
+
+s19-178
+00:10:29.160 --> 00:10:31.584
+The second act, about fifteen minutes,
+
+s19-179
+00:10:31.634 --> 00:10:34.742
+builds a skill live with
+the five-step workflow.
+
+s19-180
+00:10:34.792 --> 00:10:36.143
+Notice the repetition,
+
+s19-181
+00:10:36.193 --> 00:10:41.265
+meaning you're writing the same instructions
+into a new session for the third or
+
+s19-182
+00:10:41.315 --> 00:10:42.133
+fourth time.
+
+s19-183
+00:10:42.183 --> 00:10:47.235
+Name the inputs, which here are a CIK list,
+a form type, and a fiscal-year range.
+
+s19-184
+00:10:47.285 --> 00:10:52.226
+Design the outputs before writing anything:
+a DuckDB file, a metadata CSV,
+
+s19-185
+00:10:52.276 --> 00:10:54.352
+and a quality report.
+
+s19-186
+00:10:54.402 --> 00:10:58.217
+Have Claude draft the SKILL.md
+from a one-paragraph spec.
+
+s19-187
+00:10:58.267 --> 00:11:00.831
+Then test-fire it in a fresh session.
+
+s19-188
+00:11:00.881 --> 00:11:05.074
+And I make the title mistake on purpose,
+so you see the skill not fire,
+
+s19-189
+00:11:05.124 --> 00:11:08.310
+and then fire once the description
+is rewritten as a trigger.
+
+s20-190
+00:11:09.060 --> 00:11:12.467
+And here's what firing
+looks like, again stylized.
+
+s20-191
+00:11:12.517 --> 00:11:17.414
+It's a fresh session, and the request is
+just: scrape 10-Ks for these 12 tickers,
+
+s20-192
+00:11:17.464 --> 00:11:19.146
+risk factors, 2021 to 2023.
+
+s20-193
+00:11:19.196 --> 00:11:20.417
+Nobody names the skill.
+
+s20-194
+00:11:20.467 --> 00:11:25.921
+Claude matches the request to the
+edgar-panel description and uses it.
+
+s20-195
+00:11:25.971 --> 00:11:28.640
+It reads the ticker file,
+resolves the tickers to CIKs,
+
+s20-196
+00:11:28.690 --> 00:11:34.225
+and runs the pipeline script, which
+caches 36 filings with no network errors.
+
+s20-197
+00:11:34.275 --> 00:11:36.530
+You'll run the same test
+in Part C of the lab.
+
+s21-198
+00:11:37.280 --> 00:11:41.181
+The same idea works for reading papers,
+which you do even more often.
+
+s21-199
+00:11:41.231 --> 00:11:44.801
+The skill gives every paper the same
+notes, saved to a file: the question,
+
+s21-200
+00:11:44.851 --> 00:11:50.323
+the setting, the sample and the N after
+each filter, the identifying variation,
+
+s21-201
+00:11:50.373 --> 00:11:53.203
+the main result, and whether
+you could replicate it.
+
+s21-202
+00:11:53.253 --> 00:11:56.853
+A long PDF gets split into
+sections and read in order.
+
+s21-203
+00:11:56.903 --> 00:12:00.790
+Scott Cunningham's split-pdf skill,
+in MixtapeTools, does that,
+
+s21-204
+00:12:00.840 --> 00:12:05.495
+and Alessandro Spina's skills brownbag
+has an identification-first template.
+
+s21-205
+00:12:05.545 --> 00:12:07.840
+The skill cites a table and
+column for every number,
+
+s21-206
+00:12:07.890 --> 00:12:10.623
+and you check each one against the PDF.
+
+s21-207
+00:12:10.673 --> 00:12:14.428
+An N from an earlier filter, or a
+coefficient from the wrong column,
+
+s21-208
+00:12:14.478 --> 00:12:16.510
+reads just as fluently as the right one.
+
+s22-209
+00:12:17.260 --> 00:12:19.826
+The lab is eighty minutes in three parts.
+
+s22-210
+00:12:19.876 --> 00:12:22.824
+Part A, forty-five minutes,
+is the pipeline:
+
+s22-211
+00:12:22.874 --> 00:12:25.660
+about twenty firms over
+three years into DuckDB,
+
+s22-212
+00:12:25.710 --> 00:12:31.053
+with one keyword topic from the menu,
+tariffs, cyber, climate, or supply chain.
+
+s22-213
+00:12:31.103 --> 00:12:34.650
+Part B, fifteen minutes,
+is written, not coded.
+
+s22-214
+00:12:34.700 --> 00:12:38.686
+You classify one firm's year-over-year
+change as boilerplate or a real rewrite,
+
+s22-215
+00:12:38.736 --> 00:12:42.071
+and write a three-sentence audit protocol.
+
+s22-216
+00:12:42.121 --> 00:12:46.607
+Part C, twenty minutes: build
+edgar-panel as a project-level skill,
+
+s22-217
+00:12:46.657 --> 00:12:48.542
+test-fire it in a fresh session,
+
+s22-218
+00:12:48.592 --> 00:12:51.439
+and install a skill from
+the Barrios Skills catalog.
+
+s22-219
+00:12:51.489 --> 00:12:54.570
+If you finish early,
+the stretch is a paper-reader skill.
+
+s23-220
+00:12:55.320 --> 00:12:57.814
+Here's the checklist you
+grade yourself against.
+
+s23-221
+00:12:57.864 --> 00:13:01.422
+A re-run downloads none of the
+filings you already fetched.
+
+s23-222
+00:13:01.472 --> 00:13:05.903
+The quality report states the extraction
+rate, and you need at least 95 percent,
+
+s23-223
+00:13:05.953 --> 00:13:08.829
+with a one-line diagnosis
+for every failure.
+
+s23-224
+00:13:08.879 --> 00:13:12.496
+Named scripts listed in the
+README reproduce the result table.
+
+s23-225
+00:13:12.546 --> 00:13:15.332
+The validity paragraph and
+audit protocol are written,
+
+s23-226
+00:13:15.382 --> 00:13:17.526
+without claiming the measure is valid.
+
+s23-227
+00:13:17.576 --> 00:13:21.597
+The skill's description reads as a trigger,
+and it fires in a fresh session.
+
+s23-228
+00:13:21.647 --> 00:13:25.830
+And you can show the code line that respects
+the rate limit and sets the User-Agent.
+
+s24-229
+00:13:26.580 --> 00:13:28.282
+We close with a debrief.
+
+s24-230
+00:13:28.332 --> 00:13:30.138
+Where did your extraction rate land,
+
+s24-231
+00:13:30.188 --> 00:13:34.649
+and were the failures real edge cases
+or regex gaps a better fallback chain
+
+s24-232
+00:13:34.699 --> 00:13:35.731
+would have caught?
+
+s24-233
+00:13:35.781 --> 00:13:39.520
+I'll read two or three skill
+descriptions aloud, without names,
+
+s24-234
+00:13:39.570 --> 00:13:42.069
+and the room votes on
+whether each one would fire.
+
+s24-235
+00:13:42.119 --> 00:13:47.579
+For the bridge: your text panel is keyed
+by CIK, and fundamentals live in Compustat,
+
+s24-236
+00:13:47.629 --> 00:13:48.481
+keyed by gvkey.
+
+s24-237
+00:13:48.531 --> 00:13:53.292
+In Module 4 you use the crosswalk between
+them through an MCP server on your own
+
+s24-238
+00:13:53.342 --> 00:13:54.469
+WRDS account.
+
+s24-239
+00:13:54.519 --> 00:13:57.973
+The exit ticket is the standard
+three questions, plus one more:
+
+s24-240
+00:13:58.023 --> 00:13:59.771
+what would your second skill be?
+
+s24-241
+00:13:59.821 --> 00:14:00.930
+See you in the lab.

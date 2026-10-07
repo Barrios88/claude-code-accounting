@@ -3,10 +3,37 @@ title: "Module 3: EDGAR Text — Structured Data, and Your First Skill"
 ---
 
 ::: {.module-links}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (14 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 3 slides (PDF)](../assets/slides/day3_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day3.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab3_starter.zip)
 :::
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 3 walkthrough (14 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="../assets/video/module3_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="../assets/video/module3_edgar_text.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module3_edgar_text.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module3_edgar_text.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module3_edgar_text.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 29 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module3_edgar_text.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
 
 Accounting research meets AI most naturally in text. A 10-K's Risk Factors section, its MD&A, and its footnotes are disclosures an agent can fetch, parse, and count at a scale no RA could match by hand. They are also the raw material for measures like "tariff exposure" or "cyber risk disclosure" that show up three sections later in a paper's main table. That same combination makes this the most dangerous module of the course so far. A keyword count is not a construct. Getting from "the filing contains the word 'tariff' eleven times" to "this firm is meaningfully exposed to trade policy risk" is a measurement claim, and measurement claims are where accounting expertise matters most. No amount of agent capability substitutes for knowing what a disclosure measure is supposed to capture and where it can fail to capture it without anyone noticing.
 

@@ -3,10 +3,37 @@ title: "Module 4: WRDS MCP, Scale, and the Stata Bridge"
 ---
 
 ::: {.module-links}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (14 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 4 slides (PDF)](../assets/slides/day4_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day4.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab4_starter.zip)
 :::
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 4 walkthrough (14 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="../assets/video/module4_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="../assets/video/module4_wrds_mcp.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module4_wrds_mcp.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module4_wrds_mcp.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module4_wrds_mcp.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 32 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module4_wrds_mcp.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
 
 Module 3 ended with the filing text parsed and each firm identified by its CIK. The next step is to attach fundamentals (leverage, profitability, size) to every firm-year in the panel. Those fundamentals live in Compustat and CRSP, and unlike EDGAR text they are not available as a public bulk file. Three barriers stand in the way: authentication (a licensed WRDS account behind MFA), licensing (a subscription your institution pays for, which you may not redistribute), and scale (Compustat's full annual file has hundreds of variables and decades of history, far more than you can read into a chat window). A plain chat tool cannot get past any of the three. This module's stack handles all three in order, and you will watch it work on a real account with real data.
 

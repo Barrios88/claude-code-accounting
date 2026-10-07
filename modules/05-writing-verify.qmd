@@ -3,10 +3,37 @@ title: "Module 5: Writing, Safety, and the Verification Capstone"
 ---
 
 ::: {.module-links}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (19 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 5 slides (PDF)](../assets/slides/day5_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day5.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab5_starter.zip)
 :::
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 5 walkthrough (19 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="../assets/video/module5_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="../assets/video/module5_writing_verify.mp4" type="video/mp4">
+      <track kind="captions" src="../assets/video/module5_writing_verify.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="../assets/video/module5_writing_verify.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="../assets/video/module5_writing_verify.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 43 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="../assets/video/module5_writing_verify.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
 
 Every module in this course has ended with an artifact, such as a script, a figure, a SKILL.md or a Stata extract, that Claude Code helped you build faster than you would have built it alone. This module is about two things that decide whether that speed was worth having. The first is whether the words around those artifacts are actually yours. The second is whether a coauthor, a referee or you a year from now could pick up the repo and trust it without redoing the work. The morning is about the writer: where delegating to an agent sharpens your thinking, and where it replaces it without your noticing. The afternoon is about the record: the sandboxes, credential habits, paper trails and git discipline that make a fast pipeline one you can defend. The capstone lab asks you to take a pipeline you built earlier in this course and make it hold up under both kinds of scrutiny at once.
 
