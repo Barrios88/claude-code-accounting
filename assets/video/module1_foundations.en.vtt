@@ -1,0 +1,1061 @@
+WEBVTT
+Kind: captions
+Language: en
+
+NOTE Module 1: Foundations narrated walkthrough. Generated from the
+narration script and per-segment audio durations (0.7 s gap per slide).
+
+s01-001
+00:00:00.000 --> 00:00:02.493
+Welcome to Claude Code
+for Accounting Research.
+
+s01-002
+00:00:02.543 --> 00:00:06.285
+I'm John Barrios, and this is Module 1,
+Foundations: tools, context,
+
+s01-003
+00:00:06.335 --> 00:00:07.893
+and the research map.
+
+s01-004
+00:00:07.943 --> 00:00:10.521
+So today we're going to
+get the tool working,
+
+s01-005
+00:00:10.571 --> 00:00:15.310
+and then build the habits that make it
+something you can trust with research work.
+
+s02-006
+00:00:16.060 --> 00:00:18.297
+So here's how the live session runs.
+
+s02-007
+00:00:18.347 --> 00:00:22.907
+We start with about forty minutes of
+lecture on tools, context, verification,
+
+s02-008
+00:00:22.957 --> 00:00:24.460
+and the research map.
+
+s02-009
+00:00:24.510 --> 00:00:29.072
+Then a thirty-five minute live demo,
+where I take one task from start to finish.
+
+s02-010
+00:00:29.122 --> 00:00:30.871
+A ten-minute break.
+
+s02-011
+00:00:30.921 --> 00:00:34.109
+Then eighty minutes of lab, where you
+install Claude Code, write a CLAUDE.md file,
+
+s02-012
+00:00:34.159 --> 00:00:37.967
+and run one verified task.
+
+s02-013
+00:00:38.017 --> 00:00:40.882
+And we close with a
+debrief and an exit ticket.
+
+s02-014
+00:00:40.932 --> 00:00:42.377
+This video walks through
+the lecture slides,
+
+s02-015
+00:00:42.427 --> 00:00:46.650
+so you get a preview of the demo and
+the lab here, not the full thing.
+
+s03-016
+00:00:47.400 --> 00:00:49.208
+You've probably heard this one...
+
+s03-017
+00:00:49.258 --> 00:00:51.163
+or maybe you've said it.
+
+s03-018
+00:00:51.213 --> 00:00:55.452
+You ask a chat tool to open a Compustat
+file on your desktop and plot median
+
+s03-019
+00:00:55.502 --> 00:00:59.542
+return on assets by industry, and it
+tells you it can't see your files.
+
+s03-020
+00:00:59.592 --> 00:01:01.891
+And that's true, it can't.
+
+s03-021
+00:01:01.941 --> 00:01:03.295
+Now look at the right side.
+
+s03-022
+00:01:03.345 --> 00:01:05.363
+Same request in Claude Code.
+
+s03-023
+00:01:05.413 --> 00:01:07.496
+It reads the file,
+writes a script, runs it,
+
+s03-024
+00:01:07.546 --> 00:01:11.256
+and hands back one number
+for you to check by hand.
+
+s03-025
+00:01:11.306 --> 00:01:14.368
+Both panels are stylized,
+they're not screenshots.
+
+s03-026
+00:01:14.418 --> 00:01:17.732
+So when people say AI can't
+do real research work,
+
+s03-027
+00:01:17.782 --> 00:01:21.388
+a lot of times what they mean is
+the tool they tried can't do it.
+
+s03-028
+00:01:21.438 --> 00:01:24.630
+Different tools can do different
+things, and that's the next slide.
+
+s04-029
+00:01:25.380 --> 00:01:28.321
+So think of this as a
+ladder with five rungs.
+
+s04-030
+00:01:28.371 --> 00:01:30.079
+At the bottom is chat.
+
+s04-031
+00:01:30.129 --> 00:01:35.208
+That's fine for a definition or a syntax
+question, but it can't work with real data.
+
+s04-032
+00:01:35.258 --> 00:01:39.700
+Next is an inline assistant in your
+editor that autocompletes, say,
+
+s04-033
+00:01:39.750 --> 00:01:40.673
+a regression script.
+
+s04-034
+00:01:40.723 --> 00:01:45.716
+Then an agentic IDE, which can make
+a chain of edits across a few files.
+
+s04-035
+00:01:45.766 --> 00:01:47.776
+Claude Code is on rung four.
+
+s04-036
+00:01:47.826 --> 00:01:52.108
+It works in your terminal, reads your
+files, and runs your code end to end.
+
+s04-037
+00:01:52.158 --> 00:01:57.296
+Rung five connects the agent to outside
+services, like querying WRDS directly,
+
+s04-038
+00:01:57.346 --> 00:01:59.289
+and we do that in Module 4.
+
+s04-039
+00:01:59.339 --> 00:02:02.770
+And Cowork, by default,
+sits at or below rung two.
+
+s05-040
+00:02:03.520 --> 00:02:05.062
+Here's a common failure.
+
+s05-041
+00:02:05.112 --> 00:02:08.633
+You tried a browser assistant,
+it couldn't open your data file,
+
+s05-042
+00:02:08.683 --> 00:02:11.619
+and you concluded AI
+can't help with research.
+
+s05-043
+00:02:11.669 --> 00:02:13.915
+That's a reasonable
+experience to have had,
+
+s05-044
+00:02:13.965 --> 00:02:17.385
+and a lot of students come into
+this course after exactly that.
+
+s05-045
+00:02:17.435 --> 00:02:19.702
+But the tool was doing
+what it was built to do,
+
+s05-046
+00:02:19.752 --> 00:02:22.032
+and it wasn't built to
+touch your filesystem.
+
+s05-047
+00:02:22.082 --> 00:02:24.848
+So ask which rung the task needs.
+
+s05-048
+00:02:24.898 --> 00:02:29.034
+If it has to touch real files,
+run real code, and iterate on its own,
+
+s05-049
+00:02:29.084 --> 00:02:30.830
+you need rung four or above.
+
+s06-050
+00:02:31.580 --> 00:02:34.477
+This is what one
+Claude Code turn looks like.
+
+s06-051
+00:02:34.527 --> 00:02:36.393
+Number one is your prompt.
+
+s06-052
+00:02:36.443 --> 00:02:40.861
+Number two is the tool calls,
+so that's the agent acting on your machine:
+
+s06-053
+00:02:40.911 --> 00:02:43.897
+it reads the file,
+writes the script, runs it.
+
+s06-054
+00:02:43.947 --> 00:02:47.135
+Number three is what it saw,
+and you can read all of it.
+
+s06-055
+00:02:47.185 --> 00:02:51.269
+Four is the handback, ideally
+with one number for you to verify.
+
+s06-056
+00:02:51.319 --> 00:02:53.122
+And five tells you where you are:
+which folder, which model,
+
+s06-057
+00:02:53.172 --> 00:02:56.625
+and how much context you've used.
+
+s06-058
+00:02:56.675 --> 00:02:59.879
+So think of it as a research
+assistant sitting at your terminal.
+
+s06-059
+00:02:59.929 --> 00:03:04.810
+It uses your own R, Python, or Stata,
+and you manage it the way you'd manage an RA.
+
+s07-060
+00:03:05.560 --> 00:03:07.127
+A related failure.
+
+s07-061
+00:03:07.177 --> 00:03:11.217
+Because it feels conversational,
+people assume it comes with its own Python,
+
+s07-062
+00:03:11.267 --> 00:03:14.047
+the way a cloud notebook does. It doesn't.
+
+s07-063
+00:03:14.097 --> 00:03:19.544
+It has no Python or R of its own, so it
+uses whatever's installed on your machine.
+
+s07-064
+00:03:19.594 --> 00:03:22.531
+If a script it writes fails
+with command not found,
+
+s07-065
+00:03:22.581 --> 00:03:25.297
+check your environment
+before you blame the agent.
+
+s07-066
+00:03:25.347 --> 00:03:27.246
+Windows is usually where this shows up,
+
+s07-067
+00:03:27.296 --> 00:03:31.374
+because a native Python install and
+one inside WSL can be different,
+
+s07-068
+00:03:31.424 --> 00:03:32.710
+and nothing warns you.
+
+s08-069
+00:03:33.460 --> 00:03:36.022
+Now, how the context window works.
+
+s08-070
+00:03:36.072 --> 00:03:39.320
+Claude Code doesn't remember
+your project between turns.
+
+s08-071
+00:03:39.370 --> 00:03:40.736
+Every time you send a message,
+
+s08-072
+00:03:40.786 --> 00:03:45.682
+the whole conversation gets sent again as
+one package: every prompt, every reply,
+
+s08-073
+00:03:45.732 --> 00:03:47.885
+every file it read in.
+
+s08-074
+00:03:47.935 --> 00:03:50.138
+The standard window is two
+hundred thousand tokens,
+
+s08-075
+00:03:50.188 --> 00:03:52.801
+and some models go up to a million.
+
+s08-076
+00:03:52.851 --> 00:03:54.388
+That sounds like a lot, right?
+
+s08-077
+00:03:54.438 --> 00:03:58.991
+But one large CSV read straight into the
+conversation can use a sizable share of
+
+s08-078
+00:03:59.041 --> 00:04:00.473
+it in one turn.
+
+s08-079
+00:04:00.523 --> 00:04:04.515
+So don't have it read a giant
+Compustat extract just to look at it.
+
+s08-080
+00:04:04.565 --> 00:04:08.864
+Ask for a script that processes the
+file on disk and reports back a summary.
+
+s08-081
+00:04:08.914 --> 00:04:12.850
+And you can type /context at any
+point to see how full the window is.
+
+s09-082
+00:04:13.600 --> 00:04:16.193
+This next one is hard to unlearn.
+
+s09-083
+00:04:16.243 --> 00:04:19.183
+People treat a session like a
+shared drive or an email thread,
+
+s09-084
+00:04:19.233 --> 00:04:22.842
+where last week's work is still
+there because it's in the account.
+
+s09-085
+00:04:22.892 --> 00:04:24.955
+A session doesn't work that way.
+
+s09-086
+00:04:25.005 --> 00:04:29.501
+Nothing carries over from one session
+to the next unless it was written to a
+
+s09-087
+00:04:29.551 --> 00:04:31.285
+file a future session can read.
+
+s09-088
+00:04:31.335 --> 00:04:34.265
+That's the main change in how
+you think about this tool.
+
+s09-089
+00:04:34.315 --> 00:04:37.577
+CLAUDE.md, progress files,
+named scripts...
+
+s09-090
+00:04:37.627 --> 00:04:40.590
+they're all there because
+sessions don't keep any memory.
+
+s10-091
+00:04:41.340 --> 00:04:44.100
+As a session runs long, two things happen.
+
+s10-092
+00:04:44.150 --> 00:04:48.271
+The window fills up, and quality
+can drop well before it's full,
+
+s10-093
+00:04:48.321 --> 00:04:51.968
+because all the trial and error and
+dead ends get re-sent every turn,
+
+s10-094
+00:04:52.018 --> 00:04:57.188
+and that noise makes the
+model reason less carefully.
+
+s10-095
+00:04:57.238 --> 00:04:58.019
+So you compact on purpose.
+
+s10-096
+00:04:58.069 --> 00:05:02.498
+First, ask Claude to write a short
+progress.md: what's been decided,
+
+s10-097
+00:05:02.548 --> 00:05:04.331
+which files exist, what's left.
+
+s10-098
+00:05:04.381 --> 00:05:09.060
+Then run /compact, which condenses
+the history into a short summary.
+
+s10-099
+00:05:09.110 --> 00:05:13.200
+For a clean start, open a fresh
+session and have it read that file.
+
+s10-100
+00:05:13.250 --> 00:05:15.978
+And keep CLAUDE.md itself short.
+
+s10-101
+00:05:16.028 --> 00:05:19.055
+Anthropic's guidance is under
+about two hundred lines.
+
+s10-102
+00:05:19.105 --> 00:05:23.311
+Facts go in CLAUDE.md,
+and step-by-step procedures go in skills,
+
+s10-103
+00:05:23.361 --> 00:05:25.150
+which you'll see in Module 3.
+
+s10-104
+00:05:25.200 --> 00:05:29.370
+That's mantra one on the slide:
+files persist, context doesn't.
+
+s11-105
+00:05:30.120 --> 00:05:35.062
+Compaction replaces a long, noisy transcript
+with a short summary of what mattered,
+
+s11-106
+00:05:35.112 --> 00:05:38.754
+the way you'd hand a project to a
+colleague with a two-paragraph memo.
+
+s11-107
+00:05:38.804 --> 00:05:40.840
+People get this wrong in two ways.
+
+s11-108
+00:05:40.890 --> 00:05:45.164
+Some avoid /compact because
+they're afraid of losing progress.
+
+s11-109
+00:05:45.214 --> 00:05:49.357
+Others trust it without writing the
+important decisions to a file first.
+
+s11-110
+00:05:49.407 --> 00:05:54.044
+If something specific has to survive,
+tell Claude to keep it when it compacts.
+
+s11-111
+00:05:54.094 --> 00:05:56.950
+And put those decisions in
+a file before you run it.
+
+s12-112
+00:05:57.700 --> 00:06:00.233
+If Claude Code is an RA at your terminal,
+
+s12-113
+00:06:00.283 --> 00:06:03.265
+you treat its work the way
+you'd treat a real RA's work.
+
+s12-114
+00:06:03.315 --> 00:06:06.651
+You delegate, and you check the
+result before you build on it.
+
+s12-115
+00:06:06.701 --> 00:06:10.320
+So say it builds a leverage
+panel from a Compustat extract.
+
+s12-116
+00:06:10.370 --> 00:06:12.442
+Don't take the whole panel on faith.
+
+s12-117
+00:06:12.492 --> 00:06:14.095
+Pick one firm you know well,
+
+s12-118
+00:06:14.145 --> 00:06:18.716
+and check by hand that its leverage matches
+the balance sheet in that year's 10-K.
+
+s12-119
+00:06:18.766 --> 00:06:21.632
+If that holds, you've got grounds
+to trust the rest. If it doesn't,
+
+s12-120
+00:06:21.682 --> 00:06:26.605
+you caught a construction error before
+it went into every table downstream.
+
+s12-121
+00:06:26.655 --> 00:06:30.850
+That check is on you, because only you
+can decide whether the number looks right.
+
+s13-122
+00:06:31.600 --> 00:06:35.115
+Vague prompts usually don't
+throw an obvious error.
+
+s13-123
+00:06:35.165 --> 00:06:39.363
+What you get back looks plausible,
+but it isn't quite what you meant,
+
+s13-124
+00:06:39.413 --> 00:06:41.840
+and that gap grows over a session.
+
+s13-125
+00:06:41.890 --> 00:06:44.622
+So in every prompt you name four things.
+
+s13-126
+00:06:44.672 --> 00:06:46.326
+The file you're operating on.
+
+s13-127
+00:06:46.376 --> 00:06:49.314
+The operation, meaning the
+transformation you want.
+
+s13-128
+00:06:49.364 --> 00:06:52.390
+The aggregation, the level
+the result should live at.
+
+s13-129
+00:06:52.440 --> 00:06:56.681
+And the output, by name and
+format, decided before it runs.
+
+s13-130
+00:06:56.731 --> 00:06:58.510
+The next slide shows what that looks like.
+
+s14-131
+00:06:59.260 --> 00:07:01.735
+Here's the same request written two ways.
+
+s14-132
+00:07:01.785 --> 00:07:06.483
+The vague one: look at this Compustat
+file and tell me something about leverage.
+
+s14-133
+00:07:06.533 --> 00:07:08.040
+Now the specific one.
+
+s14-134
+00:07:08.090 --> 00:07:09.398
+It names the file.
+
+s14-135
+00:07:09.448 --> 00:07:13.504
+It defines book leverage as long-term
+debt divided by total assets,
+
+s14-136
+00:07:13.554 --> 00:07:15.594
+for each gvkey and fiscal year,
+
+s14-137
+00:07:15.644 --> 00:07:18.693
+winsorized at the first and
+ninety-ninth percentiles.
+
+s14-138
+00:07:18.743 --> 00:07:22.691
+It sets the level, the mean by
+fiscal year and two-digit SIC.
+
+s14-139
+00:07:22.741 --> 00:07:27.647
+And it names both outputs before
+anything runs, a CSV and a figure.
+
+s14-140
+00:07:27.697 --> 00:07:31.942
+Naming the output is what turns a one-off
+answer into a script you can rerun,
+
+s14-141
+00:07:31.992 --> 00:07:34.410
+and the Module 2 lab
+depends on that habit.
+
+s15-142
+00:07:35.160 --> 00:07:39.318
+The failure here is describing
+the goal instead of the task.
+
+s15-143
+00:07:39.368 --> 00:07:42.253
+Something like, analyze this
+and tell me what's interesting.
+
+s15-144
+00:07:42.303 --> 00:07:43.503
+It sounds thoughtful,
+
+s15-145
+00:07:43.553 --> 00:07:47.967
+but it hands the agent every decision
+you should be making yourself:
+
+s15-146
+00:07:48.017 --> 00:07:51.631
+which variables matter, at what
+level, and how to report them.
+
+s15-147
+00:07:51.681 --> 00:07:55.408
+So before you hit enter, go through
+the prompt and check for the file,
+
+s15-148
+00:07:55.458 --> 00:07:58.367
+the operation, the aggregation,
+and the output.
+
+s15-149
+00:07:58.417 --> 00:08:00.230
+If one of them is missing, add it.
+
+s16-150
+00:08:00.980 --> 00:08:05.591
+So let's put this inside an actual research
+project: idea, data, measure, analysis,
+
+s16-151
+00:08:05.641 --> 00:08:07.266
+paper.
+
+s16-152
+00:08:07.316 --> 00:08:09.569
+The filled boxes are where
+an agent speeds you up.
+
+s16-153
+00:08:09.619 --> 00:08:11.107
+Brainstorming framings
+and a quick lit scan.
+
+s16-154
+00:08:11.157 --> 00:08:14.915
+Downloading, cleaning, and joining panels.
+
+s16-155
+00:08:14.965 --> 00:08:16.291
+Drafting extraction pipelines.
+
+s16-156
+00:08:16.341 --> 00:08:18.458
+Running specifications
+and building figures.
+
+s16-157
+00:08:18.508 --> 00:08:21.053
+Drafting prose and formatting tables.
+
+s16-158
+00:08:21.103 --> 00:08:25.811
+The outlined boxes stay with you:
+picking the question that matters,
+
+s16-159
+00:08:25.861 --> 00:08:27.473
+judging how the sample is constructed,
+
+s16-160
+00:08:27.523 --> 00:08:32.212
+certifying that a measure
+captures the construct,
+
+s16-161
+00:08:32.262 --> 00:08:36.766
+interpreting results and choosing the
+identification, and owning the claims.
+
+s16-162
+00:08:36.816 --> 00:08:41.330
+We come back to this map in Module 6,
+after you've run the whole pipeline yourself.
+
+s17-163
+00:08:42.080 --> 00:08:47.784
+So, three mantras from this module,
+and you'll use them for the rest of the course.
+
+s17-164
+00:08:47.834 --> 00:08:50.231
+One, files persist and context doesn't,
+
+s17-165
+00:08:50.281 --> 00:08:54.590
+so anything that has to outlast
+the session goes in a file.
+
+s17-166
+00:08:54.640 --> 00:08:56.204
+Two, trust but verify, same as an RA.
+
+s17-167
+00:08:56.254 --> 00:09:01.736
+Delegate, but check at least one
+result yourself before you sign off.
+
+s17-168
+00:09:01.786 --> 00:09:06.757
+Three, be specific: file, operation,
+aggregation, and output, in every prompt.
+
+s17-169
+00:09:06.807 --> 00:09:09.738
+These go on your
+verification protocol card,
+
+s17-170
+00:09:09.788 --> 00:09:13.870
+and Module 6 comes back to a
+harder version of this question.
+
+s18-171
+00:09:14.620 --> 00:09:17.999
+In the live session, the next
+thirty-five minutes are a demo.
+
+s18-172
+00:09:18.049 --> 00:09:23.197
+I take one task from start to finish in
+a fresh, empty folder called demo one.
+
+s18-173
+00:09:23.247 --> 00:09:26.072
+I launch Claude Code,
+go through the permission modes,
+
+s18-174
+00:09:26.122 --> 00:09:31.206
+and type a goal-first prompt that uses
+the SEC's Financial Statement Data Sets.
+
+s18-175
+00:09:31.256 --> 00:09:32.946
+Then we watch the loop.
+
+s18-176
+00:09:32.996 --> 00:09:36.621
+When it starts going the wrong way,
+I press Escape and restate what I want,
+
+s18-177
+00:09:36.671 --> 00:09:39.396
+instead of typing
+corrections on top of it.
+
+s18-178
+00:09:39.446 --> 00:09:43.585
+You want to correct within two turns
+of noticing the problem, not ten.
+
+s18-179
+00:09:43.635 --> 00:09:47.179
+Then a quick look at Plan
+Mode, we write a CLAUDE.md,
+
+s18-180
+00:09:47.229 --> 00:09:50.090
+and we check the count against
+a source Claude didn't touch.
+
+s19-181
+00:09:50.840 --> 00:09:54.331
+When Claude Code wants to run something,
+like this download script,
+
+s19-182
+00:09:54.381 --> 00:09:55.689
+it can ask you first.
+
+s19-183
+00:09:55.739 --> 00:10:01.542
+You can say yes once, yes and don't ask
+again for that kind of command this session,
+
+s19-184
+00:10:01.592 --> 00:10:03.290
+or no, and tell it what to do instead.
+
+s19-185
+00:10:03.340 --> 00:10:04.739
+That's Manual mode.
+
+s19-186
+00:10:04.789 --> 00:10:08.687
+It asks before every file edit,
+command, or network call.
+
+s19-187
+00:10:08.737 --> 00:10:12.126
+Auto hands that review to a
+second model, a classifier,
+
+s19-188
+00:10:12.176 --> 00:10:15.521
+which lets routine actions
+through and blocks risky ones.
+
+s19-189
+00:10:15.571 --> 00:10:18.953
+New sessions start in Auto,
+and Shift Tab changes it.
+
+s19-190
+00:10:19.003 --> 00:10:21.893
+Manual is the safer
+choice while trust is new.
+
+s19-191
+00:10:21.943 --> 00:10:25.823
+But if you're approving the same kind
+of action ten or twenty times in a row,
+
+s19-192
+00:10:25.873 --> 00:10:27.471
+you stop reading the prompts.
+
+s19-193
+00:10:27.521 --> 00:10:31.510
+So we use Auto together with
+git, and git is Module 5.
+
+s20-194
+00:10:32.260 --> 00:10:36.923
+For anything bigger than a single script,
+ask it to plan before it builds.
+
+s20-195
+00:10:36.973 --> 00:10:40.402
+Shift Tab cycles from Manual
+to accept edits to Plan Mode,
+
+s20-196
+00:10:40.452 --> 00:10:43.235
+and the status bar tells
+you which one you're in.
+
+s20-197
+00:10:43.285 --> 00:10:48.401
+In this example the request is a panel of
+10-K filing counts by industry and year,
+
+s20-198
+00:10:48.451 --> 00:10:50.602
+from the SEC's quarterly files.
+
+s20-199
+00:10:50.652 --> 00:10:54.553
+Claude reads, checks its assumptions,
+and proposes numbered steps,
+
+s20-200
+00:10:54.603 --> 00:10:56.679
+with a verification step at the end.
+
+s20-201
+00:10:56.729 --> 00:10:59.095
+Nothing runs until you approve it.
+
+s20-202
+00:10:59.145 --> 00:11:02.508
+Let the plan finish before you
+decide whether to act on it.
+
+s20-203
+00:11:02.558 --> 00:11:07.090
+Module 3 runs the full cycle of planning,
+building, and clearing context.
+
+s21-204
+00:11:07.840 --> 00:11:11.003
+Then the lab, eighty
+minutes in three parts.
+
+s21-205
+00:11:11.053 --> 00:11:13.912
+Part A is twenty-five
+minutes on your environment,
+
+s21-206
+00:11:13.962 --> 00:11:19.160
+so Claude Code launches from a fresh terminal
+inside an empty folder called lab one.
+
+s21-207
+00:11:19.210 --> 00:11:23.746
+Part B, fifteen minutes: write your
+CLAUDE.md, restart the session,
+
+s21-208
+00:11:23.796 --> 00:11:25.394
+and confirm it loaded.
+
+s21-209
+00:11:25.444 --> 00:11:29.998
+Part C, forty minutes: one task on
+public SEC data, at the base, standard,
+
+s21-210
+00:11:30.048 --> 00:11:31.040
+or stretch tier.
+
+s21-211
+00:11:31.090 --> 00:11:34.883
+Whichever tier you pick,
+the deliverable is a named script,
+
+s21-212
+00:11:34.933 --> 00:11:37.427
+not an answer in the chat.
+
+s21-213
+00:11:37.477 --> 00:11:41.070
+And you check one output number
+against a source Claude didn't touch.
+
+s22-214
+00:11:41.820 --> 00:11:43.523
+We close with a debrief.
+
+s22-215
+00:11:43.573 --> 00:11:44.722
+What broke for you?
+
+s22-216
+00:11:44.772 --> 00:11:47.628
+Did you press Escape,
+or did you argue with it?
+
+s22-217
+00:11:47.678 --> 00:11:50.280
+Whose prompt turned out
+vaguer than they thought?
+
+s22-218
+00:11:50.330 --> 00:11:54.367
+Then the exit ticket: one thing
+that clicked, one thing that broke,
+
+s22-219
+00:11:54.417 --> 00:11:57.084
+and one thing you'd want
+to verify next time.
+
+s22-220
+00:11:57.134 --> 00:11:58.856
+And one piece of homework.
+
+s22-221
+00:11:58.906 --> 00:12:02.880
+Confirm your WRDS account
+and your Duo enrollment,
+
+s22-222
+00:12:02.930 --> 00:12:06.186
+and test ssh wrds before Module 2.
+
+s22-223
+00:12:06.236 --> 00:12:07.915
+The Module 4 lab depends
+on that connection,
+
+s22-224
+00:12:07.965 --> 00:12:11.651
+so give yourself at least two
+days to sort out problems.
+
+s22-225
+00:12:11.701 --> 00:12:14.147
+The night before Module 4 is too late.
+
+s22-226
+00:12:14.197 --> 00:12:15.210
+See you in the lab.
