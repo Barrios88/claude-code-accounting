@@ -150,561 +150,617 @@ Block 1 opens with two volunteers
 defending their placement.
 
 s04-032
-00:01:40.180 --> 00:01:42.187
+00:01:40.180 --> 00:01:42.090
 A paper is an artifact.
 
 s04-033
-00:01:42.237 --> 00:01:45.719
+00:01:42.140 --> 00:01:45.622
 Once it exists, it's
 transferable and cheap to copy.
 
 s04-034
-00:01:45.769 --> 00:01:50.267
+00:01:45.672 --> 00:01:50.157
 Your understanding is capital,
 and you only build it by doing the work.
 
 s04-035
-00:01:50.317 --> 00:01:52.906
+00:01:50.207 --> 00:01:52.541
 For most of the profession's
 history the two came bundled,
 
 s04-036
-00:01:52.956 --> 00:01:56.137
+00:01:52.591 --> 00:01:56.030
 so the paper was good
 evidence about the researcher.
 
 s04-037
-00:01:56.187 --> 00:01:58.626
+00:01:56.080 --> 00:01:57.287
 Agentic AI unbundles them.
 
 s04-038
-00:01:58.676 --> 00:02:00.912
-And the evidence isn't reassuring.
+00:01:57.337 --> 00:02:01.474
+The evidence on what that
+does to learning is mixed.
 
 s04-039
-00:02:00.962 --> 00:02:03.614
+00:02:01.524 --> 00:02:04.040
 Bastani and coauthors gave
 high-school math students GPT-4.
 
 s04-040
-00:02:03.664 --> 00:02:06.370
+00:02:04.090 --> 00:02:06.717
 Practice grades went
 up forty-eight percent.
 
 s04-041
-00:02:06.420 --> 00:02:07.670
+00:02:06.767 --> 00:02:07.843
 Then they took it away,
 
 s04-042
-00:02:07.720 --> 00:02:12.883
+00:02:07.893 --> 00:02:13.450
 and those students scored seventeen percent
 worse than students who never had it.
 
 s04-043
-00:02:12.933 --> 00:02:14.959
-That's novices.
+00:02:13.500 --> 00:02:17.364
+A version built as a tutor, with
+safeguards, largely removed that harm.
 
 s04-044
-00:02:15.009 --> 00:02:18.291
+00:02:17.414 --> 00:02:19.170
+That's novices.
+
+s04-045
+00:02:19.220 --> 00:02:22.594
 Budzyń and coauthors looked
 at experienced endoscopists.
 
-s04-045
-00:02:18.341 --> 00:02:20.179
+s04-046
+00:02:22.644 --> 00:02:24.522
 After their clinics brought in AI,
 
-s04-046
-00:02:20.229 --> 00:02:24.469
+s04-047
+00:02:24.572 --> 00:02:28.620
 the doctors' detection rate on colonoscopies
 done without the AI fell from about
 
-s04-047
-00:02:24.519 --> 00:02:26.973
+s04-048
+00:02:28.670 --> 00:02:31.280
 twenty-eight percent to about twenty-two.
 
-s04-048
-00:02:27.023 --> 00:02:29.990
+s04-049
+00:02:31.330 --> 00:02:34.421
+That's a before-and-after
+comparison with no control group,
+
+s04-050
+00:02:34.471 --> 00:02:36.725
+so the design is worth arguing about.
+
+s04-051
+00:02:36.775 --> 00:02:39.753
 The personal audit is
 the test from Module 5:
 
-s04-049
-00:02:30.040 --> 00:02:32.610
+s04-052
+00:02:39.803 --> 00:02:42.370
 can you discuss the
 finding without the LLM?
 
-s05-050
-00:02:33.360 --> 00:02:37.062
+s05-053
+00:02:43.120 --> 00:02:46.869
 Block 2 is about provenance:
 who or what produced a result,
 
-s05-051
-00:02:37.112 --> 00:02:39.523
+s05-054
+00:02:46.919 --> 00:02:49.406
 and who's accountable for it.
 
-s05-052
-00:02:39.573 --> 00:02:42.721
-The quote on the slide is from
-a 1979 IBM training manual...
-
-s05-053
-00:02:42.771 --> 00:02:45.328
-a computer can never be held accountable.
-
-s05-054
-00:02:45.378 --> 00:02:46.949
-In 2023, Nature's editors set two rules,
-
 s05-055
-00:02:46.999 --> 00:02:52.577
-and the economics and accounting
-journals have since adopted the same two.
+00:02:49.456 --> 00:02:53.966
+The quote on the slide is attributed
+to a 1979 IBM training slide,
 
 s05-056
-00:02:52.627 --> 00:02:55.438
+00:02:54.016 --> 00:02:56.644
+though the original
+has never been found...
+
+s05-057
+00:02:56.694 --> 00:02:58.396
+a computer can never be held accountable.
+
+s05-058
+00:02:58.446 --> 00:03:00.972
+In 2023, Nature's editors set two rules,
+
+s05-059
+00:03:01.022 --> 00:03:06.059
+and the AEA and the American Accounting
+Association have since adopted versions
+
+s05-060
+00:03:06.109 --> 00:03:07.090
+of the same two.
+
+s05-061
+00:03:07.140 --> 00:03:09.987
 No language model gets
 credited as an author,
 
-s05-057
-00:02:55.488 --> 00:03:00.622
+s05-062
+00:03:10.037 --> 00:03:15.272
 because authorship carries
 accountability a model can't take on.
 
-s05-058
-00:03:00.672 --> 00:03:02.496
+s05-063
+00:03:15.322 --> 00:03:17.135
 And any use of these
 tools has to be disclosed.
 
-s05-059
-00:03:02.546 --> 00:03:07.815
+s05-064
+00:03:17.185 --> 00:03:22.679
 The second rule is where the profession
 is putting its practical effort now:
 
-s05-060
-00:03:07.865 --> 00:03:11.371
+s05-065
+00:03:22.729 --> 00:03:26.282
 disclosure policies, audit
 trails, and verification.
 
-s05-061
-00:03:11.421 --> 00:03:15.150
+s05-066
+00:03:26.332 --> 00:03:29.950
 You built that kind of documentation
 in Module 5, with the paper trail.
 
-s06-062
-00:03:15.900 --> 00:03:19.630
+s06-067
+00:03:30.700 --> 00:03:34.443
 This slide is a case study,
 and it's labeled that way on purpose.
 
-s06-063
-00:03:19.680 --> 00:03:22.555
+s06-068
+00:03:34.493 --> 00:03:37.429
 We don't cite this paper
 as evidence for anything.
 
-s06-064
-00:03:22.605 --> 00:03:28.633
+s06-069
+00:03:37.479 --> 00:03:43.513
 In 2024 a working paper claimed
 that a randomized rollout of an AI
 
-s06-065
-00:03:28.683 --> 00:03:31.743
-materials-discovery tool raised
-researcher output by 44%.
+s06-070
+00:03:43.563 --> 00:03:47.756
+materials-discovery tool led researchers
+to discover 44% more new materials.
 
-s06-066
-00:03:31.793 --> 00:03:34.875
+s06-071
+00:03:47.806 --> 00:03:50.818
 It circulated to acclaim
 from prominent economists,
 
-s06-067
-00:03:34.925 --> 00:03:39.282
+s06-072
+00:03:50.868 --> 00:03:54.682
 and then MIT said it had no confidence
 in the provenance, reliability,
 
-s06-068
-00:03:39.332 --> 00:03:43.199
+s06-073
+00:03:54.732 --> 00:03:59.545
 or validity of the data, and asked
 for the paper to be withdrawn.
 
-s06-069
-00:03:43.249 --> 00:03:45.781
+s06-074
+00:03:59.595 --> 00:04:02.226
 The author is no longer at MIT.
 
-s06-070
-00:03:45.831 --> 00:03:50.705
-So the field's provenance-checking machinery
+s06-075
+00:04:02.276 --> 00:04:06.573
+So the field's provenance checks
 failed before AI was writing papers.
 
-s06-071
-00:03:50.755 --> 00:03:53.728
+s06-076
+00:04:06.623 --> 00:04:09.653
 Accounting has its own case,
 of a different kind. Kim, Muhn,
 
-s06-072
-00:03:53.778 --> 00:03:59.385
+s06-077
+00:04:09.703 --> 00:04:14.679
 and Nikolaev's 2024 paper on GPT-4
 and financial statement analysis was
 
-s06-073
-00:03:59.435 --> 00:04:02.641
+s06-078
+00:04:14.729 --> 00:04:16.834
 withdrawn by its authors in 2025,
 
-s06-074
-00:04:02.691 --> 00:04:07.077
+s06-079
+00:04:16.884 --> 00:04:21.734
 after a co-author trying to replicate
 it found inconsistencies in the data.
 
-s06-075
-00:04:07.127 --> 00:04:09.063
+s06-080
+00:04:21.784 --> 00:04:26.901
+They describe the withdrawal as
+temporary while they review the findings.
+
+s06-081
+00:04:26.951 --> 00:04:28.993
 There, the checking worked.
 
-s06-076
-00:04:09.113 --> 00:04:13.026
+s06-082
+00:04:29.043 --> 00:04:33.371
 The open question for Block 2 is whether
 AI makes that machinery stronger,
 
-s06-077
-00:04:13.076 --> 00:04:17.543
+s06-083
+00:04:33.421 --> 00:04:37.699
 through audit trails and replication
 at near-zero cost, or weaker,
 
-s06-078
-00:04:17.593 --> 00:04:20.010
+s06-084
+00:04:37.749 --> 00:04:40.090
 through volume and plausibility at scale.
 
-s07-079
-00:04:20.760 --> 00:04:22.934
+s07-085
+00:04:40.840 --> 00:04:43.096
 Block 3 is about the market.
 
-s07-080
-00:04:22.984 --> 00:04:27.040
+s07-086
+00:04:43.146 --> 00:04:47.061
 Placement, tenure, prestige,
 and salary all clear through publications,
 
-s07-081
-00:04:27.090 --> 00:04:32.468
+s07-087
+00:04:47.111 --> 00:04:52.196
 so papers are the currency, and they've
 always been expensive to produce.
 
-s07-082
-00:04:32.518 --> 00:04:35.693
+s07-088
+00:04:52.246 --> 00:04:55.480
 The readings measure what
 happens when that cost falls.
 
-s07-083
-00:04:35.743 --> 00:04:39.957
+s07-089
+00:04:55.530 --> 00:04:59.431
 Kusumegi and coauthors find that
 researchers who adopt LLMs post somewhere
 
-s07-084
-00:04:40.007 --> 00:04:43.705
+s07-090
+00:04:59.481 --> 00:05:03.616
 between twenty-four and
 eighty-nine percent more papers,
 
-s07-085
-00:04:43.755 --> 00:04:47.320
-and that polished prose stops being
-a sign of a good paper. Hao, Xu, Li,
+s07-091
+00:05:03.666 --> 00:05:07.280
+and that polished prose stops
+being a sign of a good paper.
 
-s07-086
-00:04:47.370 --> 00:04:53.449
-and Evans find that scientists who use AI
-publish about three times as many papers,
+s07-092
+00:05:07.330 --> 00:05:11.705
+Hao, Xu, Li, and Evans look
+at a different kind of AI use:
 
-s07-087
-00:04:53.499 --> 00:04:56.957
+s07-093
+00:05:11.755 --> 00:05:14.745
+natural-science papers
+that apply AI methods,
+
+s07-094
+00:05:14.795 --> 00:05:17.162
+mostly machine learning and deep learning.
+
+s07-095
+00:05:17.212 --> 00:05:21.719
+Scientists whose work uses AI publish
+about three times as many papers,
+
+s07-096
+00:05:21.769 --> 00:05:24.832
 while the range of topics
-science covers shrinks.
+the field covers narrows.
 
-s07-088
-00:04:57.007 --> 00:04:59.930
-What pays the individual
-can cost the field.
+s07-097
+00:05:24.882 --> 00:05:26.574
+Those data are observational,
 
-s07-089
-00:04:59.980 --> 00:05:01.830
+s07-098
+00:05:26.624 --> 00:05:31.115
+but they raise the question of whether what
+pays the individual can cost the field.
+
+s07-099
+00:05:31.165 --> 00:05:33.033
 The figure follows that logic.
 
-s07-090
-00:05:01.880 --> 00:05:04.693
+s07-100
+00:05:33.083 --> 00:05:36.061
 Production cost falls,
 paper volume goes up,
 
-s07-091
-00:05:04.743 --> 00:05:07.967
+s07-101
+00:05:36.111 --> 00:05:39.409
 and referee time and reader
 attention don't scale with it.
 
-s07-092
-00:05:08.017 --> 00:05:12.702
+s07-102
+00:05:39.459 --> 00:05:44.086
 So the market reprices what attention
 still depends on: taste in questions,
 
-s07-093
-00:05:12.752 --> 00:05:15.510
+s07-103
+00:05:44.136 --> 00:05:47.110
 data access, credibility,
 and accountability.
 
-s08-094
-00:05:16.260 --> 00:05:18.963
-Here's how the discussion
-runs in the live session.
+s08-104
+00:05:47.860 --> 00:05:51.181
+Here's how the discussion runs
+when the seminar meets as a group.
 
-s08-095
-00:05:19.013 --> 00:05:23.447
+s08-105
+00:05:51.231 --> 00:05:55.530
 Three blocks of about thirty minutes each,
 with a five-minute stretch between them.
 
-s08-096
-00:05:23.497 --> 00:05:28.297
+s08-106
+00:05:55.580 --> 00:06:01.486
 Each block starts with two-minute position
-statements from the debaters assigned
+statements from debaters assigned in
 
-s08-097
-00:05:28.347 --> 00:05:31.912
-in Module 5, then open
-discussion, then I synthesize.
+s08-107
+00:06:01.536 --> 00:06:03.354
+advance, then open discussion,
+then I synthesize.
 
-s08-098
-00:05:31.962 --> 00:05:35.821
-Several of you will be defending
-positions you don't actually hold,
+s08-108
+00:06:03.404 --> 00:06:07.545
+Several people will be defending
+positions they don't actually hold,
 
-s08-099
-00:05:35.871 --> 00:05:37.334
+s08-109
+00:06:07.595 --> 00:06:08.824
 and that's part of the exercise.
 
-s08-100
-00:05:37.384 --> 00:05:41.144
-The ground rule is no
-catastrophizing and no dismissing.
+s08-110
+00:06:08.874 --> 00:06:11.102
+If you're working on your own,
 
-s08-101
-00:05:41.194 --> 00:05:44.754
+s08-111
+00:06:11.152 --> 00:06:14.150
+the module page turns each block
+into a short writing exercise.
+
+s08-112
+00:06:14.200 --> 00:06:19.252
+The ground rule is the same either way:
+no catastrophizing and no dismissing.
+
+s08-113
+00:06:19.302 --> 00:06:22.763
 If you raise a provocation,
 pair it with its counterargument.
 
-s08-102
-00:05:44.804 --> 00:05:47.330
+s08-114
+00:06:22.813 --> 00:06:25.330
 And the memo is due one
 week after the seminar.
 
-s09-103
-00:05:48.080 --> 00:05:53.472
+s09-115
+00:06:26.080 --> 00:06:31.472
 Block 1 asks: if AI produces the artifact,
 what happens to the learning?
 
-s09-104
-00:05:53.522 --> 00:05:57.795
+s09-116
+00:06:31.522 --> 00:06:35.795
 We start from the placement you just did,
 with two volunteers defending theirs.
 
-s09-105
-00:05:57.845 --> 00:06:02.582
+s09-117
+00:06:35.845 --> 00:06:40.582
 Then the question is which pipeline
 stages build intuition worth protecting.
 
-s09-106
-00:06:02.632 --> 00:06:04.746
+s09-118
+00:06:40.632 --> 00:06:42.746
 The accounting parallel is
 AI-assisted audit judgment.
 
-s09-107
-00:06:04.796 --> 00:06:06.210
+s09-119
+00:06:42.796 --> 00:06:44.210
 There's also the institutional version.
 
-s09-108
-00:06:06.260 --> 00:06:12.366
+s09-120
+00:06:44.260 --> 00:06:50.366
 If researchers no longer have to build
 the capital to produce the artifact,
 
-s09-109
-00:06:12.416 --> 00:06:14.383
+s09-121
+00:06:50.416 --> 00:06:52.383
 does the profession keep
 building it on purpose,
 
-s09-110
-00:06:14.433 --> 00:06:18.595
+s09-122
+00:06:52.433 --> 00:06:56.595
 the way we still teach proofs to
 students who'll never prove anything new?
 
-s09-111
-00:06:18.645 --> 00:06:23.068
+s09-123
+00:06:56.645 --> 00:07:01.068
 The block closes on this question:
 is PhD training a production process,
 
-s09-112
-00:06:23.118 --> 00:06:25.150
+s09-124
+00:07:01.118 --> 00:07:03.150
 or a transformation of the student?
 
-s10-113
-00:06:25.900 --> 00:06:30.526
+s10-125
+00:07:03.900 --> 00:07:08.526
 Block 2 asks whether it matters
 who or what produced a result.
 
-s10-114
-00:06:30.576 --> 00:06:34.428
+s10-126
+00:07:08.576 --> 00:07:12.428
 Take two identical extraction
 results from the Module 3 pipeline.
 
-s10-115
-00:06:34.478 --> 00:06:37.322
+s10-127
+00:07:12.478 --> 00:07:15.322
 An RA hand-coded one over three weeks.
 
-s10-116
-00:06:37.372 --> 00:06:40.593
+s10-128
+00:07:15.372 --> 00:07:18.593
 The other came from a Claude session
 with a full audit trail: cached inputs,
 
-s10-117
-00:06:40.643 --> 00:06:45.413
+s10-129
+00:07:18.643 --> 00:07:23.413
 a quality report, committed code,
 and a stratified human audit sample.
 
-s10-118
-00:06:45.463 --> 00:06:47.323
+s10-130
+00:07:23.463 --> 00:07:25.323
 Are they equivalent?
 
-s10-119
-00:06:47.373 --> 00:06:50.841
+s10-131
+00:07:25.373 --> 00:07:28.841
 A spotless audit trail can
 still deliver a wrong estimate.
 
-s10-120
-00:06:50.891 --> 00:06:51.955
+s10-132
+00:07:28.891 --> 00:07:29.955
 Module 5 had that example,
 
-s10-121
-00:06:52.005 --> 00:06:57.489
+s10-133
+00:07:30.005 --> 00:07:35.489
 where DECISIONS.md claimed a robustness
 check the commit history didn't contain.
 
-s10-122
-00:06:57.539 --> 00:07:02.020
+s10-134
+00:07:35.539 --> 00:07:40.020
 A ten-minute segment then asks what's
 being verified when a second model reviews
 
-s10-123
-00:07:02.070 --> 00:07:03.362
+s10-135
+00:07:40.070 --> 00:07:41.362
 the first model's code,
 
-s10-124
-00:07:03.412 --> 00:07:07.691
+s10-136
+00:07:41.412 --> 00:07:45.691
 since correlated training plausibly
 produces correlated blind spots.
 
-s10-125
-00:07:07.741 --> 00:07:11.770
+s10-137
+00:07:45.741 --> 00:07:49.770
 The block closes on the retraction
 question: stronger or weaker?
 
-s11-126
-00:07:12.520 --> 00:07:15.141
+s11-138
+00:07:50.520 --> 00:07:53.141
 Block 3 is returns to research.
 
-s11-127
-00:07:15.191 --> 00:07:18.523
+s11-139
+00:07:53.191 --> 00:07:56.523
 You built the Module 4 pipeline
 in an eighty-minute lab.
 
-s11-128
-00:07:18.573 --> 00:07:21.808
+s11-140
+00:07:56.573 --> 00:07:59.808
 Now suppose every
 accounting PhD student can.
 
-s11-129
-00:07:21.858 --> 00:07:26.121
+s11-141
+00:07:59.858 --> 00:08:04.121
 What does the JAR submission queue look
 like in five years? Who referees it?
 
-s11-130
-00:07:26.171 --> 00:07:29.192
+s11-142
+00:08:04.171 --> 00:08:07.192
 What happens to the signal
 value of a publication?
 
-s11-131
-00:07:29.242 --> 00:07:31.585
+s11-143
+00:08:07.242 --> 00:08:09.585
 The candidates for what stays
 scarce are question taste,
 
-s11-132
-00:07:31.635 --> 00:07:37.553
+s11-144
+00:08:09.635 --> 00:08:15.553
 data access and institutional knowledge,
 credibility, and accountability.
 
-s11-133
-00:07:37.603 --> 00:07:39.536
+s11-145
+00:08:15.603 --> 00:08:17.536
 Then there's homogenization.
 
-s11-134
-00:07:39.586 --> 00:07:42.234
+s11-146
+00:08:17.586 --> 00:08:20.234
 If everyone's referee reports
 pass through the same models,
 
-s11-135
-00:07:42.284 --> 00:07:45.043
+s11-147
+00:08:20.284 --> 00:08:23.043
 does voice still signal anything?
 
-s11-136
-00:07:45.093 --> 00:07:48.953
+s11-148
+00:08:23.093 --> 00:08:26.953
 The block closes with each of you
 naming one input you think stays scarce,
 
-s11-137
-00:07:49.003 --> 00:07:51.590
+s11-149
+00:08:27.003 --> 00:08:29.590
 and that answer is where your memo starts.
 
-s12-138
-00:07:52.340 --> 00:07:56.623
+s12-150
+00:08:30.340 --> 00:08:34.623
 The memo is titled What I will
 still be paid for in 2036.
 
-s12-139
-00:07:56.673 --> 00:07:59.466
+s12-151
+00:08:34.673 --> 00:08:37.466
 It's one page, due a
 week after the seminar.
 
-s12-140
-00:07:59.516 --> 00:08:03.279
+s12-152
+00:08:37.516 --> 00:08:41.279
 Commit to specific parts of the research
 production function that you think stay
 
-s12-141
-00:08:03.329 --> 00:08:04.198
+s12-153
+00:08:41.329 --> 00:08:42.198
 human.
 
-s12-142
-00:08:04.248 --> 00:08:08.501
+s12-154
+00:08:42.248 --> 00:08:46.501
 Defend that with at least one assigned
 reading and one experience from the build
 
-s12-143
-00:08:08.551 --> 00:08:08.987
+s12-155
+00:08:46.551 --> 00:08:46.987
 modules.
 
-s12-144
-00:08:09.037 --> 00:08:13.484
+s12-156
+00:08:47.037 --> 00:08:51.484
 And name one concrete investment you'll
 make in your remaining PhD years.
 
-s12-145
-00:08:13.534 --> 00:08:17.215
+s12-157
+00:08:51.534 --> 00:08:55.215
 Grading is credit or no credit
 on defended specificity.
 
-s12-146
-00:08:17.265 --> 00:08:21.832
+s12-158
+00:08:55.265 --> 00:08:59.832
 An optimist and a pessimist can both
 earn credit, and a vague memo can't.
 
-s12-147
-00:08:21.882 --> 00:08:25.744
+s12-159
+00:08:59.882 --> 00:09:03.744
 AI help is fine everywhere in this
 course except the argument of this memo,
 
-s12-148
-00:08:25.794 --> 00:08:30.131
+s12-160
+00:09:03.794 --> 00:09:08.131
 which has to be your own, and you
 disclose what you used in one line.
 
-s12-149
-00:08:30.181 --> 00:08:31.330
+s12-161
+00:09:08.181 --> 00:09:09.330
 See you at the seminar.
