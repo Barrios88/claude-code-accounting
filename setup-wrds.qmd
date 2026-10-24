@@ -70,8 +70,8 @@ source ~/.wrds-mcp.env
 ### Alternative: export directly in your shell
 
 ```bash
-export WRDS_USERNAME="YOUR_WRDS_USERNAME"
-export WRDS_PASSWORD="YOUR_WRDS_PASSWORD"
+export WRDS_USERNAME='YOUR_WRDS_USERNAME'
+export WRDS_PASSWORD='YOUR_WRDS_PASSWORD'   # single quotes, so $ or ! in a password is read literally
 ```
 
 Both approaches work with the tunnel scripts below. The MCP server reads credentials from its environment when it runs; they are not part of your conversation with Claude. Step 4 does save them in one place: your user-level MCP configuration (`~/.claude.json` for Claude Code, `~/.cursor/mcp.json` for Cursor). Both files sit in your home directory, outside any project. Keep them private, never copy them into a repository, and consider a `Read` deny rule for them (Module 5).
@@ -131,9 +131,10 @@ bash tunnel_down.sh
 Run this once from any terminal. It saves your credentials in your user-level MCP configuration (`~/.claude.json`), not inside any project directory. Claude Code's own options come first; everything after `--` is the command that starts the server:
 
 ```bash
+source ~/.wrds-mcp.env   # loads your values, so the password is never typed on the command line
 claude mcp add --scope user \
-  --env WRDS_USERNAME=YOUR_WRDS_USERNAME \
-  --env WRDS_PASSWORD=YOUR_WRDS_PASSWORD \
+  --env WRDS_USERNAME="$WRDS_USERNAME" \
+  --env WRDS_PASSWORD="$WRDS_PASSWORD" \
   --env WRDS_TUNNEL_PORT=49600 \
   --transport stdio wrds-mcp -- ~/.wrds-mcp-env/bin/wrds-mcp
 ```
@@ -164,7 +165,7 @@ Edit `~/.cursor/mcp.json` (create it if it doesn't exist yet):
 }
 ```
 
-Replace `YOUR_MACOS_USERNAME` with your actual username (run `whoami` to confirm), then restart Cursor. On Linux or WSL the path starts with `/home/` instead of `/Users/`.
+Replace `YOUR_MACOS_USERNAME` with your actual username (run `whoami` to confirm), then restart Cursor. Keep the password inside the double quotes; if it contains a `"` or a `\`, put a backslash before that character. On Linux or WSL the path starts with `/home/` instead of `/Users/`.
 
 ## Step 5 — Verify the setup
 
