@@ -7,7 +7,7 @@ title: "Module 2: The Empirical Loop on SEC FSDS"
 ```
 
 ::: {.module-links}
-[[]{.bi .bi-play-btn aria-hidden="true"} Video (14 min)](#module-video){.is-primary}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (15 min)](#module-video){.is-primary}
 [[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Module 2 slides (PDF)](../assets/slides/day2_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab](../labs/day2.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](../assets/labs/lab2_starter.zip)
@@ -17,7 +17,7 @@ title: "Module 2: The Empirical Loop on SEC FSDS"
 <div class="module-video" id="module-video">
   <p class="module-video__label" id="module-video-label">
     <span class="bi bi-play-circle" aria-hidden="true"></span>
-    Watch: Module 2 walkthrough (14 min, narrated slides)
+    Watch: Module 2 walkthrough (15 min, narrated slides)
   </p>
   <div class="module-video__frame">
     <video controls preload="metadata" playsinline
@@ -39,19 +39,26 @@ title: "Module 2: The Empirical Loop on SEC FSDS"
 </div>
 ```
 
-Module 1 gave you the mental model: files persist and context doesn't, delegate and then verify, and say what you mean in four parts (file, operation, aggregation, output). So far you have not tested that model on a real research question. This module does. We take one accounting question, how R&D intensity has evolved across industries, from a vague idea to a verified, publication-style figure. You watch that happen in the demo, then do it yourself with a different measure. The lecture is short and mostly mechanical: what the dataset looks like, what the stages of the loop are, and which habits keep the work reproducible. Most of the learning happens in the demo and the lab, which run the same pipeline at two speeds.
+Module 1 gave you the mental model: files persist and context doesn't, delegate and then verify, and say what you mean in four parts (file, operation, aggregation, output). So far you have not tested that model on a real research question. This module does. We take one accounting question, how R&D intensity has evolved across industries, from a vague idea to a verified, publication-style figure. When the course runs with a group, you watch that happen in a live demo and then do it yourself with a different measure. Working on your own, there is no live demo: the opening prompt below is the demo, and the video walks through what it produces. The lecture is short and mostly mechanical: what the dataset looks like, what the stages of the loop are, and which habits keep the work reproducible. Most of the learning happens in the demo and the lab, which run the same pipeline at two speeds.
 
-The dataset for this module is the SEC's Financial Statement Data Sets (FSDS): free, quarterly bulk extracts of every XBRL-tagged financial value from every electronic filing the SEC receives. You need no credentials. There is no WRDS account, no Duo push, and no institutional subscription, only a zip file you can download to a laptop on a coffee-shop connection. FSDS is also structured the way Compustat is: a filing-metadata table, a tagged-values table, and a key that joins them. What you learn about FSDS here previews the shape of the Compustat pipeline you'll build in Module 4, once WRDS access is live.
+The dataset for this module is the SEC's Financial Statement Data Sets (FSDS): free, quarterly bulk extracts of the numbers on the face financial statements (balance sheet, income statement, cash flows) in every XBRL filing the SEC receives. Values that appear only in the footnotes are not in FSDS. You need no credentials. There is no WRDS account, no Duo push, and no institutional subscription, only zip files (about 100 MB each) you can download to a laptop. FSDS is also structured the way Compustat is: a filing-metadata table, a tagged-values table, and a key that joins them. What you learn about FSDS here previews the shape of the Compustat pipeline you'll build in Module 4, once WRDS access is live.
 
 ::: {.callout-note icon=false}
 ## Learning objectives
 
-By the end of this module, you should be able to describe the FSDS file structure (`sub.txt` and `num.txt`, tab-delimited, joined on `adsh`) and explain how it maps onto the shape of Compustat; write and read a six-part opening prompt that specifies the data, the join, the measure, the aggregation, the output, and the paper trail before any code is written; run the full empirical loop yourself in a single lab session, from an empty folder to a verified figure and a README a stranger could rerun; expect a wrong first-draft figure as a normal first output of a pipeline, and fix it with one to three small, targeted refinement rounds instead of one long, over-specified prompt; write a `DATA_PROFILE.md` that states what one row is, tests that it is unique, and reports tag coverage before any figure exists; and apply at least two sanity checks (one benchmark comparison and one plausibility check), plus a plot of the raw series, before you sign off on any computed result.
+By the end of this module, you should be able to:
+
+- describe the FSDS file structure (`sub.txt` and `num.txt`, tab-delimited, joined on `adsh`) and explain how it maps onto the shape of Compustat;
+- write and read a six-part opening prompt that specifies the data, the join, the measure, the aggregation, the output, and the paper trail before any code is written;
+- run the full empirical loop yourself in a single lab session, from an empty folder to a verified figure and a README a stranger could rerun;
+- expect a wrong first-draft figure as a normal first output of a pipeline, and fix it with one to three small, targeted refinement rounds instead of one long, over-specified prompt;
+- write a `DATA_PROFILE.md` that states what one row is, tests that it is unique, and reports tag coverage before any figure exists;
+- apply at least two sanity checks (one benchmark comparison and one plausibility check), plus a plot of the raw series, before you sign off on any computed result.
 :::
 
 ## The full loop, once, end to end
 
-This module teaches the empirical loop by running it rather than describing it. The loop has five stages, and each one produces a file, not a conversation. You start from an empty folder. A download script pulls the raw FSDS extracts. A cleaning-and-join script turns the two raw files into an analysis-ready panel and prints its own attrition as it goes. A figure script turns the panel into a labeled, publication-style plot. A README, written last, states what a stranger would need to type to get from the empty folder back to the same figure. Every stage is required, and none of them happens in the chat window. When you finish, each stage is a named script on disk.
+This module teaches the empirical loop by running it rather than describing it. The loop has five stages, and each one produces a file. You start from an empty folder. A download script pulls the raw FSDS extracts. A cleaning-and-join script turns the two raw files into an analysis-ready panel and prints its own attrition as it goes. A figure script turns the panel into a labeled, publication-style plot. A README, written last, states what a stranger would need to type to get from the empty folder back to the same figure. Every stage is required, and when you finish, each one is a named script on disk.
 
 ![The empirical loop: empty folder, download script, clean panel, figure, README — each an artifact on disk, not a conversation.](../assets/figures/day2/FIG-D2-01_empirical_loop.png){fig-alt="Flow diagram of five stages — empty folder, download script, clean-and-join, figure script, README — each stage producing a named file on disk."}
 
@@ -73,7 +80,7 @@ This structure is also why you should learn FSDS before Compustat, not instead o
 
 Before the first figure, have Claude write a `DATA_PROFILE.md`: a short file that records what one row of each table is and what can go wrong with it. It takes a few minutes, it stays on disk where every later session can read it, and it catches errors that a clean-looking figure will hide. Ask for it in the opening prompt, alongside `DECISIONS.md` and `LOG.md`, so it is written before any measure is computed. For FSDS, the profile should answer the questions below.
 
-**What is one row?** In `sub.txt`, one filing. In `num.txt`, one reported value: a tag, for a date, over a number of quarters, in a unit, within a filing. Write that sentence down in the profile.
+**What is one row?** In `sub.txt`, one filing. In `num.txt`, one reported value: a tag (and its taxonomy version), for a date, over a number of quarters, in a unit, for a segment and a co-registrant (both blank for the consolidated parent), within a filing. Write that sentence down in the profile. The segment part matters: about half the rows in a recent `num.txt` are segment-level values, so the same tag, date and quarters can appear many times in one filing.
 
 **Is that row actually unique?** Don't rely on Claude's answer or on your own memory. Have Claude look up the key columns in the SEC's own FSDS documentation, then *test* it: count rows, count distinct combinations of those columns, and report both numbers. If they differ, you have duplicates, and you need to know why before you aggregate anything.
 
@@ -105,9 +112,9 @@ The third habit is new in this module: paper-trail prompting. Instead of asking 
 
 Here is this module's demo prompt in full. Read it slowly. It is the most reusable artifact in the module, and you should keep it verbatim as a template for any empirical question you take through this pipeline. It has six parts. Four of them extend Module 1's four components. The other two, the join and the paper trail, are what you add once a single script becomes a multi-stage pipeline.
 
-> **DATA:** Download the FSDS quarterly zip files for these fourteen quarters — Q1 of each year from 2011 through 2024, which hold most 10-Ks for fiscal years 2010 through 2023 — from the SEC's Financial Statement Data Sets page. From each quarter we need two files: `sub.txt` (filing metadata: `adsh`, `cik`, `sic`, `form`, `fy` (fiscal year), period) and `num.txt` (tagged numeric values: `adsh`, `tag`, `ddate`, `qtrs`, `value`).
+> **DATA:** Download the FSDS quarterly zip files for these fourteen quarters — Q1 of each year from 2011 through 2024, which hold most 10-Ks for fiscal years 2010 through 2023 — from the SEC's Financial Statement Data Sets page. From each quarter we need two files: `sub.txt` (filing metadata: `adsh`, `cik`, `sic`, `form`, `fy` (fiscal year), period) and `num.txt` (tagged numeric values: `adsh`, `tag`, `version`, `ddate`, `qtrs`, `uom`, `segments`, `coreg`, `value`). Read `num.txt` one quarter at a time and keep only the tags and columns you need before combining quarters.
 >
-> **JOIN:** Merge `sub.txt` and `num.txt` on `adsh` — the filing's accession number, the only key that reliably links the two files. State the row count in each file before the join and the row count after, and flag any `adsh` values in `num.txt` with no match in `sub.txt`.
+> **JOIN:** Merge `sub.txt` and `num.txt` on `adsh` — the filing's accession number, the only key that reliably links the two files. State the row count in each file before the join and the row count after, and flag any `adsh` values in `num.txt` with no match in `sub.txt`. Keep only consolidated, parent-registrant values: rows where `segments` and `coreg` are blank and `uom` is `USD`. Report the row count before and after this filter. Then check for remaining duplicate `(adsh, tag, ddate, qtrs)` rows and document a tie-break rule if you find any.
 >
 > **MEASURE:** R&D intensity, defined as R&D expense divided by total assets for each filer-period. Use the XBRL tag `ResearchAndDevelopmentExpense` for the numerator and `Assets` for the denominator. Keep `qtrs = 0` rows for `Assets` (a balance-sheet snapshot) and `qtrs = 4` rows for the R&D tag (a full fiscal year of a flow variable). Restrict to `form = 10-K`.
 >
@@ -119,6 +126,8 @@ Here is this module's demo prompt in full. Read it slowly. It is the most reusab
 
 Read the prompt again and notice what it rules out. There is no ambiguity about which quarters, which tags, which filter, which statistic, or which filename. The pipeline also cannot end up living only inside a transcript, because the prompt requires scripts and a paper trail as part of the deliverable. This is the six-part habit in full. Learn it well enough that you can write a version of it for any measure you construct in the rest of this course.
 
+One thing the prompt leaves to you: the first year is a different sample. Smaller companies began filing XBRL in 2011, so the 2011 Q1 file holds 1,110 10-Ks against 4,778 in the 2012 Q1 file. Your raw-series plot should show that jump, and `DECISIONS.md` should say whether you keep fiscal 2010.
+
 ## Iteration is not failure
 
 The first-draft figure is almost never the figure you want. Many people are surprised by this the first time, but it is normal and does not mean anything has gone wrong. A first pass at the R&D-intensity plot might have the wrong axis labels, too many industry lines crowded onto one plot to read, or an industry grouping too coarse or too fine to show the pattern you're looking for. Don't respond with one enormous, over-specified prompt that tries to anticipate every problem. Use small, targeted refinement rounds instead: fix the axes and labels, look at the result, then adjust the industry-bucket granularity and look again. Two or three rounds is typical, and each one should address one specific thing you can see is wrong in the previous draft. Count the rounds as you go. If you're past three and the figure is not converging, stop iterating and rethink the request itself.
@@ -127,27 +136,27 @@ The other kind of iteration in this module is autonomous error recovery. Watch i
 
 ![Autonomous error recovery in practice: a 403 Forbidden, diagnosed and fixed by the agent without you typing a word.](../assets/exhibits/day2/EXH-D2-01_403_recovery.png){fig-alt="Mock terminal log: a download request returns 403 Forbidden, the agent adds a User-Agent header, retries, and succeeds."}
 
-This applies the redirect-don't-argue principle from Module 1. You watch rather than drive, and you step in only when the *strategy* looks wrong, not every time an intermediate step throws an error. If the agent starts guessing wildly, keeps retrying the same broken approach, or heads toward a dead end, intervene. Press Esc, restate the goal plainly, and let it resume from a clean point, as Module 1's stuck-loop protocol described.
+This applies the redirect-don't-argue principle from Module 1. You watch rather than drive, and you step in only when the *strategy* looks wrong, not every time an intermediate step throws an error. If the agent starts guessing wildly, keeps retrying the same broken approach, or heads toward a dead end, intervene. Press Esc, restate the goal plainly, and let it resume from a clean point, as Module 1's "Redirect, don't argue" section described.
 
 ![When a pipeline stalls: watch autonomous recovery first, and know the branch point where you step in.](../assets/figures/day2/FIG-D2-03_stuck_loop_tree.png){fig-alt="Decision tree for a stalled pipeline: watch autonomous recovery first, and intervene by pressing Esc and restating the goal only when the strategy itself is wrong."}
 
-You may also see a sub-agent appear in this module. For a long-running search or a task with several independent branches, Claude Code can start sub-agents: separate contexts that each investigate one piece of a problem and report back a summary, which saves the main conversation's context budget. This module's lab is small enough that you may not see one at all. Module 4 covers what sub-agents are and how to request parallel ones explicitly. If one does appear in your session, note it on your exit ticket; we'll come back to it.
+You may also see a sub-agent appear in this module. For a long-running search or a task with several independent branches, Claude Code can start sub-agents: separate contexts that each investigate one piece of a problem and report back a summary, which saves the main conversation's context budget. This module's lab is small enough that you may not see one at all. Module 4 covers what sub-agents are and how to request parallel ones explicitly. If one does appear in your session, note what you think it was for; Module 4 comes back to it.
 
 ## Sanity checks: two, minimum, before you sign off
 
 Nothing above replaces judgment, and judgment matters most at the end, once a figure exists and looks plausible. Before you accept any computed result in this module, run at least two checks, and know what each one tests.
 
-The first is a benchmark comparison. Pick one or two industries where you already have a strong prior about the answer. Pharmaceuticals and software should show clearly higher R&D intensity than utilities or retail, so confirm that the figure shows this. If it doesn't, something in the tag selection, the filter, or the aggregation is probably wrong, and it is much cheaper to catch that now than after the figure is in a slide deck. The second is a plausibility check tied to a known event: does the series behave as you'd expect around a real economic shock? R&D spending around 2020, for instance, should show some visible response to the disruption of that year. You don't need to know the direction in advance, but a real, economically meaningful series should show *some* response. A perfectly smooth line through a period you know was turbulent suggests that something upstream was over-aggregated or mis-constructed.
+The first is a benchmark comparison. Pick one or two industries where you already have a strong prior about the answer. Pharmaceuticals and software should show clearly higher R&D intensity than utilities or retail, so confirm that the figure shows this. If it doesn't, something in the tag selection, the filter, or the aggregation is probably wrong, and it is much cheaper to catch that now than after the figure is in a slide deck. The second is a plausibility check tied to a known event: does the series behave as you'd expect around a real economic shock? R&D intensity around 2020, for instance, may show a response to the disruption of that year. You don't need to know the direction in advance. If the line is perfectly flat through a period you know was turbulent, check whether that is real before you accept it, because it can also mean something upstream was over-aggregated or mis-constructed.
 
 ::: {.callout-tip icon=false}
 ## Verify this: name your two checks before you look at the figure
 
-Decide what your benchmark comparison and your plausibility check will be *before* the figure renders. If you name the checks in advance, you are less likely to reason backward from whatever the figure shows to a story that makes it look right. Write both checks in your README, along with the source you're checking against. If a check isn't written down, nobody else can tell that you ran it.
+Decide what your benchmark comparison and your plausibility check will be *before* the figure renders. If you name the checks in advance, you are less likely to reason backward from whatever the figure shows to a story that makes it look right. Write both checks in your README, along with the source you're checking against.
 :::
 
 One more check takes little time and comes before both of these: plot the raw series before you aggregate it. Before computing a median by industry and year, plot the firm-level ratio itself, every observation by fiscal year, once before winsorizing and once after. A handful of firms reporting R&D larger than their total assets, a year where the number of observations collapses, a cluster of exact zeros that should be missing values: each of these is obvious in a raw scatter and invisible in a median. The raw plot does not replace the two checks you named in advance. It tells you whether the series is worth summarizing at all.
 
-The benchmark and plausibility checks depend on domain knowledge, and an agent cannot run them for you. Claude Code can tell you the median R&D intensity came out at 4% for SIC code 28. It cannot tell you, on its own authority, whether 4% is a plausible number for pharmaceutical R&D intensity in 2019. That is accounting and finance judgment, and this course is built to protect it.
+The benchmark and plausibility checks depend on domain knowledge, and an agent cannot run them for you. Claude Code can tell you the median R&D intensity came out at 31% of assets for SIC code 28 in fiscal 2022. It cannot tell you, on its own authority, whether that is plausible. It is, because SIC 28 holds hundreds of small biotech filers with large R&D budgets relative to their assets, but knowing that is accounting and finance judgment, and you have to bring it yourself.
 
 ::: {.callout-warning icon=false}
 ## Common failure: treating a plausible-looking figure as a verified one
@@ -161,4 +170,4 @@ Everything in this module rests on the same three sentences from Module 1, now a
 
 **Files persist; context doesn't.** In this module that means DECISIONS.md, LOG.md, attrition rows, and named scripts at every stage, not just at the end. **Trust, but verify — same as an RA.** In this module that means two named sanity checks before you sign off on a figure, not a vague sense that it looks fine. **Be specific: file, operation, aggregation, output.** In this module that habit grows to six parts (data, join, measure, aggregation, output, paper trail), because a full pipeline involves more decisions than a single script, and each one still needs to be stated rather than inferred.
 
-From here, go to [this module's lab](../labs/day2.qmd), where you'll run the same loop yourself on a measure of your choosing. Your measure is different from the R&D demo, so your verification has to be your own rather than copied. The lab ends with a hard gate: every student needs a confirmed, working WRDS tunnel before Module 4's flagship lab depends on it. If you haven't tested `ssh wrds` and a Duo push since Module 1's homework, do it before you arrive for this module. Fixing an account or Duo problem through WRDS support takes at least two days. The lab's closing checkpoint is where we confirm access, so it is not left to the last minute.
+From here, go to [this module's lab](../labs/day2.qmd), where you'll run the same loop yourself on a measure of your choosing. Your measure is different from the R&D demo, so your verification has to be your own rather than copied. The lab ends with a WRDS checkpoint, because Module 4's main lab depends on a working connection. Before you start Module 4, confirm that `ssh wrds` connects and a Duo push arrives. Fixing an account or Duo problem through WRDS support takes at least two days, so do not leave it to the last minute.

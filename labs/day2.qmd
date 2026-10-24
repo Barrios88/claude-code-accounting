@@ -8,7 +8,7 @@ title: "Module 2 Lab: Empty Folder to Verified Figure"
 [[]{.bi .bi-journal-text aria-hidden="true"} Module 2 notes](../modules/02-empirical-loop.qmd)
 :::
 
-In this lab you run the same loop you watched in the demo: empty folder, download script, clean panel, publication-style figure, reproducibility README. The difference is that you choose the measure. The demo built R&D intensity, and your lab measure is a different one, so when you check your figure at the end you are checking your own work rather than a copy of the demo. The starter pack (`lab2_starter.zip`) contains an opening-prompt template with blanks for your measure, tags, and aggregation; a verify checklist; and a card explaining `DECISIONS.md` and `LOG.md`. The zip has no data in it. FSDS is public, and downloading it yourself is part of the exercise.
+In this lab you run the same loop the module page lays out: empty folder, download script, clean panel, publication-style figure, reproducibility README. The difference is that you choose the measure. The demo built R&D intensity, and your lab measure is a different one, so when you check your figure at the end you are checking your own work rather than a copy of the demo. The starter pack (`lab2_starter.zip`) contains an opening-prompt template with blanks for your measure, tags, and aggregation; a verify checklist; and a card explaining `DECISIONS.md` and `LOG.md`. The zip has no data in it. FSDS is public, and downloading it yourself is part of the exercise.
 
 ::: {.callout-note icon=false}
 ## What you're building in this module
@@ -17,39 +17,42 @@ By the end of the lab you will have:
 
 - a fresh project folder with a complete pipeline of named scripts (download, clean-and-join, measure, figure), none of which exist only as chat output;
 - a `DECISIONS.md` and `LOG.md` that you requested in your opening prompt rather than added afterward, plus an attrition table that explains every change in sample size;
-- a `DATA_PROFILE.md` written before your first figure;
+- a `DATA_PROFILE.md` written before your first figure, and a plot of the raw firm-level series;
 - one publication-style figure, with two sanity checks written down and sourced;
 - a README a labmate could follow to reproduce your entire pipeline in a fresh clone of the folder.
 :::
 
 ## Choose your measure
 
-Start the same way the demo did: `mkdir ~/lab2 && cd ~/lab2 && claude`. Because the folder is empty, Claude sees this project and nothing else. Then pick one of the three measures below. They are tiered by ambition. Choose the tier that matches how much cleaning judgment you want to practice in this module, which need not be the hardest one.
+Start with an empty folder: `mkdir ~/lab2 && cd ~/lab2 && claude`. Because the folder is empty, Claude sees this project and nothing else. Then pick one of the three measures below. They are tiered by ambition. Choose the tier that matches how much cleaning judgment you want to practice in this module, which need not be the hardest one.
 
-**Base: leverage by industry and year.** Compute book leverage (long-term debt divided by total assets) as the median by two-digit SIC code (`sic2`) and year. This is the closest variant of the demo: the same join and the same aggregation, with a different pair of XBRL tags.
+**Base: leverage by industry and year.** Compute book leverage (long-term debt divided by total assets) as the median by two-digit SIC code (`sic2`) and year. This is the closest variant of the demo: the same join and the same aggregation, with a different pair of XBRL tags. Expect the debt tags to cover only about a third of 10-K filers. In the pinned quarters, `LongTermDebtNoncurrent` appears in 26–28% of 10-Ks and `LongTermDebt` in 6–9%, while `Assets` appears in 98–99%. A missing debt tag can mean the firm has no long-term debt, reports it under another tag, or shows it only in a footnote, which FSDS does not carry. Decide in `DECISIONS.md` whether a missing debt tag counts as zero or as missing, and report how that choice moves the median.
 
 **Standard: R&D intensity, different industry grain.** Build the demo's R&D-intensity measure (R&D expense over total assets), but aggregate by one-digit SIC (`sic1`) instead of the demo's `sic2`. You already know the measure. What is new is the grouping decision and how it changes the pattern you see.
 
-**Stretch: revenue concentration.** For each year, compute the share of total reported revenue that comes from the ten largest filers by revenue. This tier takes more cleaning judgment than the other two. You have to decide how to handle firms that report revenue under more than one tag, and how to break ties at the tenth-largest boundary. Pick it if you want more practice with ambiguous cleaning decisions rather than with the mechanics of the join.
+**Stretch: revenue concentration.** For each year, compute the share of total reported revenue that comes from the ten largest filers by revenue. This tier takes more cleaning judgment than the other two. You have to decide how to handle firms that report revenue under more than one tag, and how to break ties at the tenth-largest boundary. Pick it if you want more practice with ambiguous cleaning decisions rather than with the mechanics of the join. Two things to know before you start. The main revenue tag changed with the 2018 revenue standard: `RevenueFromContractWithCustomerExcludingAssessedTax` appears in no 10-Ks in the 2013 and 2016 files and in 43% of them in the 2024 file, while `Revenues` falls from about 41% to 30%. And keep only rows with a blank `segments` field, or you will add each firm's segment revenue on top of its total.
 
-Whichever tier you pick, use the known-good quarters the starter pack pins for you: Q1 of 2013, 2016, 2019, 2022, and 2024, which hold most 10-Ks for fiscal years 2012, 2015, 2018, 2021, and 2023. (FSDS groups filings by the quarter they arrived, and most firms file their 10-K in February or March; the Q4 files hold only a few hundred 10-Ks each.) Five quarters give you a long enough time series for a meaningful plausibility check without downloading and cleaning fourteen quarters in an 80-minute lab. Tag coverage in FSDS also varies by quarter. A value reported under one tag in an earlier filing sometimes appears under a slightly different tag in a later one. That is another reason to pin exact quarters instead of defaulting to all of them.
+Whichever tier you pick, use the known-good quarters the starter pack pins for you: Q1 of 2013, 2016, 2019, 2022, and 2024, which hold most 10-Ks for fiscal years 2012, 2015, 2018, 2021, and 2023. Each zip is about 95–125 MB, so the download is roughly half a gigabyte. (FSDS groups filings by the quarter they arrived, and most firms file their 10-K in February or March; the Q4 files hold only a few hundred 10-Ks each.) Five quarters give you a long enough time series for a meaningful plausibility check without downloading and cleaning fourteen quarters in an 80-minute lab. Tag coverage in FSDS also varies by quarter. A value reported under one tag in an earlier filing sometimes appears under a slightly different tag in a later one. That is another reason to pin exact quarters instead of defaulting to all of them. These years skip 2019 and 2020, so the module page's 2020 example will not work here. Choose a plausibility check your five years can show, such as the number of filers per year or one well-known firm's value checked against its 10-K.
 
 ## Requirements, regardless of tier
 
 The deliverable has the same shape as the demo's:
 
 - named scripts only;
-- `DECISIONS.md` and `LOG.md` requested in your opening prompt before any analysis runs, not added later once something looks off;
+- `DATA_PROFILE.md`, `DECISIONS.md` and `LOG.md` requested in your opening prompt before any analysis runs, not added later once something looks off;
+- a plot of the raw firm-level series before you aggregate it;
 - an attrition table showing every point where your sample size changed and why;
 - one publication-style figure;
 - a README that lets a stranger, or you in three weeks, rerun the whole pipeline from scratch.
 
-Adapt the opening-prompt template in the starter pack to your tier. Fill in the measure, the tags, and the aggregation. Leave the paper-trail section exactly as written, and do not trim it if you are short on time. It is the part that produces `DECISIONS.md` and `LOG.md`.
+Adapt the opening-prompt template in the starter pack to your tier. Fill in the measure, the tags, and the aggregation. Leave the paper-trail section exactly as written, and do not trim it if you are short on time. It is the part that produces `DATA_PROFILE.md`, `DECISIONS.md` and `LOG.md`.
+
+Then work in this order. Send the prompt. Read `DATA_PROFILE.md` as soon as it is written, before any measure is computed, and check the row counts and tag coverage. Ask for a plot of the raw firm-level ratio by year. Write your two named checks into the README before the figure exists. Let the figure render and refine it in at most three rounds. Run the checks. Ask Claude to finish the README last, then rerun the pipeline from the README in a fresh copy of the folder.
 
 ::: {.callout-tip icon=false}
 ## Verify this: your checklist for this module
 
-Work through every line before you call the lab complete. As in Module 1, the checklist is self-graded and pass/fail. The instructor will spot-check a sample rather than grade every box.
+Work through every line before you call the lab complete. As in Module 1, the checklist is self-graded and pass/fail. When the course runs with a group, the instructor spot-checks a sample rather than grading every box.
 
 - [ ] Pipeline reruns start-to-finish from README instructions in a fresh clone of the folder
 
@@ -69,13 +72,13 @@ Work through every line before you call the lab complete. As in Module 1, the ch
 **Stretch for finishers:** if your pipeline is done with time to spare, do one of two things. Either rerun the same research question with a second measure and compare what changes, or write a paragraph (not code) on what the WRDS version of this pipeline would need to change: which table replaces `sub.txt` and `num.txt`, which key replaces `adsh`, and which filters Compustat would require that FSDS does not. This previews Module 4. It is not homework, and a few sentences is enough.
 
 ::: {.callout-tip icon=false}
-## WRDS CHECKPOINT — hard gate, due by the end of this module
+## WRDS CHECKPOINT — before you start Module 4
 
-Before you leave this module, submit one of two things on your exit ticket. Either submit a `tunnel_status` screenshot showing `ssh wrds` connecting, a Duo push arriving, and the connection succeeding, or, if it did not work, a flag describing exactly what went wrong. This checkpoint is required. Module 4's main lab depends on this connection, and the instructor needs tonight to triage problems and announce fixes in the next module, not the night before Module 4. If your WRDS access is not working at this checkpoint, you are provisionally assigned to the public-data fallback track for Module 4, so you can plan for it now rather than at the last minute. If you get access working before Module 4, you can move to the live track. If you have not tried the connection since Module 1's homework, do it before lab starts.
+Before you start Module 4, confirm that `ssh wrds` connects and a Duo push arrives, using `tunnel_status.sh` from Step 3 of the [WRDS MCP Setup](../setup-wrds.qmd) page. Module 4's main lab depends on this connection. If it fails, contact WRDS support now: fixing an account or Duo problem takes at least two days. If it is still not working when you reach Module 4, use that lab's public-data fallback track; you can move to the live track once access works. When the course runs with a group, this is a hard gate: you submit a `tunnel_status` screenshot or a description of what went wrong on your exit ticket, so problems get fixed before Module 4.
 :::
 
 ## Debrief and exit ticket
 
-We regroup for a short debrief. Whose first-draft figure was right on the first attempt? If almost nobody's was, that is the expected outcome and not a problem with the lab. Where did Claude recover from an error on its own, and where did you have to step in and redirect it?
+Before you move on, ask yourself the debrief questions. Was your first-draft figure right on the first attempt? Usually it is not, and that is the expected outcome. Where did Claude recover from an error on its own, and where did you have to step in and redirect it?
 
-Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result). Then add this module's two items: the WRDS checkpoint above, and one sentence on sub-agents. If you saw Claude start a sub-agent at any point during your lab, what do you think it was for? We will answer that properly in Module 4.
+Then answer the standard three exit-ticket questions in your README or your notes (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's sub-agent question: if you saw Claude start a sub-agent at any point during your lab, what do you think it was for? Module 4 answers that properly. When the course runs with a group, the debrief is a short discussion and the exit ticket is handed in, along with the WRDS checkpoint above.

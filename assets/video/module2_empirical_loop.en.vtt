@@ -438,727 +438,750 @@ before any code runs, so the record gets
 written while you're making the choices.
 
 s10-093
-00:05:25.740 --> 00:05:28.650
+00:05:25.740 --> 00:05:28.665
 This is the opening prompt from the demo,
 
 s10-094
-00:05:28.700 --> 00:05:33.368
+00:05:28.715 --> 00:05:33.529
 and it's the piece of this module
 you'll reuse the most. It has six parts.
 
 s10-095
-00:05:33.418 --> 00:05:37.736
+00:05:33.579 --> 00:05:37.849
 Data: the FSDS quarters,
 sub and num, with the columns named.
 
 s10-096
-00:05:37.786 --> 00:05:43.627
-In the demo that's the fourth quarter
-of each year from 2010 through 2023.
+00:05:37.899 --> 00:05:44.196
+In the demo that's the first-quarter file
+for each year from 2011 through 2024,
 
 s10-097
-00:05:43.677 --> 00:05:47.997
-Join: merge on ADSH, state the
-row counts before and after,
+00:05:44.246 --> 00:05:47.962
+which holds most 10-Ks for
+fiscal 2010 through 2023.
 
 s10-098
-00:05:48.047 --> 00:05:50.853
-and flag anything that doesn't match.
+00:05:48.012 --> 00:05:51.796
+Join: merge on ADSH, keep
+only the consolidated rows,
 
 s10-099
-00:05:50.903 --> 00:05:54.539
+00:05:51.846 --> 00:05:57.423
+state the row counts before and after,
+and flag anything that doesn't match.
+
+s10-100
+00:05:57.473 --> 00:06:02.635
 Measure: R&D expense over total
 assets, with the tags named,
 
-s10-100
-00:05:54.589 --> 00:05:59.327
+s10-101
+00:06:02.685 --> 00:06:05.922
 how the quarters field is handled,
 and a filter to 10-Ks.
 
-s10-101
-00:05:59.377 --> 00:06:02.624
+s10-102
+00:06:05.972 --> 00:06:09.155
 Aggregation: the median
 by two-digit SIC and year.
 
-s10-102
-00:06:02.674 --> 00:06:07.828
+s10-103
+00:06:09.205 --> 00:06:14.595
 Output: the figure and the CSV,
 both named before anything runs.
 
-s10-103
-00:06:07.878 --> 00:06:13.553
+s10-104
+00:06:14.645 --> 00:06:20.366
 And the paper trail: named scripts only,
 the data profile, DECISIONS, LOG,
 
-s10-104
-00:06:13.603 --> 00:06:16.730
+s10-105
+00:06:20.416 --> 00:06:23.530
 and an attrition row every
 time the sample size changes.
 
-s11-105
-00:06:17.480 --> 00:06:21.135
+s11-106
+00:06:24.280 --> 00:06:27.935
 The first figure is almost
 never right, and that's normal.
 
-s11-106
-00:06:21.185 --> 00:06:25.093
+s11-107
+00:06:27.985 --> 00:06:31.894
 Don't answer that with one long
 prompt that tries to fix everything.
 
-s11-107
-00:06:25.143 --> 00:06:27.327
+s11-108
+00:06:31.944 --> 00:06:34.127
 Do small, targeted rounds.
 
-s11-108
-00:06:27.377 --> 00:06:29.625
+s11-109
+00:06:34.177 --> 00:06:36.425
 Fix the axes and labels and look at it,
 
-s11-109
-00:06:29.675 --> 00:06:34.419
+s11-110
+00:06:36.475 --> 00:06:41.219
 then fix the industry-bucket granularity
 and look again. Count the rounds.
 
-s11-110
-00:06:34.469 --> 00:06:38.307
+s11-111
+00:06:41.269 --> 00:06:45.107
 Two or three is typical, and if you're
 past three and it isn't converging,
 
-s11-111
-00:06:38.357 --> 00:06:40.638
+s11-112
+00:06:45.157 --> 00:06:47.438
 stop and rethink the request.
 
-s11-112
-00:06:40.688 --> 00:06:43.609
+s11-113
+00:06:47.488 --> 00:06:50.409
 The tree on the slide is
 for when output goes wrong.
 
-s11-113
-00:06:43.659 --> 00:06:46.290
+s11-114
+00:06:50.459 --> 00:06:53.090
 If it's an execution
 glitch, let it recover.
 
-s11-114
-00:06:46.340 --> 00:06:49.586
+s11-115
+00:06:53.140 --> 00:06:56.386
 If the strategy is wrong,
 press Escape and redirect.
 
-s11-115
-00:06:49.636 --> 00:06:52.927
+s11-116
+00:06:56.436 --> 00:06:59.730
 And if a targeted redirect
 hasn't fixed it within two turns,
 
-s11-116
-00:06:52.977 --> 00:06:56.550
+s11-117
+00:06:59.780 --> 00:07:03.350
 stop and re-plan instead of
 arguing with it for ten more.
 
-s12-117
-00:06:57.300 --> 00:07:01.316
+s12-118
+00:07:04.100 --> 00:07:08.345
 Before you accept any computed
 result, run at least two checks.
 
-s12-118
-00:07:01.366 --> 00:07:03.875
+s12-119
+00:07:08.395 --> 00:07:10.852
 The first is a benchmark comparison.
 
-s12-119
-00:07:03.925 --> 00:07:06.825
+s12-120
+00:07:10.902 --> 00:07:13.798
 Pick industries where you
 already have a strong prior.
 
-s12-120
-00:07:06.875 --> 00:07:11.218
+s12-121
+00:07:13.848 --> 00:07:18.885
 Pharma and tech should show clearly higher
 R&D intensity than utilities or retail,
 
-s12-121
-00:07:11.268 --> 00:07:14.077
+s12-122
+00:07:18.935 --> 00:07:21.114
 so check that the figure shows that.
 
-s12-122
-00:07:14.127 --> 00:07:17.791
+s12-123
+00:07:21.164 --> 00:07:24.751
 The second is a plausibility
 check tied to a known event.
 
-s12-123
-00:07:17.841 --> 00:07:22.484
-Around 2020, the series should show some
+s12-124
+00:07:24.801 --> 00:07:28.298
+Around 2020, the series may show some
 response to the disruption of that year.
 
-s12-124
-00:07:22.534 --> 00:07:24.592
-You don't need to know the
-direction ahead of time,
-
 s12-125
-00:07:24.642 --> 00:07:28.328
-but a perfectly smooth line through a
-period you know was turbulent tells you
+00:07:28.348 --> 00:07:31.850
+You don't need to know the
+direction ahead of time.
 
 s12-126
-00:07:28.378 --> 00:07:32.076
-something upstream was
-over-aggregated or built wrong.
+00:07:31.900 --> 00:07:35.950
+But if the line is perfectly flat
+through a period you know was turbulent,
 
 s12-127
-00:07:32.126 --> 00:07:34.701
+00:07:36.000 --> 00:07:37.284
+check whether that's real,
+
+s12-128
+00:07:37.334 --> 00:07:41.745
+because it can also mean something upstream
+was over-aggregated or built wrong.
+
+s12-129
+00:07:41.795 --> 00:07:44.393
 Name both checks before
 the figure renders.
 
-s12-128
-00:07:34.751 --> 00:07:37.490
+s12-130
+00:07:44.443 --> 00:07:47.170
 And before either one,
 plot the raw series.
 
-s13-129
-00:07:38.240 --> 00:07:41.335
+s13-131
+00:07:47.920 --> 00:07:51.015
 So before you compute a
 median by industry and year,
 
-s13-130
-00:07:41.385 --> 00:07:46.213
+s13-132
+00:07:51.065 --> 00:07:55.893
 plot the firm-level ratio itself,
 every observation, by fiscal year.
 
-s13-131
-00:07:46.263 --> 00:07:49.374
+s13-133
+00:07:55.943 --> 00:07:59.054
 Do it once before you
 winsorize and once after.
 
-s13-132
-00:07:49.424 --> 00:07:51.902
+s13-134
+00:07:59.104 --> 00:08:01.582
 A lot of times the
 problems are right there.
 
-s13-133
-00:07:51.952 --> 00:07:55.491
+s13-135
+00:08:01.632 --> 00:08:05.171
 A few firms reporting R&D
 larger than their total assets.
 
-s13-134
-00:07:55.541 --> 00:07:58.311
+s13-136
+00:08:05.221 --> 00:08:07.991
 A year where the number
 of observations collapses.
 
-s13-135
-00:07:58.361 --> 00:08:01.954
+s13-137
+00:08:08.041 --> 00:08:11.634
 A cluster of exact zeros that
 should be missing values.
 
-s13-136
-00:08:02.004 --> 00:08:06.374
+s13-138
+00:08:11.684 --> 00:08:16.054
 Each of those is obvious in a raw scatter,
 and you'd never see it in a median.
 
-s13-137
-00:08:06.424 --> 00:08:09.301
+s13-139
+00:08:16.104 --> 00:08:18.981
 The raw plot doesn't replace
 the two named checks.
 
-s13-138
-00:08:09.351 --> 00:08:12.990
+s13-140
+00:08:19.031 --> 00:08:22.670
 You use it to find data problems
 before you summarize anything.
 
-s14-139
-00:08:13.740 --> 00:08:18.439
+s14-141
+00:08:23.420 --> 00:08:28.166
 The common failure in this module is
 treating a plausible-looking figure as a
 
-s14-140
-00:08:18.489 --> 00:08:19.240
+s14-142
+00:08:28.216 --> 00:08:28.976
 verified one.
 
-s14-141
-00:08:19.290 --> 00:08:23.000
+s14-143
+00:08:29.026 --> 00:08:33.739
 Clean axis labels, a sensible legend,
 smooth lines... it looks right.
 
-s14-142
-00:08:23.050 --> 00:08:27.504
+s14-144
+00:08:33.789 --> 00:08:37.323
 But none of that tells you whether
 the tag selection, the filter,
 
-s14-143
-00:08:27.554 --> 00:08:29.016
+s14-145
+00:08:37.373 --> 00:08:38.595
 or the join was right.
 
-s14-144
-00:08:29.066 --> 00:08:33.671
-Claude Code can tell you the median R&D
-intensity came out at four percent for
-
-s14-145
-00:08:33.721 --> 00:08:35.087
-SIC code 28.
-
 s14-146
-00:08:35.137 --> 00:08:36.878
-It can't tell you, on its own authority,
+00:08:38.645 --> 00:08:43.676
+Claude Code can tell you the median R&D
+intensity came out at thirty-one percent
 
 s14-147
-00:08:36.928 --> 00:08:41.830
-whether four percent is plausible
-for pharmaceutical R&D in 2019.
+00:08:43.726 --> 00:08:46.950
+of assets for SIC code 28 in fiscal 2022.
 
 s14-148
-00:08:41.880 --> 00:08:45.741
-That's accounting and finance judgment,
-which you have to bring yourself.
+00:08:47.000 --> 00:08:50.839
+It can't tell you, on its own authority,
+whether that's plausible. It is,
 
 s14-149
-00:08:45.791 --> 00:08:48.410
+00:08:50.889 --> 00:08:55.386
+because SIC 28 holds hundreds of small
+biotech filers with big R&D budgets
+
+s14-150
+00:08:55.436 --> 00:08:56.943
+relative to their assets.
+
+s14-151
+00:08:56.993 --> 00:09:00.916
+But knowing that is accounting
+and finance judgment,
+
+s14-152
+00:09:00.966 --> 00:09:02.700
+which you have to bring yourself.
+
+s14-153
+00:09:02.750 --> 00:09:05.290
 So run the checks even
 when the plot looks clean.
 
-s15-150
-00:08:49.160 --> 00:08:52.039
+s15-154
+00:09:06.040 --> 00:09:08.919
 So the verification habit for this module:
 
-s15-151
-00:08:52.089 --> 00:08:55.647
+s15-155
+00:09:08.969 --> 00:09:12.527
 decide your benchmark comparison and
 your plausibility check before the figure
 
-s15-152
-00:08:55.697 --> 00:08:56.082
+s15-156
+00:09:12.577 --> 00:09:12.962
 renders.
 
-s15-153
-00:08:56.132 --> 00:08:57.161
+s15-157
+00:09:13.012 --> 00:09:14.041
 If you name them in advance,
 
-s15-154
-00:08:57.211 --> 00:09:01.965
+s15-158
+00:09:14.091 --> 00:09:18.845
 you're less likely to look at whatever
 the figure shows and reason backward to a
 
-s15-155
-00:09:02.015 --> 00:09:04.464
+s15-159
+00:09:18.895 --> 00:09:21.344
 story that makes it look right.
 
-s15-156
-00:09:04.514 --> 00:09:07.794
+s15-160
+00:09:21.394 --> 00:09:24.674
 Write both checks into your README,
 with the source you're checking against,
 
-s15-157
-00:09:07.844 --> 00:09:10.790
+s15-161
+00:09:24.724 --> 00:09:27.670
 so anyone reading the project
 can see what you checked.
 
-s16-158
-00:09:11.540 --> 00:09:15.671
+s16-162
+00:09:28.420 --> 00:09:32.551
 These are the same three mantras
 from Module 1, applied to more work.
 
-s16-159
-00:09:15.721 --> 00:09:18.315
+s16-163
+00:09:32.601 --> 00:09:35.199
 Files persist and context doesn't.
 
-s16-160
-00:09:18.365 --> 00:09:23.322
+s16-164
+00:09:35.249 --> 00:09:40.202
 Here that means DECISIONS.md, LOG.md,
 and attrition rows at every stage,
 
-s16-161
-00:09:23.372 --> 00:09:24.674
+s16-165
+00:09:40.252 --> 00:09:41.554
 not just at the end.
 
-s16-162
-00:09:24.724 --> 00:09:25.500
+s16-166
+00:09:41.604 --> 00:09:42.380
 Trust, but verify.
 
-s16-163
-00:09:25.550 --> 00:09:29.948
+s16-167
+00:09:42.430 --> 00:09:46.828
 Here that means two named sanity
 checks before you sign off,
 
-s16-164
-00:09:29.998 --> 00:09:35.431
+s16-168
+00:09:46.878 --> 00:09:52.311
 instead of a general sense that the
 figure looks fine. And be specific.
 
-s16-165
-00:09:35.481 --> 00:09:40.157
+s16-169
+00:09:52.361 --> 00:09:57.037
 That's six parts now: data, join, measure,
 aggregation, output, and paper trail.
 
-s16-166
-00:09:40.207 --> 00:09:44.348
+s16-170
+00:09:57.087 --> 00:10:01.228
 A full pipeline has more decisions
 in it than a single script,
 
-s16-167
-00:09:44.398 --> 00:09:46.850
+s16-171
+00:10:01.278 --> 00:10:03.730
 and you state each one in the prompt.
 
-s17-168
-00:09:47.600 --> 00:09:50.379
+s17-172
+00:10:04.480 --> 00:10:07.275
 Here's what autonomous
 error recovery looks like.
 
-s17-169
-00:09:50.429 --> 00:09:53.630
+s17-173
+00:10:07.325 --> 00:10:10.427
 This is a stylized transcript,
 not a screenshot.
 
-s17-170
-00:09:53.680 --> 00:09:57.947
+s17-174
+00:10:10.477 --> 00:10:14.772
 The prompt asks for the
-fourth-quarter 2023 FSDS zip.
+first-quarter 2024 FSDS zip.
 
-s17-171
-00:09:57.997 --> 00:10:00.281
+s17-175
+00:10:14.822 --> 00:10:17.168
 The download script runs and
 gets a bare 403 Forbidden,
 
-s17-172
-00:10:00.331 --> 00:10:05.929
+s17-176
+00:10:17.218 --> 00:10:23.073
 because the SEC rejects bulk-file
 requests that don't identify who's asking.
 
-s17-173
-00:10:05.979 --> 00:10:09.843
-Claude reads the error, adds a
-User-Agent header with an email address,
+s17-177
+00:10:23.123 --> 00:10:27.708
+Claude reads the error, adds a User-Agent
+header with a name and an email address,
 
-s17-174
-00:10:09.893 --> 00:10:12.442
+s17-178
+00:10:27.758 --> 00:10:30.340
 runs the script again,
 and the file comes down,
 
-s17-175
-00:10:12.492 --> 00:10:14.969
+s17-179
+00:10:30.390 --> 00:10:32.818
 without you typing any part of the fix.
 
-s17-176
-00:10:15.019 --> 00:10:16.987
+s17-180
+00:10:32.868 --> 00:10:34.650
 So here you watch rather than drive,
 
-s17-177
-00:10:17.037 --> 00:10:20.030
+s17-181
+00:10:34.700 --> 00:10:37.710
 and you step in only if
 the strategy looks wrong.
 
-s18-178
-00:10:20.780 --> 00:10:25.041
+s18-182
+00:10:38.460 --> 00:10:42.721
 In the live session, the demo runs
 thirty-five minutes in five steps.
 
-s18-179
-00:10:25.091 --> 00:10:30.234
+s18-183
+00:10:42.771 --> 00:10:47.914
 First I read the opening prompt aloud,
 slowly, because it's the template you keep.
 
-s18-180
-00:10:30.284 --> 00:10:31.921
+s18-184
+00:10:47.964 --> 00:10:49.601
 That takes about eight minutes.
 
-s18-181
-00:10:31.971 --> 00:10:35.752
+s18-185
+00:10:49.651 --> 00:10:53.432
 Then the download and the
 403 recovery, which we watch.
 
-s18-182
-00:10:35.802 --> 00:10:40.845
+s18-186
+00:10:53.482 --> 00:10:58.525
 Then cleaning and the join on ADSH,
 with the attrition rows printing as it goes.
 
-s18-183
-00:10:40.895 --> 00:10:44.078
+s18-187
+00:10:58.575 --> 00:11:01.758
 Then the first-draft figure
 and two rounds of refinement.
 
-s18-184
-00:10:44.128 --> 00:10:47.150
+s18-188
+00:11:01.808 --> 00:11:04.830
 And last, the sanity checks,
 the sign-off, and the README,
 
-s18-185
-00:10:47.200 --> 00:10:49.290
+s18-189
+00:11:04.880 --> 00:11:06.970
 which gets written at the very end.
 
-s19-186
-00:10:50.040 --> 00:10:51.859
+s19-190
+00:11:07.720 --> 00:11:09.574
 In the first half of the demo,
 
-s19-187
-00:10:51.909 --> 00:10:54.563
+s19-191
+00:11:09.624 --> 00:11:12.235
 the six-part prompt goes up
 on the screen and I read it.
 
-s19-188
-00:10:54.613 --> 00:10:56.163
+s19-192
+00:11:12.285 --> 00:11:13.886
 I don't retype it.
 
-s19-189
-00:10:56.213 --> 00:11:00.957
-You'll see the same 403-and-recover
-pattern from Module 1, on a bigger file.
+s19-193
+00:11:13.936 --> 00:11:15.414
+Then the download,
 
-s19-190
-00:11:01.007 --> 00:11:02.516
+s19-194
+00:11:15.464 --> 00:11:19.984
+where you may see the SEC's User-Agent
+403 and the agent's own recovery.
+
+s19-195
+00:11:20.034 --> 00:11:21.742
 Then the join.
 
-s19-191
-00:11:02.566 --> 00:11:06.431
+s19-196
+00:11:21.792 --> 00:11:25.702
 Watch the row count in each file
 before the join and the count after,
 
-s19-192
-00:11:06.481 --> 00:11:10.038
+s19-197
+00:11:25.752 --> 00:11:29.205
 and any ADSH values that
 get flagged as unmatched.
 
-s19-193
-00:11:10.088 --> 00:11:15.103
+s19-198
+00:11:29.255 --> 00:11:34.273
 While the attrition rows print, I'll stop
 and read one DECISIONS.md entry out loud,
 
-s19-194
-00:11:15.153 --> 00:11:19.865
+s19-199
+00:11:34.323 --> 00:11:38.264
 for example which quarters value it
 kept for assets versus R&D, and why,
 
-s19-195
-00:11:19.915 --> 00:11:23.190
+s19-200
+00:11:38.314 --> 00:11:42.390
 so you see the paper trail being
 written as the choices get made.
 
-s20-196
-00:11:23.940 --> 00:11:28.063
+s20-201
+00:11:43.140 --> 00:11:47.263
 In the second half, the first draft
 of the figure will render wrong,
 
-s20-197
-00:11:28.113 --> 00:11:29.376
+s20-202
+00:11:47.313 --> 00:11:48.576
 and we count the rounds together.
 
-s20-198
-00:11:29.426 --> 00:11:32.010
+s20-203
+00:11:48.626 --> 00:11:51.210
 Round one is axes and labels.
 
-s20-199
-00:11:32.060 --> 00:11:34.630
+s20-204
+00:11:51.260 --> 00:11:53.830
 Round two is the
 industry-bucket granularity,
 
-s20-200
-00:11:34.680 --> 00:11:39.443
+s20-205
+00:11:53.880 --> 00:11:58.643
 for example cutting down to a readable
 number of two-digit SIC lines.
 
-s20-201
-00:11:39.493 --> 00:11:43.429
+s20-206
+00:11:58.693 --> 00:12:02.629
 Then I run both sanity checks
 and say what each one is testing.
 
-s20-202
-00:11:43.479 --> 00:11:45.493
+s20-207
+00:12:02.679 --> 00:12:04.693
 The README gets written
 only after they pass,
 
-s20-203
-00:11:45.543 --> 00:11:48.930
+s20-208
+00:12:04.743 --> 00:12:08.130
 so it describes a pipeline
 that's already been verified.
 
-s21-204
-00:11:49.680 --> 00:11:53.052
+s21-209
+00:12:08.880 --> 00:12:12.257
 Then the lab: eighty minutes,
 one continuous block,
 
-s21-205
-00:11:53.102 --> 00:11:56.709
+s21-210
+00:12:12.307 --> 00:12:15.833
 from an empty folder to a
 verified figure and a README.
 
-s21-206
-00:11:56.759 --> 00:11:58.284
+s21-211
+00:12:15.883 --> 00:12:17.358
 You choose one measure.
 
-s21-207
-00:11:58.334 --> 00:12:04.244
+s21-212
+00:12:17.408 --> 00:12:23.363
 Base is book leverage, long-term debt over
 total assets, by two-digit SIC and year.
 
-s21-208
-00:12:04.294 --> 00:12:09.240
+s21-213
+00:12:23.413 --> 00:12:28.289
 Standard is the demo's R&D intensity,
 but grouped by one-digit SIC.
 
-s21-209
-00:12:09.290 --> 00:12:11.525
+s21-214
+00:12:28.339 --> 00:12:30.522
 Stretch is revenue concentration,
 
-s21-210
-00:12:11.575 --> 00:12:14.924
+s21-215
+00:12:30.572 --> 00:12:34.183
 the share of total revenue from
 the ten largest filers each year,
 
-s21-211
-00:12:14.974 --> 00:12:17.177
+s21-216
+00:12:34.233 --> 00:12:36.192
 which takes more cleaning judgment.
 
-s21-212
-00:12:17.227 --> 00:12:21.271
+s21-217
+00:12:36.242 --> 00:12:41.550
 Your measure is different from the demo's,
 so the verification is your own.
 
-s21-213
-00:12:21.321 --> 00:12:27.940
+s21-218
+00:12:41.600 --> 00:12:47.126
 Use the five quarters the starter pack pins:
-the fourth quarter of 2012, 2015, 2018,
+the first quarter of 2013, 2016, 2019,
 
-s21-214
-00:12:27.990 --> 00:12:30.052
-2021, and 2023.
+s21-219
+00:12:47.176 --> 00:12:49.278
+2022, and 2024.
 
-s21-215
-00:12:30.102 --> 00:12:32.454
+s21-220
+00:12:49.328 --> 00:12:51.658
 And the requirements are the
 same as the demo: named scripts,
 
-s21-216
-00:12:32.504 --> 00:12:37.870
+s21-221
+00:12:51.708 --> 00:12:57.070
 DECISIONS and LOG requested upfront,
 an attrition table, and one figure.
 
-s22-217
-00:12:38.620 --> 00:12:42.059
+s22-222
+00:12:57.820 --> 00:13:01.259
 This is the checklist you work
 through before you call the lab done.
 
-s22-218
-00:12:42.109 --> 00:12:46.052
+s22-223
+00:13:01.309 --> 00:13:05.252
 It's self-graded, pass or fail,
 and I spot-check a sample.
 
-s22-219
-00:12:46.102 --> 00:12:50.177
+s22-224
+00:13:05.302 --> 00:13:09.377
 The pipeline reruns start to finish
 from the README in a fresh clone.
 
-s22-220
-00:12:50.227 --> 00:12:55.659
+s22-225
+00:13:09.427 --> 00:13:14.859
 Sub and num are joined on ADSH,
 with row counts stated before and after.
 
-s22-221
-00:12:55.709 --> 00:13:00.948
+s22-226
+00:13:14.909 --> 00:13:20.148
 Every change in sample size is in the
 attrition table and explained in DECISIONS.md.
 
-s22-222
-00:13:00.998 --> 00:13:04.559
+s22-227
+00:13:20.198 --> 00:13:23.759
 The data profile covers the row definition,
 the uniqueness test, tag coverage,
 
-s22-223
-00:13:04.609 --> 00:13:06.955
+s22-228
+00:13:23.809 --> 00:13:26.155
 and known problems.
 
-s22-224
-00:13:07.005 --> 00:13:11.311
+s22-229
+00:13:26.205 --> 00:13:30.511
 Two sanity checks are written down with
 sources, and the raw series is plotted.
 
-s22-225
-00:13:11.361 --> 00:13:12.970
+s22-230
+00:13:30.561 --> 00:13:32.170
 And the figure comes from a script.
 
-s23-226
-00:13:13.720 --> 00:13:18.145
+s23-231
+00:13:32.920 --> 00:13:37.345
 Now the WRDS checkpoint,
 and this one is a hard gate.
 
-s23-227
-00:13:18.195 --> 00:13:21.159
+s23-232
+00:13:37.395 --> 00:13:40.359
 By the end of this module
 you submit one of two things.
 
-s23-228
-00:13:21.209 --> 00:13:24.383
+s23-233
+00:13:40.409 --> 00:13:43.583
 Either a tunnel status screenshot
 showing ssh wrds connecting,
 
-s23-229
-00:13:24.433 --> 00:13:27.723
+s23-234
+00:13:43.633 --> 00:13:46.923
 the Duo push arriving,
 and the connection succeeding.
 
-s23-230
-00:13:27.773 --> 00:13:31.567
+s23-235
+00:13:46.973 --> 00:13:50.767
 Or a flag on your exit ticket
 saying exactly what went wrong.
 
-s23-231
-00:13:31.617 --> 00:13:36.294
+s23-236
+00:13:50.817 --> 00:13:55.494
 I triage those that night, and fixes
 get announced the morning of Module 3.
 
-s23-232
-00:13:36.344 --> 00:13:39.886
+s23-237
+00:13:55.544 --> 00:13:59.086
 Fixing an account or Duo
 problem takes at least two days.
 
-s23-233
-00:13:39.936 --> 00:13:43.226
+s23-238
+00:13:59.136 --> 00:14:02.426
 If your WRDS access isn't
 working at this checkpoint,
 
-s23-234
-00:13:43.276 --> 00:13:48.368
+s23-239
+00:14:02.476 --> 00:14:07.568
 you're provisionally on the public-data
 fallback track for Module 4,
 
-s23-235
-00:13:48.418 --> 00:13:50.057
+s23-240
+00:14:07.618 --> 00:14:09.257
 so you can plan for it now.
 
-s23-236
-00:13:50.107 --> 00:13:53.750
+s23-241
+00:14:09.307 --> 00:14:12.950
 If you get it working before Module 4,
 you can switch to the live track.
 
-s24-237
-00:13:54.500 --> 00:13:56.143
+s24-242
+00:14:13.700 --> 00:14:15.343
 We close with a debrief.
 
-s24-238
-00:13:56.193 --> 00:13:58.825
+s24-243
+00:14:15.393 --> 00:14:18.025
 Whose first-draft figure
 was actually right?
 
-s24-239
-00:13:58.875 --> 00:14:01.534
+s24-244
+00:14:18.075 --> 00:14:20.734
 Expect close to zero, and that's normal.
 
-s24-240
-00:14:01.584 --> 00:14:05.856
+s24-245
+00:14:20.784 --> 00:14:25.056
 What did Claude recover from on its own,
 and where did you have to step in?
 
-s24-241
-00:14:05.906 --> 00:14:10.920
+s24-246
+00:14:25.106 --> 00:14:30.120
 Then the exit ticket: the standard three
 questions, plus one sentence on sub-agents.
 
-s24-242
-00:14:10.970 --> 00:14:14.776
+s24-247
+00:14:30.170 --> 00:14:33.976
 If you saw Claude start one during
 your lab, what do you think it was for?
 
-s24-243
-00:14:14.826 --> 00:14:17.133
+s24-248
+00:14:34.026 --> 00:14:36.310
 We answer that properly in Module 4.
 
-s24-244
-00:14:17.183 --> 00:14:20.424
+s24-249
+00:14:36.360 --> 00:14:39.624
 And make sure your WRDS
 checkpoint is submitted.
 
-s24-245
-00:14:20.474 --> 00:14:21.490
+s24-250
+00:14:39.674 --> 00:14:40.690
 See you in the lab.
