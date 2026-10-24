@@ -8,7 +8,7 @@ toc: false
 
 # Claude Code for Accounting Research
 
-A hands-on PhD course on agentic AI for empirical accounting research, with five build modules and a closing seminar. It starts at first install and ends at a verified WRDS-to-Stata pipeline. The seminar then discusses what these tools mean for the profession.
+A hands-on PhD course on agentic AI for empirical accounting research, with five build modules and a closing seminar. It starts at first install and ends at a verified WRDS-to-Stata pipeline. The seminar then discusses what these tools mean for the profession. It is open to any PhD student as self-study, at your own pace.
 
 ::: {.hero-facts}
 6 modules · 5 labs · 40 skills · 1 verification protocol

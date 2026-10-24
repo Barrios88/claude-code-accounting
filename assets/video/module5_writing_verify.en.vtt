@@ -1449,137 +1449,147 @@ You grade yourself, and I spot-check
 three or four projects live.
 
 s30-306
-00:17:26.700 --> 00:17:29.717
+00:17:26.700 --> 00:17:29.630
 Before you leave, you get
 the Module 6 readings.
 
 s30-307
-00:17:29.767 --> 00:17:35.646
-The required set is excerpts from Korinek,
-2023, excerpts from Bloom, Jones,
+00:17:29.680 --> 00:17:32.388
+There are six, all from
+the last two years.
 
 s30-308
-00:17:35.696 --> 00:17:40.605
-Van Reenen, and Webb, 2020,
-Macnamara and coauthors, 2024,
+00:17:32.438 --> 00:17:37.241
+Bastani and coauthors on learning,
+Budzyń and coauthors on expert deskilling,
 
 s30-309
-00:17:40.655 --> 00:17:44.788
-the Nature editorial from 2023,
-and Lusher, Yang, and Carrell, 2023.
+00:17:37.291 --> 00:17:40.629
+Brodeur and coauthors on
+AI-assisted replication,
 
 s30-310
-00:17:44.838 --> 00:17:51.671
-If you want an accounting angle, you can
-swap in Kim, Muhn, and Nikolaev, 2024,
+00:17:40.679 --> 00:17:44.386
+Lu and coauthors on an AI
+system that writes whole papers,
 
 s30-311
-00:17:51.721 --> 00:17:53.276
-or Dong, Stratopoulos, and Wang, 2024.
+00:17:44.436 --> 00:17:48.061
+and then Kusumegi and coauthors,
+and Hao and coauthors,
 
 s30-312
-00:17:53.326 --> 00:17:55.075
-The whole packet is under ninety minutes.
+00:17:48.111 --> 00:17:50.879
+on what AI is doing to scientific output.
 
 s30-313
-00:17:55.125 --> 00:17:58.516
-Read it overnight.
+00:17:50.929 --> 00:17:55.100
+If you want an accounting angle,
+the swap options are on the Module 6 page.
 
 s30-314
-00:17:58.566 --> 00:18:03.288
+00:17:55.150 --> 00:17:57.065
+The whole packet is about ninety minutes.
+
+s30-315
+00:17:57.115 --> 00:17:58.359
+Read it overnight.
+
+s30-316
+00:17:58.409 --> 00:18:03.264
 The position memo prompt is "What I will
 still be paid for in 2036," and debate
 
-s30-315
-00:18:03.338 --> 00:18:05.610
+s30-317
+00:18:03.314 --> 00:18:05.530
 positions get assigned in class.
 
-s31-316
-00:18:06.360 --> 00:18:07.988
+s31-318
+00:18:06.280 --> 00:18:07.908
 We close with the debrief.
 
-s31-317
-00:18:08.038 --> 00:18:09.965
+s31-319
+00:18:07.958 --> 00:18:09.885
 I put three or four projects on screen,
 
-s31-318
-00:18:10.015 --> 00:18:13.781
+s31-320
+00:18:09.935 --> 00:18:13.701
 and together we check one DECISIONS
 claim against the commit log.
 
-s31-319
-00:18:13.831 --> 00:18:15.814
+s31-321
+00:18:13.751 --> 00:18:15.734
 Then you share your delegation rule,
 
-s31-320
-00:18:15.864 --> 00:18:19.042
+s31-322
+00:18:15.784 --> 00:18:18.962
 one task you always delegate
 and one you never do,
 
-s31-321
-00:18:19.092 --> 00:18:23.542
+s31-323
+00:18:19.012 --> 00:18:23.462
 and we talk about what a coauthor would
 need to see before trusting your repository.
 
-s31-322
-00:18:23.592 --> 00:18:27.496
+s31-324
+00:18:23.512 --> 00:18:27.416
 The exit ticket is the standard three
 questions, one thing that clicked,
 
-s31-323
-00:18:27.546 --> 00:18:28.670
+s31-325
+00:18:27.466 --> 00:18:28.590
 one thing that broke,
 
-s31-324
-00:18:28.720 --> 00:18:32.230
+s31-326
+00:18:28.640 --> 00:18:32.150
 and one thing you'd want to verify
 before trusting a similar result,
 
-s31-325
-00:18:32.280 --> 00:18:34.310
+s31-327
+00:18:32.200 --> 00:18:34.230
 plus your delegation rule in writing.
 
-s32-326
-00:18:35.060 --> 00:18:37.998
+s32-328
+00:18:34.980 --> 00:18:37.918
 This last page is the
 course operating system,
 
-s32-327
-00:18:38.048 --> 00:18:41.524
+s32-329
+00:18:37.968 --> 00:18:41.444
 a one-pager of what to keep
 doing after the course ends.
 
-s32-328
-00:18:41.574 --> 00:18:44.895
+s32-330
+00:18:41.494 --> 00:18:44.815
 Across the top are the
 three mantras from Module 1:
 
-s32-329
-00:18:44.945 --> 00:18:50.343
+s32-331
+00:18:44.865 --> 00:18:50.263
 files persist and context doesn't, trust
 but verify the way you would with an RA,
 
-s32-330
-00:18:50.393 --> 00:18:55.200
+s32-332
+00:18:50.313 --> 00:18:55.120
 and be specific about the file,
 operation, aggregation, and output.
 
-s32-331
-00:18:55.250 --> 00:18:58.713
+s32-333
+00:18:55.170 --> 00:18:58.633
 Below that are the five git
 commands, the paper-trail files,
 
-s32-332
-00:18:58.763 --> 00:19:02.826
+s32-334
+00:18:58.683 --> 00:19:02.746
 the two-command credential audit,
 and a hygiene checklist.
 
-s32-333
-00:19:02.876 --> 00:19:06.921
+s32-335
+00:19:02.796 --> 00:19:06.841
 Module 6 comes back to a harder
 version of the delegation question,
 
-s32-334
-00:19:06.971 --> 00:19:09.810
+s32-336
+00:19:06.891 --> 00:19:09.730
 applied to what a PhD
 is for. See you there.

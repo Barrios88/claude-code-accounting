@@ -2,7 +2,7 @@
 title: "Labs"
 ---
 
-There are five labs, one per build module, and each takes 80 minutes of the module session. Each lab page has the full instructions, the tiered task menu (base / standard / stretch), and the verify checklist you grade yourself against. The checklist is pass/fail and spot-checked in the debrief. Starter packs are small zips of templates and checklists. They never contain data or credentials. You download data yourself from public sources, and Module 4's WRDS pull runs on your own account. A public-data fallback track covers anyone whose WRDS access isn't live yet.
+There are five labs, one per build module, and each takes 80 minutes of the module session. Each lab page has the full instructions, the tiered task menu (base / standard / stretch), and the verify checklist you grade yourself against. The checklist is pass/fail. In a live session it is spot-checked in the debrief; on your own, it is the standard. Starter packs are small zips of templates and checklists. They never contain data or credentials. You download data yourself from public sources, and Module 4's WRDS pull runs on your own account. A public-data fallback track covers anyone whose WRDS access isn't live yet.
 
 | Lab | Builds | Starter |
 |-----|--------|---------|
