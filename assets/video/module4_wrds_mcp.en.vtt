@@ -163,1004 +163,1028 @@ This is rung five of the
 ladder from Module 1.
 
 s05-035
-00:02:01.840 --> 00:02:03.908
+00:02:01.840 --> 00:02:04.016
 Here's the chain, from left to right.
 
 s05-036
-00:02:03.958 --> 00:02:07.866
+00:02:04.066 --> 00:02:07.760
 You type a plain request in
 Claude Code, with no password in it.
 
 s05-037
-00:02:07.916 --> 00:02:10.886
+00:02:07.810 --> 00:02:10.857
 That goes to the wrds-mcp server,
 
 s05-038
-00:02:10.936 --> 00:02:15.936
+00:02:10.907 --> 00:02:15.712
 a local process that reads your username
-and password from an env file on your disk.
+and password from its configuration on
 
 s05-039
-00:02:15.986 --> 00:02:22.480
+00:02:15.762 --> 00:02:16.717
+your disk.
+
+s05-040
+00:02:16.767 --> 00:02:22.206
 The tunnel uses paramiko to open one SSH
 session to WRDS, takes a single Duo push,
 
-s05-040
-00:02:22.530 --> 00:02:25.569
+s05-041
+00:02:22.256 --> 00:02:25.289
 and stays open on local port 49600.
 
-s05-041
-00:02:25.619 --> 00:02:29.100
+s05-042
+00:02:25.339 --> 00:02:28.201
+It reads the same credentials
+from the env file.
+
+s05-043
+00:02:28.251 --> 00:02:31.844
 Then WRDS PostgreSQL itself,
 with schemas like comp and crsp.
 
-s05-042
-00:02:29.150 --> 00:02:33.583
-Results land in a folder called
+s05-044
+00:02:31.894 --> 00:02:36.329
+Downloads land in a folder called
 WRDS data in your home directory,
 
-s05-043
-00:02:33.633 --> 00:02:37.696
+s05-045
+00:02:36.379 --> 00:02:40.267
 and Claude sees a summary,
 like a row count.
 
-s05-044
-00:02:37.746 --> 00:02:42.111
+s05-046
+00:02:40.317 --> 00:02:44.674
 People often assume Claude must have
 your password to pull WRDS data,
 
-s05-045
-00:02:42.161 --> 00:02:45.790
-but the password stays in the env
-file and never reaches Claude.
+s05-047
+00:02:44.724 --> 00:02:48.110
+but the password stays in those
+files and never reaches Claude.
 
-s06-046
-00:02:46.540 --> 00:02:49.815
+s06-048
+00:02:48.860 --> 00:02:52.135
 This distinction applies well beyond WRDS.
 
-s06-047
-00:02:49.865 --> 00:02:55.299
+s06-049
+00:02:52.185 --> 00:02:57.619
 A sandbox, like a container or a locked-down
 shell, limits what an agent can do.
 
-s06-048
-00:02:55.349 --> 00:02:59.674
+s06-050
+00:02:57.669 --> 00:03:01.994
 It does nothing to limit what the agent
 can see once data is in front of it.
 
-s06-049
-00:02:59.724 --> 00:03:02.289
+s06-051
+00:03:02.044 --> 00:03:04.609
 What protects your password is
 where it sits: in an env file,
 
-s06-050
-00:03:02.339 --> 00:03:06.142
+s06-052
+00:03:04.659 --> 00:03:08.462
 one link below where
 Claude does its reasoning.
 
-s06-051
-00:03:06.192 --> 00:03:08.624
+s06-053
+00:03:08.512 --> 00:03:10.944
 You're not relying on
 Claude's good behavior.
 
-s06-052
-00:03:08.674 --> 00:03:12.063
+s06-054
+00:03:10.994 --> 00:03:14.383
 Data is a separate matter,
 and it's a legal one.
 
-s06-053
-00:03:12.113 --> 00:03:15.141
+s06-055
+00:03:14.433 --> 00:03:17.461
 The WRDS license belongs
 to your institution,
 
-s06-054
-00:03:15.191 --> 00:03:17.532
+s06-056
+00:03:17.511 --> 00:03:19.852
 and extracts aren't yours to redistribute.
 
-s06-055
-00:03:17.582 --> 00:03:21.322
+s06-057
+00:03:19.902 --> 00:03:23.642
 So the course rule is zero
 WRDS data distribution.
 
-s06-056
-00:03:21.372 --> 00:03:25.530
+s06-058
+00:03:23.692 --> 00:03:27.850
 That means no extracts in a lab zip,
 on the course site, or in Slack.
 
-s07-057
-00:03:26.280 --> 00:03:29.753
+s07-059
+00:03:28.600 --> 00:03:32.073
 Now the routine habits,
 done in order every session.
 
-s07-058
-00:03:29.803 --> 00:03:35.656
+s07-060
+00:03:32.123 --> 00:03:37.976
 Install wrds-mcp in its own virtual
 environment, not your system Python.
 
-s07-059
-00:03:35.706 --> 00:03:39.799
+s07-061
+00:03:38.026 --> 00:03:43.309
 Put your credentials in the ~/.wrds-mcp.env
 file in your home directory,
 
-s07-060
-00:03:39.849 --> 00:03:42.845
+s07-062
+00:03:43.359 --> 00:03:45.165
 and chmod it to 600 so
 only you can read it.
 
-s07-061
-00:03:42.895 --> 00:03:49.236
+s07-063
+00:03:45.215 --> 00:03:51.556
 If you're in a git project, write the
 gitignore entry before that file exists.
 
-s07-062
-00:03:49.286 --> 00:03:50.854
+s07-064
+00:03:51.606 --> 00:03:53.174
 Then the tunnel: up, work, teardown.
 
-s07-063
-00:03:50.904 --> 00:03:56.067
+s07-065
+00:03:53.224 --> 00:03:58.387
 Run tunnel up, approve the one Duo push,
 and confirm port 49600 is listening.
 
-s07-064
-00:03:56.117 --> 00:03:59.598
+s07-066
+00:03:58.437 --> 00:04:01.918
 One approved session covers
 every query in the run.
 
-s07-065
-00:03:59.648 --> 00:04:02.990
+s07-067
+00:04:01.968 --> 00:04:05.310
 Then run tunnel down at
 the end of every session.
 
-s07-066
-00:04:03.040 --> 00:04:08.390
+s07-068
+00:04:05.360 --> 00:04:10.710
 People skip that step most often,
 because nothing visibly breaks when they do.
 
-s08-067
-00:04:09.140 --> 00:04:13.413
+s08-069
+00:04:11.460 --> 00:04:15.733
 The hardest mistake to undo is pasting
 your WRDS password into a prompt,
 
-s08-068
-00:04:13.463 --> 00:04:14.314
+s08-070
+00:04:15.783 --> 00:04:16.634
 just this once.
 
-s08-069
-00:04:14.364 --> 00:04:17.376
+s08-071
+00:04:16.684 --> 00:04:19.696
 A lot of times it happens
 because a script errored,
 
-s08-070
-00:04:17.426 --> 00:04:22.332
+s08-072
+00:04:19.746 --> 00:04:24.652
 and pasting the password felt faster
 than fixing the environment variable.
 
-s08-071
-00:04:22.382 --> 00:04:26.622
+s08-073
+00:04:24.702 --> 00:04:28.942
 Once a credential is typed into the
 conversation, it has been sent to the model,
 
-s08-072
-00:04:26.672 --> 00:04:29.015
+s08-074
+00:04:28.992 --> 00:04:31.335
 and no cleanup afterward
 fully undoes that.
 
-s08-073
-00:04:29.065 --> 00:04:31.124
+s08-075
+00:04:31.385 --> 00:04:33.444
 So the fix is procedural.
 
-s08-074
-00:04:31.174 --> 00:04:33.178
+s08-076
+00:04:33.494 --> 00:04:35.498
 Credentials go in the env file.
 
-s08-075
-00:04:33.228 --> 00:04:36.408
+s08-077
+00:04:35.548 --> 00:04:38.728
 If a script can't find them,
 check that the env file is sourced,
 
-s08-076
-00:04:36.458 --> 00:04:38.930
+s08-078
+00:04:38.778 --> 00:04:41.250
 and don't hardcode a value to move faster.
 
-s09-077
-00:04:39.680 --> 00:04:44.839
+s09-079
+00:04:42.000 --> 00:04:47.159
 These are the four Compustat filters,
 and every pull from funda uses all four.
 
-s09-078
-00:04:44.889 --> 00:04:47.568
+s09-080
+00:04:47.209 --> 00:04:49.888
 indfmt = 'INDL', for industrial format.
 
-s09-079
-00:04:47.618 --> 00:04:49.271
+s09-081
+00:04:49.938 --> 00:04:51.591
 datafmt = 'STD', for standardized data.
 
-s09-080
-00:04:49.321 --> 00:04:53.151
+s09-082
+00:04:51.641 --> 00:04:55.471
 popsrc = 'D', for the domestic population.
 
-s09-081
-00:04:53.201 --> 00:04:56.484
+s09-083
+00:04:55.521 --> 00:04:58.804
 And consol = 'C',
 for consolidated statements.
 
-s09-082
-00:04:56.534 --> 00:05:00.160
+s09-084
+00:04:58.854 --> 00:05:02.480
 If you leave one out, the query doesn't
 error, and the rows look reasonable.
 
-s09-083
-00:05:00.210 --> 00:05:04.185
+s09-085
+00:05:02.530 --> 00:05:06.505
 Drop the industrial-format filter,
 
-s09-084
-00:05:04.235 --> 00:05:07.991
+s09-086
+00:05:06.555 --> 00:05:10.311
 and financial-services records
 load next to the industrial ones.
 
-s09-085
-00:05:08.041 --> 00:05:09.789
+s09-087
+00:05:10.361 --> 00:05:12.109
 Drop the consolidation filter,
 
-s09-086
-00:05:09.839 --> 00:05:14.572
+s09-088
+00:05:12.159 --> 00:05:16.892
 and unconsolidated records load
 beside the consolidated statements,
 
-s09-087
-00:05:14.622 --> 00:05:17.857
+s09-089
+00:05:16.942 --> 00:05:20.177
 so the same business gets counted twice.
 
-s09-088
-00:05:17.907 --> 00:05:20.721
+s09-090
+00:05:20.227 --> 00:05:23.041
 That shows up later as wrong coefficients.
 
-s09-089
-00:05:20.771 --> 00:05:25.312
+s09-091
+00:05:23.091 --> 00:05:27.632
 The WRDS filter skill in the
 course catalog enforces all four.
 
-s09-090
-00:05:25.362 --> 00:05:27.870
+s09-092
+00:05:27.682 --> 00:05:30.190
 It's built the same way as
 the skills from Module 3.
 
-s10-091
-00:05:28.620 --> 00:05:33.330
+s10-093
+00:05:30.940 --> 00:05:35.650
 CRSP is different, because there's
 no iron-law list to fall back on.
 
-s10-092
-00:05:33.380 --> 00:05:37.429
+s10-094
+00:05:35.700 --> 00:05:39.749
 The CRSP returns helper joins the returns
 file to the names file by permno and
 
-s10-093
-00:05:37.479 --> 00:05:40.488
+s10-095
+00:05:39.799 --> 00:05:42.808
 date range, and that's all it does.
 
-s10-094
-00:05:40.538 --> 00:05:44.750
+s10-096
+00:05:42.858 --> 00:05:47.070
 Share-type and exchange restrictions
 aren't applied by any tool in this stack.
 
-s10-095
-00:05:44.800 --> 00:05:47.182
+s10-097
+00:05:47.120 --> 00:05:49.502
 You apply them yourself,
 after the pull, every time.
 
-s10-096
-00:05:47.232 --> 00:05:50.111
+s10-098
+00:05:49.552 --> 00:05:52.431
 So the order is the
 same for both databases.
 
-s10-097
-00:05:50.161 --> 00:05:51.227
+s10-099
+00:05:52.481 --> 00:05:53.547
 Figure out which filters apply,
 
-s10-098
-00:05:51.277 --> 00:05:56.315
+s10-100
+00:05:53.597 --> 00:05:58.635
 check that the query includes them before
 you run it, run it, and then inspect.
 
-s10-099
-00:05:56.365 --> 00:05:59.231
+s10-101
+00:05:58.685 --> 00:06:01.551
 Do that for a quick test too.
 
-s10-100
-00:05:59.281 --> 00:06:02.005
+s10-102
+00:06:01.601 --> 00:06:04.325
 If a quick test skips a filter
 and the output looks fine,
 
-s10-101
-00:06:02.055 --> 00:06:04.250
+s10-103
+00:06:04.375 --> 00:06:06.570
 you still haven't validated anything.
 
-s11-102
-00:06:05.000 --> 00:06:08.896
+s11-104
+00:06:07.320 --> 00:06:11.216
 After every pull, and before you
 tell anyone the extract is good,
 
-s11-103
-00:06:08.946 --> 00:06:11.933
+s11-105
+00:06:11.266 --> 00:06:14.253
 including yourself, you run four checks.
 
-s11-104
-00:06:11.983 --> 00:06:15.380
+s11-106
+00:06:14.303 --> 00:06:17.700
 The row count, compared with a
 number you expected going in.
 
-s11-105
-00:06:15.430 --> 00:06:19.759
+s11-107
+00:06:17.750 --> 00:06:22.079
 A look at actual values with head or
 sample, not just the column names.
 
-s11-106
-00:06:19.809 --> 00:06:22.336
+s11-108
+00:06:22.129 --> 00:06:24.656
 A null check on the
 columns you plan to use.
 
-s11-107
-00:06:22.386 --> 00:06:23.990
+s11-109
+00:06:24.706 --> 00:06:26.310
 And a date-range check,
 
-s11-108
-00:06:24.040 --> 00:06:27.946
+s11-110
+00:06:26.360 --> 00:06:30.266
 the min and max of fyear against
 what the query should have returned.
 
-s11-109
-00:06:27.996 --> 00:06:29.842
+s11-111
+00:06:30.316 --> 00:06:32.162
 All four together take under a minute,
 
-s11-110
-00:06:29.892 --> 00:06:32.787
+s11-112
+00:06:32.212 --> 00:06:35.107
 and you run them even when
 the query finished cleanly.
 
-s11-111
-00:06:32.837 --> 00:06:35.670
+s11-113
+00:06:35.157 --> 00:06:37.990
 No error only tells you the SQL was valid.
 
-s12-112
-00:06:36.420 --> 00:06:38.633
+s12-114
+00:06:38.740 --> 00:06:40.953
 This is the Rationalization Table:
 
-s12-113
-00:06:38.683 --> 00:06:42.736
+s12-115
+00:06:41.003 --> 00:06:45.056
 the things people tell themselves right
 before they report a number they never
 
-s12-114
-00:06:42.786 --> 00:06:43.191
+s12-116
+00:06:45.106 --> 00:06:45.511
 checked.
 
-s12-115
-00:06:43.241 --> 00:06:44.642
+s12-117
+00:06:45.561 --> 00:06:46.962
 It ran without an error.
 
-s12-116
-00:06:44.692 --> 00:06:46.174
+s12-118
+00:06:47.012 --> 00:06:48.494
 The row count looks about right,
 
-s12-117
-00:06:46.224 --> 00:06:50.382
+s12-119
+00:06:48.544 --> 00:06:52.702
 which isn't the same as comparing it
 with a number you wrote down beforehand.
 
-s12-118
-00:06:50.432 --> 00:06:54.558
+s12-120
+00:06:52.752 --> 00:06:56.878
 I've pulled this table before,
 which says nothing about this query,
 
-s12-119
-00:06:54.608 --> 00:06:56.652
+s12-121
+00:06:56.928 --> 00:06:58.972
 on this date range, with these filters.
 
-s12-120
-00:06:56.702 --> 00:07:01.080
+s12-122
+00:06:59.022 --> 00:07:03.400
 The last row does the most damage:
 the query worked, so it's correct.
 
-s12-121
-00:07:01.130 --> 00:07:05.358
+s12-123
+00:07:03.450 --> 00:07:07.678
 Whether the query executed and whether the
 data is correct are separate questions,
 
-s12-122
-00:07:05.408 --> 00:07:08.370
+s12-124
+00:07:07.728 --> 00:07:10.690
 and only the inspection
 checks answer the second one.
 
-s13-123
-00:07:09.120 --> 00:07:12.862
+s13-125
+00:07:11.440 --> 00:07:15.182
 On scale, filter at the
 database, not in pandas.
 
-s13-124
-00:07:12.912 --> 00:07:15.699
+s13-126
+00:07:15.232 --> 00:07:18.019
 The WHERE clause restricts
 by year, by the iron laws,
 
-s13-125
-00:07:15.749 --> 00:07:21.498
+s13-127
+00:07:18.069 --> 00:07:23.818
 by a list of G V keys or an SIC range,
 before a single row crosses the wire.
 
-s13-126
-00:07:21.548 --> 00:07:22.985
+s13-128
+00:07:23.868 --> 00:07:25.305
 And never SELECT * on a WRDS table.
 
-s13-127
-00:07:23.035 --> 00:07:24.593
+s13-129
+00:07:25.355 --> 00:07:26.913
 Name the columns you need.
 
-s13-128
-00:07:24.643 --> 00:07:29.680
+s13-130
+00:07:26.963 --> 00:07:32.000
 Compustat's annual file has hundreds
 of variables and decades of history for
 
-s13-129
-00:07:29.730 --> 00:07:31.452
+s13-131
+00:07:32.050 --> 00:07:33.772
 tens of thousands of firms,
 
-s13-130
-00:07:31.502 --> 00:07:36.166
+s13-132
+00:07:33.822 --> 00:07:38.486
 so you never read it whole into
 a chat window or a data frame.
 
-s13-131
-00:07:36.216 --> 00:07:39.394
+s13-133
+00:07:38.536 --> 00:07:41.714
 Module 1 warned you about large
 CSVs in the context window,
 
-s13-132
-00:07:39.444 --> 00:07:43.070
+s13-134
+00:07:41.764 --> 00:07:45.390
 and the same mechanics apply
 here at a much higher cost.
 
-s14-133
-00:07:43.820 --> 00:07:47.967
+s14-135
+00:07:46.140 --> 00:07:50.287
 Once a filtered, narrow extract
 is on disk, convert it to Parquet,
 
-s14-134
-00:07:48.017 --> 00:07:50.459
+s14-136
+00:07:50.337 --> 00:07:52.779
 which is compressed and stored by column.
 
-s14-135
-00:07:50.509 --> 00:07:52.164
+s14-137
+00:07:52.829 --> 00:07:54.484
 In the course's own test,
 
-s14-136
-00:07:52.214 --> 00:07:57.187
+s14-138
+00:07:54.534 --> 00:07:59.507
 a filtered Compustat CSV extract shrank
 to roughly one-fifteenth of its size as
 
-s14-137
-00:07:57.237 --> 00:07:58.184
+s14-139
+00:07:59.557 --> 00:08:00.504
 Parquet.
 
-s14-138
-00:07:58.234 --> 00:08:02.265
+s14-140
+00:08:00.554 --> 00:08:04.585
 That number comes from our own conversion,
 and you can run a test like it yourself.
 
-s14-139
-00:08:02.315 --> 00:08:05.009
+s14-141
+00:08:04.635 --> 00:08:07.329
 Then query the file with DuckDB,
 
-s14-140
-00:08:05.059 --> 00:08:07.963
+s14-142
+00:08:07.379 --> 00:08:10.283
 which reads only the columns
 and row groups a query touches.
 
-s14-141
-00:08:08.013 --> 00:08:13.530
+s14-143
+00:08:10.333 --> 00:08:15.850
 At the end, export to Stata only the
 analysis-ready table, as a .dta file.
 
-s15-142
-00:08:14.280 --> 00:08:17.380
+s15-144
+00:08:16.600 --> 00:08:19.700
 Compustat's variable names
 don't explain themselves.
 
-s15-143
-00:08:17.430 --> 00:08:19.697
+s15-145
+00:08:19.750 --> 00:08:22.017
 dltt, che, csho, prcc_f.
 
-s15-144
-00:08:19.747 --> 00:08:22.734
+s15-146
+00:08:22.067 --> 00:08:25.054
 A fresh session, or a coauthor,
 
-s15-145
-00:08:22.784 --> 00:08:27.537
+s15-147
+00:08:25.104 --> 00:08:29.857
 can't know that dltt is long-term debt
 in millions of dollars unless something
 
-s15-146
-00:08:27.587 --> 00:08:29.269
+s15-148
+00:08:29.907 --> 00:08:31.589
 on disk says so.
 
-s15-147
-00:08:29.319 --> 00:08:35.453
+s15-149
+00:08:31.639 --> 00:08:37.773
 So you build a metadata table once,
 one row per variable: the name, a plain label,
 
-s15-148
-00:08:35.503 --> 00:08:37.216
+s15-150
+00:08:37.823 --> 00:08:39.536
 the units, and a screening note.
 
-s15-149
-00:08:37.266 --> 00:08:39.391
+s15-151
+00:08:39.586 --> 00:08:41.711
 In the demo I close the
 session, open a new one,
 
-s15-150
-00:08:39.441 --> 00:08:44.225
+s15-152
+00:08:41.761 --> 00:08:46.545
 and orient it with nothing
 but SELECT * from metadata.
 
-s15-151
-00:08:44.275 --> 00:08:50.220
+s15-153
+00:08:46.595 --> 00:08:52.540
 It's Module 1's first mantra, files persist
 and context doesn't, used for your data.
 
-s15-152
-00:08:50.270 --> 00:08:55.735
+s15-154
+00:08:52.590 --> 00:08:58.055
 The table also survives handing the
 project to a coauthor who never saw your
 
-s15-153
-00:08:55.785 --> 00:08:56.310
+s15-155
+00:08:58.105 --> 00:08:58.630
 prompts.
 
-s16-154
-00:08:57.060 --> 00:09:00.831
+s16-156
+00:08:59.380 --> 00:09:03.151
 Before you build anything
 nontrivial, ask what's involved.
 
-s16-155
-00:09:00.881 --> 00:09:04.505
+s16-157
+00:09:03.201 --> 00:09:06.825
 Use this wording as written,
 not a paraphrase.
 
-s16-156
-00:09:04.555 --> 00:09:08.989
+s16-158
+00:09:06.875 --> 00:09:11.309
 I want a firm-year panel with leverage
 and ROA for US industrials 2000 to 2023
 
-s16-157
-00:09:09.039 --> 00:09:09.713
+s16-159
+00:09:11.359 --> 00:09:12.033
 from funda.
 
-s16-158
-00:09:09.763 --> 00:09:14.212
+s16-160
+00:09:12.083 --> 00:09:16.532
 Tell me what's involved before
 you try anything complicated.
 
-s16-159
-00:09:14.262 --> 00:09:16.032
+s16-161
+00:09:16.582 --> 00:09:18.352
 What might be missing?
 
-s16-160
-00:09:16.082 --> 00:09:19.587
+s16-162
+00:09:18.402 --> 00:09:21.907
 The prompt asks Claude to reason
 about the task before any SQL runs:
 
-s16-161
-00:09:19.637 --> 00:09:23.508
+s16-163
+00:09:21.957 --> 00:09:25.828
 which filters apply,
 which variables it needs,
 
-s16-162
-00:09:23.558 --> 00:09:26.797
+s16-164
+00:09:25.878 --> 00:09:29.117
 where a link to CRSP could create
 duplicate rows. In the demo,
 
-s16-163
-00:09:26.847 --> 00:09:31.829
+s16-165
+00:09:29.167 --> 00:09:34.149
 the filter question and the linking
 caveat both come up before a single row is
 
-s16-164
-00:09:31.879 --> 00:09:32.290
+s16-166
+00:09:34.199 --> 00:09:34.610
 pulled.
 
-s17-165
-00:09:33.040 --> 00:09:37.368
+s17-167
+00:09:35.360 --> 00:09:39.705
 Here's what that looks like, as a
 stylized transcript, not a screenshot.
 
-s17-166
-00:09:37.418 --> 00:09:43.933
-The request is plain English: annual
-Compustat fundamentals for industrials,
-
-s17-167
-00:09:43.983 --> 00:09:48.001
-2000 to 2023, with gvkey,
-fyear, sales, and total assets.
-
 s17-168
-00:09:48.051 --> 00:09:51.557
-Underneath is the parameterized
-SQL that wrds-mcp sends for you.
+00:09:39.755 --> 00:09:45.535
+The request is plain English: annual
+Compustat fundamentals, 2000 to 2023,
 
 s17-169
-00:09:51.607 --> 00:09:58.052
+00:09:45.585 --> 00:09:49.074
+with gvkey, fyear, sales,
+and total assets, saved as Parquet.
+
+s17-170
+00:09:49.124 --> 00:09:53.329
+Underneath is the call to the
+download tool and the SQL it runs.
+
+s17-171
+00:09:53.379 --> 00:09:58.516
 It has an explicit column list, all four
 iron-law filters, and the year range.
 
-s17-170
-00:09:58.102 --> 00:10:02.896
-Then a script writes the result to a
-Parquet file in your WRDS data folder.
+s17-172
+00:09:58.566 --> 00:09:59.702
+Look at the max rows setting.
 
-s17-171
-00:10:02.946 --> 00:10:06.190
+s17-173
+00:09:59.752 --> 00:10:05.757
+By default the download tool stops
+at 100,000 rows without telling you,
+
+s17-174
+00:10:05.807 --> 00:10:08.216
+so set it above the count you expect.
+
+s17-175
+00:10:08.266 --> 00:10:12.577
+The file lands in your WRDS data
+folder, not in the conversation.
+
+s17-176
+00:10:12.627 --> 00:10:15.870
 There are no credentials and
 no data values anywhere in it.
 
-s18-172
-00:10:06.940 --> 00:10:09.510
+s18-177
+00:10:16.620 --> 00:10:19.151
 Module 2 said we'd come
 back to sub-agents,
 
-s18-173
-00:10:09.560 --> 00:10:13.632
+s18-178
+00:10:19.201 --> 00:10:23.106
 and they belong here because
 scale is the problem they solve.
 
-s18-174
-00:10:13.682 --> 00:10:17.858
+s18-179
+00:10:23.156 --> 00:10:27.375
 A sub-agent is a separate Claude instance
 with its own fresh context and one
 
-s18-175
-00:10:17.908 --> 00:10:19.224
+s18-180
+00:10:27.425 --> 00:10:28.654
 bounded job.
 
-s18-176
-00:10:19.274 --> 00:10:21.027
+s18-181
+00:10:28.704 --> 00:10:31.053
 Its intermediate output stays inside it,
 
-s18-177
-00:10:21.077 --> 00:10:24.891
+s18-182
+00:10:31.103 --> 00:10:34.371
 and only a written summary
 comes back to your main session.
 
-s18-178
-00:10:24.941 --> 00:10:30.186
+s18-183
+00:10:34.421 --> 00:10:39.533
 Independent pieces can run in parallel,
 one per decade, industry, or filing batch.
 
-s18-179
-00:10:30.236 --> 00:10:33.275
-You can define your own in the
-agents folder inside .claude,
+s18-184
+00:10:39.583 --> 00:10:44.010
+You can define your own as Markdown files
+in the agents folder inside .claude,
 
-s18-180
-00:10:33.325 --> 00:10:35.042
-and manage them with /agents.
+s18-185
+00:10:44.060 --> 00:10:45.925
+and ask Claude to create or edit them.
 
-s18-181
-00:10:35.092 --> 00:10:35.889
+s18-186
+00:10:45.975 --> 00:10:47.305
 In the slide's example,
 
-s18-182
-00:10:35.939 --> 00:10:41.392
+s18-187
+00:10:47.355 --> 00:10:52.116
 three sub-agents each profile one
 decade of the funda Parquet file,
 
-s18-183
-00:10:41.442 --> 00:10:43.403
+s18-188
+00:10:52.166 --> 00:10:54.129
 write their results to a checks folder,
 
-s18-184
-00:10:43.453 --> 00:10:46.010
+s18-189
+00:10:54.179 --> 00:10:56.730
 and then the main session
 compares the three files.
 
-s19-185
-00:10:46.760 --> 00:10:49.043
+s19-190
+00:10:57.480 --> 00:10:59.763
 Start with what a sub-agent can see.
 
-s19-186
-00:10:49.093 --> 00:10:50.846
+s19-191
+00:10:59.813 --> 00:11:01.566
 It doesn't see your conversation.
 
-s19-187
-00:10:50.896 --> 00:10:55.302
+s19-192
+00:11:01.616 --> 00:11:06.022
 It starts with only the task description,
 so the filters, the sample rules,
 
-s19-188
-00:10:55.352 --> 00:10:59.470
+s19-193
+00:11:06.072 --> 00:11:10.190
 and the fyear convention you agreed
 on in chat are invisible to it.
 
-s19-189
-00:10:59.520 --> 00:11:04.668
+s19-194
+00:11:10.240 --> 00:11:15.388
 Put the rules on disk, and tell it to read
 the metadata table and CLAUDE.md first.
 
-s19-190
-00:11:04.718 --> 00:11:07.332
+s19-195
+00:11:15.438 --> 00:11:18.052
 Also, treat its summary as a claim.
 
-s19-191
-00:11:07.382 --> 00:11:10.159
+s19-196
+00:11:18.102 --> 00:11:20.879
 A line like no duplicates arrives
 without the evidence behind it.
 
-s19-192
-00:11:10.209 --> 00:11:14.037
+s19-197
+00:11:20.929 --> 00:11:24.757
 Have it write the numbers to a file,
 and spot-check one yourself.
 
-s19-193
-00:11:14.087 --> 00:11:14.980
+s19-198
+00:11:24.807 --> 00:11:25.700
 As a rule of thumb,
 
-s19-194
-00:11:15.030 --> 00:11:19.049
+s19-199
+00:11:25.750 --> 00:11:29.769
 use them for independent pieces
 or output you don't need to read,
 
-s19-195
-00:11:19.099 --> 00:11:22.390
+s19-200
+00:11:29.819 --> 00:11:33.110
 and skip them for small steps
 that depend on each other.
 
-s20-196
-00:11:23.140 --> 00:11:26.301
+s20-201
+00:11:33.860 --> 00:11:37.021
 The idea for this check
 comes from Scott Cunningham,
 
-s20-197
-00:11:26.351 --> 00:11:31.178
+s20-202
+00:11:37.071 --> 00:11:41.898
 in Claude Code 31 on his Causal
 Inference Substack, March 2026.
 
-s20-198
-00:11:31.228 --> 00:11:34.018
+s20-203
+00:11:41.948 --> 00:11:44.738
 You have Claude write the same
 fixed-effects regression twice,
 
-s20-199
-00:11:34.068 --> 00:11:36.801
+s20-204
+00:11:44.788 --> 00:11:47.520
 once in Python and once in Stata,
 
-s20-200
-00:11:36.851 --> 00:11:40.307
+s20-205
+00:11:47.570 --> 00:11:51.027
 each from the description of the
 model and not from the other script.
 
-s20-201
-00:11:40.357 --> 00:11:43.079
+s20-206
+00:11:51.077 --> 00:11:53.799
 The coefficients should
 match to six decimals.
 
-s20-202
-00:11:43.129 --> 00:11:47.787
+s20-207
+00:11:53.849 --> 00:11:58.507
 If they don't, look for a wrong fixed
 effect, a merge that duplicated rows,
 
-s20-203
-00:11:47.837 --> 00:11:49.245
+s20-208
+00:11:58.557 --> 00:11:59.965
 or a flipped sign.
 
-s20-204
-00:11:49.295 --> 00:11:54.718
+s20-209
+00:12:00.015 --> 00:12:05.438
 Standard errors can differ for legitimate
 reasons: small-sample corrections,
 
-s20-205
-00:11:54.768 --> 00:11:58.076
+s20-210
+00:12:05.488 --> 00:12:08.796
 singleton handling, since reghdfe
 drops singletons by default,
 
-s20-206
-00:11:58.126 --> 00:12:00.615
+s20-211
+00:12:08.846 --> 00:12:11.335
 and cluster degrees-of-freedom
 adjustments.
 
-s20-207
-00:12:00.665 --> 00:12:04.210
+s20-212
+00:12:11.385 --> 00:12:14.930
 Whatever the gap, explain it with
 a named default you can point to.
 
-s21-208
-00:12:04.960 --> 00:12:09.929
+s21-213
+00:12:15.680 --> 00:12:20.649
 In the live session, the next thirty-five
 minutes are the demo, on my own account,
 
-s21-209
-00:12:09.979 --> 00:12:10.968
+s21-214
+00:12:20.699 --> 00:12:21.688
 with the tunnel already up.
 
-s21-210
-00:12:11.018 --> 00:12:13.024
+s21-215
+00:12:21.738 --> 00:12:23.744
 I start with the feasibility prompt.
 
-s21-211
-00:12:13.074 --> 00:12:16.415
+s21-216
+00:12:23.794 --> 00:12:27.135
 Then the funda pull through wrds-mcp,
 
-s21-212
-00:12:16.465 --> 00:12:19.456
+s21-217
+00:12:27.185 --> 00:12:30.176
 with the iron laws and an
 explicit variable list.
 
-s21-213
-00:12:19.506 --> 00:12:21.007
+s21-218
+00:12:30.226 --> 00:12:31.727
 Then all four inspection checks,
 
-s21-214
-00:12:21.057 --> 00:12:24.640
+s21-219
+00:12:31.777 --> 00:12:35.360
 and there's one anomaly in
 there that I planted on purpose.
 
-s21-215
-00:12:24.690 --> 00:12:28.842
+s21-220
+00:12:35.410 --> 00:12:39.562
 Then I land the data in Parquet and
 DuckDB, build the metadata table,
 
-s21-216
-00:12:28.892 --> 00:12:31.014
+s21-221
+00:12:39.612 --> 00:12:41.734
 and test it cold in a fresh session.
 
-s21-217
-00:12:31.064 --> 00:12:33.310
+s21-222
+00:12:41.784 --> 00:12:44.030
 And I tear down the tunnel on camera.
 
-s22-218
-00:12:34.060 --> 00:12:35.749
+s22-223
+00:12:44.780 --> 00:12:46.469
 The lab has two tracks.
 
-s22-219
-00:12:35.799 --> 00:12:40.869
+s22-224
+00:12:46.519 --> 00:12:51.589
 The live track is for students who cleared
 the WRDS checkpoint: virtual environment,
 
-s22-220
-00:12:40.919 --> 00:12:45.869
+s22-225
+00:12:51.639 --> 00:12:56.589
 env file, tunnel up, the feasibility prompt,
 a funda pull on your own account,
 
-s22-221
-00:12:45.919 --> 00:12:51.390
+s22-226
+00:12:56.639 --> 00:13:02.110
 then inspection, Parquet, DuckDB,
 the metadata table, and tunnel teardown.
 
-s22-222
-00:12:51.440 --> 00:12:56.289
+s22-227
+00:13:02.160 --> 00:13:07.010
 The fallback track is for anyone whose Duo
 isn't sorted out or whose tunnel fails.
 
-s22-223
-00:12:56.339 --> 00:13:00.485
+s22-228
+00:13:07.060 --> 00:13:11.205
 It's the same pipeline on a public
 sample built from the SEC's Financial
 
-s22-224
-00:13:00.535 --> 00:13:02.879
+s22-229
+00:13:11.255 --> 00:13:13.599
 Statement Data Sets and shaped like funda.
 
-s22-225
-00:13:02.929 --> 00:13:06.226
+s22-230
+00:13:13.649 --> 00:13:16.946
 Both tracks count equally,
 and you can switch at any point.
 
-s22-226
-00:13:06.276 --> 00:13:09.491
+s22-231
+00:13:16.996 --> 00:13:20.211
 The extension, on either
 track, is the Stata bridge:
 
-s22-227
-00:13:09.541 --> 00:13:13.690
+s22-232
+00:13:20.261 --> 00:13:24.410
 export an analysis-ready
 .dta file, never full funda.
 
-s23-228
-00:13:14.440 --> 00:13:16.390
+s23-233
+00:13:25.160 --> 00:13:26.979
 Then the verify checklist.
 
-s23-229
-00:13:16.440 --> 00:13:18.245
-Your env file exists, it's gitignored,
+s23-234
+00:13:27.029 --> 00:13:29.421
+Your credential file
+sits outside the project,
 
-s23-230
-00:13:18.295 --> 00:13:22.763
-and a grep for your password across
-the project comes back empty.
+s23-235
+00:13:29.471 --> 00:13:33.742
+and a grep for your password variable
+across the project comes back empty.
 
-s23-231
-00:13:22.813 --> 00:13:26.991
+s23-236
+00:13:33.792 --> 00:13:38.044
 All four iron-law filters are in the
 query, and you paste the WHERE clause.
 
-s23-232
-00:13:27.041 --> 00:13:30.394
+s23-237
+00:13:38.094 --> 00:13:41.542
 Your four inspection checks are
 written down with actual numbers.
 
-s23-233
-00:13:30.444 --> 00:13:34.530
+s23-238
+00:13:41.592 --> 00:13:45.799
 The metadata table is queryable,
 with at least eight variables documented.
 
-s23-234
-00:13:34.580 --> 00:13:36.828
-There's no SELECT * anywhere.
+s23-239
+00:13:45.849 --> 00:13:50.187
+There's no SELECT * against a
+WRDS table or your raw extract.
 
-s23-235
-00:13:36.878 --> 00:13:41.496
+s23-240
+00:13:50.237 --> 00:13:56.051
 And there's no WRDS-derived file outside
 your WRDS data folder or project data
 
-s23-236
-00:13:41.546 --> 00:13:42.829
+s23-241
+00:13:56.101 --> 00:13:58.125
 folder, with nothing committed to git.
 
-s23-237
-00:13:42.879 --> 00:13:47.339
+s23-242
+00:13:58.175 --> 00:14:00.796
 On the live track, the last
 box is tearing down the tunnel,
 
-s23-238
-00:13:47.389 --> 00:13:50.230
+s23-243
+00:14:00.846 --> 00:14:03.670
 so it's the last thing
 you do before you finish.
 
-s24-239
-00:13:50.980 --> 00:13:52.634
+s24-244
+00:14:04.420 --> 00:14:06.074
 We close with a debrief.
 
-s24-240
-00:13:52.684 --> 00:13:54.880
+s24-245
+00:14:06.124 --> 00:14:08.320
 What anomaly did your inspection catch?
 
-s24-241
-00:13:54.930 --> 00:13:56.672
+s24-246
+00:14:08.370 --> 00:14:10.112
 I'll collect three from the room.
 
-s24-242
-00:13:56.722 --> 00:13:59.915
+s24-247
+00:14:10.162 --> 00:14:13.355
 Which skipped iron law would
 have broken whose extract?
 
-s24-243
-00:13:59.965 --> 00:14:03.353
+s24-248
+00:14:13.405 --> 00:14:16.793
 And for the fallback track,
 did the pipeline feel any different?
 
-s24-244
-00:14:03.403 --> 00:14:06.366
+s24-249
+00:14:16.843 --> 00:14:19.806
 It shouldn't have, since
 only the data source changed.
 
-s24-245
-00:14:06.416 --> 00:14:11.077
+s24-250
+00:14:19.856 --> 00:14:24.517
 Then the exit ticket: the standard three
 questions, plus one item for this module.
 
-s24-246
-00:14:11.127 --> 00:14:15.467
+s24-251
+00:14:24.567 --> 00:14:28.907
 Write the feasibility-assessment prompt
 for the data pull in your own dissertation.
 
-s24-247
-00:14:15.517 --> 00:14:18.218
+s24-252
+00:14:28.957 --> 00:14:31.658
 Name the table, the variables,
 and the date range,
 
-s24-248
-00:14:18.268 --> 00:14:21.939
+s24-253
+00:14:31.708 --> 00:14:35.379
 and ask what might be missing
 before you try anything complicated.
 
-s24-249
-00:14:21.989 --> 00:14:23.010
+s24-254
+00:14:35.429 --> 00:14:36.450
 See you in the lab.

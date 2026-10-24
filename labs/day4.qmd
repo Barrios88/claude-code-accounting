@@ -24,11 +24,11 @@ If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP
 
 ## Live track
 
-**Checkpoint-cleared students, own WRDS account.**
+**Working WRDS account and tunnel, your own credentials.**
 
-1. **Environment.** Activate `~/.wrds-mcp-env`, confirm `.env` is filled in and gitignored, source it, and bring the tunnel up with `tunnel_up.sh`. Approve the single Duo push. Confirm with `tunnel_status.sh` before doing anything else.
+1. **Environment.** Activate `~/.wrds-mcp-env`, confirm `~/.wrds-mcp.env` is filled in (with `export` on every line) and sits outside your project, source it, and bring the tunnel up with `tunnel_up.sh`. Approve the single Duo push. Confirm with `tunnel_status.sh` before doing anything else.
 2. **Feasibility-assessment prompt.** Before asking for any SQL, ask Claude the exact question from the module page: *"I want a firm-year panel with leverage and ROA for US industrials 2000–2023 from funda. Tell me what's involved before you try anything complicated. What might be missing?"* Read the answer before you go on. It should raise the iron-law filters and at least one linking or coverage caveat.
-3. **Pull.** Request the `funda` extract with an explicit variable list (`gvkey`, `fyear`, `sich`, `sale`, `at`, `dltt`, `ni`, plus anything else your panel needs; `sich` is the historical SIC code, needed for the industry fixed effects in the Stata extension) and all four iron-law filters applied. Do not use `SELECT *` in any script you produce in this module.
+3. **Pull.** Request the `funda` extract with an explicit variable list (`gvkey`, `fyear`, `sich`, `sale`, `at`, `dltt`, `ni`, plus anything else your panel needs; `sich` is the historical SIC code, needed for the industry fixed effects in the Stata extension) and all four iron-law filters applied. Ask Claude to use `wrds_download_data` with `format='parquet'` and `max_rows` set above the row count you expect. The tool's default silently caps a download at 100,000 rows; if your count comes back exactly 100,000, you were truncated. Do not use `SELECT *` in any script you produce in this module.
 4. **Inspect — write all four down, with real numbers, before proceeding:**
    - Row count, compared to what you expected going in.
    - `.head()` or `.sample()` eyeball of the actual values.
@@ -36,7 +36,7 @@ If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP
    - `fyear` min/max, checked against your requested range.
 
    Then check one benchmark firm's value against a source Claude did not touch (its own 10-K, or a number you already knew).
-5. **Land it.** Convert the extract to Parquet, attach it in DuckDB, and build a `compustat_metadata` table documenting at least eight variables (varname, label, units, one screening note each) using the template from the starter pack.
+5. **Land it.** Land the extract as Parquet (`wrds_download_data` can write it directly; to see the compression yourself, also save a CSV once and compare the sizes), attach it in DuckDB, and create an `analysis_ready` table with `lev = dltt / at` and `roa = ni / at` (set both to null where `at <= 0`). Then build a `compustat_metadata` table documenting at least eight variables (varname, label, units, one screening note each) using the template from the starter pack.
 6. **Fresh-session check.** Close your session entirely, open a new one, and orient it with nothing but `SELECT * FROM compustat_metadata`. Confirm the fresh session can describe your variables correctly from that alone.
 7. **Tunnel teardown.** Run `tunnel_down.sh` and confirm with `tunnel_status.sh` that the tunnel is closed. This step is required, and it is last on the list on purpose.
 
@@ -46,23 +46,23 @@ If your WRDS account is active, Duo is enrolled, and you completed the [WRDS MCP
 
 The fallback sample (`fallback_panel.parquet`) is built entirely from the SEC's public Financial Statement Data Sets by `build_fallback_sample.py` in the starter pack. It needs no WRDS account, credentials, or institutional access. Its columns are named to mirror a `funda`-style pull: `firm_id` (CIK, standing in for `gvkey`), `company_name` (for `conm`), `period` (for `datadate`), `at`, `sale`, `ni`. It is not Compustat. XBRL tags vary by filer and period in ways Compustat's standardization smooths over, and `firm_id` cannot be joined to CRSP or Compustat without a crosswalk, which this sample doesn't include. Every mechanical step below, however, is the same as on the live track.
 
-1. **Environment.** You need no tunnel, `.env`, or Duo. Build the sample once, from the starter-pack folder: `pip install requests pandas pyarrow`, then `export SEC_USER_AGENT="Your Name your.email@yale.edu"` (SEC requires your name and email on every request), then `python build_fallback_sample.py --quarter 2024q1 --out-dir .`. Confirm that `fallback_panel.parquet` and `fallback_panel.csv` appear. See `README_fallback.md` for details.
+1. **Environment.** You need no tunnel, credential file, or Duo. Build the sample once, from the starter-pack folder: `pip install requests pandas pyarrow`, then `export SEC_USER_AGENT="Your Name your.email@yale.edu"` (SEC requires your name and email on every request), then `python build_fallback_sample.py --quarter 2024q1 --out-dir .`. Confirm that `fallback_panel.parquet` and `fallback_panel.csv` appear. See `README_fallback.md` for details.
 2. **Feasibility-assessment prompt.** Ask the same question, adapted to the fallback panel's actual columns: *"I want a firm-year panel with leverage and profitability measures from this sample. Tell me what's involved before you try anything complicated. What might be missing?"* The answer should still raise real issues, such as missing revenue tags for some filers and the CIK/gvkey gap, even without WRDS involved.
 3. **Pull.** There's no live query here, but treat the load the same way. Select columns explicitly; never read every column in the file. Document which SEC XBRL tags feed each variable. This is the fallback's equivalent of the iron-law filters: write down which tags you used and why, even though there's no `WHERE` clause to paste.
 4. **Inspect — the same four checks, on the fallback data:**
    - Row count, compared to what the README states (≤ 5,000 firm-year observations).
    - `.head()` or `.sample()` eyeball.
    - Null check: the share of missing `at`, `sale` and `ni` (expect `sale` to be missing more often, because revenue tags vary by filer).
-   - `period` min/max, checked against the quarter the sample was built from.
+   - `period` min/max. `period` is the fiscal period end, so 10-Ks filed in 2024 Q1 mostly cover fiscal years ending in 2023. Expect most period ends in mid-to-late 2023 and look into any outliers.
 
    Then check one firm's `at` or `sale` value against that company's own public 10-K filing.
-5. **Land it.** Follow the same Parquet/DuckDB/metadata steps as the live track. Build a `metadata` table with at least eight variables documented (the panel has seven columns, so add at least one variable you construct, such as `roa = ni / at`), including a screening note that flags where SEC tag coverage is inconsistent.
+5. **Land it.** Follow the same Parquet/DuckDB/metadata steps as the live track. Create an `analysis_ready` table with `roa = ni / at` (null where `at <= 0`). Build a `metadata` table with at least eight variables documented (the panel has seven columns, so add at least one variable you construct, such as `roa`), including a screening note that flags where SEC tag coverage is inconsistent.
 6. **Fresh-session check.** Same as the live track: close, reopen, orient with `SELECT * FROM metadata` alone.
 7. **No tunnel to tear down.** Skip this step and go to the verify checklist below.
 
 ## Extension: the Stata bridge
 
-Export to `.dta` only the analysis-ready table you built, never a full `funda` pull, on either track. On the live track, run the Stata code in Step 3 of the starter pack's `stata_bridge_extension.md`, which regresses ROA on leverage with fiscal-year and two-digit-SIC fixed effects. The fallback panel has no SIC code, no debt item, and essentially one fiscal year, so that regression can't be run on it. Fallback-track students regress `ni / at` on `log(at)` with no fixed effects and errors clustered by `firm_id`, and use that model for the two-language check below. Match each variable's Stata `label variable` line to your metadata table. If you documented `dltt` as "long-term debt, millions of dollars" in DuckDB, use that same label in Stata rather than writing a new one.
+Export to `.dta` only the analysis-ready table you built, never a full `funda` pull, on either track. On the live track, run the Stata code in Step 3 of the starter pack's `stata_bridge_extension.md`, which regresses ROA on leverage with fiscal-year and two-digit-SIC fixed effects. The fallback panel has no SIC code, no debt item, and essentially one fiscal year, so that regression can't be run on it. Fallback-track students regress `roa` (`ni / at`) on `log(at)` with no fixed effects and heteroskedasticity-robust errors (with about one row per firm, clustering by firm would amount to the same thing), and use that model for the two-language check below. Match each variable's Stata `label variable` line to your metadata table. If you documented `dltt` as "long-term debt, millions of dollars" in DuckDB, use that same label in Stata rather than writing a new one.
 
 Then run the two-language check from this module's notes. In a fresh session, give Claude only a written description of the model — outcome, regressors, the two sets of fixed effects, how standard errors are clustered — and ask for a Python version that reads the same `.dta` file. Don't show it the `.do` file. Compare the leverage coefficient from both runs to six decimal places and paste both numbers into your notes. If the standard errors differ, find the default that explains the gap and write it down.
 
@@ -78,11 +78,11 @@ This exercise answers the question from the Module 2 exit ticket. Ask Claude to 
 
 Work through every line below. It is self-graded and pass/fail, as in every other module.
 
-- [ ] `.env` exists, is gitignored, and `grep -r` for your WRDS password over the entire project returns nothing (live track; on the fallback track this passes automatically, but check anyway)
+- [ ] `~/.wrds-mcp.env` lives outside the project (or, if a copy is inside, `git check-ignore` confirms it is ignored), and after sourcing it, `grep -rIl --exclude-dir=.git -F "$WRDS_PASSWORD" .` run from the project folder returns nothing. Never type the password itself on the command line, where it lands in your shell history. (Live track; on the fallback track this passes automatically.)
 - [ ] All four iron-law filters are present in the query — paste the `WHERE` clause into the box below (fallback track: paste the list of XBRL tags you used and why)
 - [ ] Four inspection checks written down with actual numbers: rows, sample eyeball, null shares, `fyear`/`period` min/max; plus one benchmark firm checked against a source Claude didn't touch
-- [ ] Metadata table is queryable in DuckDB, with at least 8 variables documented (units + one screening note each)
-- [ ] Explicit variable list in every query — no `SELECT *` anywhere in any script
+- [ ] `analysis_ready` table built, and the metadata table is queryable in DuckDB, with at least 8 variables documented (units + one screening note each)
+- [ ] Explicit variable list in every query against a WRDS table or your raw extract — no `SELECT *` there (`SELECT * FROM metadata` on your own small tables is fine)
 - [ ] No WRDS-derived file anywhere outside `~/wrds_data` or your project data directory; nothing WRDS-derived committed to git
 - [ ] **Tunnel torn down** (live track). This is the last item on the list on purpose.
 
@@ -95,7 +95,7 @@ Paste your WHERE clause (or, on the fallback track, your XBRL tag list) here:
 
 ## Debrief and exit ticket
 
-Come back together for a short debrief. Be ready to share three things informally. First, what anomaly your inspection step caught. There is usually at least one: missing `at` values, an unexpected duplicate row, or a benchmark firm that didn't match. Second, which iron-law filter would have caused a problem in your pull had you skipped it. Third, if you're on the fallback track, whether the pipeline felt different from the live track. It should not have.
+On your own, write down three things (when the course runs with a group, these are the debrief questions). First, what anomaly your inspection step caught. There is usually at least one: missing `at` values, an unexpected duplicate row, or a benchmark firm that didn't match. Second, which iron-law filter would have caused a problem in your pull had you skipped it (fallback track: which XBRL tag choice). Third, if you're on the fallback track, whether the pipeline felt different from the live track. It should not have.
 
 Complete the standard three-question exit ticket (one concept that clicked, one thing that broke, one thing you'd want to verify before trusting a similar result), plus this module's item:
 
