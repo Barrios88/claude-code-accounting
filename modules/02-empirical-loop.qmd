@@ -106,6 +106,8 @@ The second is named-script discipline, which you met in Module 1 on a small scal
 
 The third habit is new in this module: paper-trail prompting. Instead of asking for the analysis and adding documentation later, you request the documentation *in the same prompt that starts the work*. The prompt asks for a `DECISIONS.md` file that records each methodological choice as it is made (which tag was used when more than one was available, how a duplicate row was handled, why a filter was applied), a `LOG.md` file with a timestamped line at every major step, and an attrition row (sample size before, sample size after, and the reason for the change) printed every time the sample shrinks or grows. Ask for these upfront. A paper trail requested after the fact has to be reconstructed from memory, and Module 1 warned you not to rely on memory.
 
+Keep the approved research plan intact when the pipeline hits a problem. If a tag has poor coverage, the agent can propose a different tag, sample or measure, with the evidence behind the proposal. It should wait for your decision before changing any of those choices. Record the date, the old choice, the proposed replacement, the source and your reason in `DECISIONS.md`. Preserve rejected proposals too. A coauthor should be able to tell which analysis you intended to run and why that plan changed.
+
 ![A paper trail in practice: DECISIONS.md, LOG.md, and an attrition row, each requested in the same prompt that starts the work.](../assets/exhibits/day2/EXH-D2-02_paper_trail.png){fig-alt="Mock project listing with excerpts of DECISIONS.md, LOG.md, and an attrition row printed as a pipeline runs."}
 
 ## The opening-prompt template

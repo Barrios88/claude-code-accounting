@@ -113,6 +113,8 @@ The course assumes no Claude Code experience. It does assume a laptop you contro
 
 ## Beyond the modules
 
+**Coming back with your own project?** Open the last figure an agent helped you make. Can you show a labmate the source, the script and the check that convinced you it was right? If one is missing, start with the [Verification protocol](verification.qmd) and apply it to that figure before adding another step to the pipeline.
+
 The [Skills catalog](skills/index.qmd) has 40 agent skills for accounting research, covering econometrics, data work, writing and review. Each has a download and a one-line install command. The [Tools guide](tools.qmd) compares Claude Code with Claude Desktop, Cursor, and Codex, and includes a decision table for choosing one for each task. The [Prompt gallery](prompts.qmd) collects every reusable prompt the course teaches. The [Verification protocol](verification.qmd) is the one-page checklist you practice in every module. [Resources](resources.qmd) lists other useful tools and readings, grouped by the module where each is most relevant.
 
 Taught by [John Barrios](about.qmd), Yale School of Management. Course materials draw on outside sources, which are credited on the [About](about.qmd) page. All student-facing content is original.
